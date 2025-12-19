@@ -110,12 +110,12 @@
     }
 
     .navbar-culinaire.scrolled {
-        /* Glassmorphism muncul saat scroll */
+        /* Glassmorphism muncul saat scroll - sama dengan contact form */
         background: rgba(255, 255, 255, 0.30);
-        backdrop-filter: blur(50px);
-        -webkit-backdrop-filter: blur(50px);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
         padding: 12px 0;
     }
 
