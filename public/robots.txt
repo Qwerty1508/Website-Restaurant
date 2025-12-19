@@ -1,2 +1,9 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /storage
+Disallow: /nova
+Disallow: /telescope
+Disallow: /horizon
+Disallow: /css
+Disallow: /js
+Allow: /

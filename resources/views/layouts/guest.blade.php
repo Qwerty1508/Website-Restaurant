@@ -133,14 +133,21 @@
     
     <script src="{{ asset('js/cursor.js') }}"></script>
     <script>
-        document.addEventListener('dragstart', function(event) {
-            if (event.target.tagName === 'IMG') {
-                event.preventDefault();
-            }
-        });
-        document.addEventListener('contextmenu', function(event) {
-            if (event.target.tagName === 'IMG') {
-                event.preventDefault();
+        // Ultimate UI Protection (Disable Right Click, Drag, Select, Inspect)
+        document.addEventListener('dragstart', e => e.preventDefault());
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+        
+        document.addEventListener('keydown', function(e) {
+            // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                (e.ctrlKey && e.key === 'U') ||
+                (e.ctrlKey && e.key === 'S')
+            ) {
+                e.preventDefault();
+                return false;
             }
         });
     </script>
