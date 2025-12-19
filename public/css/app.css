@@ -2545,6 +2545,100 @@ body {
     background-color: var(--bg-primary);
 }
 
+/* Landing page sections - override bg classes */
+[data-theme="dark"] .section.bg-white,
+[data-theme="dark"] .section.bg-cream,
+[data-theme="dark"] .bg-cream {
+    background-color: var(--bg-primary) !important;
+}
+
+[data-theme="dark"] .section.bg-brown,
+[data-theme="dark"] .bg-brown {
+    background-color: var(--surface) !important;
+}
+
+/* Section titles */
+[data-theme="dark"] .section-title h2 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .section-title p,
+[data-theme="dark"] .section-title .subtitle {
+    color: var(--text-secondary);
+}
+
+/* Card titles and text */
+[data-theme="dark"] .card-title {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .card-text {
+    color: var(--text-secondary);
+}
+
+/* Feature cards / Why Choose Us */
+[data-theme="dark"] .card-glass {
+    background: var(--glass-bg) !important;
+    border-color: var(--glass-border) !important;
+}
+
+[data-theme="dark"] .card-glass h5,
+[data-theme="dark"] .card-glass h6 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .card-glass p {
+    color: var(--text-secondary) !important;
+}
+
+/* Testimonial cards */
+[data-theme="dark"] .section.bg-cream .card,
+[data-theme="dark"] .bg-cream .card {
+    background-color: var(--surface) !important;
+    border-color: var(--border-light) !important;
+}
+
+[data-theme="dark"] .section.bg-cream .card strong,
+[data-theme="dark"] .bg-cream .card strong {
+    color: var(--text-primary);
+}
+
+/* Dividers */
+[data-theme="dark"] .divider {
+    background-color: var(--accent);
+}
+
+/* Price tags */
+[data-theme="dark"] .price-tag {
+    background: var(--accent);
+    color: var(--bg-primary);
+}
+
+/* Rating stars */
+[data-theme="dark"] .rating-stars i.filled {
+    color: var(--accent);
+}
+
+/* Text gold */
+[data-theme="dark"] .text-gold {
+    color: var(--accent) !important;
+}
+
+/* Highlight text in hero */
+[data-theme="dark"] .highlight {
+    color: var(--accent) !important;
+}
+
+/* CTA Section */
+[data-theme="dark"] .bg-gradient-primary {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg-primary) 100%) !important;
+}
+
+/* Subtitle and description text */
+[data-theme="dark"] .subtitle {
+    color: var(--text-secondary);
+}
+
 /* Hr dividers */
 [data-theme="dark"] hr {
     border-color: var(--border-light);
