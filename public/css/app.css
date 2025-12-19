@@ -2846,60 +2846,139 @@ body {
 }
 
 /* Luxury Step Card */
+/* Luxury Step Card - Ultra Premium */
 .luxury-step-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    /* Lighter glass */
+    border-radius: 20px;
+    /* Softer rounded */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+        /* Inner bezel */
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+    /* Inner glow */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    border: 1px solid transparent;
 }
 
 [data-theme="dark"] .luxury-step-card {
-    background: rgba(12, 42, 54, 0.4);
-    /* Darker glass for dark mode */
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    /* Gold border hint */
+    background: linear-gradient(135deg, rgba(20, 30, 35, 0.8) 0%, rgba(12, 16, 20, 0.9) 100%);
+    box-shadow:
+        0 10px 40px -10px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1px rgba(212, 175, 55, 0.15),
+        /* Subtle Gold Border */
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    /* Top highlight */
 }
 
-.luxury-step-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    border-color: rgba(212, 175, 55, 0.5);
+/* Gold Gradient Border Effect via pseudo - simulates metal edge */
+.luxury-step-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.5;
 }
 
-.border-gold {
-    border-color: #D4AF37 !important;
+/* Hover & Active Effects */
+.luxury-step-card:hover,
+.luxury-step-card:active {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 50px -12px rgba(12, 42, 54, 0.5),
+        inset 0 0 0 1px rgba(212, 175, 55, 0.4);
 }
 
-/* Float Animation */
-@keyframes float {
+/* Specialized Icon Container (Gold Circle) */
+.luxury-step-card .rounded-circle {
+    background: linear-gradient(135deg, #ECC25B 0%, #B07F23 100%) !important;
+    box-shadow: 0 5px 15px rgba(176, 127, 35, 0.4);
+    position: relative;
+    z-index: 1;
+}
+
+/* Icon Inner Bezel */
+.luxury-step-card .rounded-circle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+}
+
+[data-theme="dark"] .luxury-step-card .text-dark {
+    color: #0F1416 !important;
+    /* Make icon distinct distinct dark against gold */
+}
+
+/* Number Badge Luxury */
+.luxury-step-card .badge {
+    background: #0F1416 !important;
+    color: #D4AF37 !important;
+    border: 1px solid #D4AF37 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Flowing Shine Animation */
+@keyframes shine {
     0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-10px);
+        background-position: -200% center;
     }
 
     100% {
-        transform: translateY(0px);
+        background-position: 200% center;
+    }
+}
+
+[data-theme="dark"] .luxury-step-card:hover {
+    background: linear-gradient(120deg,
+            rgba(20, 30, 35, 0.8) 30%,
+            rgba(212, 175, 55, 0.1) 50%,
+            rgba(20, 30, 35, 0.8) 70%);
+    background-size: 200% auto;
+    animation: shine 3s linear infinite;
+}
+
+/* Refined Float Animation */
+@keyframes luxuryFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(1deg);
     }
 }
 
 .animate-float {
-    animation: float 4s ease-in-out infinite;
+    animation: luxuryFloat 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 .delay-1 {
-    animation-delay: 0.5s;
+    animation-delay: 1.2s;
 }
 
 .delay-2 {
-    animation-delay: 1s;
+    animation-delay: 2.4s;
 }
 
 .delay-3 {
-    animation-delay: 1.5s;
+    animation-delay: 3.6s;
 }
