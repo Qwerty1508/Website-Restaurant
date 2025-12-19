@@ -100,61 +100,140 @@
 <style>
     .navbar-culinaire {
         padding: 15px 0;
-        transition: all 0.3s ease;
+        transition: all 0.12s ease;
         background-color: transparent;
     }
 
     .navbar-culinaire.scrolled {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: #0C2A36;
         backdrop-filter: blur(10px);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px -1px rgba(12, 42, 54, 0.2);
         padding: 10px 0;
+    }
+
+    .navbar-culinaire.scrolled .navbar-brand {
+        color: #F6F2EE !important;
+    }
+    
+    .navbar-culinaire.scrolled .navbar-brand span {
+        color: #C89B3A !important;
+    }
+
+    .navbar-culinaire.scrolled .nav-link {
+        color: #F6F2EE !important;
+    }
+
+    .navbar-culinaire.scrolled .nav-link:hover,
+    .navbar-culinaire.scrolled .nav-link.active {
+        color: #C89B3A !important;
+    }
+
+    .navbar-culinaire.scrolled .lang-link {
+        color: rgba(246, 242, 238, 0.6);
+    }
+
+    .navbar-culinaire.scrolled .lang-link:hover,
+    .navbar-culinaire.scrolled .lang-link.active-lang {
+        color: #C89B3A;
+    }
+
+    .navbar-culinaire.scrolled .navbar-toggler i {
+        color: #F6F2EE;
     }
 
     .navbar-brand {
         font-family: var(--font-heading, "Playfair Display", serif);
         font-weight: 700;
         font-size: 1.75rem;
-        color: var(--primary-color, #d4af37) !important;
+        color: #0C2A36 !important;
     }
     
     .navbar-brand span {
-        color: var(--dark-color, #333);
+        color: #C89B3A !important;
     }
 
     .lang-link {
         font-size: 0.85rem;
         font-weight: 600;
-        color: #aaa;
+        color: rgba(12, 42, 54, 0.5);
         text-decoration: none;
-        transition: color 0.3s ease;
+        transition: color 0.12s ease;
     }
-    .lang-link:hover { color: var(--primary-color, #d4af37); }
-    .lang-link.active-lang { color: var(--primary-color, #d4af37); }
+    .lang-link:hover { color: #C89B3A; }
+    .lang-link.active-lang { color: #C89B3A; }
     
     .navbar-nav .nav-link {
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-weight: 500;
-        color: var(--dark-color, #333);
+        color: #0C2A36;
     }
     .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
-        color: var(--primary-color, #d4af37);
+        color: #C89B3A;
+    }
+
+    /* Dark mode navbar */
+    [data-theme="dark"] .navbar-brand {
+        color: #E6EFEF !important;
+    }
+    
+    [data-theme="dark"] .navbar-brand span {
+        color: #D4AF37 !important;
+    }
+
+    [data-theme="dark"] .navbar-nav .nav-link {
+        color: #E6EFEF;
+    }
+
+    [data-theme="dark"] .navbar-nav .nav-link:hover,
+    [data-theme="dark"] .navbar-nav .nav-link.active {
+        color: #D4AF37;
+    }
+
+    [data-theme="dark"] .lang-link {
+        color: rgba(230, 239, 239, 0.5);
+    }
+
+    [data-theme="dark"] .lang-link:hover,
+    [data-theme="dark"] .lang-link.active-lang {
+        color: #D4AF37;
+    }
+
+    [data-theme="dark"] .navbar-culinaire.scrolled {
+        background-color: #16252B;
     }
 
     @media (max-width: 991.98px) {
         .navbar-collapse {
-            background-color: #fdfbf7;
+            background-color: #0C2A36;
             border-radius: 12px;
             padding: 20px;
             margin-top: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(12, 42, 54, 0.3);
             position: absolute;
             top: 100%;
             left: 15px;
             right: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(200, 155, 58, 0.2);
+        }
+
+        .navbar-collapse .nav-link {
+            color: #F6F2EE !important;
+        }
+
+        .navbar-collapse .nav-link:hover,
+        .navbar-collapse .nav-link.active {
+            color: #C89B3A !important;
+        }
+
+        .navbar-collapse .lang-link {
+            color: rgba(246, 242, 238, 0.6);
+        }
+
+        .navbar-collapse .lang-link:hover,
+        .navbar-collapse .lang-link.active-lang {
+            color: #C89B3A;
         }
         
         .navbar-nav {
@@ -190,6 +269,11 @@
 
         .theme-toggle {
             margin: 0 auto;
+        }
+
+        [data-theme="dark"] .navbar-collapse {
+            background-color: #16252B;
+            border-color: rgba(212, 175, 55, 0.2);
         }
     }
 </style>

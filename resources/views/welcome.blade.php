@@ -85,7 +85,7 @@
                             <i class="bi bi-fire"></i> <span data-i18n="trending_1">{{ __('messages.trending_1') }}</span>
                         </span>
                         @elseif($index == 1)
-                        <span class="trending-badge" style="background: linear-gradient(135deg, #D4AF37 0%, #B8960C 100%); color: #1A1A1A;">
+                        <span class="trending-badge" style="background: linear-gradient(135deg, #C89B3A 0%, #B07F23 100%); color: #0B0B0B;">
                             <i class="bi bi-trophy-fill"></i> <span data-i18n="popular_2">{{ __('messages.popular_2') }}</span>
                         </span>
                         @else
@@ -440,7 +440,7 @@
     .hero-section {
         padding-top: 0;
         margin-top: -80px;
-        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.2) 100%), url('https://res.cloudinary.com/dh9ysyfit/image/upload/v1766046687/IMG_7856_esb0xz.jpg');
+        background-image: linear-gradient(to right, rgba(12, 42, 54, 0.92) 0%, rgba(12, 42, 54, 0.7) 50%, rgba(12, 42, 54, 0.22) 100%), url('https://res.cloudinary.com/dh9ysyfit/image/upload/v1766046687/IMG_7856_esb0xz.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -450,62 +450,81 @@
         padding-top: 80px;
     }
 
-
+    /* Navbar transparent state on hero */
     .navbar-culinaire:not(.scrolled) .nav-link,
     .navbar-culinaire:not(.scrolled) .navbar-brand {
-        color: #ffffff !important;
+        color: #F6F2EE !important;
     }
     .navbar-culinaire:not(.scrolled) .navbar-brand span {
-        color: #D4AF37 !important;
+        color: #C89B3A !important;
     }
     .navbar-culinaire:not(.scrolled) .btn-outline-primary {
-        color: #fff !important;
-        border-color: #fff !important;
+        color: #F6F2EE !important;
+        border-color: #F6F2EE !important;
     }
     .navbar-culinaire:not(.scrolled) .btn-outline-primary:hover {
-        background-color: #fff !important;
-        color: #333 !important;
+        background-color: #F6F2EE !important;
+        color: #0C2A36 !important;
+    }
+    .navbar-culinaire:not(.scrolled) .lang-link {
+        color: rgba(246, 242, 238, 0.6);
+    }
+    .navbar-culinaire:not(.scrolled) .lang-link:hover,
+    .navbar-culinaire:not(.scrolled) .lang-link.active-lang {
+        color: #C89B3A;
+    }
+    .navbar-culinaire:not(.scrolled) .navbar-toggler i {
+        color: #F6F2EE;
     }
 
-
     .highlight {
-        color: #D4AF37 !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        color: #C89B3A !important;
+        text-shadow: 0 2px 4px rgba(12, 42, 54, 0.5);
     }
     
     .hero-title {
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        text-shadow: 0 2px 10px rgba(12, 42, 54, 0.5);
     }
 
-
+    /* Glass buttons with Metallic Gold accent */
     .btn-glass-gold {
-        background: rgba(212, 175, 55, 0.25) !important;
+        background: rgba(200, 155, 58, 0.25) !important;
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
-        border: 1px solid rgba(212, 175, 55, 0.4) !important;
-        color: #D4AF37 !important;
-        transition: all 0.3s ease;
+        border: 1px solid rgba(200, 155, 58, 0.4) !important;
+        color: #C89B3A !important;
+        transition: all 0.12s ease;
     }
     
     .btn-glass-gold:hover {
-        background: rgba(212, 175, 55, 0.5) !important;
-        color: #fff !important;
-        box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+        background: rgba(200, 155, 58, 0.5) !important;
+        color: #F6F2EE !important;
+        box-shadow: 0 8px 32px rgba(200, 155, 58, 0.3);
     }
 
     .btn-glass-light {
-        background: rgba(255, 255, 255, 0.25) !important;
+        background: rgba(246, 242, 238, 0.2) !important;
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.18) !important;
-        color: #fff !important;
-        transition: all 0.3s ease;
+        border: 1px solid rgba(246, 242, 238, 0.25) !important;
+        color: #F6F2EE !important;
+        transition: all 0.12s ease;
     }
     
     .btn-glass-light:hover {
-        background: rgba(255, 255, 255, 0.4) !important;
-        color: #333 !important;
-        box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+        background: rgba(246, 242, 238, 0.4) !important;
+        color: #0C2A36 !important;
+        box-shadow: 0 8px 32px rgba(246, 242, 238, 0.2);
+    }
+
+    /* Text gold utility */
+    .text-gold {
+        color: #C89B3A !important;
+    }
+
+    [data-theme="dark"] .text-gold {
+        color: #D4AF37 !important;
     }
 </style>
 @endpush
+
