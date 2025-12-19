@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+class AuthController extends Controller
+{
+    /**
+     * Handle login request
+     */
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return back()->withErrors([
+                'email' => 'Email atau password salah.',
+            ])->withInput($request->only('email'));
+        }
+
+        // Check if user is blocked
+        if ($user->isBlocked()) {
+            return back()->withErrors([
+                'email' => 'Akun Anda telah diblokir. Silakan hubungi admin untuk informasi lebih lanjut.',
+            ])->withInput($request->only('email'));
+        }
+
+        Auth::login($user, $request->boolean('remember'));
+
+        // Log activity
+        \DB::table('activity_logs')->insert([
+            'user_id' => $user->id,
+            'action' => 'login',
+            'description' => 'User logged in',
+            'ip_address' => $request->ip(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Redirect admin to admin dashboard, customer to home
+        if ($user->is_admin) {
+            return redirect('/admin/dashboard');
+        }
+
+        // Check if user is suspended - redirect with warning
+        if ($user->isSuspended()) {
+            return redirect('/')->with('warning', 'Peringatan: Akun Anda sedang dalam status suspend karena terdeteksi adanya aktivitas yang melanggar ketentuan layanan. Harap perbaiki perilaku Anda atau akun akan diblokir permanen.');
+        }
+
+        return redirect('/');
+    }
+
+    /**
+     * Handle logout request
+     */
+    public function logout(Request $request)
+    {
+        // Log activity before logout
+        if (Auth::check()) {
+            \DB::table('activity_logs')->insert([
+                'user_id' => Auth::id(),
+                'action' => 'logout',
+                'description' => 'User logged out',
+                'ip_address' => $request->ip(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+}

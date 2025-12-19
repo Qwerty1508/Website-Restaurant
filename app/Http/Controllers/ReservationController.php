@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class ReservationController extends Controller
+{
+    /**
+     * Show reservation form
+     */
+    public function create()
+    {
+        return view('reservation.create');
+    }
+
+    /**
+     * Store a new reservation
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:20',
+            'date' => 'required|date|after_or_equal:today',
+            'time' => 'required|string',
+            'guests' => 'required|integer|min:1|max:20',
+            'table_id' => 'nullable|string',
+            'notes' => 'nullable|string|max:500',
+            // Now accepting URL from client-side upload
+            'payment_proof' => 'required|url',
+        ], [
+            'payment_proof.required' => 'Bukti transfer wajib diupload.',
+            'payment_proof.url' => 'URL bukti transfer tidak valid.',
+        ]);
+
+        // Payment proof is now a URL from client-side Cloudinary upload
+        $paymentProofPath = $request->payment_proof;
+
+        DB::table('reservations')->insert([
+            'user_id' => Auth::id(),
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'date' => $request->date,
+            'time' => $request->time,
+            'guests' => $request->guests,
+            'table_id' => $request->table_id,
+            'notes' => $request->notes,
+            'payment_proof' => $paymentProofPath,
+            'status' => 'pending',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Log activity
+        DB::table('activity_logs')->insert([
+            'user_id' => Auth::id(),
+            'action' => 'reservation_created',
+            'description' => 'Created reservation for ' . $request->date . ' at ' . $request->time,
+            'ip_address' => $request->ip(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect('/customer/reservations')->with('success', 'Reservasi berhasil dibuat! Menunggu konfirmasi admin.');
+    }
+
+    /**
+     * Show customer's reservations
+     */
+    public function index()
+    {
+        $reservations = DB::table('reservations')
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('customer.reservations.index', compact('reservations'));
+    }
+
+    /**
+     * Show reservation detail
+     */
+    public function show($id)
+    {
+        $reservation = DB::table('reservations')
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (!$reservation) {
+            abort(404);
+        }
+
+        return view('customer.reservations.show', compact('reservation'));
+    }
+}

@@ -1,0 +1,205 @@
+@extends('layouts.guest')
+
+@section('title', __('messages.our_menu'))
+
+@section('content')
+<section class="bg-gradient-primary text-white pb-5" style="margin-top: -80px; padding-top: 120px;">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold mb-3" data-i18n="our_menu">{{ __('messages.our_menu') }}</h1>
+                <p class="lead opacity-75 mb-0" data-i18n="menu_desc">
+                    {{ __('messages.menu_desc') }}
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-lg-end mb-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/') }}" class="text-white opacity-75" data-i18n="home">{{ __('messages.home') }}</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page" data-i18n="menu">{{ __('messages.menu') }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section bg-cream">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row mb-5">
+            <div class="col-lg-6 mb-3 mb-lg-0">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" class="form-control border-start-0 ps-0" 
+                           placeholder="{{ __('messages.search_placeholder') }}" id="searchMenu" data-i18n="search_placeholder">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="d-flex gap-2 flex-wrap justify-content-lg-end">
+                    <button class="btn btn-primary active" data-category="all" data-i18n="cat_all">{{ __('messages.cat_all') }}</button>
+                    <button class="btn btn-outline-primary" data-category="nasi & mie" data-i18n="cat_rice_noodle">{{ __('messages.cat_rice_noodle') }}</button>
+                    <button class="btn btn-outline-primary" data-category="lauk pauk" data-i18n="cat_dishes">{{ __('messages.cat_dishes') }}</button>
+                    <button class="btn btn-outline-primary" data-category="minuman" data-i18n="cat_drinks">{{ __('messages.cat_drinks') }}</button>
+                    <button class="btn btn-outline-primary" data-category="dessert" data-i18n="cat_dessert">{{ __('messages.cat_dessert') }}</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4" id="menuGrid">
+            @forelse($menus as $index => $menu)
+            <div class="col-lg-3 col-md-4 col-sm-6 menu-item" data-category="{{ strtolower($menu->category) }}">
+                <div class="card menu-card h-100">
+                    <div class="position-relative">
+                        @if($menu->image_url)
+                            <img src="{{ $menu->image_url }}" 
+                                 class="card-img-top" alt="{{ $menu->name }}" style="height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null; this.src='https://res.cloudinary.com/dh9ysyfit/image/fetch/w_400,h_300,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1546069901-ba9599a7e63c';">
+                        @else
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-image fs-1 text-muted"></i>
+                            </div>
+                        @endif
+                        @if($index == 0)
+                        <span class="trending-badge">
+                            <i class="bi bi-fire"></i> <span data-i18n="trending">{{ __('messages.trending') }}</span>
+                        </span>
+                        @endif
+                        <span class="price-tag">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge bg-light text-muted mb-2">{{ $menu->category }}</span>
+                        <h6 class="card-title">{{ $menu->name }}</h6>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="rating-stars small">
+                                <i class="bi bi-star-fill filled"></i>
+                                <i class="bi bi-star-fill filled"></i>
+                                <i class="bi bi-star-fill filled"></i>
+                                <i class="bi bi-star-fill filled"></i>
+                                <i class="bi bi-star-fill filled"></i>
+                            </div>
+                            <small class="text-muted ms-2">({{ rand(50, 300) }})</small>
+                        </div>
+                        <p class="text-muted small mb-3">{{ Str::limit($menu->description, 60) }}</p>
+                        <button class="btn btn-primary btn-sm w-100" style="isolation: isolate; position: relative; z-index: 2;">
+    <i class="bi bi-cart-plus me-1"></i> <span data-i18n="add">{{ __('messages.add') }}</span>
+</button>
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-inbox fs-1 text-muted"></i>
+                <p class="text-muted" data-i18n="no_menu">{{ __('messages.no_menu') }}</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<section class="section bg-gradient-primary text-white text-center">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h3 class="text-white mb-3" data-i18n="want_order">{{ __('messages.want_order') }}</h3>
+                <p class="opacity-75 mb-4" data-i18n="order_desc">
+                    {{ __('messages.order_desc') }}
+                </p>
+                @guest
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{{ url('/login') }}" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-box-arrow-in-right me-2"></i><span data-i18n="login">{{ __('messages.login') }}</span>
+                    </a>
+                    <a href="{{ url('/register') }}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-person-plus me-2"></i><span data-i18n="register">{{ __('messages.register') }}</span>
+                    </a>
+                </div>
+                @else
+                <a href="{{ url('/customer/orders/create') }}" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-cart-plus me-2"></i><span data-i18n="create_order">{{ __('messages.create_order') }}</span>
+                </a>
+                @endguest
+            </div>
+        </div>
+    </div>
+</section>
+@endsection
+
+@push('styles')
+<style>
+    .pagination .page-link {
+        border: none;
+        color: var(--gray-600);
+        padding: 0.75rem 1rem;
+        margin: 0 0.25rem;
+        border-radius: var(--radius-md);
+    }
+    
+    .pagination .page-link:hover {
+        background: var(--gray-200);
+        color: var(--primary);
+    }
+    
+    .pagination .page-item.active .page-link {
+        background: var(--primary);
+        color: var(--white);
+    }
+</style>
+@endpush
+
+@push('styles')
+<style>
+
+    .navbar-culinaire:not(.scrolled) .nav-link,
+    .navbar-culinaire:not(.scrolled) .navbar-brand {
+        color: #ffffff !important;
+    }
+    .navbar-culinaire:not(.scrolled) .navbar-brand span {
+        color: #D4AF37 !important;
+    }
+    .navbar-culinaire:not(.scrolled) .btn-outline-primary {
+        color: #fff !important;
+        border-color: #fff !important;
+    }
+    .navbar-culinaire:not(.scrolled) .btn-outline-primary:hover {
+        background-color: #fff !important;
+        color: #333 !important;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+    document.querySelectorAll('[data-category]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const category = this.dataset.category;
+            
+            document.querySelectorAll('[data-category]').forEach(b => b.classList.remove('active', 'btn-primary'));
+            document.querySelectorAll('[data-category]').forEach(b => b.classList.add('btn-outline-primary'));
+            this.classList.remove('btn-outline-primary');
+            this.classList.add('active', 'btn-primary');
+            
+            document.querySelectorAll('.menu-item').forEach(item => {
+                if (category === 'all' || item.dataset.category.includes(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    document.getElementById('searchMenu').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        document.querySelectorAll('.menu-item').forEach(item => {
+            const name = item.querySelector('.card-title').textContent.toLowerCase();
+            if (name.includes(query)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
+@endpush
