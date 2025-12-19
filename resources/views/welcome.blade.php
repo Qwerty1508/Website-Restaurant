@@ -632,10 +632,8 @@
                          if(subtitleCursor) {
                              subtitleCursor.style.display = 'inline-block';
                              typeString(subtitleContainer, subtitleText, 0, () => {
-                                 // Fade out cursor when finished
-                                 subtitleCursor.style.transition = 'opacity 0.5s ease';
-                                 subtitleCursor.style.opacity = '0';
-                                 setTimeout(() => subtitleCursor.style.display = 'none', 500);
+                                 // Vanish immediately
+                                 subtitleCursor.style.display = 'none';
                              });
                          }
                     }, 800);
