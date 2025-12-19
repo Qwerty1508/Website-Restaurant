@@ -99,9 +99,9 @@
 html {
     scroll-behavior: smooth;
     scrollbar-width: none;
-    
+
     -ms-overflow-style: none;
-    
+
 }
 
 
@@ -1716,4 +1716,25 @@ body.is-loaded {
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+/* FIX: Missing .card-glass class for glassmorphism cards */
+.card-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-glass:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .card-glass {
+    background: rgba(26, 26, 26, 0.85);
+    border-color: rgba(255, 255, 255, 0.08);
 }
