@@ -111,7 +111,7 @@
 
     .navbar-culinaire.scrolled {
         /* Glassmorphism muncul saat scroll */
-        background: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.30);
         backdrop-filter: blur(50px);
         -webkit-backdrop-filter: blur(50px);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
