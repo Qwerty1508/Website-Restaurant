@@ -2635,14 +2635,18 @@ body {
 
 /* Price tags */
 /* Price tags */
+/* Price tags */
+[data-theme="dark"] .menu-card .price-tag,
 [data-theme="dark"] .price-tag {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.5) !important;
     /* White semi-transparent */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    color: #0C2A36;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    color: #0C2A36 !important;
     /* Deep Navy - Same as Light Mode */
+    font-weight: 600 !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Rating stars */
