@@ -2552,6 +2552,25 @@ body {
     background-color: var(--bg-primary) !important;
 }
 
+/* Content inside bg-white/bg-cream sections */
+[data-theme="dark"] .section.bg-white h2,
+[data-theme="dark"] .section.bg-white h3,
+[data-theme="dark"] .section.bg-white h4,
+[data-theme="dark"] .section.bg-cream h2,
+[data-theme="dark"] .section.bg-cream h3,
+[data-theme="dark"] .section.bg-cream h4 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .section.bg-white p,
+[data-theme="dark"] .section.bg-white span,
+[data-theme="dark"] .section.bg-white li,
+[data-theme="dark"] .section.bg-cream p,
+[data-theme="dark"] .section.bg-cream span,
+[data-theme="dark"] .section.bg-cream li {
+    color: var(--text-secondary);
+}
+
 [data-theme="dark"] .section.bg-brown,
 [data-theme="dark"] .bg-brown {
     background-color: var(--surface) !important;
