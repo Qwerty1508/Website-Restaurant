@@ -1376,6 +1376,16 @@ body.is-loaded {
     background: rgba(212, 175, 55, 0.1);
 }
 
+/* Hide custom cursor on touch devices (mobile/tablet) */
+@media (hover: none),
+(pointer: coarse) {
+
+    .cursor-dot,
+    .cursor-follower {
+        display: none !important;
+    }
+}
+
 .preloader {
     position: fixed;
     top: 0;
