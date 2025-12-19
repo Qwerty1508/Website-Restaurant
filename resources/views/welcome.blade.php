@@ -209,8 +209,10 @@
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
                 <div class="position-relative">
-                    <img src="https://res.cloudinary.com/dh9ysyfit/image/fetch/w_600,h_500,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1577219491135-ce391730fb2c" 
-                         alt="Chef kami" class="img-fluid rounded-4 shadow-lg">
+                    <video autoplay loop muted playsinline class="img-fluid rounded-4 shadow-lg" style="width: 100%; object-fit: cover;">
+                        <source src="https://res.cloudinary.com/dh9ysyfit/video/upload/v1766171775/gemini_generated_video_1C6E4459_ge0iic.mov" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     
                     <div class="position-absolute bg-gradient-primary text-white rounded-4 p-4 shadow-lg" 
                          style="bottom: -20px; right: -20px;">
