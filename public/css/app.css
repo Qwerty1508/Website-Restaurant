@@ -2420,59 +2420,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Navbar Dark Mode */
-[data-theme="dark"] .navbar-culinaire.scrolled {
-    background: rgba(22, 37, 43, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom-color: var(--border-light);
-}
-
-[data-theme="dark"] .navbar-culinaire .navbar-brand {
-    color: var(--text-primary) !important;
-}
-
-[data-theme="dark"] .navbar-culinaire .navbar-brand span {
-    color: var(--accent) !important;
-}
-
-[data-theme="dark"] .navbar-culinaire .nav-link {
-    color: var(--text-primary) !important;
-}
-
-[data-theme="dark"] .navbar-culinaire .nav-link:hover,
-[data-theme="dark"] .navbar-culinaire .nav-link.active {
-    color: var(--accent) !important;
-}
-
-[data-theme="dark"] .navbar-culinaire .btn-outline-primary {
-    color: var(--text-primary) !important;
-    border-color: var(--border-medium) !important;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-[data-theme="dark"] .navbar-culinaire .btn-outline-primary:hover {
-    background: rgba(212, 175, 55, 0.15) !important;
-    border-color: var(--accent) !important;
-    color: var(--accent) !important;
-}
-
-[data-theme="dark"] .navbar-culinaire .dropdown-menu {
-    background: rgba(22, 37, 43, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-color: var(--border-light);
-}
-
-[data-theme="dark"] .navbar-culinaire .dropdown-item {
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .navbar-culinaire .dropdown-item:hover {
-    background: rgba(212, 175, 55, 0.15);
-    color: var(--accent);
-}
-
 /* Sidebar (Admin) */
 [data-theme="dark"] .sidebar {
     background: linear-gradient(180deg, var(--surface) 0%, var(--bg-primary) 100%);
@@ -2596,13 +2543,6 @@ body {
 /* Hero sections */
 [data-theme="dark"] .hero-section {
     background-color: var(--bg-primary);
-}
-
-/* Mobile Collapse */
-[data-theme="dark"] .navbar-collapse {
-    background: rgba(22, 37, 43, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
 }
 
 /* Hr dividers */
