@@ -2641,8 +2641,8 @@ body {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    color: var(--text-primary);
-    /* Dark text for contrast on white glass */
+    color: #0C2A36;
+    /* Deep Navy - Same as Light Mode */
 }
 
 /* Rating stars */
