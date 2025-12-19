@@ -2538,6 +2538,23 @@ body {
 }
 
 /* Navbar Dark Mode Override */
+[data-theme="dark"] .navbar-culinaire {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .navbar-culinaire.scrolled {
+    background: rgba(12, 42, 54, 0.85) !important;
+    /* Dark Navy transparent */
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
 [data-theme="dark"] .navbar-culinaire .nav-link,
 [data-theme="dark"] .navbar-culinaire .navbar-brand,
 [data-theme="dark"] .navbar-culinaire .btn-outline-primary,
@@ -2545,6 +2562,7 @@ body {
 [data-theme="dark"] .navbar-culinaire .language-switcher a {
     color: #FFFFFF !important;
 }
+
 
 [data-theme="dark"] .navbar-culinaire .btn-outline-primary {
     border-color: #FFFFFF !important;
