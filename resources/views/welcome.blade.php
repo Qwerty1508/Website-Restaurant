@@ -552,29 +552,37 @@
         color: #D4AF37 !important;
     }
 
-    /* Typing Animation Styles */
+    /* Luxury Typing Styles */
     .typing-cursor {
         display: inline-block;
-        width: 3px;
+        width: 2px;
         background-color: #C89B3A;
-        animation: blink 1s step-end infinite;
-        margin-left: 5px;
-        vertical-align: middle;
-        height: 1em;
+        animation: smoothBlink 1s ease-in-out infinite;
+        margin-left: 4px;
+        vertical-align: text-bottom;
+        height: 1.1em;
+        opacity: 0.8;
     }
     
-    .min-h-title {
-        min-height: 1.2em; /* Reserve space */
+    .char-reveal {
+        display: inline-block; /* Enables transform */
+        opacity: 0;
+        animation: fadeSlideChar 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+        white-space: pre; /* Preserve spaces */
     }
     
-    .min-h-subtitle {
-        min-height: 1.5em;
+    @keyframes fadeSlideChar {
+        0% { opacity: 0; transform: translateY(5px) scale(0.95); filter: blur(2px); }
+        100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
     }
 
-    @keyframes blink {
-        from, to { opacity: 1; }
-        50% { opacity: 0; }
+    @keyframes smoothBlink {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
     }
+    
+    .min-h-title { min-height: 1.2em; }
+    .min-h-subtitle { min-height: 3em; } /* Increased for multiline */
 </style>
 @endpush
 
@@ -585,30 +593,30 @@
         const subtitleContainer = document.getElementById('typing-subtitle');
         const subtitleCursor = document.getElementById('subtitle-cursor');
         
-        // Configuration
-        const typingSpeed = 70; // ms per char (Standard luxury pace)
-        const segmentDelay = 300; // ms between highlighting words
-        const startDelay = 500; // ms before starting
+        // Luxury Configuration
+        const baseSpeed = 50; // Faster base speed
+        const variance = 20; // Randomness
+        const startDelay = 500;
         
-        // Parse segments
         try {
             const titleSegments = JSON.parse(titleContainer.dataset.segments);
             const subtitleText = subtitleContainer.dataset.text;
             
-            // Initial State
+            // Clear
             titleContainer.innerHTML = '';
             subtitleContainer.innerHTML = '';
             
-            setTimeout(() => {
-                typeSegments(0);
-            }, startDelay);
+            setTimeout(() => processTitleSegments(0), startDelay);
             
-            function typeSegments(index) {
+            function processTitleSegments(index) {
                 if (index >= titleSegments.length) {
-                    // Title done, start subtitle
-                    document.querySelector('.hero-title .typing-cursor').style.display = 'none'; // Hide title cursor
-                    subtitleCursor.style.display = 'inline-block'; // Show subtitle cursor
-                    setTimeout(() => typeSubtitle(0), 500);
+                    // Transition to subtitle
+                    document.querySelector('.hero-title .typing-cursor').style.opacity = '0';
+                    setTimeout(() => {
+                         document.querySelector('.hero-title .typing-cursor').style.display = 'none';
+                         subtitleCursor.style.display = 'inline-block';
+                         typeString(subtitleContainer, subtitleText, 0, () => {});
+                    }, 500);
                     return;
                 }
                 
@@ -617,34 +625,36 @@
                 if (segment.class) span.className = segment.class;
                 titleContainer.appendChild(span);
                 
-                let charIndex = 0;
-                function typeChar() {
-                    if (charIndex < segment.text.length) {
-                        span.textContent += segment.text.charAt(charIndex);
-                        charIndex++;
-                        setTimeout(typeChar, typingSpeed);
-                    } else {
-                        // Segment finished
-                        setTimeout(() => typeSegments(index + 1), segmentDelay);
-                    }
-                }
-                typeChar();
+                typeString(span, segment.text, 0, () => {
+                    setTimeout(() => processTitleSegments(index + 1), 50); // Small pause between segments
+                });
             }
             
-            function typeSubtitle(index) {
-                if (index < subtitleText.length) {
-                    subtitleContainer.textContent += subtitleText.charAt(index);
-                    setTimeout(() => typeSubtitle(index + 1), 30); // Faster for subtitle
-                } else {
-                     // Finished
-                     // Keep subtitle cursor blinking or hide it? User usually prefers blinking for a bit then hide?
-                     // Let's keep it blinking to show "live" feel.
+            function typeString(container, text, index, callback) {
+                if (index >= text.length) {
+                     callback();
+                     return;
                 }
+                
+                const char = text.charAt(index);
+                const charSpan = document.createElement('span');
+                charSpan.textContent = char;
+                charSpan.classList.add('char-reveal');
+                container.appendChild(charSpan);
+                
+                // Humanize timing
+                let delay = baseSpeed + (Math.random() * variance * 2 - variance);
+                
+                // Pause slightly on punctuation
+                if (char === ',' || char === '.') delay += 100;
+                
+                setTimeout(() => {
+                    typeString(container, text, index + 1, callback);
+                }, delay);
             }
             
         } catch (e) {
-            console.error('Typing animation error:', e);
-            // Fallback if error: just show text
+            console.error(e);
             titleContainer.innerHTML = titleContainer.ariaLabel;
             subtitleContainer.innerHTML = subtitleContainer.dataset.text;
         }
