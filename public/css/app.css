@@ -2847,138 +2847,273 @@ body {
 
 /* Luxury Step Card */
 /* Luxury Step Card - Ultra Premium */
-.luxury-step-card {
-    position: relative;
-    background: rgba(255, 255, 255, 0.08);
-    /* Lighter glass */
-    border-radius: 20px;
-    /* Softer rounded */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow:
-        0 4px 30px rgba(0, 0, 0, 0.1),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.2),
-        /* Inner bezel */
-        inset 0 0 20px rgba(255, 255, 255, 0.05);
-    /* Inner glow */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    overflow: hidden;
-    border: 1px solid transparent;
-}
+/* =========================================
+   10X ULTRA LUXURY ANIMATION ENGINE
+   ========================================= */
 
-[data-theme="dark"] .luxury-step-card {
-    background: linear-gradient(135deg, rgba(20, 30, 35, 0.8) 0%, rgba(12, 16, 20, 0.9) 100%);
-    box-shadow:
-        0 10px 40px -10px rgba(0, 0, 0, 0.5),
-        inset 0 0 0 1px rgba(212, 175, 55, 0.15),
-        /* Subtle Gold Border */
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    /* Top highlight */
-}
-
-/* Gold Gradient Border Effect via pseudo - simulates metal edge */
-.luxury-step-card::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 20px;
-    padding: 1px;
-    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.3), transparent);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0.5;
-}
-
-/* Hover & Active Effects */
-.luxury-step-card:hover,
-.luxury-step-card:active {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow:
-        0 20px 50px -12px rgba(12, 42, 54, 0.5),
-        inset 0 0 0 1px rgba(212, 175, 55, 0.4);
-}
-
-/* Specialized Icon Container (Gold Circle) */
-.luxury-step-card .rounded-circle {
-    background: linear-gradient(135deg, #ECC25B 0%, #B07F23 100%) !important;
-    box-shadow: 0 5px 15px rgba(176, 127, 35, 0.4);
+.luxury-card-wrapper {
     position: relative;
     z-index: 1;
+    border-radius: 24px;
+    background: transparent;
+    perspective: 1000px;
 }
 
-/* Icon Inner Bezel */
-.luxury-step-card .rounded-circle::after {
-    content: '';
+/* Base Glass Structure */
+.luxury-card-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    /* Ultra transparent */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.2),
+        inset 0 0 30px rgba(255, 255, 255, 0.05);
+    /* Inner volumetric fog */
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Dark Mode Obsidian Glass */
+[data-theme="dark"] .luxury-card-content {
+    background: linear-gradient(160deg, rgba(20, 24, 28, 0.8) 0%, rgba(10, 12, 16, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 20px 50px -10px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        /* Top edge light */
+        inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    /* Bottom depth */
+}
+
+/* =========================================
+   DYNAMIC LIGHTING & GOLD (The "10x" Factor)
+   ========================================= */
+
+/* Rotating Conic Gold Border */
+.luxury-card-border {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    inset: -2px;
+    z-index: 0;
+    border-radius: 26px;
+    background: conic-gradient(from 0deg,
+            transparent 0%,
+            rgba(212, 175, 55, 0.1) 20%,
+            #D4AF37 45%,
+            /* Pure Gold Peak */
+            rgba(212, 175, 55, 0.1) 70%,
+            transparent 100%);
+    animation: rotateGold 8s linear infinite;
+    opacity: 0;
+    /* Hidden by default, appears on interaction */
+    filter: blur(10px);
+    transition: opacity 0.5s ease;
+}
+
+@keyframes rotateGold {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+[data-theme="dark"] .luxury-card-wrapper:hover .luxury-card-border {
+    opacity: 0.8;
+}
+
+/* Internal Spotlight (Glow) */
+.luxury-card-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    top: -50%;
+    left: -50%;
+    z-index: 5;
+    opacity: 0.5;
+    transform: translate(0, 0);
     pointer-events: none;
+    transition: transform 0.2s ease-out;
+    /* JavaScript would drive this follow-mouse, keeping simple pure CSS center for now */
+    animation: pulseGlow 5s ease-in-out infinite alternate;
 }
 
-[data-theme="dark"] .luxury-step-card .text-dark {
-    color: #0F1416 !important;
-    /* Make icon distinct distinct dark against gold */
-}
-
-/* Number Badge Luxury */
-.luxury-step-card .badge {
-    background: #0F1416 !important;
-    color: #D4AF37 !important;
-    border: 1px solid #D4AF37 !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-/* Flowing Shine Animation */
-@keyframes shine {
+@keyframes pulseGlow {
     0% {
-        background-position: -200% center;
+        transform: scale(1) translate(10%, 10%);
+        opacity: 0.3;
     }
 
     100% {
+        transform: scale(1.2) translate(-10%, -10%);
+        opacity: 0.6;
+    }
+}
+
+/* =========================================
+   ELEMENTS STYLING
+   ========================================= */
+
+/* The Stage */
+.icon-stage {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: floatComplex 6s ease-in-out infinite;
+}
+
+/* Complex Float Animation (Figure 8) */
+@keyframes floatComplex {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    33% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+
+    66% {
+        transform: translateY(5px) rotate(-1deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* Golden Ring (Halo) */
+.golden-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    animation: pingRing 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pingRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+        border-width: 2px;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+        border-width: 0px;
+    }
+}
+
+/* The Gemstone Icon Background */
+.icon-gem {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 30% 30%, #F5D77F 0%, #D4AF37 40%, #8C6A18 100%);
+    border-radius: 50%;
+    /* Circle gem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.4),
+        inset 0 2px 5px rgba(255, 255, 255, 0.6),
+        /* Specular highlight */
+        inset 0 -5px 10px rgba(0, 0, 0, 0.3);
+    /* Depth shadow */
+    z-index: 2;
+    border: 2px solid #FFF5D6;
+    /* Platinum rim */
+}
+
+/* Levitating Badge */
+.floating-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #0B0E10;
+    color: #D4AF37;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-family: 'Playfair Display', serif;
+    border: 1px solid #D4AF37;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 3;
+    animation: badgeBounce 3s ease-in-out infinite reverse;
+}
+
+@keyframes badgeBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Typography Gradient */
+.luxury-title {
+    background: linear-gradient(to right, #ffffff 20%, #D4AF37 50%, #ffffff 80%);
+    background-size: 200% auto;
+    color: #fff;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    animation: shineText 5s linear infinite;
+}
+
+@keyframes shineText {
+    to {
         background-position: 200% center;
     }
 }
 
-[data-theme="dark"] .luxury-step-card:hover {
-    background: linear-gradient(120deg,
-            rgba(20, 30, 35, 0.8) 30%,
-            rgba(212, 175, 55, 0.1) 50%,
-            rgba(20, 30, 35, 0.8) 70%);
-    background-size: 200% auto;
-    animation: shine 3s linear infinite;
+.luxury-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    line-height: 1.6;
 }
 
-/* Refined Float Animation */
-@keyframes luxuryFloat {
-
-    0%,
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    50% {
-        transform: translateY(-12px) rotate(1deg);
-    }
-}
-
-.animate-float {
-    animation: luxuryFloat 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
+/* Animation Delays */
 .delay-1 {
-    animation-delay: 1.2s;
+    animation-delay: 1.5s;
 }
 
 .delay-2 {
-    animation-delay: 2.4s;
+    animation-delay: 3.0s;
 }
 
 .delay-3 {
-    animation-delay: 3.6s;
+    animation-delay: 4.5s;
+}
+
+/* Mobile Optimization: Reduce Blur for performance but keep gradient */
+@media (max-width: 768px) {
+    .luxury-card-content {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
 }

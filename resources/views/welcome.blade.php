@@ -265,79 +265,89 @@
             <div class="divider"></div>
         </div>
         
-        <div class="row g-4 horizontal-scroll-mobile">
+            <!-- Step 1 -->
             <div class="col-lg-3 col-md-6 text-center">
-                <div class="luxury-step-card h-100 p-4">
-                    <div class="mb-3 position-relative d-inline-block animate-float">
-                        <div class="bg-gradient-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg" 
-                             style="width: 80px; height: 80px;">
-                            <i class="bi bi-person-plus fs-2 text-dark"></i>
+                <div class="luxury-card-wrapper h-100">
+                    <div class="luxury-card-border"></div>
+                    <div class="luxury-card-glow"></div>
+                    <div class="luxury-card-content p-4">
+                        <div class="icon-stage mb-4">
+                            <div class="golden-ring"></div>
+                            <div class="icon-gem">
+                                <i class="bi bi-person-plus fs-2 text-dark"></i>
+                            </div>
+                            <div class="floating-badge">1</div>
                         </div>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-primary fs-6 shadow-sm border border-gold">
-                            1
-                        </span>
+                        <h5 class="luxury-title mb-2" data-i18n="step_1_title">{{ __('messages.step_1_title') }}</h5>
+                        <p class="luxury-desc small mb-0" data-i18n="step_1_desc">
+                            {{ __('messages.step_1_desc') }}
+                        </p>
                     </div>
-                    <h5 class="text-white mb-2" data-i18n="step_1_title">{{ __('messages.step_1_title') }}</h5>
-                    <p class="text-light opacity-75 small mb-0" data-i18n="step_1_desc">
-                        {{ __('messages.step_1_desc') }}
-                    </p>
                 </div>
             </div>
             
+            <!-- Step 2 -->
             <div class="col-lg-3 col-md-6 text-center">
-                <div class="luxury-step-card h-100 p-4">
-                    <div class="mb-3 position-relative d-inline-block animate-float delay-1">
-                        <div class="bg-gradient-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg" 
-                             style="width: 80px; height: 80px;">
-                            <i class="bi bi-menu-button-wide fs-2 text-dark"></i>
+                <div class="luxury-card-wrapper h-100">
+                    <div class="luxury-card-border"></div>
+                    <div class="luxury-card-glow"></div>
+                    <div class="luxury-card-content p-4">
+                        <div class="icon-stage mb-4 delay-1">
+                            <div class="golden-ring"></div>
+                            <div class="icon-gem">
+                                <i class="bi bi-menu-button-wide fs-2 text-dark"></i>
+                            </div>
+                            <div class="floating-badge">2</div>
                         </div>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-primary fs-6 shadow-sm border border-gold">
-                            2
-                        </span>
+                        <h5 class="luxury-title mb-2" data-i18n="step_2_title">{{ __('messages.step_2_title') }}</h5>
+                        <p class="luxury-desc small mb-0" data-i18n="step_2_desc">
+                            {{ __('messages.step_2_desc') }}
+                        </p>
                     </div>
-                    <h5 class="text-white mb-2" data-i18n="step_2_title">{{ __('messages.step_2_title') }}</h5>
-                    <p class="text-light opacity-75 small mb-0" data-i18n="step_2_desc">
-                        {{ __('messages.step_2_desc') }}
-                    </p>
                 </div>
             </div>
             
+            <!-- Step 3 -->
             <div class="col-lg-3 col-md-6 text-center">
-                <div class="luxury-step-card h-100 p-4">
-                    <div class="mb-3 position-relative d-inline-block animate-float delay-2">
-                        <div class="bg-gradient-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg" 
-                             style="width: 80px; height: 80px;">
-                            <i class="bi bi-credit-card fs-2 text-dark"></i>
+                <div class="luxury-card-wrapper h-100">
+                    <div class="luxury-card-border"></div>
+                    <div class="luxury-card-glow"></div>
+                    <div class="luxury-card-content p-4">
+                        <div class="icon-stage mb-4 delay-2">
+                            <div class="golden-ring"></div>
+                            <div class="icon-gem">
+                                <i class="bi bi-credit-card fs-2 text-dark"></i>
+                            </div>
+                            <div class="floating-badge">3</div>
                         </div>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-primary fs-6 shadow-sm border border-gold">
-                            3
-                        </span>
+                        <h5 class="luxury-title mb-2" data-i18n="step_3_title">{{ __('messages.step_3_title') }}</h5>
+                        <p class="luxury-desc small mb-0" data-i18n="step_3_desc">
+                            {{ __('messages.step_3_desc') }}
+                        </p>
                     </div>
-                    <h5 class="text-white mb-2" data-i18n="step_3_title">{{ __('messages.step_3_title') }}</h5>
-                    <p class="text-light opacity-75 small mb-0" data-i18n="step_3_desc">
-                        {{ __('messages.step_3_desc') }}
-                    </p>
                 </div>
             </div>
             
+            <!-- Step 4 -->
             <div class="col-lg-3 col-md-6 text-center">
-                <div class="luxury-step-card h-100 p-4">
-                    <div class="mb-3 position-relative d-inline-block animate-float delay-3">
-                        <div class="bg-gradient-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg" 
-                             style="width: 80px; height: 80px;">
-                            <i class="bi bi-bag-check fs-2 text-dark"></i>
+                <div class="luxury-card-wrapper h-100">
+                    <div class="luxury-card-border"></div>
+                    <div class="luxury-card-glow"></div>
+                    <div class="luxury-card-content p-4">
+                        <div class="icon-stage mb-4 delay-3">
+                            <div class="golden-ring"></div>
+                            <div class="icon-gem">
+                                <i class="bi bi-bag-check fs-2 text-dark"></i>
+                            </div>
+                            <div class="floating-badge">4</div>
                         </div>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-primary fs-6 shadow-sm border border-gold">
-                            4
-                        </span>
+                        <h5 class="luxury-title mb-2" data-i18n="step_4_title">{{ __('messages.step_4_title') }}</h5>
+                        <p class="luxury-desc small mb-0" data-i18n="step_4_desc">
+                            {{ __('messages.step_4_desc') }}
+                        </p>
                     </div>
-                    <h5 class="text-white mb-2" data-i18n="step_4_title">{{ __('messages.step_4_title') }}</h5>
-                    <p class="text-light opacity-75 small mb-0" data-i18n="step_4_desc">
-                        {{ __('messages.step_4_desc') }}
-                    </p>
                 </div>
             </div>
-        </div>
     </div>
 </section>
 
