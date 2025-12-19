@@ -2537,6 +2537,28 @@ body {
     border-color: var(--border-medium) !important;
 }
 
+/* Navbar Dark Mode Override */
+[data-theme="dark"] .navbar-culinaire .nav-link,
+[data-theme="dark"] .navbar-culinaire .navbar-brand,
+[data-theme="dark"] .navbar-culinaire .btn-outline-primary,
+[data-theme="dark"] .navbar-culinaire .text-dark,
+[data-theme="dark"] .navbar-culinaire .language-switcher a {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .navbar-culinaire .btn-outline-primary {
+    border-color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .navbar-culinaire .btn-outline-primary:hover {
+    background-color: #FFFFFF !important;
+    color: #0C2A36 !important;
+}
+
+[data-theme="dark"] .navbar-culinaire .navbar-brand span {
+    color: var(--accent) !important;
+}
+
 /* Sections */
 [data-theme="dark"] .section {
     background-color: var(--bg-primary);
