@@ -23,6 +23,7 @@
 </head>
 <body>
     @include('components.sidebar')
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <div class="main-content-admin">
         <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded-3 mb-4 px-4">
@@ -145,10 +146,22 @@
         
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
         
         if (sidebarToggle && sidebar) {
             sidebarToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('show');
+                if (sidebarOverlay) {
+                    sidebarOverlay.classList.toggle('show');
+                }
+            });
+        }
+        
+        // Close sidebar when clicking on overlay
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('show');
+                sidebarOverlay.classList.remove('show');
             });
         }
     </script>
