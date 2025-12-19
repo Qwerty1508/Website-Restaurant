@@ -5,13 +5,44 @@
 
     RewriteEngine On
 
+    # ==================================================================
+    # SECURITY HEADERS (MILITARY GRADE)
+    # ==================================================================
+    <IfModule mod_headers.c>
+        # Prevent Clickjacking
+        Header always set X-Frame-Options "SAMEORIGIN"
+        # Prevent MIME type sniffing
+        Header always set X-Content-Type-Options "nosniff"
+        # Enable XSS Protection
+        Header always set X-XSS-Protection "1; mode=block"
+        # Referrer Policy
+        Header always set Referrer-Policy "strict-origin-when-cross-origin"
+        # Permissions Policy (Disable dangerous features)
+        Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    </IfModule>
+
+    # ==================================================================
+    # FILE PROTECTION LAYERS
+    # ==================================================================
+    
+    # Block access to all dot files (like .env, .git, .htaccess)
+    RewriteRule (^\.|/\.) - [F]
+
+    # Block access to sensitive file types inside public
+    RewriteRule \.(md|json|lock|xml|yml|yaml|log|sh|bat)$ - [F]
+
+    # Prevent direct access to any PHP file except index.php
+    # This ensures no one can bypass the router
+    RewriteCond %{REQUEST_URI} !^/index.php$
+    RewriteRule ^.+\.php$ - [F,L]
+
+    # ==================================================================
+    # STANDARD LARAVEL ROUTING
+    # ==================================================================
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-    # Handle X-XSRF-Token Header
-    RewriteCond %{HTTP:x-xsrf-token} .
-    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
