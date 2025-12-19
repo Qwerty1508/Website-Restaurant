@@ -101,26 +101,26 @@
     .navbar-culinaire {
         padding: 15px 0;
         transition: all 0.3s ease;
-        /* Glassmorphism - selalu aktif */
-        background: rgba(12, 42, 54, 0.5);
+        /* Glassmorphism - transparan natural */
+        background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(50px);
         -webkit-backdrop-filter: blur(50px);
-        border-bottom: 1px solid rgba(246, 242, 238, 0.1);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     }
 
     .navbar-culinaire.scrolled {
-        background: rgba(12, 42, 54, 0.7);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         padding: 10px 0;
     }
 
-    /* Default navbar text colors (on glass) */
+    /* Default navbar text colors (on transparent glass) */
     .navbar-brand {
         font-family: var(--font-heading, "Playfair Display", serif);
         font-weight: 700;
         font-size: 1.75rem;
-        color: #F6F2EE !important;
+        color: #0C2A36 !important;
     }
     
     .navbar-brand span {
@@ -128,7 +128,7 @@
     }
 
     .navbar-nav .nav-link {
-        color: #F6F2EE !important;
+        color: #0C2A36 !important;
     }
 
     .navbar-nav .nav-link:hover,
@@ -139,7 +139,7 @@
     .lang-link {
         font-size: 0.85rem;
         font-weight: 600;
-        color: rgba(246, 242, 238, 0.6);
+        color: rgba(12, 42, 54, 0.5);
         text-decoration: none;
         transition: color 0.12s ease;
     }
@@ -150,40 +150,40 @@
     }
 
     .navbar-toggler i {
-        color: #F6F2EE;
+        color: #0C2A36;
     }
 
     /* Dropdown button styling */
     .navbar-culinaire .btn-outline-primary {
-        color: #F6F2EE !important;
-        border-color: rgba(246, 242, 238, 0.4) !important;
-        background: rgba(246, 242, 238, 0.1);
+        color: #0C2A36 !important;
+        border-color: rgba(12, 42, 54, 0.3) !important;
+        background: rgba(255, 255, 255, 0.2);
     }
 
     .navbar-culinaire .btn-outline-primary:hover {
-        background: rgba(246, 242, 238, 0.2) !important;
+        background: rgba(200, 155, 58, 0.2) !important;
         border-color: #C89B3A !important;
         color: #C89B3A !important;
     }
 
     .navbar-culinaire .dropdown-menu {
-        background: rgba(12, 42, 54, 0.95);
+        background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(50px);
         -webkit-backdrop-filter: blur(50px);
-        border: 1px solid rgba(246, 242, 238, 0.1);
+        border: 1px solid rgba(12, 42, 54, 0.1);
     }
 
     .navbar-culinaire .dropdown-item {
-        color: #F6F2EE;
+        color: #0C2A36;
     }
 
     .navbar-culinaire .dropdown-item:hover {
-        background: rgba(200, 155, 58, 0.2);
+        background: rgba(200, 155, 58, 0.15);
         color: #C89B3A;
     }
 
     .navbar-culinaire .dropdown-divider {
-        border-color: rgba(246, 242, 238, 0.1);
+        border-color: rgba(12, 42, 54, 0.1);
     }
 
     .navbar-nav .nav-link {
