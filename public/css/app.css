@@ -2629,14 +2629,91 @@ body {
     color: var(--accent) !important;
 }
 
-/* CTA Section */
+/* CTA Section / Hero gradient sections */
 [data-theme="dark"] .bg-gradient-primary {
     background: linear-gradient(135deg, var(--surface) 0%, var(--bg-primary) 100%) !important;
+}
+
+[data-theme="dark"] .bg-gradient-primary h1,
+[data-theme="dark"] .bg-gradient-primary h2,
+[data-theme="dark"] .bg-gradient-primary h3,
+[data-theme="dark"] .bg-gradient-primary h4,
+[data-theme="dark"] .bg-gradient-primary p,
+[data-theme="dark"] .bg-gradient-primary .lead {
+    color: var(--text-primary) !important;
 }
 
 /* Subtitle and description text */
 [data-theme="dark"] .subtitle {
     color: var(--text-secondary);
+}
+
+/* Display headings */
+[data-theme="dark"] .display-1,
+[data-theme="dark"] .display-2,
+[data-theme="dark"] .display-3,
+[data-theme="dark"] .display-4,
+[data-theme="dark"] .display-5,
+[data-theme="dark"] .display-6 {
+    color: var(--text-primary);
+}
+
+/* Card headings */
+[data-theme="dark"] .card h4,
+[data-theme="dark"] .card h5,
+[data-theme="dark"] .card h6 {
+    color: var(--text-primary);
+}
+
+/* Page headers/titles - reservation, menu, etc */
+[data-theme="dark"] .py-5 h1,
+[data-theme="dark"] .py-5 .display-5 {
+    color: var(--text-primary) !important;
+}
+
+/* Lead text */
+[data-theme="dark"] .lead {
+    color: var(--text-secondary) !important;
+}
+
+/* Opacity text */
+[data-theme="dark"] .opacity-75 {
+    color: var(--text-secondary) !important;
+}
+
+/* About page specific - preloader */
+[data-theme="dark"] .preloader {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .preloader-brand {
+    color: var(--accent);
+}
+
+/* Small text helper */
+[data-theme="dark"] small,
+[data-theme="dark"] .small {
+    color: var(--text-muted);
+}
+
+/* Form check labels */
+[data-theme="dark"] .form-check-label {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-check-label .text-muted,
+[data-theme="dark"] .form-check-label small {
+    color: var(--text-muted) !important;
+}
+
+/* Strong text in cards */
+[data-theme="dark"] .card strong {
+    color: var(--text-primary);
+}
+
+/* Info panel text */
+[data-theme="dark"] .card-body h5 {
+    color: var(--text-primary);
 }
 
 /* Hr dividers */
