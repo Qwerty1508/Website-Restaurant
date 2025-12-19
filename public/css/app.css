@@ -2210,13 +2210,20 @@ body {
 /* Forms */
 [data-theme="dark"] .form-control,
 [data-theme="dark"] .form-select {
-    background-color: var(--surface);
-    border-color: var(--border-medium);
-    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    /* Glass effect */
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #FFFFFF !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 [data-theme="dark"] .form-control::placeholder {
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+[data-theme="dark"] .navbar-toggler i {
+    color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .form-control:focus,
