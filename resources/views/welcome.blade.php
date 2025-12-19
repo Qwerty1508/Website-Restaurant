@@ -265,6 +265,7 @@
             <div class="divider"></div>
         </div>
         
+        <div class="row g-4 flex-nowrap luxury-scroll-container">
             <!-- Step 1 -->
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="luxury-card-wrapper h-100">

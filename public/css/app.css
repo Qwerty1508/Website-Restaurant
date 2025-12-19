@@ -2804,10 +2804,9 @@ body {
     opacity: 1;
 }
 
-/* Mobile Horizontal Scroll (Luxury) */
 /* Mobile & Tablet Horizontal Scroll (Luxury) */
 @media (max-width: 991.98px) {
-    .horizontal-scroll-mobile {
+    .luxury-scroll-container {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: nowrap !important;
@@ -2823,47 +2822,44 @@ body {
         scrollbar-width: thin;
         scrollbar-color: var(--accent) transparent;
         margin-right: -12px;
-        /* Compensate for container padding */
         margin-left: -12px;
     }
 
-    .horizontal-scroll-mobile>.col-lg-3,
-    .horizontal-scroll-mobile>[class*="col-"] {
+    .luxury-scroll-container>.col-lg-3,
+    .luxury-scroll-container>[class*="col-"] {
         flex: 0 0 85% !important;
-        /* Mobile width */
         max-width: 85% !important;
         scroll-snap-align: center;
         width: 85%;
         margin-bottom: 0 !important;
-        /* Prevent bottom margin stacking */
     }
 
     /* Tablet specific adjustment */
     @media (min-width: 768px) {
 
-        .horizontal-scroll-mobile>.col-lg-3,
-        .horizontal-scroll-mobile>[class*="col-"] {
+        .luxury-scroll-container>.col-lg-3,
+        .luxury-scroll-container>[class*="col-"] {
             flex: 0 0 45% !important;
-            /* Tablet width - show 2 items + peek */
             max-width: 45% !important;
             width: 45%;
         }
     }
+}
 
-    /* Custom Scrollbar for Webkit */
-    .horizontal-scroll-mobile::-webkit-scrollbar {
-        height: 6px;
-    }
+/* Custom Scrollbar for Webkit */
+.luxury-scroll-container::-webkit-scrollbar {
+    height: 6px;
+}
 
-    .horizontal-scroll-mobile::-webkit-scrollbar-track {
-        background: rgba(200, 155, 58, 0.1);
-        border-radius: 10px;
-    }
+.luxury-scroll-container::-webkit-scrollbar-track {
+    background: rgba(200, 155, 58, 0.1);
+    border-radius: 10px;
+}
 
-    .horizontal-scroll-mobile::-webkit-scrollbar-thumb {
-        background: var(--accent);
-        border-radius: 10px;
-    }
+.luxury-scroll-container::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
 }
 
 /* Luxury Step Card */
