@@ -116,7 +116,20 @@ Route::prefix('customer')->middleware('auth')->group(function () {
     Route::get('/reservations/{id}', [ReservationController::class, 'show']);
     
     Route::get('/profile', function () {
-        return view('customer.profile');
+        $userId = auth()->id();
+        $totalOrders = \DB::table('orders')->where('user_id', $userId)->count();
+        $totalReservations = \DB::table('reservations')->where('user_id', $userId)->count();
+        
+        // Calculate points based on total spend (1 point per 10,000 IDR) from completed orders
+        // If status 'completed' is not yet used, we can count all or 'paid'
+        $totalSpend = \DB::table('orders')
+            ->where('user_id', $userId)
+            // ->where('status', 'completed') // Uncomment when status flow is strict
+            ->sum('total');
+            
+        $points = floor($totalSpend / 10000);
+        
+        return view('customer.profile', compact('totalOrders', 'totalReservations', 'points'));
     });
 });
 

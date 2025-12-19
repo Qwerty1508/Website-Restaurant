@@ -27,15 +27,15 @@
                     <hr>
                     <div class="row text-center">
                         <div class="col-4">
-                            <h5 class="mb-0">12</h5>
+                            <h5 class="mb-0">{{ $totalOrders }}</h5>
                             <small class="text-muted" data-i18n="profile_orders">{{ __('messages.profile_orders') }}</small>
                         </div>
                         <div class="col-4">
-                            <h5 class="mb-0">450</h5>
+                            <h5 class="mb-0">{{ number_format($points, 0, ',', '.') }}</h5>
                             <small class="text-muted" data-i18n="profile_points">{{ __('messages.profile_points') }}</small>
                         </div>
                         <div class="col-4">
-                            <h5 class="mb-0">3</h5>
+                            <h5 class="mb-0">{{ $totalReservations }}</h5>
                             <small class="text-muted" data-i18n="profile_reservations">{{ __('messages.profile_reservations') }}</small>
                         </div>
                     </div>
