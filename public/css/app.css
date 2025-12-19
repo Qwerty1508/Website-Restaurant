@@ -2805,11 +2805,14 @@ body {
 }
 
 /* Mobile Horizontal Scroll (Luxury) */
-@media (max-width: 767.98px) {
+/* Mobile & Tablet Horizontal Scroll (Luxury) */
+@media (max-width: 991.98px) {
     .horizontal-scroll-mobile {
         display: flex !important;
+        flex-direction: row !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
+        overflow-y: hidden;
         padding-bottom: 2rem;
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
@@ -2819,14 +2822,32 @@ body {
         /* Hiding scrollbar for cleaner look but keeping functionality, or custom styling */
         scrollbar-width: thin;
         scrollbar-color: var(--accent) transparent;
+        margin-right: -12px;
+        /* Compensate for container padding */
+        margin-left: -12px;
     }
 
     .horizontal-scroll-mobile>.col-lg-3,
     .horizontal-scroll-mobile>[class*="col-"] {
         flex: 0 0 85% !important;
+        /* Mobile width */
         max-width: 85% !important;
         scroll-snap-align: center;
         width: 85%;
+        margin-bottom: 0 !important;
+        /* Prevent bottom margin stacking */
+    }
+
+    /* Tablet specific adjustment */
+    @media (min-width: 768px) {
+
+        .horizontal-scroll-mobile>.col-lg-3,
+        .horizontal-scroll-mobile>[class*="col-"] {
+            flex: 0 0 45% !important;
+            /* Tablet width - show 2 items + peek */
+            max-width: 45% !important;
+            width: 45%;
+        }
     }
 
     /* Custom Scrollbar for Webkit */
