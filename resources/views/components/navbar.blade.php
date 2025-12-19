@@ -100,148 +100,104 @@
 <style>
     .navbar-culinaire {
         padding: 15px 0;
-        transition: all 0.12s ease;
-        background-color: transparent;
+        transition: all 0.3s ease;
+        /* Glassmorphism - selalu aktif */
+        background: rgba(12, 42, 54, 0.5);
+        backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(50px);
+        border-bottom: 1px solid rgba(246, 242, 238, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
 
     .navbar-culinaire.scrolled {
-        background: rgba(12, 42, 54, 0.75);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(246, 242, 238, 0.1);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+        background: rgba(12, 42, 54, 0.7);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         padding: 10px 0;
     }
 
-    .navbar-culinaire.scrolled .navbar-brand {
-        color: #F6F2EE !important;
-    }
-    
-    .navbar-culinaire.scrolled .navbar-brand span {
-        color: #C89B3A !important;
-    }
-
-    .navbar-culinaire.scrolled .nav-link {
-        color: #F6F2EE !important;
-    }
-
-    .navbar-culinaire.scrolled .nav-link:hover,
-    .navbar-culinaire.scrolled .nav-link.active {
-        color: #C89B3A !important;
-    }
-
-    .navbar-culinaire.scrolled .lang-link {
-        color: rgba(246, 242, 238, 0.6);
-    }
-
-    .navbar-culinaire.scrolled .lang-link:hover,
-    .navbar-culinaire.scrolled .lang-link.active-lang {
-        color: #C89B3A;
-    }
-
-    .navbar-culinaire.scrolled .navbar-toggler i {
-        color: #F6F2EE;
-    }
-
-    /* Dropdown button styling for scrolled state */
-    .navbar-culinaire.scrolled .btn-outline-primary {
-        color: #F6F2EE !important;
-        border-color: rgba(246, 242, 238, 0.4) !important;
-        background: rgba(246, 242, 238, 0.1);
-    }
-
-    .navbar-culinaire.scrolled .btn-outline-primary:hover {
-        background: rgba(246, 242, 238, 0.2) !important;
-        border-color: #C89B3A !important;
-        color: #C89B3A !important;
-    }
-
-    .navbar-culinaire.scrolled .dropdown-menu {
-        background: rgba(12, 42, 54, 0.95);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(246, 242, 238, 0.1);
-    }
-
-    .navbar-culinaire.scrolled .dropdown-item {
-        color: #F6F2EE;
-    }
-
-    .navbar-culinaire.scrolled .dropdown-item:hover {
-        background: rgba(200, 155, 58, 0.2);
-        color: #C89B3A;
-    }
-
-    .navbar-culinaire.scrolled .dropdown-divider {
-        border-color: rgba(246, 242, 238, 0.1);
-    }
-
+    /* Default navbar text colors (on glass) */
     .navbar-brand {
         font-family: var(--font-heading, "Playfair Display", serif);
         font-weight: 700;
         font-size: 1.75rem;
-        color: #0C2A36 !important;
+        color: #F6F2EE !important;
     }
     
     .navbar-brand span {
         color: #C89B3A !important;
     }
 
+    .navbar-nav .nav-link {
+        color: #F6F2EE !important;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        color: #C89B3A !important;
+    }
+
     .lang-link {
         font-size: 0.85rem;
         font-weight: 600;
-        color: rgba(12, 42, 54, 0.5);
+        color: rgba(246, 242, 238, 0.6);
         text-decoration: none;
         transition: color 0.12s ease;
     }
-    .lang-link:hover { color: #C89B3A; }
-    .lang-link.active-lang { color: #C89B3A; }
-    
+
+    .lang-link:hover,
+    .lang-link.active-lang {
+        color: #C89B3A;
+    }
+
+    .navbar-toggler i {
+        color: #F6F2EE;
+    }
+
+    /* Dropdown button styling */
+    .navbar-culinaire .btn-outline-primary {
+        color: #F6F2EE !important;
+        border-color: rgba(246, 242, 238, 0.4) !important;
+        background: rgba(246, 242, 238, 0.1);
+    }
+
+    .navbar-culinaire .btn-outline-primary:hover {
+        background: rgba(246, 242, 238, 0.2) !important;
+        border-color: #C89B3A !important;
+        color: #C89B3A !important;
+    }
+
+    .navbar-culinaire .dropdown-menu {
+        background: rgba(12, 42, 54, 0.95);
+        backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(50px);
+        border: 1px solid rgba(246, 242, 238, 0.1);
+    }
+
+    .navbar-culinaire .dropdown-item {
+        color: #F6F2EE;
+    }
+
+    .navbar-culinaire .dropdown-item:hover {
+        background: rgba(200, 155, 58, 0.2);
+        color: #C89B3A;
+    }
+
+    .navbar-culinaire .dropdown-divider {
+        border-color: rgba(246, 242, 238, 0.1);
+    }
+
     .navbar-nav .nav-link {
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-weight: 500;
-        color: #0C2A36;
-    }
-    .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
-        color: #C89B3A;
-    }
-
-    /* Dark mode navbar */
-    [data-theme="dark"] .navbar-brand {
-        color: #E6EFEF !important;
-    }
-    
-    [data-theme="dark"] .navbar-brand span {
-        color: #D4AF37 !important;
-    }
-
-    [data-theme="dark"] .navbar-nav .nav-link {
-        color: #E6EFEF;
-    }
-
-    [data-theme="dark"] .navbar-nav .nav-link:hover,
-    [data-theme="dark"] .navbar-nav .nav-link.active {
-        color: #D4AF37;
-    }
-
-    [data-theme="dark"] .lang-link {
-        color: rgba(230, 239, 239, 0.5);
-    }
-
-    [data-theme="dark"] .lang-link:hover,
-    [data-theme="dark"] .lang-link.active-lang {
-        color: #D4AF37;
-    }
-
-    [data-theme="dark"] .navbar-culinaire.scrolled {
-        background-color: #16252B;
     }
 
     @media (max-width: 991.98px) {
         .navbar-collapse {
-            background-color: #0C2A36;
+            background: rgba(12, 42, 54, 0.95);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
             border-radius: 12px;
             padding: 20px;
             margin-top: 15px;
