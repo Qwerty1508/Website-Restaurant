@@ -99,20 +99,23 @@
 
 <style>
     .navbar-culinaire {
-        padding: 15px 0;
-        transition: all 0.3s ease;
+        padding: 18px 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         /* Glassmorphism - transparan natural */
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(50px);
-        -webkit-backdrop-filter: blur(50px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: none;
     }
 
     .navbar-culinaire.scrolled {
-        background: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        padding: 10px 0;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(50px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(12, 42, 54, 0.08);
+        padding: 12px 0;
     }
 
     /* Default navbar text colors (on transparent glass) */
