@@ -452,11 +452,16 @@ a:hover {
     position: absolute;
     top: var(--space-md);
     right: var(--space-md);
-    background: var(--secondary);
+    background: rgba(255, 255, 255, 0.5);
+    /* 50% opacity */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     color: var(--dark);
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-sm);
     font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .menu-card .trending-badge {
@@ -1220,6 +1225,7 @@ a:hover {
 
 .text-grad-gold {
     background: linear-gradient(135deg, #FDE68A 0%, #D4AF37 50%, #92400E 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -2628,9 +2634,14 @@ body {
 }
 
 /* Price tags */
+/* Price tags */
 [data-theme="dark"] .price-tag {
-    background: var(--accent);
-    color: var(--bg-primary);
+    background: rgba(200, 155, 58, 0.6);
+    /* Gold semi-transparent */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(200, 155, 58, 0.3);
+    color: #FFFFFF;
 }
 
 /* Rating stars */
