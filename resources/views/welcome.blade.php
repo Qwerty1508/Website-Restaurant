@@ -265,7 +265,7 @@
             <div class="divider"></div>
         </div>
         
-        <div class="row g-4">
+        <div class="row g-4 horizontal-scroll-mobile">
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="mb-3 position-relative d-inline-block">
                     <div class="bg-gradient-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto" 
