@@ -552,37 +552,51 @@
         color: #D4AF37 !important;
     }
 
-    /* Luxury Typing Styles */
+    /* Luxury Typing Styles - Ethereal Edition */
     .typing-cursor {
         display: inline-block;
-        width: 2px;
+        width: 1px; /* Thinner for elegance */
         background-color: #C89B3A;
-        animation: smoothBlink 1s ease-in-out infinite;
-        margin-left: 4px;
+        animation: smoothBlink 1.5s ease-in-out infinite; /* Slower breath */
+        margin-left: 2px;
         vertical-align: text-bottom;
-        height: 1.1em;
-        opacity: 0.8;
+        height: 1.2em;
+        opacity: 0.6;
+        box-shadow: 0 0 5px rgba(200, 155, 58, 0.5); /* Subtle glow */
     }
     
     .char-reveal {
-        display: inline-block; /* Enables transform */
+        display: inline-block;
         opacity: 0;
-        animation: fadeSlideChar 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
-        white-space: pre; /* Preserve spaces */
+        animation: etherealReveal 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        white-space: pre; 
+        will-change: transform, opacity, filter;
     }
     
-    @keyframes fadeSlideChar {
-        0% { opacity: 0; transform: translateY(5px) scale(0.95); filter: blur(2px); }
-        100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    @keyframes etherealReveal {
+        0% { 
+            opacity: 0; 
+            transform: translateY(12px) scale(0.95); 
+            filter: blur(8px); 
+        }
+        20% {
+            opacity: 1;
+        }
+        100% { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+            filter: blur(0); 
+        }
     }
 
     @keyframes smoothBlink {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.8; }
     }
     
     .min-h-title { min-height: 1.2em; }
-    .min-h-subtitle { min-height: 3em; } /* Increased for multiline */
+    .min-h-subtitle { min-height: 3em; }
+
 </style>
 @endpush
 
@@ -593,10 +607,10 @@
         const subtitleContainer = document.getElementById('typing-subtitle');
         const subtitleCursor = document.getElementById('subtitle-cursor');
         
-        // Luxury Configuration
-        const baseSpeed = 50; // Faster base speed
-        const variance = 20; // Randomness
-        const startDelay = 500;
+        // Luxury Configuration - "Elegance takes time"
+        const baseSpeed = 90; // Slower, more confident
+        const variance = 40; // More natural variance
+        const startDelay = 800; // Let the page breathe first
         
         try {
             const titleSegments = JSON.parse(titleContainer.dataset.segments);
@@ -611,12 +625,15 @@
             function processTitleSegments(index) {
                 if (index >= titleSegments.length) {
                     // Transition to subtitle
-                    document.querySelector('.hero-title .typing-cursor').style.opacity = '0';
+                    const tCursor = document.querySelector('.hero-title .typing-cursor');
+                    if(tCursor) tCursor.style.opacity = '0';
                     setTimeout(() => {
-                         document.querySelector('.hero-title .typing-cursor').style.display = 'none';
-                         subtitleCursor.style.display = 'inline-block';
-                         typeString(subtitleContainer, subtitleText, 0, () => {});
-                    }, 500);
+                         if(tCursor) tCursor.style.display = 'none';
+                         if(subtitleCursor) {
+                             subtitleCursor.style.display = 'inline-block';
+                             typeString(subtitleContainer, subtitleText, 0, () => {});
+                         }
+                    }, 800);
                     return;
                 }
                 
@@ -626,7 +643,7 @@
                 titleContainer.appendChild(span);
                 
                 typeString(span, segment.text, 0, () => {
-                    setTimeout(() => processTitleSegments(index + 1), 50); // Small pause between segments
+                    setTimeout(() => processTitleSegments(index + 1), 100);
                 });
             }
             
@@ -642,11 +659,12 @@
                 charSpan.classList.add('char-reveal');
                 container.appendChild(charSpan);
                 
-                // Humanize timing
+                // Humanize timing - Slower = More Luxury
                 let delay = baseSpeed + (Math.random() * variance * 2 - variance);
                 
-                // Pause slightly on punctuation
-                if (char === ',' || char === '.') delay += 100;
+                // Pause gracefully on punctuation
+                if (char === ',' || char === '.') delay += 300;
+                if (char === ' ') delay += 30; // Slight micro-pause between words
                 
                 setTimeout(() => {
                     typeString(container, text, index + 1, callback);
