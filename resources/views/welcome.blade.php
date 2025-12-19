@@ -10,13 +10,18 @@
                 <span class="badge bg-gradient-secondary text-dark mb-3 px-3 py-2 rounded-pill animate-fadeInUp">
                     <i class="bi bi-star-fill me-1"></i> <span data-i18n="hero_subtitle">{{ __('messages.hero_subtitle') }}</span>
                 </span>
-                <h1 class="hero-title animate-fadeInUp delay-1 text-white">
-                    <span data-i18n="hero_title_1">{{ __('messages.hero_title_1') }}</span>
-                    <span data-i18n="hero_title_2">{{ __('messages.hero_title_2') }}</span>
-                    <span class="highlight" data-i18n="hero_title_3">{{ __('messages.hero_title_3') }}</span>
+                <!-- Typing Animation Containers -->
+                <h1 class="hero-title animate-fadeInUp delay-1 text-white min-h-title" aria-label="{{ __('messages.hero_title_1') }} {{ __('messages.hero_title_2') }} {{ __('messages.hero_title_3') }}">
+                    <span id="typing-title" 
+                          data-segments='[
+                              {"text": "{{ __('messages.hero_title_1') }} ", "class": ""},
+                              {"text": "{{ __('messages.hero_title_2') }} ", "class": ""},
+                              {"text": "{{ __('messages.hero_title_3') }}", "class": "highlight"}
+                          ]'></span><span class="typing-cursor">|</span>
                 </h1>
-                <p class="hero-subtitle animate-fadeInUp delay-2 text-light opacity-75" data-i18n="hero_desc">
-                    {{ __('messages.hero_desc') }}
+                
+                <p class="hero-subtitle animate-fadeInUp delay-2 text-light opacity-75 min-h-subtitle">
+                    <span id="typing-subtitle" data-text="{{ __('messages.hero_desc') }}"></span><span class="typing-cursor" id="subtitle-cursor" style="display:none;">|</span>
                 </p>
                 <div class="hero-actions animate-fadeInUp delay-3">
                     <a href="{{ url('/menu') }}" class="btn btn-lg rounded-pill px-5 me-3 shadow-lg btn-glass-gold">
@@ -546,6 +551,104 @@
     [data-theme="dark"] .text-gold {
         color: #D4AF37 !important;
     }
+
+    /* Typing Animation Styles */
+    .typing-cursor {
+        display: inline-block;
+        width: 3px;
+        background-color: #C89B3A;
+        animation: blink 1s step-end infinite;
+        margin-left: 5px;
+        vertical-align: middle;
+        height: 1em;
+    }
+    
+    .min-h-title {
+        min-height: 1.2em; /* Reserve space */
+    }
+    
+    .min-h-subtitle {
+        min-height: 1.5em;
+    }
+
+    @keyframes blink {
+        from, to { opacity: 1; }
+        50% { opacity: 0; }
+    }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const titleContainer = document.getElementById('typing-title');
+        const subtitleContainer = document.getElementById('typing-subtitle');
+        const subtitleCursor = document.getElementById('subtitle-cursor');
+        
+        // Configuration
+        const typingSpeed = 70; // ms per char (Standard luxury pace)
+        const segmentDelay = 300; // ms between highlighting words
+        const startDelay = 500; // ms before starting
+        
+        // Parse segments
+        try {
+            const titleSegments = JSON.parse(titleContainer.dataset.segments);
+            const subtitleText = subtitleContainer.dataset.text;
+            
+            // Initial State
+            titleContainer.innerHTML = '';
+            subtitleContainer.innerHTML = '';
+            
+            setTimeout(() => {
+                typeSegments(0);
+            }, startDelay);
+            
+            function typeSegments(index) {
+                if (index >= titleSegments.length) {
+                    // Title done, start subtitle
+                    document.querySelector('.hero-title .typing-cursor').style.display = 'none'; // Hide title cursor
+                    subtitleCursor.style.display = 'inline-block'; // Show subtitle cursor
+                    setTimeout(() => typeSubtitle(0), 500);
+                    return;
+                }
+                
+                const segment = titleSegments[index];
+                const span = document.createElement('span');
+                if (segment.class) span.className = segment.class;
+                titleContainer.appendChild(span);
+                
+                let charIndex = 0;
+                function typeChar() {
+                    if (charIndex < segment.text.length) {
+                        span.textContent += segment.text.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, typingSpeed);
+                    } else {
+                        // Segment finished
+                        setTimeout(() => typeSegments(index + 1), segmentDelay);
+                    }
+                }
+                typeChar();
+            }
+            
+            function typeSubtitle(index) {
+                if (index < subtitleText.length) {
+                    subtitleContainer.textContent += subtitleText.charAt(index);
+                    setTimeout(() => typeSubtitle(index + 1), 30); // Faster for subtitle
+                } else {
+                     // Finished
+                     // Keep subtitle cursor blinking or hide it? User usually prefers blinking for a bit then hide?
+                     // Let's keep it blinking to show "live" feel.
+                }
+            }
+            
+        } catch (e) {
+            console.error('Typing animation error:', e);
+            // Fallback if error: just show text
+            titleContainer.innerHTML = titleContainer.ariaLabel;
+            subtitleContainer.innerHTML = subtitleContainer.dataset.text;
+        }
+    });
+</script>
 @endpush
 
