@@ -18,9 +18,9 @@
 
     <div class="main-content">
 
-        <section class="hero-section text-center text-white position-relative" data-scroll-section style="background-color: #2c1810;">
+        <section class="hero-section text-center text-white position-relative" data-scroll-section style="background-color: #0C2A36;">
             <div class="hero-bg parallax-img" style="background-image: url('https://res.cloudinary.com/dh9ysyfit/image/fetch/w_1920,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1505935428862-770b6f24f629'); opacity: 0.6;" data-speed="0.5"></div>
-            <div class="hero-overlay" style="background: linear-gradient(to bottom, rgba(44,24,16,0.3), #2c1810);"></div>
+            <div class="hero-overlay" style="background: linear-gradient(to bottom, rgba(12,42,54,0.3), #0C2A36);"></div>
             
             <div class="container-fluid h-100 px-4 px-lg-5 d-flex flex-column justify-content-center align-items-center position-relative z-2">
                 <div class="hero-text-wrapper overflow-hidden">
@@ -38,7 +38,7 @@
             </div>
         </section>
 
-        <section class="history-chapter section-padding position-relative text-white" style="background-color: #3e2723;" data-scroll-section>
+        <section class="history-chapter section-padding position-relative text-white" style="background-color: #1a3d4d;" data-scroll-section>
             <div class="container-fluid px-4 px-lg-5">
                 <div class="row align-items-center">
                     <div class="col-lg-6 mb-5 mb-lg-0">
@@ -63,9 +63,9 @@
             </div>
         </section>
 
-        <div class="transition-spacer" style="height: 100px; background: linear-gradient(to bottom, #3e2723, #4a4a4a);" data-scroll-section></div>
+        <div class="transition-spacer" style="height: 100px; background: linear-gradient(to bottom, #1a3d4d, #2a5060);" data-scroll-section></div>
 
-        <section class="history-chapter section-padding position-relative text-white" style="background-color: #4a4a4a;" data-scroll-section>
+        <section class="history-chapter section-padding position-relative text-white" style="background-color: #2a5060;" data-scroll-section>
             <div class="container-fluid px-4 px-lg-5">
                 <div class="row align-items-center flex-row-reverse">
                     <div class="col-lg-6 mb-5 mb-lg-0">
@@ -90,9 +90,9 @@
             </div>
         </section>
 
-        <div class="transition-spacer" style="height: 100px; background: linear-gradient(to bottom, #4a4a4a, #fdfbf7);" data-scroll-section></div>
+        <div class="transition-spacer" style="height: 100px; background: linear-gradient(to bottom, #2a5060, #F6F2EE);" data-scroll-section></div>
 
-        <section class="history-chapter section-padding position-relative" style="background-color: #fdfbf7;" data-scroll-section>
+        <section class="history-chapter section-padding position-relative" style="background-color: #F6F2EE;" data-scroll-section>
             <div class="container-fluid px-4 px-lg-5">
                 <div class="row align-items-center">
                     <div class="col-lg-6 mb-5 mb-lg-0">

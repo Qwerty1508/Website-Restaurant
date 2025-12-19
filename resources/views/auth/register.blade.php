@@ -170,7 +170,7 @@
                         
                         <div class="col-lg-6 order-lg-2 order-1 d-none d-lg-block">
                             <div class="h-100 position-relative" 
-                                 style="background: linear-gradient(135deg, rgba(60, 36, 21, 0.95), rgba(139, 0, 0, 0.9)), 
+                                 style="background: linear-gradient(135deg, rgba(12, 42, 54, 0.95), rgba(12, 42, 54, 0.85)), 
                                         url('https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,h_1000,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1552566626-52f8b828add9') center/cover;">
                                 <div class="p-5 d-flex flex-column justify-content-center h-100 text-white">
                                     <h2 class="display-6 fw-bold text-white mb-4" data-i18n="join_us">
@@ -183,25 +183,25 @@
                                     <div class="row g-3">
                                         <div class="col-6">
                                             <div class="glass-effect rounded-3 p-3 text-center">
-                                                <i class="bi bi-percent fs-2 text-warning mb-2 d-block"></i>
+                                                <i class="bi bi-percent fs-2 mb-2 d-block" style="color: #C89B3A;"></i>
                                                 <small data-i18n="member_discount">{{ __('messages.member_discount') }}</small>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="glass-effect rounded-3 p-3 text-center">
-                                                <i class="bi bi-gift fs-2 text-warning mb-2 d-block"></i>
+                                                <i class="bi bi-gift fs-2 mb-2 d-block" style="color: #C89B3A;"></i>
                                                 <small data-i18n="special_promo">{{ __('messages.special_promo') }}</small>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="glass-effect rounded-3 p-3 text-center">
-                                                <i class="bi bi-star fs-2 text-warning mb-2 d-block"></i>
+                                                <i class="bi bi-star fs-2 mb-2 d-block" style="color: #C89B3A;"></i>
                                                 <small data-i18n="reward_points">{{ __('messages.reward_points') }}</small>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="glass-effect rounded-3 p-3 text-center">
-                                                <i class="bi bi-calendar-heart fs-2 text-warning mb-2 d-block"></i>
+                                                <i class="bi bi-calendar-heart fs-2 mb-2 d-block" style="color: #C89B3A;"></i>
                                                 <small data-i18n="priority_booking">{{ __('messages.priority_booking') }}</small>
                                             </div>
                                         </div>
