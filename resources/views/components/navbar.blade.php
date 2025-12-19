@@ -101,18 +101,21 @@
     .navbar-culinaire {
         padding: 18px 0;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        /* Glassmorphism - full blur */
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(50px);
-        -webkit-backdrop-filter: blur(50px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        /* Transparan di atas */
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom: none;
+        box-shadow: none;
     }
 
     .navbar-culinaire.scrolled {
-        background: rgba(255, 255, 255, 0.35);
+        /* Glassmorphism muncul saat scroll */
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(50px);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        border-bottom: 1px solid rgba(12, 42, 54, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         padding: 12px 0;
     }
 
