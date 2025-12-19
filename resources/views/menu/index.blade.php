@@ -6,19 +6,11 @@
 <section class="bg-gradient-primary text-white pb-5" style="margin-top: -80px; padding-top: 120px;">
     <div class="container-fluid px-4 px-lg-5">
         <div class="row align-items-center">
-            <div class="col-lg-8">
+            <div class="col-12">
                 <h1 class="display-5 fw-bold mb-3" data-i18n="our_menu">{{ __('messages.our_menu') }}</h1>
                 <p class="lead opacity-75 mb-0" data-i18n="menu_desc">
                     {{ __('messages.menu_desc') }}
                 </p>
-            </div>
-            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-lg-end mb-0">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}" class="text-white opacity-75" data-i18n="home">{{ __('messages.home') }}</a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page" data-i18n="menu">{{ __('messages.menu') }}</li>
-                    </ol>
-                </nav>
             </div>
         </div>
     </div>
