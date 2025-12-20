@@ -11,7 +11,6 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        // Get stats
         $totalUsers = User::where('is_admin', false)->count();
         $todayUsers = User::where('is_admin', false)
             ->whereDate('created_at', today())
@@ -22,13 +21,11 @@ class AdminDashboardController extends Controller
         
         $totalMenus = DB::table('menus')->count();
         
-        // Order statistics
         $totalOrders = DB::table('orders')->count();
         $todayOrders = DB::table('orders')->whereDate('created_at', today())->count();
         $pendingOrders = DB::table('orders')->where('status', 'pending')->count();
         $processingOrders = DB::table('orders')->where('status', 'processing')->count();
         
-        // Revenue
         $todayRevenue = DB::table('orders')
             ->whereDate('created_at', today())
             ->where('payment_status', 'paid')
@@ -39,7 +36,6 @@ class AdminDashboardController extends Controller
             ->where('payment_status', 'paid')
             ->sum('total');
         
-        // Recent orders
         $recentOrders = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->select('orders.*', 'users.name as customer_name')
@@ -47,7 +43,6 @@ class AdminDashboardController extends Controller
             ->limit(5)
             ->get();
         
-        // Recent activities
         $recentActivities = DB::table('activity_logs')
             ->leftJoin('users', 'activity_logs.user_id', '=', 'users.id')
             ->select('activity_logs.*', 'users.name as user_name', 'users.email as user_email')
@@ -55,7 +50,6 @@ class AdminDashboardController extends Controller
             ->limit(10)
             ->get();
         
-        // Today's registrations
         $todayRegistrations = User::where('is_admin', false)
             ->whereDate('created_at', today())
             ->orderBy('created_at', 'desc')

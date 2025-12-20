@@ -22,7 +22,6 @@ class AdminUserController extends Controller
         
         $users = $query->paginate(20);
         
-        // Stats
         $todayCount = User::where('is_admin', false)->whereDate('created_at', today())->count();
         $last30DaysCount = User::where('is_admin', false)->where('created_at', '>=', now()->subDays(30))->count();
         $totalCount = User::where('is_admin', false)->count();

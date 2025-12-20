@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class AdminReservationController extends Controller
 {
-    /**
-     * Display all reservations
-     */
     public function index(Request $request)
     {
         $filter = $request->get('filter', 'all');
@@ -32,7 +29,6 @@ class AdminReservationController extends Controller
 
         $reservations = $query->paginate(20);
 
-        // Stats
         $pendingCount = DB::table('reservations')->where('status', 'pending')->count();
         $acceptedCount = DB::table('reservations')->where('status', 'accepted')->count();
         $rejectedCount = DB::table('reservations')->where('status', 'rejected')->count();
@@ -43,9 +39,6 @@ class AdminReservationController extends Controller
         ));
     }
 
-    /**
-     * Show reservation detail with payment proof
-     */
     public function show($id)
     {
         $reservation = DB::table('reservations')
@@ -61,9 +54,6 @@ class AdminReservationController extends Controller
         return view('admin.reservations.show', compact('reservation'));
     }
 
-    /**
-     * Update reservation status
-     */
     public function updateStatus(Request $request, $id)
     {
         $request->validate([

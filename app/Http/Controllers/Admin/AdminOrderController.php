@@ -14,12 +14,10 @@ class AdminOrderController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->select('orders.*', 'users.name as customer_name', 'users.email as customer_email');
         
-        // Filter by status
         if ($request->filled('status')) {
             $query->where('orders.status', $request->status);
         }
         
-        // Search by order number or customer
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -31,14 +29,12 @@ class AdminOrderController extends Controller
         
         $orders = $query->orderBy('orders.created_at', 'desc')->paginate(15);
         
-        // Get item count for each order
         foreach ($orders as $order) {
             $order->item_count = DB::table('order_items')
                 ->where('order_id', $order->id)
                 ->sum('quantity');
         }
         
-        // Stats
         $stats = [
             'total' => DB::table('orders')->count(),
             'pending' => DB::table('orders')->where('status', 'pending')->count(),
@@ -91,14 +87,12 @@ class AdminOrderController extends Controller
             'updated_at' => now(),
         ]);
         
-        // If completed, mark as paid
         if ($request->status === 'completed') {
             DB::table('orders')->where('id', $id)->update([
                 'payment_status' => 'paid',
             ]);
         }
         
-        // Log activity
         DB::table('activity_logs')->insert([
             'user_id' => auth()->id(),
             'action' => 'update_order_status',

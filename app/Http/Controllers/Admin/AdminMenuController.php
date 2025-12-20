@@ -11,16 +11,13 @@ use Cloudinary\Configuration\Configuration;
 
 class AdminMenuController extends Controller
 {
-    // Default placeholder image from Unsplash
     const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop';
 
     public function __construct()
     {
-        // Force manual configuration to bypass .env issues
         try {
             Configuration::instance('cloudinary://474775265674185:pI64ZhoDmEy2fhevZp-kqzzVuCE@dh9ysyfit');
         } catch (\Exception $e) {
-            // Ignore if already configured
         }
     }
 
@@ -42,16 +39,13 @@ class AdminMenuController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'category' => 'required|string',
-            // Now accepting URL from client-side upload
             'image_url' => 'nullable|url',
         ], [
             'name.unique' => 'Menu dengan nama tersebut sudah ada. Silakan gunakan nama lain.',
         ]);
 
-        // Image URL comes directly from client-side Cloudinary upload
         $imageUrl = $request->image_url;
 
-        // Use default image if none provided
         if (empty($imageUrl)) {
             $imageUrl = self::DEFAULT_IMAGE;
         }
@@ -89,7 +83,6 @@ class AdminMenuController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'category' => 'required|string',
-            // Now accepting URL from client-side upload
             'image_url' => 'nullable|url',
         ]);
 
@@ -99,7 +92,6 @@ class AdminMenuController extends Controller
             abort(404);
         }
 
-        // Use new URL from client-side upload, or keep existing
         $imageUrl = $request->image_url ?: $menu->image_url;
 
         DB::table('menus')->where('id', $menu->id)->update([

@@ -25,7 +25,6 @@ class AdminActivityController extends Controller
         
         $activities = $query->paginate(30);
         
-        // Stats
         $todayCount = DB::table('activity_logs')->whereDate('created_at', today())->count();
         $last30DaysCount = DB::table('activity_logs')->where('created_at', '>=', now()->subDays(30))->count();
         $totalCount = DB::table('activity_logs')->count();
