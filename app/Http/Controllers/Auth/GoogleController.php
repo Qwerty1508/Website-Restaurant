@@ -9,23 +9,16 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
-    /**
-     * Redirect to Google OAuth
-     */
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    /**
-     * Handle callback from Google
-     */
     public function handleGoogleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->user();
             
-            // Allowed email domains
             $allowedDomains = [
                 'gmail.com',
                 'outlook.com',
@@ -37,7 +30,6 @@ class GoogleController extends Controller
                 'yandex.com',
             ];
             
-            // Check email domain
             $email = $googleUser->getEmail();
             $emailDomain = substr(strrchr($email, "@"), 1);
             
@@ -45,20 +37,16 @@ class GoogleController extends Controller
                 return redirect()->route('login')->with('error', 'Maaf, hanya email dengan domain ' . implode(', ', $allowedDomains) . ' yang diizinkan untuk mendaftar.');
             }
             
-            // Check if user already exists by google_id
             $user = User::where('google_id', $googleUser->getId())->first();
             
             if (!$user) {
-                // Check if email already exists (registered via email)
                 $user = User::where('email', $googleUser->getEmail())->first();
                 
                 if ($user) {
-                    // Link Google account to existing user
                     $user->update([
                         'google_id' => $googleUser->getId(),
                     ]);
                 } else {
-                    // Create new user
                     $user = User::create([
                         'name' => $googleUser->getName(),
                         'email' => $googleUser->getEmail(),
@@ -69,15 +57,12 @@ class GoogleController extends Controller
                 }
             }
             
-            // Check if user is blocked
             if ($user->isBlocked()) {
                 return redirect()->route('login')->with('error', 'Akun Anda telah diblokir. Silakan hubungi admin untuk informasi lebih lanjut.');
             }
             
-            // Login the user
             Auth::login($user, true);
             
-            // Check if user is suspended - redirect with warning
             if ($user->isSuspended()) {
                 return redirect('/')->with('warning', 'Peringatan: Akun Anda sedang dalam status suspend karena terdeteksi adanya aktivitas yang melanggar ketentuan layanan. Harap perbaiki perilaku Anda atau akun akan diblokir permanen.');
             }

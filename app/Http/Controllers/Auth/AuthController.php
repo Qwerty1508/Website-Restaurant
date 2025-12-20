@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    /**
-     * Handle login request
-     */
     public function login(Request $request)
     {
         $request->validate([
@@ -28,7 +25,6 @@ class AuthController extends Controller
             ])->withInput($request->only('email'));
         }
 
-        // Check if user is blocked
         if ($user->isBlocked()) {
             return back()->withErrors([
                 'email' => 'Akun Anda telah diblokir. Silakan hubungi admin untuk informasi lebih lanjut.',
@@ -37,7 +33,6 @@ class AuthController extends Controller
 
         Auth::login($user, $request->boolean('remember'));
 
-        // Log activity
         \DB::table('activity_logs')->insert([
             'user_id' => $user->id,
             'action' => 'login',
@@ -47,12 +42,10 @@ class AuthController extends Controller
             'updated_at' => now(),
         ]);
 
-        // Redirect admin to admin dashboard, customer to home
         if ($user->is_admin) {
             return redirect('/admin/dashboard');
         }
 
-        // Check if user is suspended - redirect with warning
         if ($user->isSuspended()) {
             return redirect('/')->with('warning', 'Peringatan: Akun Anda sedang dalam status suspend karena terdeteksi adanya aktivitas yang melanggar ketentuan layanan. Harap perbaiki perilaku Anda atau akun akan diblokir permanen.');
         }
@@ -60,12 +53,8 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Handle logout request
-     */
     public function logout(Request $request)
     {
-        // Log activity before logout
         if (Auth::check()) {
             \DB::table('activity_logs')->insert([
                 'user_id' => Auth::id(),
