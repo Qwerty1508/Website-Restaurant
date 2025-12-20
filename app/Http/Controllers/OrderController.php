@@ -21,10 +21,8 @@ class OrderController extends Controller
 
         $userId = Auth::id();
         
-        // Generate order number
         $orderNumber = 'ORD-' . date('ymd') . '-' . strtoupper(substr(uniqid(), -4));
         
-        // Calculate totals
         $subtotal = 0;
         $orderItems = [];
         
@@ -44,10 +42,9 @@ class OrderController extends Controller
             }
         }
         
-        $tax = $subtotal * 0.10; // 10% tax
+        $tax = $subtotal * 0.10;
         $total = $subtotal + $tax;
         
-        // Create order
         $orderId = DB::table('orders')->insertGetId([
             'order_number' => $orderNumber,
             'user_id' => $userId,
@@ -63,7 +60,6 @@ class OrderController extends Controller
             'updated_at' => now(),
         ]);
         
-        // Create order items
         foreach ($orderItems as $item) {
             DB::table('order_items')->insert([
                 'order_id' => $orderId,
@@ -77,7 +73,6 @@ class OrderController extends Controller
             ]);
         }
         
-        // Log activity
         DB::table('activity_logs')->insert([
             'user_id' => $userId,
             'action' => 'create_order',

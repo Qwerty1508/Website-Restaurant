@@ -8,17 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
-    /**
-     * Show reservation form
-     */
     public function create()
     {
         return view('reservation.create');
     }
 
-    /**
-     * Store a new reservation
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -30,14 +24,12 @@ class ReservationController extends Controller
             'guests' => 'required|integer|min:1|max:20',
             'table_id' => 'nullable|string',
             'notes' => 'nullable|string|max:500',
-            // Now accepting URL from client-side upload
             'payment_proof' => 'required|url',
         ], [
             'payment_proof.required' => 'Bukti transfer wajib diupload.',
             'payment_proof.url' => 'URL bukti transfer tidak valid.',
         ]);
 
-        // Payment proof is now a URL from client-side Cloudinary upload
         $paymentProofPath = $request->payment_proof;
 
         DB::table('reservations')->insert([
@@ -56,7 +48,6 @@ class ReservationController extends Controller
             'updated_at' => now(),
         ]);
 
-        // Log activity
         DB::table('activity_logs')->insert([
             'user_id' => Auth::id(),
             'action' => 'reservation_created',
@@ -69,9 +60,6 @@ class ReservationController extends Controller
         return redirect('/customer/reservations')->with('success', 'Reservasi berhasil dibuat! Menunggu konfirmasi admin.');
     }
 
-    /**
-     * Show customer's reservations
-     */
     public function index()
     {
         $reservations = DB::table('reservations')
@@ -82,9 +70,6 @@ class ReservationController extends Controller
         return view('customer.reservations.index', compact('reservations'));
     }
 
-    /**
-     * Show reservation detail
-     */
     public function show($id)
     {
         $reservation = DB::table('reservations')
