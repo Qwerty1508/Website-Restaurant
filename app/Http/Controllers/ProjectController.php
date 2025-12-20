@@ -11,7 +11,6 @@ class ProjectController extends Controller
     {
         $steps = $this->generateAllSteps();
         
-        // Group steps by member
         $members = [
             [
                 'id' => 1,
@@ -51,7 +50,6 @@ class ProjectController extends Controller
         $steps = [];
         $stepNumber = 1;
 
-        // ============ EDO (Steps 1-200): Core & Foundation ============
         $edoFiles = [
             '.env.example',
             'composer.json',
@@ -61,7 +59,6 @@ class ProjectController extends Controller
             'config/database.php',
             'config/auth.php',
             'bootstrap/app.php',
-            'routes/web.php',
             'app/Models/User.php',
             'app/Http/Controllers/Auth/AuthController.php',
             'app/Http/Controllers/Auth/GoogleController.php',
@@ -71,7 +68,6 @@ class ProjectController extends Controller
         ];
         $stepNumber = $this->processFilesIntoSteps($edoFiles, $steps, $stepNumber, 200);
 
-        // ============ HAIDAR (Steps 201-400): Database & Admin ============
         $haidarFiles = [
             'database/migrations/0001_01_01_000000_create_users_table.php',
             'database/migrations/0001_01_01_000001_create_cache_table.php',
@@ -100,7 +96,6 @@ class ProjectController extends Controller
         ];
         $stepNumber = $this->processFilesIntoSteps($haidarFiles, $steps, $stepNumber, 400);
 
-        // ============ DIMAS (Steps 401-600): Features & Customer ============
         $dimasFiles = [
             'app/Http/Controllers/ReservationController.php',
             'app/Http/Controllers/OrderController.php',
@@ -116,7 +111,6 @@ class ProjectController extends Controller
         ];
         $stepNumber = $this->processFilesIntoSteps($dimasFiles, $steps, $stepNumber, 600);
 
-        // ============ BERNARD (Steps 601-800): UI & Public ============
         $bernardFiles = [
             'resources/views/welcome.blade.php',
             'resources/views/about.blade.php',
@@ -134,9 +128,8 @@ class ProjectController extends Controller
     private function processFilesIntoSteps(array $files, array &$steps, int $startStep, int $maxStep): int
     {
         $currentStep = $startStep;
-        $targetSteps = $maxStep - $startStep + 1; // 200 steps per member
+        $targetSteps = $maxStep - $startStep + 1;
         
-        // Calculate total lines across all files
         $allFileContents = [];
         $totalLines = 0;
         
@@ -154,7 +147,6 @@ class ProjectController extends Controller
             return $currentStep;
         }
 
-        // Calculate lines per step (aim for ~targetSteps)
         $linesPerStep = max(1, ceil($totalLines / $targetSteps));
 
         foreach ($allFileContents as $filePath => $lines) {
@@ -166,7 +158,6 @@ class ProjectController extends Controller
                 $chunk = array_slice($lines, $currentLine, $endLine - $currentLine);
                 $codeContent = implode("\n", $chunk);
 
-                // Skip empty chunks
                 if (trim($codeContent) !== '') {
                     $steps[] = [
                         'step' => $currentStep,
@@ -183,14 +174,13 @@ class ProjectController extends Controller
             }
         }
 
-        // If we haven't reached maxStep, pad with empty steps
         while ($currentStep <= $maxStep) {
             $steps[] = [
                 'step' => $currentStep,
                 'file' => 'N/A',
                 'line_start' => 0,
                 'line_end' => 0,
-                'code' => '// Step reserved for future expansion',
+                'code' => 'Step reserved for future expansion',
                 'action' => 'Reserved',
             ];
             $currentStep++;
