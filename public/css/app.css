@@ -1,21 +1,16 @@
 :root {
-    /* === LUXURY PALETTE - LIGHT MODE (60-30-10) === */
 
-    /* 60% - Background Utama */
     --bg-primary: #F6F2EE;
     --bg-secondary: #FFFFFF;
 
-    /* 30% - Surface / Deep Navy */
     --surface: #0C2A36;
     --surface-light: #1a3d4d;
     --surface-lighter: #2a5060;
 
-    /* 10% - Accent Metallic Gold */
     --accent: #C89B3A;
     --accent-hover: #B07F23;
     --accent-light: #D4AF5A;
 
-    /* Legacy variable mapping */
     --primary: #0C2A36;
     --primary-dark: #081c24;
     --primary-light: #1a3d4d;
@@ -23,14 +18,12 @@
     --secondary-dark: #B07F23;
     --secondary-light: #D4AF5A;
 
-    /* Text Colors */
     --text-primary: #0C2A36;
     --text-secondary: #3d5a68;
     --text-muted: rgba(12, 42, 54, 0.6);
     --text-light: #F6F2EE;
     --text-on-accent: #0B0B0B;
 
-    /* Gray Scale */
     --dark: #0C2A36;
     --dark-secondary: #1a3d4d;
     --gray-900: #0C2A36;
@@ -44,29 +37,24 @@
     --gray-100: #F6F2EE;
     --white: #FFFFFF;
 
-    /* Brand Colors */
     --cream: #F6F2EE;
     --cream-dark: #EDE6DF;
     --brown: #0C2A36;
     --brown-light: #1a3d4d;
 
-    /* Status Colors */
     --success: #198754;
     --warning: #C89B3A;
     --danger: #dc3545;
     --info: #0C2A36;
 
-    /* Overlays */
     --overlay-photo: rgba(12, 42, 54, 0.22);
     --overlay-dark: rgba(12, 42, 54, 0.6);
     --border-light: rgba(12, 42, 54, 0.06);
     --border-medium: rgba(12, 42, 54, 0.12);
 
-    /* Typography */
     --font-heading: 'Playfair Display', Georgia, serif;
     --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    /* Spacing */
     --space-xs: 0.25rem;
     --space-sm: 0.5rem;
     --space-md: 1rem;
@@ -75,14 +63,12 @@
     --space-2xl: 3rem;
     --space-3xl: 4rem;
 
-    /* Border Radius */
     --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
     --radius-lg: 1rem;
     --radius-xl: 1.5rem;
     --radius-full: 50%;
 
-    /* Shadows - Navy tinted */
     --shadow-sm: 0 1px 2px rgba(12, 42, 54, 0.08);
     --shadow-md: 0 4px 6px -1px rgba(12, 42, 54, 0.1), 0 2px 4px -1px rgba(12, 42, 54, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(12, 42, 54, 0.1), 0 4px 6px -2px rgba(12, 42, 54, 0.05);
@@ -90,35 +76,28 @@
     --shadow-gold: 0 4px 14px rgba(200, 155, 58, 0.25);
     --shadow-navy: 0 4px 14px rgba(12, 42, 54, 0.2);
 
-    /* Transitions */
     --transition-fast: 120ms ease;
     --transition-normal: 300ms ease;
     --transition-slow: 500ms ease;
 
-    /* Glassmorphism */
     --glass-bg: rgba(255, 255, 255, 0.9);
     --glass-border: rgba(12, 42, 54, 0.08);
     --glass-blur: blur(10px);
 }
 
 [data-theme="dark"] {
-    /* === LUXURY PALETTE - DARK MODE (60-30-10) === */
 
-    /* 60% - Background Utama */
     --bg-primary: #0B0E10;
     --bg-secondary: #0f1315;
 
-    /* 30% - Surface / Deep Slate */
     --surface: #16252B;
     --surface-light: #1e3038;
     --surface-lighter: #2a4048;
 
-    /* 10% - Accent Soft Gold */
     --accent: #D4AF37;
     --accent-hover: #B98923;
     --accent-light: #E0C060;
 
-    /* Legacy variable mapping */
     --primary: #16252B;
     --primary-dark: #0B0E10;
     --primary-light: #1e3038;
@@ -126,14 +105,12 @@
     --secondary-dark: #B98923;
     --secondary-light: #E0C060;
 
-    /* Text Colors */
     --text-primary: #E6EFEF;
     --text-secondary: #9AAEB3;
     --text-muted: #9AAEB3;
     --text-light: #E6EFEF;
     --text-on-accent: #08100B;
 
-    /* Gray Scale */
     --dark: #0B0E10;
     --dark-secondary: #16252B;
     --gray-900: #0B0E10;
@@ -147,25 +124,21 @@
     --gray-100: #E6EFEF;
     --white: #E6EFEF;
 
-    /* Brand Colors */
     --cream: #0B0E10;
     --cream-dark: #050708;
     --brown: #D4AF37;
     --brown-light: #E0C060;
 
-    /* Status Colors */
     --success: #2ecc71;
     --warning: #D4AF37;
     --danger: #e74c3c;
     --info: #3498db;
 
-    /* Overlays */
     --overlay-photo: rgba(1, 6, 8, 0.5);
     --overlay-dark: rgba(1, 6, 8, 0.7);
     --border-light: rgba(255, 255, 255, 0.04);
     --border-medium: rgba(255, 255, 255, 0.08);
 
-    /* Shadows - Dark tinted */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
@@ -173,7 +146,6 @@
     --shadow-gold: 0 4px 14px rgba(212, 175, 55, 0.3);
     --shadow-navy: 0 4px 14px rgba(0, 0, 0, 0.4);
 
-    /* Glassmorphism */
     --glass-bg: rgba(22, 37, 43, 0.9);
     --glass-border: rgba(255, 255, 255, 0.06);
 }
@@ -191,7 +163,6 @@ html {
     -ms-overflow-style: none;
 
 }
-
 
 ::-webkit-scrollbar {
     display: none;
@@ -453,7 +424,7 @@ a:hover {
     top: var(--space-md);
     right: var(--space-md);
     background: rgba(255, 255, 255, 0.5);
-    /* 50% opacity */
+
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.5);
@@ -1382,7 +1353,6 @@ body.is-loaded {
     background: rgba(212, 175, 55, 0.1);
 }
 
-/* Hide custom cursor on touch devices (mobile/tablet) */
 @media (hover: none),
 (pointer: coarse) {
 
@@ -1823,7 +1793,6 @@ body.is-loaded {
     }
 }
 
-/* FIX: Missing .card-glass class for glassmorphism cards */
 .card-glass {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
@@ -1844,9 +1813,6 @@ body.is-loaded {
     border-color: rgba(255, 255, 255, 0.08);
 }
 
-/* ===== RESPONSIVE ADMIN PANEL ===== */
-
-/* Mobile & Tablet - Hide sidebar and make content full width */
 @media (max-width: 991.98px) {
     .sidebar {
         transform: translateX(-100%);
@@ -1864,19 +1830,16 @@ body.is-loaded {
         overflow-x: hidden;
     }
 
-    /* Responsive container */
     .container-fluid {
         padding-left: 0.75rem;
         padding-right: 0.75rem;
     }
 
-    /* Responsive stat cards */
     .row.g-3>.col-md-3 {
         flex: 0 0 50%;
         max-width: 50%;
     }
 
-    /* Responsive table */
     .table-responsive {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -1886,21 +1849,18 @@ body.is-loaded {
         min-width: 600px;
     }
 
-    /* Responsive form filter */
     .card-body .row.g-3>div[class*="col-"] {
         flex: 0 0 100%;
         max-width: 100%;
         margin-bottom: 0.5rem;
     }
 
-    /* Responsive navbar */
     .main-content-admin>nav.navbar {
         margin-left: 0;
         margin-right: 0;
         border-radius: 0 !important;
     }
 
-    /* Overlay when sidebar is open */
     .sidebar-overlay {
         display: none;
         position: fixed;
@@ -1917,7 +1877,6 @@ body.is-loaded {
     }
 }
 
-/* Small mobile */
 @media (max-width: 575.98px) {
     .row.g-3>.col-md-3 {
         flex: 0 0 100%;
@@ -1932,7 +1891,6 @@ body.is-loaded {
         padding: 0.75rem !important;
     }
 
-    /* Hide some table columns on very small screens */
     .table th:nth-child(4),
     .table td:nth-child(4),
     .table th:nth-child(7),
@@ -1940,24 +1898,20 @@ body.is-loaded {
         display: none;
     }
 
-    /* Responsive badges */
     .badge {
         font-size: 0.65rem;
         padding: 0.25rem 0.5rem;
     }
 
-    /* Responsive dropdown button */
     .dropdown-toggle {
         padding: 0.25rem 0.5rem;
         font-size: 0.8rem;
     }
 
-    /* Make page title smaller */
     h4.mb-1 {
         font-size: 1.1rem;
     }
 
-    /* Responsive card header */
     .d-flex.justify-content-between.align-items-center {
         flex-direction: column;
         align-items: flex-start !important;
@@ -1965,16 +1919,12 @@ body.is-loaded {
     }
 }
 
-/* ===== RESPONSIVE GUEST/LANDING PAGE ===== */
-
-/* Ensure proper viewport */
 html,
 body {
     overflow-x: hidden;
     max-width: 100vw;
 }
 
-/* Tablet responsive */
 @media (max-width: 991.98px) {
     .hero-section {
         padding-top: 100px !important;
@@ -1989,7 +1939,6 @@ body {
         font-size: 1rem;
     }
 
-    /* Hero buttons responsive */
     .hero-actions {
         display: flex;
         flex-direction: column;
@@ -2002,7 +1951,6 @@ body {
         padding: 0.75rem 1.5rem;
     }
 
-    /* Stats responsive */
     .hero-content .row .col-4 h3 {
         font-size: 1.5rem !important;
     }
@@ -2011,14 +1959,12 @@ body {
         font-size: 0.65rem !important;
     }
 
-    /* Navbar in mobile */
     .navbar-culinaire .container-fluid {
         padding-left: 1rem;
         padding-right: 1rem;
     }
 }
 
-/* Mobile responsive */
 @media (max-width: 767.98px) {
 
     .container,
@@ -2043,7 +1989,6 @@ body {
         margin-bottom: 1.5rem !important;
     }
 
-    /* Hero stats responsive */
     .hero-content .row.mt-5 {
         margin-top: 2rem !important;
     }
@@ -2062,7 +2007,6 @@ body {
         line-height: 1.2;
     }
 
-    /* Hero buttons stack */
     .hero-actions {
         flex-direction: column !important;
         gap: 0.75rem !important;
@@ -2074,7 +2018,6 @@ body {
         font-size: 0.9rem !important;
     }
 
-    /* Section padding */
     .section {
         padding: 2rem 0 !important;
     }
@@ -2087,13 +2030,11 @@ body {
         font-size: 0.9rem;
     }
 
-    /* Cards responsive */
     .card.menu-card,
     .card.card-glass {
         margin-bottom: 1rem;
     }
 
-    /* Footer responsive */
     .footer {
         padding: 2rem 0 1rem !important;
     }
@@ -2104,7 +2045,6 @@ body {
         margin-bottom: 1.5rem;
     }
 
-    /* About image responsive */
     .position-absolute[style*="bottom: -20px"] {
         position: relative !important;
         bottom: auto !important;
@@ -2113,7 +2053,6 @@ body {
     }
 }
 
-/* Small mobile */
 @media (max-width: 575.98px) {
     .hero-title {
         font-size: 1.75rem !important;
@@ -2132,12 +2071,10 @@ body {
         font-size: 0.85rem !important;
     }
 
-    /* Card padding */
     .card-body {
         padding: 1rem !important;
     }
 
-    /* Section title */
     .section-title {
         margin-bottom: 1.5rem !important;
     }
@@ -2146,12 +2083,10 @@ body {
         font-size: 1.35rem !important;
     }
 
-    /* Feature cards */
     .card-glass.p-4 {
         padding: 1rem !important;
     }
 
-    /* Steps section */
     .bg-brown .col-lg-3 {
         margin-bottom: 1.5rem;
     }
@@ -2164,7 +2099,6 @@ body {
         font-size: 0.8rem;
     }
 
-    /* CTA section */
     .bg-gradient-primary.section h2 {
         font-size: 1.25rem !important;
     }
@@ -2178,11 +2112,6 @@ body {
     }
 }
 
-/* ========================================
-   COMPREHENSIVE DARK MODE STYLING
-   ======================================== */
-
-/* Cards */
 [data-theme="dark"] .card,
 [data-theme="dark"] .menu-card {
     background-color: var(--surface);
@@ -2207,11 +2136,10 @@ body {
     border-color: var(--glass-border);
 }
 
-/* Forms */
 [data-theme="dark"] .form-control,
 [data-theme="dark"] .form-select {
     background-color: rgba(255, 255, 255, 0.1) !important;
-    /* Glass effect */
+
     border-color: rgba(255, 255, 255, 0.2) !important;
     color: #FFFFFF !important;
     backdrop-filter: blur(4px);
@@ -2244,7 +2172,6 @@ body {
     color: var(--text-secondary);
 }
 
-/* Buttons */
 [data-theme="dark"] .btn-primary {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
     border-color: var(--accent);
@@ -2283,7 +2210,6 @@ body {
     color: var(--text-primary);
 }
 
-/* Tables */
 [data-theme="dark"] .table {
     color: var(--text-primary);
 }
@@ -2309,7 +2235,6 @@ body {
     background-color: var(--surface);
 }
 
-/* Dropdowns */
 [data-theme="dark"] .dropdown-menu {
     background-color: var(--surface);
     border-color: var(--border-medium);
@@ -2330,7 +2255,6 @@ body {
     border-color: var(--border-light);
 }
 
-/* Modals */
 [data-theme="dark"] .modal-content {
     background-color: var(--surface);
     border-color: var(--border-medium);
@@ -2346,7 +2270,6 @@ body {
     filter: invert(1);
 }
 
-/* Alerts */
 [data-theme="dark"] .alert {
     border-color: var(--border-medium);
 }
@@ -2371,7 +2294,6 @@ body {
     color: #3498db;
 }
 
-/* Badges */
 [data-theme="dark"] .badge {
     color: var(--text-primary);
 }
@@ -2396,7 +2318,6 @@ body {
     color: #e74c3c;
 }
 
-/* Footer */
 [data-theme="dark"] footer {
     background-color: var(--bg-primary) !important;
     color: var(--text-primary);
@@ -2433,7 +2354,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Sidebar (Admin) */
 [data-theme="dark"] .sidebar {
     background: linear-gradient(180deg, var(--surface) 0%, var(--bg-primary) 100%);
 }
@@ -2452,7 +2372,6 @@ body {
     color: var(--bg-primary);
 }
 
-/* Stats Cards */
 [data-theme="dark"] .stats-card,
 [data-theme="dark"] .stat-card {
     background-color: var(--surface);
@@ -2464,7 +2383,6 @@ body {
     color: var(--text-primary);
 }
 
-/* Breadcrumbs */
 [data-theme="dark"] .breadcrumb {
     background-color: transparent;
 }
@@ -2477,7 +2395,6 @@ body {
     color: var(--text-primary);
 }
 
-/* List Groups */
 [data-theme="dark"] .list-group-item {
     background-color: var(--surface);
     border-color: var(--border-light);
@@ -2488,7 +2405,6 @@ body {
     background-color: var(--surface-light);
 }
 
-/* Pagination */
 [data-theme="dark"] .page-link {
     background-color: var(--surface);
     border-color: var(--border-medium);
@@ -2506,7 +2422,6 @@ body {
     color: var(--bg-primary);
 }
 
-/* Text utilities */
 [data-theme="dark"] .text-muted {
     color: var(--text-muted) !important;
 }
@@ -2519,7 +2434,6 @@ body {
     color: var(--text-secondary) !important;
 }
 
-/* Background utilities */
 [data-theme="dark"] .bg-light {
     background-color: var(--surface) !important;
 }
@@ -2532,7 +2446,6 @@ body {
     background-color: var(--bg-primary) !important;
 }
 
-/* Borders */
 [data-theme="dark"] .border {
     border-color: var(--border-medium) !important;
 }
@@ -2544,7 +2457,6 @@ body {
     border-color: var(--border-medium) !important;
 }
 
-/* Navbar Dark Mode Override */
 [data-theme="dark"] .navbar-culinaire {
     background: transparent !important;
     backdrop-filter: none !important;
@@ -2555,7 +2467,7 @@ body {
 
 [data-theme="dark"] .navbar-culinaire.scrolled {
     background: rgba(12, 42, 54, 0.85) !important;
-    /* Dark Navy transparent */
+
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5) !important;
@@ -2570,7 +2482,6 @@ body {
     color: #FFFFFF !important;
 }
 
-
 [data-theme="dark"] .navbar-culinaire .btn-outline-primary {
     border-color: #FFFFFF !important;
 }
@@ -2584,7 +2495,6 @@ body {
     color: var(--accent) !important;
 }
 
-/* Sections */
 [data-theme="dark"] .section {
     background-color: var(--bg-primary);
 }
@@ -2593,19 +2503,16 @@ body {
     background-color: var(--bg-primary);
 }
 
-/* Hero sections */
 [data-theme="dark"] .hero-section {
     background-color: var(--bg-primary);
 }
 
-/* Landing page sections - override bg classes */
 [data-theme="dark"] .section.bg-white,
 [data-theme="dark"] .section.bg-cream,
 [data-theme="dark"] .bg-cream {
     background-color: var(--bg-primary) !important;
 }
 
-/* Content inside bg-white/bg-cream sections */
 [data-theme="dark"] .section.bg-white h2,
 [data-theme="dark"] .section.bg-white h3,
 [data-theme="dark"] .section.bg-white h4,
@@ -2629,7 +2536,6 @@ body {
     background-color: var(--surface) !important;
 }
 
-/* Section titles */
 [data-theme="dark"] .section-title h2 {
     color: var(--text-primary);
 }
@@ -2639,7 +2545,6 @@ body {
     color: var(--text-secondary);
 }
 
-/* Card titles and text */
 [data-theme="dark"] .card-title {
     color: var(--text-primary) !important;
 }
@@ -2648,7 +2553,6 @@ body {
     color: var(--text-secondary);
 }
 
-/* Feature cards / Why Choose Us */
 [data-theme="dark"] .card-glass {
     background: var(--glass-bg) !important;
     border-color: var(--glass-border) !important;
@@ -2663,7 +2567,6 @@ body {
     color: var(--text-secondary) !important;
 }
 
-/* Testimonial cards */
 [data-theme="dark"] .section.bg-cream .card,
 [data-theme="dark"] .bg-cream .card {
     background-color: var(--surface) !important;
@@ -2675,43 +2578,35 @@ body {
     color: var(--text-primary);
 }
 
-/* Dividers */
 [data-theme="dark"] .divider {
     background-color: var(--accent);
 }
 
-/* Price tags */
-/* Price tags */
-/* Price tags */
 [data-theme="dark"] .menu-card .price-tag,
 [data-theme="dark"] .price-tag {
     background: rgba(255, 255, 255, 0.5) !important;
-    /* White semi-transparent */
+
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
     border: 1px solid rgba(255, 255, 255, 0.5) !important;
     color: #0C2A36 !important;
-    /* Deep Navy - Same as Light Mode */
+
     font-weight: 600 !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Rating stars */
 [data-theme="dark"] .rating-stars i.filled {
     color: var(--accent);
 }
 
-/* Text gold */
 [data-theme="dark"] .text-gold {
     color: var(--accent) !important;
 }
 
-/* Highlight text in hero */
 [data-theme="dark"] .highlight {
     color: var(--accent) !important;
 }
 
-/* CTA Section / Hero gradient sections */
 [data-theme="dark"] .bg-gradient-primary {
     background: linear-gradient(135deg, var(--surface) 0%, var(--bg-primary) 100%) !important;
 }
@@ -2725,12 +2620,10 @@ body {
     color: var(--text-primary) !important;
 }
 
-/* Subtitle and description text */
 [data-theme="dark"] .subtitle {
     color: var(--text-secondary);
 }
 
-/* Display headings */
 [data-theme="dark"] .display-1,
 [data-theme="dark"] .display-2,
 [data-theme="dark"] .display-3,
@@ -2740,30 +2633,25 @@ body {
     color: var(--text-primary);
 }
 
-/* Card headings */
 [data-theme="dark"] .card h4,
 [data-theme="dark"] .card h5,
 [data-theme="dark"] .card h6 {
     color: var(--text-primary);
 }
 
-/* Page headers/titles - reservation, menu, etc */
 [data-theme="dark"] .py-5 h1,
 [data-theme="dark"] .py-5 .display-5 {
     color: var(--text-primary) !important;
 }
 
-/* Lead text */
 [data-theme="dark"] .lead {
     color: var(--text-secondary) !important;
 }
 
-/* Opacity text */
 [data-theme="dark"] .opacity-75 {
     color: var(--text-secondary) !important;
 }
 
-/* About page specific - preloader */
 [data-theme="dark"] .preloader {
     background: var(--bg-primary);
 }
@@ -2772,13 +2660,11 @@ body {
     color: var(--accent);
 }
 
-/* Small text helper */
 [data-theme="dark"] small,
 [data-theme="dark"] .small {
     color: var(--text-muted);
 }
 
-/* Form check labels */
 [data-theme="dark"] .form-check-label {
     color: var(--text-primary);
 }
@@ -2788,23 +2674,19 @@ body {
     color: var(--text-muted) !important;
 }
 
-/* Strong text in cards */
 [data-theme="dark"] .card strong {
     color: var(--text-primary);
 }
 
-/* Info panel text */
 [data-theme="dark"] .card-body h5 {
     color: var(--text-primary);
 }
 
-/* Hr dividers */
 [data-theme="dark"] hr {
     border-color: var(--border-light);
     opacity: 1;
 }
 
-/* Mobile & Tablet Horizontal Scroll (Luxury) */
 @media (max-width: 991.98px) {
     .luxury-scroll-container {
         display: flex !important;
@@ -2818,7 +2700,7 @@ body {
         gap: 1.5rem;
         padding-left: 1rem;
         padding-right: 1rem;
-        /* Hiding scrollbar for cleaner look but keeping functionality, or custom styling */
+
         scrollbar-width: thin;
         scrollbar-color: var(--accent) transparent;
         margin-right: -12px;
@@ -2834,7 +2716,6 @@ body {
         margin-bottom: 0 !important;
     }
 
-    /* Tablet specific adjustment */
     @media (min-width: 768px) {
 
         .luxury-scroll-container>.col-lg-3,
@@ -2846,17 +2727,16 @@ body {
     }
 }
 
-/* Hide Scrollbar for cleaner look (requested) */
 .luxury-scroll-container {
     scrollbar-width: none;
-    /* Firefox */
+
     -ms-overflow-style: none;
-    /* IE/Edge */
+
 }
 
 .luxury-scroll-container::-webkit-scrollbar {
     display: none;
-    /* Chrome/Safari/Opera */
+
     width: 0;
     height: 0;
 }
@@ -2869,7 +2749,6 @@ body {
     display: none;
 }
 
-/* Fix container width to prevent overflow using Breakout strategy */
 .luxury-scroll-container {
     width: 100vw;
     position: relative;
@@ -2878,14 +2757,11 @@ body {
     margin-left: -50vw;
     margin-right: -50vw;
     padding-left: 20px;
-    /* Safe padding */
+
     padding-right: 20px;
 }
 }
 
-/* =========================================
-   GLOBAL FIT & RESET (High Precision)
-   ========================================= */
 html,
 body {
     width: 100%;
@@ -2902,21 +2778,13 @@ body {
     padding-right: var(--bs-gutter-x, 0.75rem);
     padding-left: var(--bs-gutter-x, 0.75rem);
     overflow-x: hidden;
-    /* Protect grid from overflowing */
+
 }
 
-/* Ensure images don't break layout */
 img {
     max-width: 100%;
     height: auto;
 }
-
-
-/* Luxury Step Card */
-/* Luxury Step Card - Ultra Premium */
-/* =========================================
-   10X ULTRA LUXURY ANIMATION ENGINE
-   ========================================= */
 
 .luxury-card-wrapper {
     position: relative;
@@ -2926,13 +2794,12 @@ img {
     perspective: 1000px;
 }
 
-/* Base Glass Structure */
 .luxury-card-content {
     position: relative;
     z-index: 10;
     height: 100%;
     background: rgba(255, 255, 255, 0.03);
-    /* Ultra transparent */
+
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 24px;
@@ -2940,28 +2807,22 @@ img {
     box-shadow:
         0 15px 35px rgba(0, 0, 0, 0.2),
         inset 0 0 30px rgba(255, 255, 255, 0.05);
-    /* Inner volumetric fog */
+
     overflow: hidden;
     transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Dark Mode Obsidian Glass */
 [data-theme="dark"] .luxury-card-content {
     background: linear-gradient(160deg, rgba(20, 24, 28, 0.8) 0%, rgba(10, 12, 16, 0.95) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow:
         0 20px 50px -10px rgba(0, 0, 0, 0.7),
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        /* Top edge light */
+
         inset 0 -1px 0 rgba(0, 0, 0, 0.5);
-    /* Bottom depth */
+
 }
 
-/* =========================================
-   DYNAMIC LIGHTING & GOLD (The "10x" Factor)
-   ========================================= */
-
-/* Rotating Conic Gold Border */
 .luxury-card-border {
     position: absolute;
     inset: -2px;
@@ -2971,12 +2832,12 @@ img {
             transparent 0%,
             rgba(212, 175, 55, 0.1) 20%,
             #D4AF37 45%,
-            /* Pure Gold Peak */
+
             rgba(212, 175, 55, 0.1) 70%,
             transparent 100%);
     animation: rotateGold 8s linear infinite;
     opacity: 0;
-    /* Hidden by default, appears on interaction */
+
     filter: blur(10px);
     transition: opacity 0.5s ease;
 }
@@ -2995,7 +2856,6 @@ img {
     opacity: 0.8;
 }
 
-/* Internal Spotlight (Glow) */
 .luxury-card-glow {
     position: absolute;
     width: 300px;
@@ -3008,7 +2868,7 @@ img {
     transform: translate(0, 0);
     pointer-events: none;
     transition: transform 0.2s ease-out;
-    /* JavaScript would drive this follow-mouse, keeping simple pure CSS center for now */
+
     animation: pulseGlow 5s ease-in-out infinite alternate;
 }
 
@@ -3024,11 +2884,6 @@ img {
     }
 }
 
-/* =========================================
-   ELEMENTS STYLING
-   ========================================= */
-
-/* The Stage */
 .icon-stage {
     position: relative;
     height: 100px;
@@ -3040,7 +2895,6 @@ img {
     animation: floatComplex 6s ease-in-out infinite;
 }
 
-/* Complex Float Animation (Figure 8) */
 @keyframes floatComplex {
     0% {
         transform: translateY(0) rotate(0deg);
@@ -3059,7 +2913,6 @@ img {
     }
 }
 
-/* Golden Ring (Halo) */
 .golden-ring {
     position: absolute;
     width: 100%;
@@ -3084,29 +2937,27 @@ img {
     }
 }
 
-/* The Gemstone Icon Background */
 .icon-gem {
     position: relative;
     width: 80px;
     height: 80px;
     background: radial-gradient(circle at 30% 30%, #F5D77F 0%, #D4AF37 40%, #8C6A18 100%);
     border-radius: 50%;
-    /* Circle gem */
+
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow:
         0 10px 20px rgba(0, 0, 0, 0.4),
         inset 0 2px 5px rgba(255, 255, 255, 0.6),
-        /* Specular highlight */
+
         inset 0 -5px 10px rgba(0, 0, 0, 0.3);
-    /* Depth shadow */
+
     z-index: 2;
     border: 2px solid #FFF5D6;
-    /* Platinum rim */
+
 }
 
-/* Levitating Badge */
 .floating-badge {
     position: absolute;
     top: 0;
@@ -3139,7 +2990,6 @@ img {
     }
 }
 
-/* Typography Gradient */
 .luxury-title {
     background: linear-gradient(to right, #ffffff 20%, #D4AF37 50%, #ffffff 80%);
     background-size: 200% auto;
@@ -3164,7 +3014,6 @@ img {
     line-height: 1.6;
 }
 
-/* Animation Delays */
 .delay-1 {
     animation-delay: 1.5s;
 }
@@ -3177,7 +3026,6 @@ img {
     animation-delay: 4.5s;
 }
 
-/* Mobile Optimization: Reduce Blur for performance but keep gradient */
 @media (max-width: 768px) {
     .luxury-card-content {
         backdrop-filter: blur(10px);
