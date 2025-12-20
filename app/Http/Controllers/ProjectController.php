@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -43,6 +44,49 @@ class ProjectController extends Controller
         ];
 
         return view('project.index', compact('members'));
+    }
+
+    public function getProgress()
+    {
+        $progress = DB::table('project_progress')->first();
+        
+        if (!$progress) {
+            return response()->json([
+                'completed_steps' => [],
+                'repo_submissions' => [],
+                'updated_at' => now()->toISOString()
+            ]);
+        }
+
+        return response()->json([
+            'completed_steps' => json_decode($progress->completed_steps, true) ?? [],
+            'repo_submissions' => json_decode($progress->repo_submissions, true) ?? [],
+            'updated_at' => $progress->updated_at
+        ]);
+    }
+
+    public function saveProgress(Request $request)
+    {
+        $completedSteps = $request->input('completed_steps', []);
+        $repoSubmissions = $request->input('repo_submissions', []);
+
+        $exists = DB::table('project_progress')->exists();
+
+        if ($exists) {
+            DB::table('project_progress')->update([
+                'completed_steps' => json_encode($completedSteps),
+                'repo_submissions' => json_encode($repoSubmissions),
+                'updated_at' => now()
+            ]);
+        } else {
+            DB::table('project_progress')->insert([
+                'completed_steps' => json_encode($completedSteps),
+                'repo_submissions' => json_encode($repoSubmissions),
+                'updated_at' => now()
+            ]);
+        }
+
+        return response()->json(['success' => true, 'updated_at' => now()->toISOString()]);
     }
 
     private function generateAllSteps(): array

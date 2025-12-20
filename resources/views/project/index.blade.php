@@ -811,10 +811,51 @@
     </div>
     
     <script>
-        const completedSteps = new Set(JSON.parse(localStorage.getItem('project_steps_v2') || '[]'));
-        const repoSubmissions = JSON.parse(localStorage.getItem('repo_submissions') || '{}');
+        let completedSteps = new Set();
+        let repoSubmissions = {};
+        let lastUpdated = null;
+        const POLL_INTERVAL = 3000;
 
-        document.addEventListener('DOMContentLoaded', () => { loadProgress(); loadSubmissions(); });
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchProgress();
+            setInterval(pollForUpdates, POLL_INTERVAL);
+        });
+
+        async function fetchProgress() {
+            try {
+                const res = await fetch('/project/progress');
+                const data = await res.json();
+                completedSteps = new Set(data.completed_steps || []);
+                repoSubmissions = data.repo_submissions || {};
+                lastUpdated = data.updated_at;
+                applyProgressUI();
+                applySubmissionsUI();
+            } catch (e) {}
+        }
+
+        async function pollForUpdates() {
+            try {
+                const res = await fetch('/project/progress');
+                const data = await res.json();
+                if (data.updated_at !== lastUpdated) {
+                    completedSteps = new Set(data.completed_steps || []);
+                    repoSubmissions = data.repo_submissions || {};
+                    lastUpdated = data.updated_at;
+                    applyProgressUI();
+                    applySubmissionsUI();
+                }
+            } catch (e) {}
+        }
+
+        async function syncToServer() {
+            try {
+                await fetch('/project/progress', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                    body: JSON.stringify({ completed_steps: [...completedSteps], repo_submissions: repoSubmissions })
+                });
+            } catch (e) {}
+        }
 
         function toggleMember(id) {
             const content = document.getElementById(`content-${id}`);
@@ -838,9 +879,9 @@
 
         function markComplete(stepNum) {
             completedSteps.add(stepNum);
-            saveProgress();
             updateStepUI(stepNum);
             updateAllProgress();
+            syncToServer();
         }
 
         function updateStepUI(stepNum) {
@@ -848,7 +889,8 @@
             if (el && completedSteps.has(stepNum)) el.classList.add('completed');
         }
 
-        function loadProgress() {
+        function applyProgressUI() {
+            document.querySelectorAll('.step-row').forEach(el => el.classList.remove('completed'));
             completedSteps.forEach(s => updateStepUI(s));
             updateAllProgress();
         }
@@ -866,25 +908,28 @@
             });
         }
 
-        function saveProgress() { localStorage.setItem('project_steps_v2', JSON.stringify([...completedSteps])); }
-
-        function resetProgress() {
-            if (confirm('Reset all progress?')) { localStorage.removeItem('project_steps_v2'); location.reload(); }
-        }
-
-        function loadSubmissions() {
+        function applySubmissionsUI() {
             [1, 2, 3, 4].forEach(id => {
                 const data = repoSubmissions[id];
-                if (!data) return;
                 const input = document.getElementById(`repo-${id}`);
                 const status = document.getElementById(`status-${id}`);
-                if (input) input.value = data.url || '';
+                if (input) input.value = data?.url || '';
                 if (status) {
-                    if (data.status === 'approved') { status.textContent = '✓ Approved'; status.className = 'badge badge-approved'; showSuccess(id, 'Repository approved!'); }
-                    else if (data.status === 'rejected') { status.textContent = '✗ Rejected'; status.className = 'badge badge-rejected'; showWarning(id, data.feedback || 'Please fix issues.'); }
-                    else if (data.status === 'submitted') { status.textContent = '⏳ Pending'; status.className = 'badge badge-pending'; }
+                    if (data?.status === 'approved') { status.textContent = '✓ Approved'; status.className = 'badge badge-approved'; showSuccess(id, 'Repository approved!'); }
+                    else if (data?.status === 'rejected') { status.textContent = '✗ Rejected'; status.className = 'badge badge-rejected'; showWarning(id, data.feedback || 'Please fix issues.'); }
+                    else if (data?.status === 'submitted') { status.textContent = '⏳ Pending'; status.className = 'badge badge-pending'; }
+                    else { status.textContent = 'Not Submitted'; status.className = 'badge badge-default'; }
                 }
             });
+        }
+
+        function resetProgress() {
+            if (confirm('Reset all progress?')) {
+                completedSteps = new Set();
+                repoSubmissions = {};
+                syncToServer();
+                location.reload();
+            }
         }
 
         function submitRepo(id) {
@@ -895,7 +940,7 @@
             for (let i = start; i <= end; i++) if (completedSteps.has(i)) done++;
             if (done < 200) { showWarning(id, `Complete all steps first. (${done}/200)`); return; }
             repoSubmissions[id] = { url, status: 'submitted', feedback: '' };
-            localStorage.setItem('repo_submissions', JSON.stringify(repoSubmissions));
+            syncToServer();
             const status = document.getElementById(`status-${id}`);
             status.textContent = '⏳ Pending';
             status.className = 'badge badge-pending';
@@ -905,7 +950,7 @@
 
         function approveRepo(id) {
             repoSubmissions[id] = { ...repoSubmissions[id], status: 'approved', feedback: '' };
-            localStorage.setItem('repo_submissions', JSON.stringify(repoSubmissions));
+            syncToServer();
             const status = document.getElementById(`status-${id}`);
             status.textContent = '✓ Approved';
             status.className = 'badge badge-approved';
@@ -916,7 +961,7 @@
         function rejectRepo(id) {
             const fb = document.getElementById(`feedback-${id}`)?.value || 'Fix issues.';
             repoSubmissions[id] = { ...repoSubmissions[id], status: 'rejected', feedback: fb };
-            localStorage.setItem('repo_submissions', JSON.stringify(repoSubmissions));
+            syncToServer();
             const status = document.getElementById(`status-${id}`);
             status.textContent = '✗ Rejected';
             status.className = 'badge badge-rejected';
@@ -944,3 +989,4 @@
     </script>
 </body>
 </html>
+
