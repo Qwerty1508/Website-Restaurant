@@ -111,6 +111,52 @@
                     </div>
                     @endforeach
                 </div>
+                
+                <!-- GitHub Submission Section -->
+                <div class="mt-6 pt-4 border-t border-gray-700">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-gray-300">📦 Submit Repository</h3>
+                        <span class="submission-status text-xs px-2 py-1 rounded" id="status-{{ $member['id'] }}">Not Submitted</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" 
+                               id="repo-{{ $member['id'] }}" 
+                               placeholder="https://github.com/username/repo"
+                               class="flex-1 bg-gray-900 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:border-gold focus:outline-none">
+                        <button onclick="submitRepo({{ $member['id'] }})" 
+                                class="bg-gold hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded text-sm transition-colors">
+                            Submit
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Pastikan 100% langkah selesai sebelum submit.</p>
+                    
+                    <!-- Approval Section (Only visible to Edo) -->
+                    @if(Auth::check() && Auth::user()->email === 'pedoprimasaragi@gmail.com')
+                    <div class="mt-4 p-3 bg-gray-800/50 rounded border border-gray-700" id="approval-{{ $member['id'] }}">
+                        <p class="text-xs text-gray-400 mb-2">🔒 Admin Review (Only Edo can see this)</p>
+                        <div class="flex gap-2">
+                            <button onclick="approveRepo({{ $member['id'] }})" 
+                                    class="flex-1 bg-green-600 hover:bg-green-500 text-white text-xs px-3 py-2 rounded transition-colors">
+                                ✓ Approve
+                            </button>
+                            <button onclick="rejectRepo({{ $member['id'] }})" 
+                                    class="flex-1 bg-red-600 hover:bg-red-500 text-white text-xs px-3 py-2 rounded transition-colors">
+                                ✗ Reject
+                            </button>
+                        </div>
+                        <textarea id="feedback-{{ $member['id'] }}" 
+                                  placeholder="Feedback (jika reject, jelaskan apa yang salah)"
+                                  class="w-full mt-2 bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:border-gold focus:outline-none resize-none"
+                                  rows="2"></textarea>
+                    </div>
+                    @endif
+                    
+                    <!-- Warning/Feedback Display -->
+                    <div id="warning-{{ $member['id'] }}" class="hidden mt-3 p-3 bg-red-900/30 border border-red-700 rounded text-sm text-red-300">
+                    </div>
+                    <div id="success-{{ $member['id'] }}" class="hidden mt-3 p-3 bg-green-900/30 border border-green-700 rounded text-sm text-green-300">
+                    </div>
+                </div>
             </div>
         </div>
         @endforeach
@@ -196,6 +242,122 @@
             location.reload();
         }
     }
+
+    // ========== REPO SUBMISSION & APPROVAL ==========
+    const repoSubmissions = JSON.parse(localStorage.getItem('repo_submissions') || '{}');
+    
+    function loadSubmissions() {
+        [1, 2, 3, 4].forEach(id => {
+            const data = repoSubmissions[id];
+            if (data) {
+                const input = document.getElementById(`repo-${id}`);
+                const status = document.getElementById(`status-${id}`);
+                input.value = data.url || '';
+                
+                if (data.status === 'approved') {
+                    status.textContent = '✓ Approved';
+                    status.className = 'submission-status text-xs px-2 py-1 rounded bg-green-600 text-white';
+                    showSuccess(id, 'Repository approved! Great work.');
+                } else if (data.status === 'rejected') {
+                    status.textContent = '✗ Rejected';
+                    status.className = 'submission-status text-xs px-2 py-1 rounded bg-red-600 text-white';
+                    showWarning(id, data.feedback || 'Please check your code and resubmit.');
+                } else if (data.status === 'submitted') {
+                    status.textContent = '⏳ Pending Review';
+                    status.className = 'submission-status text-xs px-2 py-1 rounded bg-yellow-600 text-black';
+                }
+            }
+        });
+    }
+
+    function submitRepo(memberId) {
+        const input = document.getElementById(`repo-${memberId}`);
+        const url = input.value.trim();
+        const status = document.getElementById(`status-${memberId}`);
+        
+        // Validate URL
+        if (!url.includes('github.com') || url.length < 20) {
+            showWarning(memberId, 'Please enter a valid GitHub repository URL.');
+            return;
+        }
+        
+        // Check progress
+        const start = (memberId - 1) * 200 + 1;
+        const end = memberId * 200;
+        let completed = 0;
+        for (let i = start; i <= end; i++) {
+            if (completedSteps.has(i)) completed++;
+        }
+        
+        if (completed < 200) {
+            showWarning(memberId, `Please complete all 200 steps first. Currently: ${completed}/200`);
+            return;
+        }
+        
+        // Save submission
+        repoSubmissions[memberId] = { url, status: 'submitted', feedback: '' };
+        localStorage.setItem('repo_submissions', JSON.stringify(repoSubmissions));
+        
+        status.textContent = '⏳ Pending Review';
+        status.className = 'submission-status text-xs px-2 py-1 rounded bg-yellow-600 text-black';
+        hideWarning(memberId);
+        alert('Repository submitted! Waiting for admin review.');
+    }
+
+    function approveRepo(memberId) {
+        repoSubmissions[memberId] = { 
+            ...repoSubmissions[memberId], 
+            status: 'approved',
+            feedback: ''
+        };
+        localStorage.setItem('repo_submissions', JSON.stringify(repoSubmissions));
+        
+        const status = document.getElementById(`status-${memberId}`);
+        status.textContent = '✓ Approved';
+        status.className = 'submission-status text-xs px-2 py-1 rounded bg-green-600 text-white';
+        hideWarning(memberId);
+        showSuccess(memberId, 'Repository approved!');
+    }
+
+    function rejectRepo(memberId) {
+        const feedback = document.getElementById(`feedback-${memberId}`).value || 'Please fix the issues and resubmit.';
+        
+        repoSubmissions[memberId] = { 
+            ...repoSubmissions[memberId], 
+            status: 'rejected',
+            feedback: feedback
+        };
+        localStorage.setItem('repo_submissions', JSON.stringify(repoSubmissions));
+        
+        const status = document.getElementById(`status-${memberId}`);
+        status.textContent = '✗ Rejected';
+        status.className = 'submission-status text-xs px-2 py-1 rounded bg-red-600 text-white';
+        showWarning(memberId, feedback);
+    }
+
+    function showWarning(memberId, message) {
+        const el = document.getElementById(`warning-${memberId}`);
+        el.textContent = '⚠️ ' + message;
+        el.classList.remove('hidden');
+        document.getElementById(`success-${memberId}`).classList.add('hidden');
+    }
+
+    function hideWarning(memberId) {
+        document.getElementById(`warning-${memberId}`).classList.add('hidden');
+    }
+
+    function showSuccess(memberId, message) {
+        const el = document.getElementById(`success-${memberId}`);
+        el.textContent = '✓ ' + message;
+        el.classList.remove('hidden');
+        document.getElementById(`warning-${memberId}`).classList.add('hidden');
+    }
+
+    // Load submissions on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProgress();
+        loadSubmissions();
+    });
 </script>
 </body>
 </html>
