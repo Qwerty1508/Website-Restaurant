@@ -9,92 +9,193 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        // Define the steps and their associated files
-        $steps = [
+        $steps = $this->generateAllSteps();
+        
+        // Group steps by member
+        $members = [
             [
                 'id' => 1,
-                'user' => 'Edo',
+                'name' => 'Edo',
                 'role' => 'Project Lead & Core Backend',
-                'description' => 'Foundation Setup: Authentication, User Model, Environment Config, and Base Routes.',
-                'files' => [
-                    'composer.json',
-                    '.env.example',
-                    'config/app.php',
-                    'database/migrations/0001_01_01_000000_create_users_table.php',
-                    'app/Models/User.php',
-                    'routes/web.php',
-                    'resources/views/layouts/guest.blade.php',
-                ]
+                'email' => 'pedoprimasaragi@gmail.com',
+                'steps' => array_filter($steps, fn($s) => $s['step'] >= 1 && $s['step'] <= 200),
             ],
             [
                 'id' => 2,
-                'user' => 'Haidar',
-                'role' => 'Backend Admin & Database',
-                'description' => 'Admin Panel Implementation: Menu Management, Category Logic, and Admin Dashboard.',
-                'files' => [
-                    'database/migrations/2025_12_16_044137_create_menus_table.php',
-                    'database/migrations/2025_12_17_151701_add_slug_to_menus_table.php',
-                    'app/Models/Menu.php',
-                    'resources/views/layouts/admin.blade.php',
-                    'resources/views/admin/dashboard.blade.php',
-                    'resources/views/admin/menus/create.blade.php', 
-                    // Note: Ideally we would list the controller too if it exists, but sticking to key files.
-                ]
+                'name' => 'Haidar',
+                'role' => 'Database & Admin Panel',
+                'email' => 'haiidarmirza8289@gmail.com',
+                'steps' => array_filter($steps, fn($s) => $s['step'] >= 201 && $s['step'] <= 400),
             ],
             [
                 'id' => 3,
-                'user' => 'Dimas',
+                'name' => 'Dimas',
                 'role' => 'Features & Customer Logic',
-                'description' => 'Customer Features: Reservations, Orders, and Customer Dashboard.',
-                'files' => [
-                    'database/migrations/2025_12_16_053030_create_reservations_table.php',
-                    'database/migrations/2025_12_18_000001_create_orders_table.php',
-                    'app/Models/Reservation.php',
-                    'app/Http/Controllers/ReservationController.php',
-                    'app/Http/Controllers/OrderController.php',
-                    'resources/views/reservation/create.blade.php',
-                    'resources/views/customer/profile.blade.php',
-                ]
+                'email' => 'dimasaryadesta2@gmail.com',
+                'steps' => array_filter($steps, fn($s) => $s['step'] >= 401 && $s['step'] <= 600),
             ],
             [
                 'id' => 4,
-                'user' => 'Bernard',
-                'role' => 'Frontend UI & Public Pages',
-                'description' => 'Public Interface: Landing Page, About, Contact, and Animations.',
-                'files' => [
-                    'resources/views/welcome.blade.php',
-                    'resources/views/about.blade.php',
-                    'resources/views/contact.blade.php',
-                    'resources/views/components/navbar.blade.php',
-                    'public/css/app.css',
-                ]
+                'name' => 'Bernard',
+                'role' => 'UI & Public Pages',
+                'email' => 'bernardprawira54@gmail.com',
+                'steps' => array_filter($steps, fn($s) => $s['step'] >= 601 && $s['step'] <= 800),
             ],
         ];
 
-        // Process files to read content
-        foreach ($steps as &$step) {
-            $step['file_contents'] = [];
-            foreach ($step['files'] as $filePath) {
-                // Determine absolute path
-                $absolutePath = base_path($filePath);
-                
-                if (File::exists($absolutePath)) {
-                    $content = File::get($absolutePath);
-                    $step['file_contents'][] = [
-                        'path' => $filePath,
-                        'content' => $content,
-                        'exists' => true
-                    ];
-                } else {
-                    $step['file_contents'][] = [
-                        'path' => $filePath,
-                        'content' => "// File not found in current project directory: $filePath",
-                        'exists' => false
-                    ];
-                }
+        return view('project.index', compact('members'));
+    }
+
+    private function generateAllSteps(): array
+    {
+        $steps = [];
+        $stepNumber = 1;
+
+        // ============ EDO (Steps 1-200): Core & Foundation ============
+        $edoFiles = [
+            '.env.example',
+            'composer.json',
+            'package.json',
+            'vite.config.js',
+            'config/app.php',
+            'config/database.php',
+            'config/auth.php',
+            'bootstrap/app.php',
+            'routes/web.php',
+            'app/Models/User.php',
+            'app/Http/Controllers/Auth/AuthController.php',
+            'app/Http/Controllers/Auth/GoogleController.php',
+            'resources/views/layouts/guest.blade.php',
+            'resources/views/auth/login.blade.php',
+            'resources/views/auth/register.blade.php',
+        ];
+        $stepNumber = $this->processFilesIntoSteps($edoFiles, $steps, $stepNumber, 200);
+
+        // ============ HAIDAR (Steps 201-400): Database & Admin ============
+        $haidarFiles = [
+            'database/migrations/0001_01_01_000000_create_users_table.php',
+            'database/migrations/0001_01_01_000001_create_cache_table.php',
+            'database/migrations/0001_01_01_000002_create_jobs_table.php',
+            'database/migrations/2025_12_16_035649_add_google_id_to_users_table.php',
+            'database/migrations/2025_12_16_044126_add_is_admin_to_users_table.php',
+            'database/migrations/2025_12_16_044137_create_menus_table.php',
+            'database/migrations/2025_12_16_044139_create_activity_logs_table.php',
+            'database/migrations/2025_12_16_050152_add_status_to_users_table.php',
+            'database/migrations/2025_12_16_053030_create_reservations_table.php',
+            'database/migrations/2025_12_17_151701_add_slug_to_menus_table.php',
+            'database/migrations/2025_12_18_000001_create_orders_table.php',
+            'app/Models/Menu.php',
+            'app/Models/Reservation.php',
+            'app/Models/Order.php',
+            'resources/views/layouts/admin.blade.php',
+            'resources/views/admin/dashboard.blade.php',
+            'resources/views/admin/menus/index.blade.php',
+            'resources/views/admin/menus/create.blade.php',
+            'resources/views/admin/menus/edit.blade.php',
+            'resources/views/admin/users/index.blade.php',
+            'resources/views/admin/orders/index.blade.php',
+            'resources/views/admin/orders/show.blade.php',
+            'resources/views/admin/reservations/index.blade.php',
+            'resources/views/admin/reservations/show.blade.php',
+        ];
+        $stepNumber = $this->processFilesIntoSteps($haidarFiles, $steps, $stepNumber, 400);
+
+        // ============ DIMAS (Steps 401-600): Features & Customer ============
+        $dimasFiles = [
+            'app/Http/Controllers/ReservationController.php',
+            'app/Http/Controllers/OrderController.php',
+            'resources/views/reservation/create.blade.php',
+            'resources/views/menu/index.blade.php',
+            'resources/views/customer/dashboard.blade.php',
+            'resources/views/customer/profile.blade.php',
+            'resources/views/customer/orders/index.blade.php',
+            'resources/views/customer/orders/create.blade.php',
+            'resources/views/customer/orders/show.blade.php',
+            'resources/views/customer/reservations/index.blade.php',
+            'resources/views/customer/reservations/show.blade.php',
+        ];
+        $stepNumber = $this->processFilesIntoSteps($dimasFiles, $steps, $stepNumber, 600);
+
+        // ============ BERNARD (Steps 601-800): UI & Public ============
+        $bernardFiles = [
+            'resources/views/welcome.blade.php',
+            'resources/views/about.blade.php',
+            'resources/views/contact.blade.php',
+            'resources/views/components/navbar.blade.php',
+            'resources/views/components/footer.blade.php',
+            'public/css/app.css',
+            'public/js/cursor.js',
+        ];
+        $stepNumber = $this->processFilesIntoSteps($bernardFiles, $steps, $stepNumber, 800);
+
+        return $steps;
+    }
+
+    private function processFilesIntoSteps(array $files, array &$steps, int $startStep, int $maxStep): int
+    {
+        $currentStep = $startStep;
+        $targetSteps = $maxStep - $startStep + 1; // 200 steps per member
+        
+        // Calculate total lines across all files
+        $allFileContents = [];
+        $totalLines = 0;
+        
+        foreach ($files as $filePath) {
+            $absolutePath = base_path($filePath);
+            if (File::exists($absolutePath)) {
+                $content = File::get($absolutePath);
+                $lines = explode("\n", $content);
+                $allFileContents[$filePath] = $lines;
+                $totalLines += count($lines);
             }
         }
 
-        return view('project.index', compact('steps'));
+        if ($totalLines === 0) {
+            return $currentStep;
+        }
+
+        // Calculate lines per step (aim for ~targetSteps)
+        $linesPerStep = max(1, ceil($totalLines / $targetSteps));
+
+        foreach ($allFileContents as $filePath => $lines) {
+            $lineCount = count($lines);
+            $currentLine = 0;
+
+            while ($currentLine < $lineCount && $currentStep <= $maxStep) {
+                $endLine = min($currentLine + $linesPerStep, $lineCount);
+                $chunk = array_slice($lines, $currentLine, $endLine - $currentLine);
+                $codeContent = implode("\n", $chunk);
+
+                // Skip empty chunks
+                if (trim($codeContent) !== '') {
+                    $steps[] = [
+                        'step' => $currentStep,
+                        'file' => $filePath,
+                        'line_start' => $currentLine + 1,
+                        'line_end' => $endLine,
+                        'code' => $codeContent,
+                        'action' => $currentLine === 0 ? 'Create file and add' : 'Continue adding',
+                    ];
+                    $currentStep++;
+                }
+
+                $currentLine = $endLine;
+            }
+        }
+
+        // If we haven't reached maxStep, pad with empty steps
+        while ($currentStep <= $maxStep) {
+            $steps[] = [
+                'step' => $currentStep,
+                'file' => 'N/A',
+                'line_start' => 0,
+                'line_end' => 0,
+                'code' => '// Step reserved for future expansion',
+                'action' => 'Reserved',
+            ];
+            $currentStep++;
+        }
+
+        return $currentStep;
     }
 }
