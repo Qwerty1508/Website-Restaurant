@@ -133,8 +133,10 @@
         </div>
     </div>
 
+    <script src="{{ asset('js/cursor.js') }}"></script>
     <script>
         // Initialize State
+
         document.addEventListener('DOMContentLoaded', () => {
             loadProgress();
         });
