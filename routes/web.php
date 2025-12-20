@@ -37,6 +37,10 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+// Project Timeline Route (Protected)
+Route::get('/project', [\App\Http\Controllers\ProjectController::class, 'index'])
+    ->middleware(['auth', \App\Http\Middleware\ProjectAccess::class]);
+
 // Reservation Routes
 Route::get('/reservation', [ReservationController::class, 'create']);
 Route::post('/reservation', [ReservationController::class, 'store'])->middleware('auth');
