@@ -1,7 +1,6 @@
 <?php
 
 return [
-    // Navbar
     'home' => 'Beranda',
     'menu' => 'Menu',
     'reservation' => 'Reservasi',
@@ -13,7 +12,6 @@ return [
     'dashboard' => 'Dasbor',
     'logout' => 'Keluar',
 
-    // Hero Section (Welcome)
     'hero_subtitle' => 'EST. 2023 • INDONESIA',
     'hero_title_1' => 'Cita Rasa',
     'hero_title_2' => 'yang',
@@ -22,37 +20,30 @@ return [
     'book_now' => 'Pesan Meja',
     'explore_menu' => 'Lihat Menu',
 
-    // About Page
     'about_title' => 'Seni Rasa',
     'about_manifesto' => 'Kami percaya bersantap bukan sekadar makan. Ini adalah pertunjukan teater di mana kenangan, budaya, dan emosi bertemu dalam satu piring.',
     'legacy_title' => 'WARISAN KAMI',
     'legacy_subtitle' => 'Odisea Cita Rasa',
     '15_years' => '15 TAHUN KEUNGGULAN',
     
-    // Timeline
-    // History Journey (About Page)
     'about_hero_title' => 'Perjalanan Rasa',
     'about_hero_subtitle' => 'DARI RUMAH PANGGUNG KE PANGGUNG DUNIA',
     
-    // Chapter 1: The Wooden House
     'chapter_1_year' => '2009',
     'chapter_1_title' => 'Awal yang Sederhana',
     'chapter_1_subtitle' => 'The Wooden House',
     'chapter_1_desc' => 'Semua bermula di sebuah rumah panggung kayu tua di pinggiran Jakarta. Tanpa peralatan canggih, hanya bermodalkan wajan warisan nenek dan semangat untuk melestarikan resep kuno. Aroma kayu bakar dan rempah menyatu, menciptakan kehangatan yang tak terlupakan.',
     
-    // Chapter 2: The Evolution
     'chapter_2_year' => '2017',
     'chapter_2_title' => 'Transformasi Rasa',
     'chapter_2_subtitle' => 'The Brick & Stone',
     'chapter_2_desc' => 'Kecintaan pelanggan membawa kami tumbuh. Kami pindah ke bangunan bata bernuansa kolonial. Menu mulai berevolusi, memadukan teknik tradisional dengan presentasi modern. Antrian mulai mengular, cerita kami mulai didengar.',
 
-    // Chapter 3: The Peak
     'chapter_3_year' => '2024',
     'chapter_3_title' => 'Puncak Kemewahan',
     'chapter_3_subtitle' => 'The Modern Star',
     'chapter_3_desc' => '15 tahun perjalanan membawa kami ke sini. Sebuah mahakarya arsitektur kaca dan emas. Culinaire bukan lagi sekedar tempat makan, tapi destinasi gastronomi kelas dunia yang merayakan kekayaan kuliner Indonesia dalam balutan kemewahan.',
 
-    // Menu Page
     'our_menu' => 'Menu Kami',
     'menu_desc' => 'Jelajahi berbagai hidangan lezat dari dapur kami. Mulai dari makanan tradisional hingga kreasi modern.',
     'search_placeholder' => 'Cari menu favorit Anda...',
@@ -68,7 +59,6 @@ return [
     'order_desc' => 'Daftar atau masuk untuk mulai memesan dan nikmati berbagai promo menarik!',
     'create_order' => 'Buat Pesanan',
 
-    // Common
     'scroll' => 'GULIR',
     'copyright' => '© 2023 Culinaire. Hak cipta dilindungi.',
     'customers' => 'Pelanggan',
@@ -85,7 +75,6 @@ return [
     'order_btn' => 'Pesan',
     'see_all_menu' => 'Lihat Semua Menu',
     
-    // Features
     'why_choose_us' => 'Mengapa Memilih Kami?',
     'why_choose_desc' => 'Kami berkomitmen memberikan pengalaman kuliner terbaik',
     'feature_1_title' => 'Bahan Premium',
@@ -97,7 +86,6 @@ return [
     'feature_4_title' => 'Higienis & Aman',
     'feature_4_desc' => 'Standar kebersihan tinggi dengan protokol kesehatan yang ketat.',
 
-    // About Section (Welcome)
     'about_journey_title' => 'Perjalanan Kami dalam Dunia Kuliner',
     'about_journey_desc' => 'Culinaire didirikan pada tahun 2009 dengan visi sederhana: menyajikan hidangan Indonesia autentik dengan sentuhan modern tanpa kehilangan esensi tradisionalnya. Bermula dari warung kecil, kini kami telah menjadi destinasi kuliner favorit di Jakarta.',
     'about_point_1' => 'Resep turun-temurun dari berbagai daerah Indonesia',
@@ -106,7 +94,6 @@ return [
     'about_point_4' => 'Private dining untuk acara spesial Anda',
     'contact_us' => 'Hubungi Kami',
 
-    // How to Order
     'how_to_order' => 'Cara Memesan',
     'how_to_order_desc' => 'Pesan makanan favorit Anda dalam 4 langkah mudah',
     'step_1_title' => 'Daftar / Masuk',
@@ -118,7 +105,6 @@ return [
     'step_4_title' => 'Ambil / Dine In',
     'step_4_desc' => 'Ambil pesanan Anda atau nikmati di restoran kami.',
 
-    // Testimonials
     'testimonials_title' => 'Apa Kata Pelanggan Kami',
     'testimonials_desc' => 'Testimoni dari pelanggan setia Culinaire',
     'testimonial_1' => '"Rendang di sini adalah yang terbaik yang pernah saya coba! Bumbu meresap sempurna dan dagingnya sangat empuk. Pasti akan kembali lagi!"',
@@ -128,21 +114,17 @@ return [
     'cust_blogger' => 'Food Blogger',
     'cust_regular' => 'Regular Customer',
 
-    // CTA
     'cta_ready_title' => 'Siap untuk Pengalaman Kuliner Tak Terlupakan?',
     'cta_ready_desc' => 'Reservasi meja sekarang dan nikmati hidangan istimewa kami. Dapatkan konfirmasi instan dan pengalaman dining yang menyenangkan!',
     'reserve_now' => 'Reservasi Sekarang',
     'see_menu' => 'Lihat Menu',
 
-    // About Page Extras
     'about_quote' => '"Piring adalah kanvas saya, dan dunia adalah kebun saya. Kami tidak hanya memasak; kami mengurasi momen."',
     'about_chef' => '— JUNAEDI SANTOSO, EXECUTIVE CHEF',
 
-    // Layout & Meta
     'meta_desc' => 'Culinaire - Rasakan pengalaman bersantap mewah dengan masakan asli Indonesia. Pesan meja, pesan antar, atau makan di tempat bersama kami.',
     'premium_restaurant' => 'Restoran Premium',
     
-    // Auth - Login
     'welcome_back' => 'Selamat Datang Kembali!',
     'login_desc' => 'Masuk untuk menikmati berbagai hidangan lezat dan layanan eksklusif dari Culinaire.',
     'login_benefit_1' => 'Pesan menu favorit dengan mudah',
@@ -161,7 +143,6 @@ return [
     'password_placeholder' => '••••••••',
     'email_placeholder' => 'nama@email.com',
 
-    // Auth - Register
     'create_account' => 'Buat akun baru Anda',
     'register_title' => 'Daftar',
     'register_with_google' => 'Daftar dengan Google',
@@ -185,10 +166,8 @@ return [
     'password_min_placeholder' => 'Min. 8 karakter',
     'password_repeat_placeholder' => 'Ulangi kata sandi',
 
-    // Navbar Extra
     'my_orders' => 'Pesanan Saya',
 
-    // Reservation Page
     'reservation_title' => 'Reservasi Meja',
     'reservation_desc' => 'Pesan meja Anda sekarang untuk pengalaman dining yang tak terlupakan.',
     'form_title' => 'Form Reservasi',
@@ -231,7 +210,6 @@ return [
     'term_4' => 'Status reservasi dapat dilihat di halaman Reservasi Saya.',
     'term_5' => 'Private Room memerlukan deposit lebih besar (Rp 300.000).',
 
-    // Dashboard
     'morning' => 'Selamat Pagi',
     'afternoon' => 'Selamat Siang',
     'evening' => 'Selamat Sore',
@@ -239,7 +217,6 @@ return [
     'dashboard_welcome_desc' => 'Apa yang ingin Anda pesan hari ini? Lihat menu terbaru kami atau buat reservasi meja.',
     'create_order_btn' => 'Buat Pesanan',
     'total_orders' => 'Total Pesanan',
-    'reward_points' => 'Poin Reward',
     'total_reservations' => 'Reservasi',
     'favorite_menu' => 'Menu Favorit',
     'recent_orders' => 'Pesanan Terakhir',
@@ -257,7 +234,6 @@ return [
     'reserve_table_action' => 'Reservasi Meja',
     'edit_profile' => 'Edit Profil',
 
-    // Profile Page
     'my_profile_title' => 'Profil Saya',
     'profile_desc' => 'Kelola informasi profil Anda',
     'member_active' => 'Member Aktif',
@@ -277,12 +253,10 @@ return [
     'change_password_btn' => 'Ubah Password',
     'back_to_dashboard' => 'Kembali ke Dashboard',
 
-    // Orders Page
     'my_orders_desc' => 'Lihat dan kelola semua pesanan Anda',
     'status_pending_payment' => 'Menunggu Pembayaran',
     'pay_now' => 'Bayar Sekarang',
 
-    // Create Order
     'create_order_title' => 'Buat Pesanan',
     'create_order_desc' => 'Pilih menu dan tentukan cara pengambilan',
     'select_order_type' => 'Pilih Jenis Pesanan',
@@ -305,7 +279,6 @@ return [
     'secure_payment' => 'Pembayaran aman & terenkripsi',
     'table' => 'Meja',
 
-    // Reservations Page
     'my_reservations' => 'Reservasi Saya',
     'my_reservations_desc' => 'Lihat status dan riwayat reservasi Anda',
     'new_reservation_btn' => 'Reservasi Baru',
@@ -319,7 +292,6 @@ return [
     'no_reservations_desc' => 'Anda belum memiliki reservasi. Buat reservasi pertama Anda sekarang!',
     'create_reservation_btn' => 'Buat Reservasi',
 
-    // Reservation Details
     'reservation_details_title' => 'Detail Reservasi',
     'reservation_details_desc' => 'Informasi lengkap reservasi Anda',
     'back_btn' => 'Kembali',
@@ -334,7 +306,6 @@ return [
     'reservation_status_accepted' => 'Reservasi Diterima',
     'reservation_status_rejected' => 'Reservasi Ditolak',
 
-    // Admin Dashboard
     'admin_dashboard' => 'Dashboard Admin',
     'admin_welcome_desc' => 'Selamat datang, :name! Kelola restoran Anda dari sini.',
     'total_users' => 'Total Users',
@@ -350,7 +321,6 @@ return [
     'recent_activities' => 'Aktivitas Terbaru',
     'no_activities' => 'Belum ada aktivitas',
 
-    // Admin Menus
     'manage_menus_desc' => 'Tambah, edit, atau hapus menu restoran',
     'add_menu' => 'Tambah Menu',
     'menu_image' => 'Gambar',

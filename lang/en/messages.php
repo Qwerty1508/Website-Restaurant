@@ -1,7 +1,6 @@
 <?php
 
 return [
-    // Navbar
     'home' => 'Home',
     'menu' => 'Menu',
     'reservation' => 'Reservation',
@@ -13,7 +12,6 @@ return [
     'dashboard' => 'Dashboard',
     'logout' => 'Log Out',
 
-    // Hero Section (Welcome)
     'hero_subtitle' => 'EST. 2023 • INDONESIA',
     'hero_title_1' => 'Taste',
     'hero_title_2' => 'the',
@@ -22,37 +20,30 @@ return [
     'book_now' => 'Book a Table',
     'explore_menu' => 'Explore Menu',
 
-    // About Page
     'about_title' => 'Art of Taste',
     'about_manifesto' => 'We believe dining is not just about sustenance. It is a theatrical performance where memory, culture, and emotion collide on a single plate.',
     'legacy_title' => 'THE LEGACY',
     'legacy_subtitle' => 'An Odyssey of Flavor',
     '15_years' => '15 YEARS OF EXCELLENCE',
     
-    // Timeline
-    // History Journey (About Page)
     'about_hero_title' => 'A Journey of Taste',
     'about_hero_subtitle' => 'FROM WOODEN HOUSE TO GLOBAL STAGE',
     
-    // Chapter 1: The Wooden House
     'chapter_1_year' => '2009',
     'chapter_1_title' => 'Humble Beginnings',
     'chapter_1_subtitle' => 'The Wooden House',
     'chapter_1_desc' => 'It all started in an old wooden house on the outskirts of Jakarta. No fancy equipment, just a grandmother\'s wok and a passion to preserve ancient recipes. The aroma of firewood and spices blended together, creating unforgettable warmth.',
     
-    // Chapter 2: The Evolution
     'chapter_2_year' => '2017',
     'chapter_2_title' => 'Taste Transformation',
     'chapter_2_subtitle' => 'The Brick & Stone',
     'chapter_2_desc' => 'Customer love made us grow. We moved to a colonial-style brick building. Menus began to evolve, blending traditional techniques with modern presentation. Queues started to form, our story began to be heard.',
 
-    // Chapter 3: The Peak
     'chapter_3_year' => '2024',
     'chapter_3_title' => 'Peak of Luxury',
     'chapter_3_subtitle' => 'The Modern Star',
     'chapter_3_desc' => '15 years of journey brought us here. A masterpiece of glass and gold architecture. Culinaire is no longer just a dining place, but a world-class gastronomic destination celebrating Indonesian culinary richness in luxury.',
 
-    // Menu Page
     'our_menu' => 'Our Menu',
     'menu_desc' => 'Explore various delicious dishes from our kitchen. From traditional foods to modern creations.',
     'search_placeholder' => 'Search for your favorite menu...',
@@ -68,7 +59,6 @@ return [
     'order_desc' => 'Register or login to start ordering and enjoy various attractive promos!',
     'create_order' => 'Create Order',
 
-    // Common
     'scroll' => 'SCROLL',
     'copyright' => '© 2023 Culinaire. All rights reserved.',
     'customers' => 'Customers',
@@ -85,7 +75,6 @@ return [
     'order_btn' => 'Order',
     'see_all_menu' => 'View All Menu',
     
-    // Features
     'why_choose_us' => 'Why Choose Us?',
     'why_choose_desc' => 'We are committed to providing the best culinary experience',
     'feature_1_title' => 'Premium Ingredients',
@@ -97,7 +86,6 @@ return [
     'feature_4_title' => 'Hygienic & Safe',
     'feature_4_desc' => 'High hygiene standards with strict health protocols.',
 
-    // About Section (Welcome)
     'about_journey_title' => 'Our Journey in Culinary World',
     'about_journey_desc' => 'Culinaire was founded in 2009 with a simple vision: serving authentic Indonesian dishes with a modern touch without losing their traditional essence. Starting from a small stall, we have now become a favorite culinary destination in Jakarta.',
     'about_point_1' => 'Recipes passed down from various Indonesian regions',
@@ -106,7 +94,6 @@ return [
     'about_point_4' => 'Private dining for your special events',
     'contact_us' => 'Contact Us',
 
-    // How to Order
     'how_to_order' => 'How to Order',
     'how_to_order_desc' => 'Order your favorite food in 4 easy steps',
     'step_1_title' => 'Register / Login',
@@ -118,7 +105,6 @@ return [
     'step_4_title' => 'Pickup / Dine In',
     'step_4_desc' => 'Pick up your order or enjoy it at our restaurant.',
 
-    // Testimonials
     'testimonials_title' => 'What Our Customers Say',
     'testimonials_desc' => 'Testimonials from loyal Culinaire customers',
     'testimonial_1' => '"The Rendang here is the best I\'ve ever tasted! The spices absorb perfectly and the meat is very tender. Definitely coming back!"',
@@ -128,21 +114,17 @@ return [
     'cust_blogger' => 'Food Blogger',
     'cust_regular' => 'Regular Customer',
 
-    // CTA
     'cta_ready_title' => 'Ready for Unforgettable Culinary Experience?',
     'cta_ready_desc' => 'Reserve a table now and enjoy our special dishes. Get instant confirmation and a delightful dining experience!',
     'reserve_now' => 'Reserve Now',
     'see_menu' => 'View Menu',
 
-    // About Page Extras
     'about_quote' => '"The plate is my canvas, and the world is my garden. We don\'t just cook; we curate moments."',
     'about_chef' => '— JUNAEDI SANTOSO, EXECUTIVE CHEF',
 
-    // Layout & Meta
     'meta_desc' => 'Culinaire - Experience luxury dining with authentic Indonesian cuisine. Reserve your table, order takeaway, or dine in with us.',
     'premium_restaurant' => 'Premium Restaurant',
     
-    // Auth - Login
     'welcome_back' => 'Welcome Back!',
     'login_desc' => 'Login to enjoy delicious dishes and exclusive services from Culinaire.',
     'login_benefit_1' => 'Order favorite menu easily',
@@ -161,7 +143,6 @@ return [
     'password_placeholder' => '••••••••',
     'email_placeholder' => 'name@email.com',
 
-    // Auth - Register
     'create_account' => 'Create your new account',
     'register_title' => 'Register',
     'register_with_google' => 'Register with Google',
@@ -185,10 +166,8 @@ return [
     'password_min_placeholder' => 'Min. 8 characters',
     'password_repeat_placeholder' => 'Repeat password',
 
-    // Navbar Extra
     'my_orders' => 'My Orders',
 
-    // Reservation Page
     'reservation_title' => 'Reserve a Table',
     'reservation_desc' => 'Book your table now for an unforgettable dining experience.',
     'form_title' => 'Reservation Form',
@@ -231,7 +210,6 @@ return [
     'term_4' => 'Reservation status can be viewed on My Reservations page.',
     'term_5' => 'Private Room requires a larger deposit (Rp 300.000).',
 
-    // Dashboard
     'morning' => 'Good Morning',
     'afternoon' => 'Good Afternoon',
     'evening' => 'Good Evening',
@@ -239,7 +217,6 @@ return [
     'dashboard_welcome_desc' => 'What would you like to order today? Check out our latest menu or make a table reservation.',
     'create_order_btn' => 'Create Order',
     'total_orders' => 'Total Orders',
-    'reward_points' => 'Reward Points',
     'total_reservations' => 'Reservations',
     'favorite_menu' => 'Favorite Menu',
     'recent_orders' => 'Recent Orders',
@@ -257,7 +234,6 @@ return [
     'reserve_table_action' => 'Reserve a Table',
     'edit_profile' => 'Edit Profile',
 
-    // Profile Page
     'my_profile_title' => 'My Profile',
     'profile_desc' => 'Manage your profile information',
     'member_active' => 'Active Member',
@@ -277,12 +253,10 @@ return [
     'change_password_btn' => 'Update Password',
     'back_to_dashboard' => 'Back to Dashboard',
 
-    // Orders Page
     'my_orders_desc' => 'View and manage all your orders',
     'status_pending_payment' => 'Waiting for Payment',
     'pay_now' => 'Pay Now',
 
-    // Create Order
     'create_order_title' => 'Create Order',
     'create_order_desc' => 'Select menu and pickup method',
     'select_order_type' => 'Select Order Type',
@@ -305,7 +279,6 @@ return [
     'secure_payment' => 'Secure & encrypted payment',
     'table' => 'Table',
 
-    // Reservations Page
     'my_reservations' => 'My Reservations',
     'my_reservations_desc' => 'View status and history of your reservations',
     'new_reservation_btn' => 'New Reservation',
@@ -319,7 +292,6 @@ return [
     'no_reservations_desc' => 'You have no reservations. Make your first reservation now!',
     'create_reservation_btn' => 'Make Reservation',
 
-    // Reservation Details
     'reservation_details_title' => 'Reservation Details',
     'reservation_details_desc' => 'Complete information about your reservation',
     'back_btn' => 'Back',
@@ -334,7 +306,6 @@ return [
     'reservation_status_accepted' => 'Reservation Accepted',
     'reservation_status_rejected' => 'Reservation Rejected',
 
-    // Admin Dashboard
     'admin_dashboard' => 'Admin Dashboard',
     'admin_welcome_desc' => 'Welcome, :name! Manage your restaurant from here.',
     'total_users' => 'Total Users',
@@ -350,7 +321,6 @@ return [
     'recent_activities' => 'Recent Activities',
     'no_activities' => 'No activities',
 
-    // Admin Menus
     'manage_menus_desc' => 'Add, edit, or delete restaurant menu',
     'add_menu' => 'Add Menu',
     'menu_image' => 'Image',
