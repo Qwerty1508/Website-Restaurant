@@ -70,32 +70,63 @@ class ProjectController extends Controller
 
     private function getGitUpdates(): array
     {
-        return [
-            [
+        $updates = [];
+        
+        try {
+            $gitLog = shell_exec('cd ' . base_path() . ' && git log --oneline --name-only -30 2>&1');
+            
+            if ($gitLog) {
+                $lines = explode("\n", $gitLog);
+                $currentCommit = null;
+                $id = 1;
+                $seenFiles = [];
+                
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if (empty($line)) continue;
+                    
+                    if (preg_match('/^[a-f0-9]{7,}\s+(.+)$/', $line, $matches)) {
+                        $currentCommit = $matches[1];
+                    } else if ($currentCommit && !empty($line) && strpos($line, ' ') === false) {
+                        if (!isset($seenFiles[$line])) {
+                            $seenFiles[$line] = true;
+                            $updates[] = [
+                                'id' => $id++,
+                                'title' => $currentCommit,
+                                'description' => 'Perubahan terbaru pada: ' . $line,
+                                'file_path' => $line,
+                                'update_type' => 'modify',
+                                'update_date' => date('Y-m-d'),
+                            ];
+                            
+                            if ($id > 15) break;
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            $updates[] = [
                 'id' => 1,
-                'title' => 'Fix: Profile dropdown with IDs and direct style toggle',
-                'description' => 'Menambahkan ID ke dropdown button dan menu untuk JavaScript targeting yang lebih reliable. Menghapus data-bs-toggle dan menggunakan custom JS handler.',
-                'file_path' => 'resources/views/components/navbar.blade.php',
-                'update_type' => 'modify',
-                'update_date' => '2025-12-21',
-            ],
-            [
-                'id' => 2,
-                'title' => 'Fix: Add manual JS dropdown handler for profile menu',
-                'description' => 'Menambahkan JavaScript untuk menangani dropdown secara manual karena Bootstrap dropdown tidak berfungsi dengan benar.',
-                'file_path' => 'resources/views/components/navbar.blade.php',
-                'update_type' => 'modify',
-                'update_date' => '2025-12-21',
-            ],
-            [
-                'id' => 3,
-                'title' => 'Fix: Navbar dropdown z-index and pointer-events',
-                'description' => 'Menambahkan z-index tinggi ke navbar dan dropdown untuk memastikan elemen bisa di-klik.',
-                'file_path' => 'resources/views/components/navbar.blade.php',
-                'update_type' => 'modify',
-                'update_date' => '2025-12-21',
-            ],
-        ];
+                'title' => 'Error reading git log',
+                'description' => $e->getMessage(),
+                'file_path' => 'N/A',
+                'update_type' => 'error',
+                'update_date' => date('Y-m-d'),
+            ];
+        }
+        
+        if (empty($updates)) {
+            $updates[] = [
+                'id' => 1,
+                'title' => 'No recent updates',
+                'description' => 'Belum ada perubahan code terbaru yang terdeteksi.',
+                'file_path' => 'N/A',
+                'update_type' => 'info',
+                'update_date' => date('Y-m-d'),
+            ];
+        }
+        
+        return $updates;
     }
 
     public function saveProgress(Request $request)
