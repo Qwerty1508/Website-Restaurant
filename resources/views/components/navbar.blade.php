@@ -175,12 +175,16 @@
     }
 
     .navbar-culinaire .dropdown-menu {
-        background: rgba(255, 255, 255, 0.95);
+        background: #ffffff;
         backdrop-filter: blur(50px);
         -webkit-backdrop-filter: blur(50px);
-        border: 1px solid rgba(12, 42, 54, 0.1);
+        border: 1px solid rgba(12, 42, 54, 0.15);
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
         z-index: 10001;
         position: absolute;
+        min-width: 180px;
+        padding: 8px 0;
     }
 
     .navbar-culinaire .dropdown-item {
