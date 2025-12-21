@@ -73,59 +73,48 @@ class ProjectController extends Controller
         $updates = [];
         
         try {
-            $apiUrl = 'https://api.github.com/repos/Qwerty1508/Website-Restaurant/commits?per_page=20';
-            
-            $context = stream_context_create([
-                'http' => [
-                    'method' => 'GET',
-                    'header' => [
-                        'User-Agent: PHP',
-                        'Accept: application/vnd.github.v3+json'
-                    ],
-                    'timeout' => 10
-                ]
+            $response = \Illuminate\Support\Facades\Http::withHeaders([
+                'User-Agent' => 'Laravel-App',
+                'Accept' => 'application/vnd.github.v3+json',
+            ])->timeout(5)->get('https://api.github.com/repos/Qwerty1508/Website-Restaurant/commits', [
+                'per_page' => 15
             ]);
             
-            $response = @file_get_contents($apiUrl, false, $context);
-            
-            if ($response) {
-                $commits = json_decode($response, true);
+            if ($response->successful()) {
+                $commits = $response->json();
                 $id = 1;
                 
-                if (is_array($commits)) {
-                    foreach ($commits as $commit) {
-                        $message = $commit['commit']['message'] ?? 'No message';
-                        $message = explode("\n", $message)[0];
-                        $date = isset($commit['commit']['committer']['date']) 
-                            ? date('Y-m-d', strtotime($commit['commit']['committer']['date'])) 
-                            : date('Y-m-d');
-                        $sha = substr($commit['sha'] ?? '', 0, 7);
-                        
-                        $updates[] = [
-                            'id' => $id++,
-                            'title' => $message,
-                            'description' => 'Commit: ' . $sha,
-                            'file_path' => 'github.com/Qwerty1508/Website-Restaurant',
-                            'update_type' => 'commit',
-                            'update_date' => $date,
-                        ];
-                        
-                        if ($id > 15) break;
-                    }
+                foreach ($commits as $commit) {
+                    $message = $commit['commit']['message'] ?? 'No message';
+                    $message = explode("\n", $message)[0];
+                    $date = isset($commit['commit']['committer']['date']) 
+                        ? date('Y-m-d', strtotime($commit['commit']['committer']['date'])) 
+                        : date('Y-m-d');
+                    $sha = substr($commit['sha'] ?? '', 0, 7);
+                    
+                    $updates[] = [
+                        'id' => $id++,
+                        'title' => $message,
+                        'description' => 'Commit ' . $sha . ' pada ' . $date,
+                        'file_path' => 'github.com/Qwerty1508/Website-Restaurant',
+                        'update_type' => 'commit',
+                        'update_date' => $date,
+                    ];
                 }
             }
         } catch (\Exception $e) {
-            // Fallback: no updates
+            // API failed, use fallback
         }
         
+        // Fallback: show recent known updates if API fails
         if (empty($updates)) {
-            $updates[] = [
-                'id' => 1,
-                'title' => 'Tidak dapat memuat updates',
-                'description' => 'Coba refresh halaman.',
-                'file_path' => 'N/A',
-                'update_type' => 'info',
-                'update_date' => date('Y-m-d'),
+            $updates = [
+                ['id' => 1, 'title' => 'feat: use GitHub API for Code Updates', 'description' => 'Menggunakan GitHub API untuk menampilkan commits terbaru', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
+                ['id' => 2, 'title' => 'style: make dropdown more transparent', 'description' => 'Dropdown profile sekarang lebih transparan', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
+                ['id' => 3, 'title' => 'style: glassmorphism blur effect on dropdown', 'description' => 'Efek blur glassmorphism pada dropdown menu', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
+                ['id' => 4, 'title' => 'fix: add overflow visible to navbar', 'description' => 'Memperbaiki dropdown yang terpotong di navbar', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+                ['id' => 5, 'title' => 'fix: solid background for profile dropdown', 'description' => 'Background dropdown diperbaiki agar lebih terlihat', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+                ['id' => 6, 'title' => 'chore: FINALIZE navbar component', 'description' => 'Navbar component telah di-finalisasi dan locked', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
             ];
         }
         
