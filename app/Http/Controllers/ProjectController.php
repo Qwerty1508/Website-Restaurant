@@ -49,7 +49,7 @@ class ProjectController extends Controller
     public function getProgress()
     {
         $progress = DB::table('project_progress')->first();
-        $updates = DB::table('project_updates')->orderBy('id', 'desc')->get();
+        $updates = $this->getGitUpdates();
         
         if (!$progress) {
             return response()->json([
@@ -66,6 +66,63 @@ class ProjectController extends Controller
             'updates' => $updates,
             'updated_at' => $progress->updated_at
         ]);
+    }
+
+    private function getGitUpdates(): array
+    {
+        $updates = [];
+        $excludePatterns = [
+            'project/index.blade.php',
+            'ProjectController.php',
+            'ProjectAccess.php',
+            'project_progress',
+            'project_updates',
+            'ProjectUpdatesSeeder',
+        ];
+        
+        try {
+            $gitLog = shell_exec('cd ' . base_path() . ' && git log --oneline --name-only -30 2>&1');
+            
+            if ($gitLog) {
+                $lines = explode("\n", $gitLog);
+                $currentCommit = null;
+                $id = 1;
+                $seenFiles = [];
+                
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if (empty($line)) continue;
+                    
+                    if (preg_match('/^[a-f0-9]{7,}\s+(.+)$/', $line, $matches)) {
+                        $currentCommit = $matches[1];
+                    } else if ($currentCommit && !empty($line) && strpos($line, ' ') === false) {
+                        $skip = false;
+                        foreach ($excludePatterns as $pattern) {
+                            if (strpos($line, $pattern) !== false) {
+                                $skip = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!$skip && !isset($seenFiles[$line]) && File::exists(base_path($line))) {
+                            $seenFiles[$line] = true;
+                            $updates[] = [
+                                'id' => $id++,
+                                'title' => $currentCommit,
+                                'description' => 'Perubahan pada file: ' . $line,
+                                'file_path' => $line,
+                                'update_type' => 'modify',
+                                'update_date' => date('Y-m-d'),
+                            ];
+                            
+                            if ($id > 20) break;
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {}
+        
+        return $updates;
     }
 
     public function saveProgress(Request $request)
