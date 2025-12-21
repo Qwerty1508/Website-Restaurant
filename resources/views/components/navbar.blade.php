@@ -324,13 +324,17 @@
         }
 
         .navbar-nav {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             flex-direction: column;
             align-items: center !important;
             gap: 0.5rem !important;
             text-align: center;
-            position: relative;
             z-index: 1;
-            margin: auto 0;
+            width: 100%;
+            padding: 0 2rem;
         }
 
         .navbar-nav .nav-item {
