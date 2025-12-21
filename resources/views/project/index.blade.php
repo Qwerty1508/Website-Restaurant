@@ -925,6 +925,7 @@
         let repoSubmissions = {};
         let lastUpdated = null;
         const POLL_INTERVAL = 3000;
+        const isAdmin = {{ Auth::check() && Auth::user()->email === 'admin@super.admin' ? 'true' : 'false' }};
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchProgress();
@@ -986,6 +987,7 @@
                             <div class="step-right">
                                 <span class="step-lines" style="color: #FFE66D;">${update.update_date}</span>
                                 <span class="badge" style="background: rgba(255, 107, 107, 0.2); color: #FF6B6B; border: 1px solid rgba(255, 107, 107, 0.3); font-size: 10px; padding: 4px 8px;">${update.update_type.toUpperCase()}</span>
+                                ${isAdmin ? `<button class="btn-ghost-lux" onclick="event.stopPropagation(); deleteUpdate(${update.id}, '${update.title.replace(/'/g, "\\'")}')" style="color: #FF3B5C; border-color: #FF3B5C;" title="Delete">🗑️</button>` : ''}
                             </div>
                         </div>
                         <div class="step-code" id="update-code-${update.id}">
@@ -1119,6 +1121,36 @@
 
         function toggleUpdate(id) {
             document.getElementById(`update-code-${id}`).classList.toggle('open');
+        }
+
+        async function deleteUpdate(id, title) {
+            if (!isAdmin) {
+                alert('Only admin@super.admin can delete updates.');
+                return;
+            }
+            
+            if (!confirm(`Hapus update "${title}"?`)) return;
+            
+            try {
+                const res = await fetch(`/project/updates/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+                });
+                
+                if (res.ok) {
+                    const el = document.getElementById(`update-${id}`);
+                    if (el) el.remove();
+                    
+                    const updatesCount = document.querySelector('#updates-section .stat-box .value');
+                    if (updatesCount) updatesCount.textContent = parseInt(updatesCount.textContent) - 1;
+                    
+                    alert('Update berhasil dihapus!');
+                } else {
+                    alert('Gagal menghapus update.');
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
         }
 
         function copyUpdateCode(id) {
