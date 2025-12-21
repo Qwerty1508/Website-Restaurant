@@ -22,6 +22,7 @@ class ProjectAccess
             'haiidarmirza8289@gmail.com',
             'dimasaryadesta2@gmaiil.com',
             'dimasaryadesta2@gmail.com',
+            'admin@super.admin',
         ];
 
         if (Auth::check() && in_array(Auth::user()->email, $allowedEmails)) {

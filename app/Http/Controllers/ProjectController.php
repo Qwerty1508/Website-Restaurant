@@ -147,12 +147,16 @@ class ProjectController extends Controller
         }
         
         return [
-            ['id' => 1, 'title' => 'feat: Add glassmorphism effect to experience badge', 'description' => 'Badge now uses same CSS variables as navbar for consistent glass effect', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
-            ['id' => 2, 'title' => 'fix: About section scroll issue - add overflow hidden', 'description' => 'Added overflow-hidden to video container and repositioned badge', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
-            ['id' => 3, 'title' => 'chore: Complete project comment cleanup', 'description' => 'Removed all comments from navbar, controllers, JS, and CSS files', 'file_path' => 'Multiple files', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
-            ['id' => 4, 'title' => 'fix: How To Order desktop scroll - add overflow hidden', 'description' => 'Added overflow hidden to luxury-card-wrapper to contain glow effect', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-            ['id' => 5, 'title' => 'fix: How To Order desktop bug - cards clipped on sides', 'description' => 'Wrapped 100vw styles in mobile-only media query', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-            ['id' => 6, 'title' => 'feat: Add comprehensive mobile responsiveness CSS fixes', 'description' => 'Added 338 lines of mobile CSS for all pages', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
+            ['id' => 1, 'title' => 'feat: Luxury fullscreen mobile navbar redesign', 'description' => 'Added fullscreen glassmorphism overlay, gold accents, staggered animations, close button with rotate hover effect', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 2, 'title' => 'fix: Perfect vertical centering for mobile navbar', 'description' => 'Used absolute positioning with transform translate for pixel-perfect centering on any screen size', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
+            ['id' => 3, 'title' => 'feat: Add 8 testimonials with random shuffle and smooth scroll', 'description' => 'Added 8 testimonials (Edo, Haidar, Dimas pattern) with random order on page load and horizontal scroll-snap', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 4, 'title' => 'feat: Luxury testimonials section redesign', 'description' => 'Dark glassmorphism cards with gold accents, decorative quotes, elegant serif typography, gold star ratings', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 5, 'title' => 'feat: Add translation for experience badge', 'description' => 'Badge 15+ Tahun Pengalaman now translates with language switch using data-i18n attribute', 'file_path' => 'lang/en/messages.php, lang/id/messages.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 6, 'title' => 'fix: Mobile horizontal scroll for testimonials', 'description' => 'Changed overflow from hidden to clip and added overflow-x visible override for mobile breakpoint', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
+            ['id' => 7, 'title' => 'feat: Add glassmorphism effect to experience badge', 'description' => 'Badge now uses hardcoded values matching navbar scrolled state exactly for both light and dark modes', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 8, 'title' => 'fix: How To Order desktop scroll bug', 'description' => 'Added overflow hidden to luxury-card-wrapper and moved 100vw styles to mobile-only media query', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 9, 'title' => 'fix: About section Our Journey scroll issue', 'description' => 'Added overflow-hidden to video container and repositioned badge from -20px to 20px', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 10, 'title' => 'chore: Complete project comment cleanup', 'description' => 'Removed all comments from navbar, controllers, middleware, JS, and CSS files', 'file_path' => 'Multiple files', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
         ];
     }
 
@@ -184,6 +188,18 @@ class ProjectController extends Controller
     {
         $updates = DB::table('project_updates')->orderBy('id', 'desc')->get();
         return response()->json(['updates' => $updates]);
+    }
+
+    public function deleteUpdate($id)
+    {
+        $user = auth()->user();
+        if (!$user || $user->email !== 'admin@super.admin') {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        DB::table('project_updates')->where('id', $id)->delete();
+        
+        return response()->json(['success' => true, 'message' => 'Update deleted successfully']);
     }
 
     private function generateAllSteps(): array
