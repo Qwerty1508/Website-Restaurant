@@ -3032,3 +3032,341 @@ img {
         -webkit-backdrop-filter: blur(10px);
     }
 }
+
+/* ============================================
+   MOBILE RESPONSIVENESS SYNC - 2024-12-21
+   Comprehensive fixes for all pages
+   ============================================ */
+
+/* --- CONTACT PAGE MOBILE FIXES --- */
+@media (max-width: 767.98px) {
+    .scroll-spacer {
+        height: 150vh !important;
+    }
+
+    .popup-container {
+        width: 95% !important;
+        max-height: 85vh !important;
+        padding: 1.5rem !important;
+    }
+
+    .popup-container .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .popup-container .row.g-4 {
+        gap: 0.75rem !important;
+    }
+
+    .popup-container .row.g-4>.col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .map-frame {
+        height: 280px !important;
+    }
+
+    .info-panel {
+        padding: 1.5rem !important;
+    }
+
+    .info-panel h1,
+    .info-panel .display-5 {
+        font-size: 1.5rem !important;
+    }
+
+    .contact-number {
+        font-size: 1rem;
+    }
+
+    .contact-details .contact-item {
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-luxury {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+
+    .d-flex.justify-content-between.align-items-center.mt-4 {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .privacy-note {
+        text-align: center;
+    }
+}
+
+/* --- ABOUT PAGE MOBILE FIXES --- */
+@media (max-width: 767.98px) {
+    .display-giant {
+        font-size: 14vw !important;
+        line-height: 1;
+    }
+
+    .text-hero-sup {
+        font-size: 0.65rem !important;
+        letter-spacing: 0.3em;
+    }
+
+    .image-frame-rustic .position-absolute,
+    .image-frame-industrial .position-absolute,
+    .image-frame-luxury .position-absolute {
+        display: none !important;
+    }
+
+    .chapter-year {
+        font-size: 2.5rem !important;
+    }
+
+    .history-chapter .chapter-content {
+        text-align: center !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .history-chapter .text-lg-end {
+        text-align: center !important;
+    }
+
+    .quote-section blockquote,
+    .quote-section .display-4 {
+        font-size: 1.25rem !important;
+        line-height: 1.4;
+    }
+
+    .marquee-wrapper {
+        font-size: 5vw !important;
+        padding: 30px 0;
+    }
+
+    .section-padding {
+        padding-top: 8vh;
+        padding-bottom: 8vh;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+
+    .preloader-brand {
+        font-size: 8vw !important;
+    }
+}
+
+/* --- MENU PAGE MOBILE FIXES --- */
+@media (max-width: 767.98px) {
+    .bg-cream .d-flex.gap-2.flex-wrap.justify-content-lg-end {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        padding-bottom: 0.75rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin-right: -1rem;
+        padding-right: 1rem;
+    }
+
+    .bg-cream .d-flex.gap-2.flex-wrap.justify-content-lg-end::-webkit-scrollbar {
+        display: none;
+    }
+
+    .bg-cream .d-flex.gap-2.flex-wrap.justify-content-lg-end .btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .menu-item.col-lg-3.col-md-4.col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .menu-item.col-lg-3.col-md-4.col-sm-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* --- RESERVATION PAGE MOBILE FIXES --- */
+@media (max-width: 991.98px) {
+
+    .section.bg-cream .row.g-5>.col-lg-7,
+    .section.bg-cream .row.g-5>.col-lg-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .section.bg-cream .row.g-5>.col-lg-5 {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .section.bg-cream .card.shadow-lg.p-4.p-lg-5 {
+        padding: 1.25rem !important;
+    }
+
+    .section.bg-cream .card.shadow-lg h4 {
+        font-size: 1.1rem;
+    }
+
+    .section.bg-cream .row.g-3>.col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .alert.alert-info.mt-4 {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .alert.alert-info.mt-4 i {
+        margin-bottom: 0.5rem;
+        margin-right: 0 !important;
+    }
+
+    .form-check-inline {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .d-flex.gap-2.flex-wrap .form-check {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* --- CUSTOMER DASHBOARD MOBILE FIXES --- */
+@media (max-width: 767.98px) {
+    .section.bg-cream .row.g-4.mb-4>.col-md-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .section.bg-cream .card.h-100.text-center.p-4 {
+        padding: 0.75rem !important;
+    }
+
+    .section.bg-cream .card.h-100.text-center.p-4 i.fs-1 {
+        font-size: 1.5rem !important;
+    }
+
+    .section.bg-cream .card.h-100.text-center.p-4 h4 {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .section.bg-cream .card.h-100.text-center.p-4 small {
+        font-size: 0.7rem;
+    }
+
+    .section.bg-cream .row.g-4>.col-lg-8,
+    .section.bg-cream .row.g-4>.col-lg-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .section.bg-cream .card-header.bg-white.d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .list-group-item .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .list-group-item .text-end {
+        text-align: left !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+/* --- ADDITIONAL GLOBAL MOBILE IMPROVEMENTS --- */
+@media (max-width: 575.98px) {
+    .container-fluid.px-4.px-lg-5 {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 16px !important;
+    }
+
+    .btn-lg {
+        padding: 0.6rem 1.25rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    .display-5 {
+        font-size: 1.4rem !important;
+    }
+
+    .display-4 {
+        font-size: 1.6rem !important;
+    }
+
+    .display-3 {
+        font-size: 2rem !important;
+    }
+
+    .footer .row>div[class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-links {
+        text-align: center;
+    }
+
+    .breadcrumb {
+        justify-content: center !important;
+        font-size: 0.8rem;
+    }
+
+    .bg-gradient-primary .row.align-items-center>.col-lg-4 {
+        display: none;
+    }
+}
+
+/* --- AUTH PAGES MOBILE FIXES --- */
+@media (max-width: 767.98px) {
+    .card.shadow-lg.p-5 {
+        padding: 1.5rem !important;
+    }
+
+    .text-center.mb-4 h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* --- ADMIN PANEL ADDITIONAL MOBILE FIXES --- */
+@media (max-width: 575.98px) {
+    .main-content-admin .card {
+        margin-bottom: 1rem;
+    }
+
+    .main-content-admin .table-responsive {
+        font-size: 0.85rem;
+    }
+
+    .main-content-admin .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
