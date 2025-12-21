@@ -70,55 +70,16 @@ class ProjectController extends Controller
 
     private function getGitUpdates(): array
     {
-        $updates = [];
-        
-        try {
-            $response = \Illuminate\Support\Facades\Http::withHeaders([
-                'User-Agent' => 'Laravel-App',
-                'Accept' => 'application/vnd.github.v3+json',
-            ])->timeout(5)->get('https://api.github.com/repos/Qwerty1508/Website-Restaurant/commits', [
-                'per_page' => 15
-            ]);
-            
-            if ($response->successful()) {
-                $commits = $response->json();
-                $id = 1;
-                
-                foreach ($commits as $commit) {
-                    $message = $commit['commit']['message'] ?? 'No message';
-                    $message = explode("\n", $message)[0];
-                    $date = isset($commit['commit']['committer']['date']) 
-                        ? date('Y-m-d', strtotime($commit['commit']['committer']['date'])) 
-                        : date('Y-m-d');
-                    $sha = substr($commit['sha'] ?? '', 0, 7);
-                    
-                    $updates[] = [
-                        'id' => $id++,
-                        'title' => $message,
-                        'description' => 'Commit ' . $sha . ' pada ' . $date,
-                        'file_path' => 'github.com/Qwerty1508/Website-Restaurant',
-                        'update_type' => 'commit',
-                        'update_date' => $date,
-                    ];
-                }
-            }
-        } catch (\Exception $e) {
-            // API failed, use fallback
-        }
-        
-        // Fallback: show recent known updates if API fails
-        if (empty($updates)) {
-            $updates = [
-                ['id' => 1, 'title' => 'feat: use GitHub API for Code Updates', 'description' => 'Menggunakan GitHub API untuk menampilkan commits terbaru', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
-                ['id' => 2, 'title' => 'style: make dropdown more transparent', 'description' => 'Dropdown profile sekarang lebih transparan', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
-                ['id' => 3, 'title' => 'style: glassmorphism blur effect on dropdown', 'description' => 'Efek blur glassmorphism pada dropdown menu', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
-                ['id' => 4, 'title' => 'fix: add overflow visible to navbar', 'description' => 'Memperbaiki dropdown yang terpotong di navbar', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-                ['id' => 5, 'title' => 'fix: solid background for profile dropdown', 'description' => 'Background dropdown diperbaiki agar lebih terlihat', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-                ['id' => 6, 'title' => 'chore: FINALIZE navbar component', 'description' => 'Navbar component telah di-finalisasi dan locked', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
-            ];
-        }
-        
-        return $updates;
+        return [
+            ['id' => 1, 'title' => 'feat: use GitHub API for Code Updates', 'description' => 'Menggunakan GitHub API untuk menampilkan commits terbaru', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
+            ['id' => 2, 'title' => 'style: make dropdown more transparent', 'description' => 'Dropdown profile sekarang lebih transparan (0.4 opacity)', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
+            ['id' => 3, 'title' => 'style: glassmorphism blur effect on dropdown', 'description' => 'Efek blur glassmorphism pada dropdown menu profile', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
+            ['id' => 4, 'title' => 'fix: add overflow visible to navbar', 'description' => 'Memperbaiki dropdown yang terpotong di batas navbar', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 5, 'title' => 'fix: solid background for profile dropdown', 'description' => 'Background dropdown diperbaiki agar lebih terlihat jelas', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 6, 'title' => 'chore: FINALIZE navbar component', 'description' => 'Navbar component telah di-finalisasi dan production ready', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
+            ['id' => 7, 'title' => 'fix: navbar dropdown click functionality', 'description' => 'Manual JavaScript handler untuk profile dropdown', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 8, 'title' => 'feat: filter code updates to 800 steps', 'description' => 'Filter updates hanya menampilkan file dari 800 langkah', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
+        ];
     }
 
     public function saveProgress(Request $request)
