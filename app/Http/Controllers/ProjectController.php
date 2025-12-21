@@ -11,7 +11,6 @@ class ProjectController extends Controller
     public function index()
     {
         $steps = $this->generateAllSteps();
-        $updates = $this->generateUpdates();
         
         $members = [
             [
@@ -44,17 +43,19 @@ class ProjectController extends Controller
             ],
         ];
 
-        return view('project.index', compact('members', 'updates'));
+        return view('project.index', compact('members'));
     }
 
     public function getProgress()
     {
         $progress = DB::table('project_progress')->first();
+        $updates = DB::table('project_updates')->orderBy('id', 'desc')->get();
         
         if (!$progress) {
             return response()->json([
                 'completed_steps' => [],
                 'repo_submissions' => [],
+                'updates' => $updates,
                 'updated_at' => now()->toISOString()
             ]);
         }
@@ -62,6 +63,7 @@ class ProjectController extends Controller
         return response()->json([
             'completed_steps' => json_decode($progress->completed_steps, true) ?? [],
             'repo_submissions' => json_decode($progress->repo_submissions, true) ?? [],
+            'updates' => $updates,
             'updated_at' => $progress->updated_at
         ]);
     }
@@ -88,6 +90,12 @@ class ProjectController extends Controller
         }
 
         return response()->json(['success' => true, 'updated_at' => now()->toISOString()]);
+    }
+
+    public function getUpdates()
+    {
+        $updates = DB::table('project_updates')->orderBy('id', 'desc')->get();
+        return response()->json(['updates' => $updates]);
     }
 
     private function generateAllSteps(): array
@@ -233,26 +241,5 @@ class ProjectController extends Controller
 
         return $currentStep;
     }
-
-    private function generateUpdates(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Navbar Enhancement',
-                'description' => 'Perbaikan tampilan navbar untuk responsif di mobile. Menambahkan hamburger menu, memperbaiki spacing, dan animasi smooth untuk transisi.',
-                'date' => '2025-12-21',
-                'file' => 'resources/views/components/navbar.blade.php',
-                'type' => 'modify'
-            ],
-            [
-                'id' => 2,
-                'title' => 'CSS App Updates',
-                'description' => 'Update styling untuk luxury theme. Menambahkan variabel warna baru, glassmorphism effect, dan perbaikan responsive design.',
-                'date' => '2025-12-21',
-                'file' => 'public/css/app.css',
-                'type' => 'modify'
-            ],
-        ];
-    }
 }
+

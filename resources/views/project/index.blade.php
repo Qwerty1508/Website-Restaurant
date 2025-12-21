@@ -905,27 +905,8 @@
                 <div class="content-inner">
                     <div class="glow-line" style="margin-bottom: 24px; background: linear-gradient(90deg, transparent, #FF6B6B, transparent);"></div>
                     <div id="updates-list-container">
-                        <div class="steps-list scroll-luxury">
-                            @foreach($updates as $update)
-                            <div class="step-row" id="update-{{ $update['id'] }}" style="border-left-color: #FF6B6B;">
-                                <div class="step-top" onclick="toggleUpdate({{ $update['id'] }})">
-                                    <div class="step-left">
-                                        <div class="step-num" style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%); color: #000;">{{ $update['id'] }}</div>
-                                        <div class="step-info">
-                                            <div class="action" style="color: #FF6B6B;">{{ $update['title'] }}</div>
-                                            <div class="file">{{ $update['file'] }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="step-right">
-                                        <span class="step-lines" style="color: #FFE66D;">{{ $update['date'] }}</span>
-                                        <span class="badge" style="background: rgba(255, 107, 107, 0.2); color: #FF6B6B; border: 1px solid rgba(255, 107, 107, 0.3); font-size: 10px; padding: 4px 8px;">{{ strtoupper($update['type']) }}</span>
-                                    </div>
-                                </div>
-                                <div class="step-code" id="update-code-{{ $update['id'] }}">
-                                    <p style="font-size: 13px; color: var(--text-light); padding: 16px; background: rgba(16, 16, 24, 0.6); border-radius: 12px; line-height: 1.6;">{{ $update['description'] }}</p>
-                                </div>
-                            </div>
-                            @endforeach
+                        <div class="steps-list scroll-luxury" id="updates-list">
+                            <div style="text-align: center; padding: 20px; color: var(--text-muted);">Loading updates...</div>
                         </div>
                     </div>
                 </div>
@@ -957,6 +938,7 @@
                 lastUpdated = data.updated_at;
                 applyProgressUI();
                 applySubmissionsUI();
+                if (data.updates) renderUpdates(data.updates);
             } catch (e) {}
         }
 
@@ -970,8 +952,47 @@
                     lastUpdated = data.updated_at;
                     applyProgressUI();
                     applySubmissionsUI();
+                    if (data.updates) renderUpdates(data.updates);
                 }
             } catch (e) {}
+        }
+
+        function renderUpdates(updates) {
+            const container = document.getElementById('updates-list');
+            if (!container) return;
+            
+            const updatesCount = document.querySelector('#updates-section .stat-box .value');
+            if (updatesCount) updatesCount.textContent = updates.length;
+            
+            if (updates.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Belum ada update code</div>';
+                return;
+            }
+            
+            let html = '';
+            updates.forEach(update => {
+                html += `
+                    <div class="step-row" id="update-${update.id}" style="border-left-color: #FF6B6B;">
+                        <div class="step-top" onclick="toggleUpdate(${update.id})">
+                            <div class="step-left">
+                                <div class="step-num" style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%); color: #000;">${update.id}</div>
+                                <div class="step-info">
+                                    <div class="action" style="color: #FF6B6B;">${update.title}</div>
+                                    <div class="file">${update.file_path}</div>
+                                </div>
+                            </div>
+                            <div class="step-right">
+                                <span class="step-lines" style="color: #FFE66D;">${update.update_date}</span>
+                                <span class="badge" style="background: rgba(255, 107, 107, 0.2); color: #FF6B6B; border: 1px solid rgba(255, 107, 107, 0.3); font-size: 10px; padding: 4px 8px;">${update.update_type.toUpperCase()}</span>
+                            </div>
+                        </div>
+                        <div class="step-code" id="update-code-${update.id}">
+                            <p style="font-size: 13px; color: var(--text-light); padding: 16px; background: rgba(16, 16, 24, 0.6); border-radius: 12px; line-height: 1.6;">${update.description}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
 
         async function syncToServer() {
