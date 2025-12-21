@@ -1100,24 +1100,13 @@
         }
 
         function applyUpdatesLock(progressData) {
-            const allComplete = progressData[1] === 100 && progressData[2] === 100 && progressData[3] === 100 && progressData[4] === 100;
+            // Updates section is now always unlocked - no need to complete 800 steps
             const updatesSection = document.getElementById('updates-section');
             const updatesLockOverlay = document.getElementById('updates-lock-overlay');
-            const updatesListContainer = document.getElementById('updates-list-container');
             
-            if (!allComplete) {
-                updatesSection.classList.add('locked');
-                updatesSection.style.pointerEvents = 'none';
-                if (updatesLockOverlay) updatesLockOverlay.style.display = 'flex';
-                if (updatesListContainer) {
-                    const remaining = 800 - completedSteps.size;
-                    updatesListContainer.innerHTML = `<div class="locked-message"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C8.676 1 6 3.676 6 7v2H4v14h16V9h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg><p>Updates Terkunci</p><span>Selesaikan semua 800 langkah untuk membuka section ini (${remaining} tersisa)</span></div>`;
-                }
-            } else {
-                updatesSection.classList.remove('locked');
-                updatesSection.style.pointerEvents = 'auto';
-                if (updatesLockOverlay) updatesLockOverlay.style.display = 'none';
-            }
+            updatesSection.classList.remove('locked');
+            updatesSection.style.pointerEvents = 'auto';
+            if (updatesLockOverlay) updatesLockOverlay.style.display = 'none';
         }
 
         function toggleUpdates() {
