@@ -682,6 +682,70 @@
         @media (max-width: 768px) {
             .decorative-line { display: none; }
         }
+        
+        .member-card.locked { opacity: 0.6; pointer-events: none; }
+        .member-card.locked .avatar-luxury { background: var(--dark-border); }
+        .member-card.locked .avatar-inner { color: var(--text-muted); }
+        .member-card.locked .member-details h2 { color: var(--text-muted); }
+        .member-card.locked:hover { transform: none; }
+        
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+        
+        .avatar-wrap {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .avatar-wrap { width: 52px; height: 52px; }
+            .lock-icon { font-size: 16px; }
+        }
+        
+        .locked-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 8, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .locked-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+        
+        .locked-message svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            color: var(--gold-dark);
+            opacity: 0.5;
+        }
+        
+        .locked-message p {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .locked-message span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
@@ -715,12 +779,17 @@
         </header>
         
         <div class="members-grid">
-            @foreach($members as $member)
-            <div class="member-card glass-ultra" id="member-{{ $member['id'] }}">
+            @foreach($members as $index => $member)
+            <div class="member-card glass-ultra" id="member-{{ $member['id'] }}" data-member-id="{{ $member['id'] }}">
                 <div class="member-header" onclick="toggleMember({{ $member['id'] }})">
                     <div class="member-info">
-                        <div class="avatar-luxury">
-                            <div class="avatar-inner">{{ substr($member['name'], 0, 1) }}</div>
+                        <div class="avatar-wrap">
+                            <div class="avatar-luxury">
+                                <div class="avatar-inner" id="avatar-text-{{ $member['id'] }}">{{ substr($member['name'], 0, 1) }}</div>
+                            </div>
+                            <div class="locked-overlay" id="lock-overlay-{{ $member['id'] }}" style="display: none;">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 1C8.676 1 6 3.676 6 7v2H4v14h16V9h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg>
+                            </div>
                         </div>
                         <div class="member-details">
                             <h2>{{ $member['name'] }}</h2>
@@ -895,16 +964,57 @@
             updateAllProgress();
         }
 
+        function getMemberProgress(id) {
+            const start = (id - 1) * 200 + 1, end = id * 200;
+            let done = 0;
+            for (let i = start; i <= end; i++) if (completedSteps.has(i)) done++;
+            return Math.round((done / 200) * 100);
+        }
+
         function updateAllProgress() {
+            const progressData = {};
             [1, 2, 3, 4].forEach(id => {
-                const start = (id - 1) * 200 + 1, end = id * 200;
-                let done = 0;
-                for (let i = start; i <= end; i++) if (completedSteps.has(i)) done++;
-                const pct = Math.round((done / 200) * 100);
+                const pct = getMemberProgress(id);
+                progressData[id] = pct;
                 const txt = document.getElementById(`progress-${id}`);
                 if (txt) txt.textContent = `${pct}%`;
                 const circle = document.querySelector(`#ring-${id} .fill`);
                 if (circle) circle.style.strokeDashoffset = 150.8 - (pct / 100) * 150.8;
+            });
+            
+            applyLockState(progressData);
+        }
+
+        function applyLockState(progressData) {
+            const memberNames = { 1: 'Edo', 2: 'Haidar', 3: 'Dimas', 4: 'Bernard' };
+            
+            [1, 2, 3, 4].forEach(id => {
+                const card = document.getElementById(`member-${id}`);
+                const lockOverlay = document.getElementById(`lock-overlay-${id}`);
+                const content = document.getElementById(`content-${id}`);
+                const stepsContainer = content?.querySelector('.steps-list');
+                
+                let isLocked = false;
+                let prevMemberName = '';
+                
+                if (id > 1) {
+                    const prevProgress = progressData[id - 1];
+                    if (prevProgress < 100) {
+                        isLocked = true;
+                        prevMemberName = memberNames[id - 1];
+                    }
+                }
+                
+                if (isLocked) {
+                    card.classList.add('locked');
+                    card.style.pointerEvents = 'none';
+                    if (lockOverlay) lockOverlay.style.display = 'flex';
+                    if (stepsContainer) stepsContainer.innerHTML = `<div class="locked-message"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C8.676 1 6 3.676 6 7v2H4v14h16V9h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg><p>Section Terkunci</p><span>Tunggu ${prevMemberName} menyelesaikan 100% steps</span></div>`;
+                } else {
+                    card.classList.remove('locked');
+                    card.style.pointerEvents = 'auto';
+                    if (lockOverlay) lockOverlay.style.display = 'none';
+                }
             });
         }
 
