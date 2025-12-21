@@ -71,17 +71,44 @@ class ProjectController extends Controller
     private function getGitUpdates(): array
     {
         $updates = [];
-        $excludePatterns = [
-            'project/index.blade.php',
-            'ProjectController.php',
-            'ProjectAccess.php',
-            'project_progress',
-            'project_updates',
-            'ProjectUpdatesSeeder',
+        
+        $includedFiles = [
+            '.env.example', 'composer.json', 'package.json', 'vite.config.js',
+            'config/app.php', 'config/database.php', 'config/auth.php', 'bootstrap/app.php',
+            'app/Models/User.php', 'app/Http/Controllers/Auth/AuthController.php',
+            'app/Http/Controllers/Auth/GoogleController.php',
+            'resources/views/layouts/guest.blade.php', 'resources/views/auth/login.blade.php',
+            'resources/views/auth/register.blade.php',
+            'database/migrations/0001_01_01_000000_create_users_table.php',
+            'database/migrations/0001_01_01_000001_create_cache_table.php',
+            'database/migrations/0001_01_01_000002_create_jobs_table.php',
+            'database/migrations/2025_12_16_035649_add_google_id_to_users_table.php',
+            'database/migrations/2025_12_16_044126_add_is_admin_to_users_table.php',
+            'database/migrations/2025_12_16_044137_create_menus_table.php',
+            'database/migrations/2025_12_16_044139_create_activity_logs_table.php',
+            'database/migrations/2025_12_16_050152_add_status_to_users_table.php',
+            'database/migrations/2025_12_16_053030_create_reservations_table.php',
+            'database/migrations/2025_12_17_151701_add_slug_to_menus_table.php',
+            'database/migrations/2025_12_18_000001_create_orders_table.php',
+            'app/Models/Menu.php', 'app/Models/Reservation.php', 'app/Models/Order.php',
+            'resources/views/layouts/admin.blade.php', 'resources/views/admin/dashboard.blade.php',
+            'resources/views/admin/menus/index.blade.php', 'resources/views/admin/menus/create.blade.php',
+            'resources/views/admin/menus/edit.blade.php', 'resources/views/admin/users/index.blade.php',
+            'resources/views/admin/orders/index.blade.php', 'resources/views/admin/orders/show.blade.php',
+            'resources/views/admin/reservations/index.blade.php', 'resources/views/admin/reservations/show.blade.php',
+            'app/Http/Controllers/ReservationController.php', 'app/Http/Controllers/OrderController.php',
+            'resources/views/reservation/create.blade.php', 'resources/views/menu/index.blade.php',
+            'resources/views/customer/dashboard.blade.php', 'resources/views/customer/profile.blade.php',
+            'resources/views/customer/orders/index.blade.php', 'resources/views/customer/orders/create.blade.php',
+            'resources/views/customer/orders/show.blade.php', 'resources/views/customer/reservations/index.blade.php',
+            'resources/views/customer/reservations/show.blade.php',
+            'resources/views/welcome.blade.php', 'resources/views/about.blade.php',
+            'resources/views/contact.blade.php', 'resources/views/components/navbar.blade.php',
+            'resources/views/components/footer.blade.php', 'public/css/app.css', 'public/js/cursor.js',
         ];
         
         try {
-            $gitLog = shell_exec('cd ' . base_path() . ' && git log --oneline --name-only -30 2>&1');
+            $gitLog = shell_exec('cd ' . base_path() . ' && git log --oneline --name-only -50 2>&1');
             
             if ($gitLog) {
                 $lines = explode("\n", $gitLog);
@@ -96,20 +123,12 @@ class ProjectController extends Controller
                     if (preg_match('/^[a-f0-9]{7,}\s+(.+)$/', $line, $matches)) {
                         $currentCommit = $matches[1];
                     } else if ($currentCommit && !empty($line) && strpos($line, ' ') === false) {
-                        $skip = false;
-                        foreach ($excludePatterns as $pattern) {
-                            if (strpos($line, $pattern) !== false) {
-                                $skip = true;
-                                break;
-                            }
-                        }
-                        
-                        if (!$skip && !isset($seenFiles[$line]) && File::exists(base_path($line))) {
+                        if (in_array($line, $includedFiles) && !isset($seenFiles[$line])) {
                             $seenFiles[$line] = true;
                             $updates[] = [
                                 'id' => $id++,
                                 'title' => $currentCommit,
-                                'description' => 'Perubahan pada file: ' . $line,
+                                'description' => 'Perubahan terbaru pada file ini setelah 800 langkah dibuat',
                                 'file_path' => $line,
                                 'update_type' => 'modify',
                                 'update_date' => date('Y-m-d'),
