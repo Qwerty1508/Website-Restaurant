@@ -938,8 +938,8 @@
                 lastUpdated = data.updated_at;
                 applyProgressUI();
                 applySubmissionsUI();
-                if (data.updates) renderUpdates(data.updates);
-            } catch (e) {}
+                renderUpdates(data.updates || []);
+            } catch (e) { console.error('fetchProgress error:', e); }
         }
 
         async function pollForUpdates() {
@@ -952,9 +952,9 @@
                     lastUpdated = data.updated_at;
                     applyProgressUI();
                     applySubmissionsUI();
-                    if (data.updates) renderUpdates(data.updates);
                 }
-            } catch (e) {}
+                renderUpdates(data.updates || []);
+            } catch (e) { console.error('pollForUpdates error:', e); }
         }
 
         function renderUpdates(updates) {
