@@ -914,7 +914,9 @@
         </div>
         
         <footer class="footer-section">
+            @if(Auth::check() && Auth::user()->email === 'pedoprimasaragi@gmail.com')
             <button class="reset-btn" onclick="resetProgress()">Reset All Progress</button>
+            @endif
         </footer>
     </div>
     
