@@ -1100,7 +1100,6 @@
         }
 
         function applyUpdatesLock(progressData) {
-            // Updates section is now always unlocked - no need to complete 800 steps
             const updatesSection = document.getElementById('updates-section');
             const updatesLockOverlay = document.getElementById('updates-lock-overlay');
             

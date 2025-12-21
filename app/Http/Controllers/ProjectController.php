@@ -70,15 +70,93 @@ class ProjectController extends Controller
 
     private function getGitUpdates(): array
     {
+        // Try to get from cache first (5 minute cache)
+        $cacheKey = 'github_commits_cache';
+        $cached = cache()->get($cacheKey);
+        
+        if ($cached !== null) {
+            return $cached;
+        }
+        
+        $updates = [];
+        
+        // Try GitHub API
+        try {
+            $response = \Illuminate\Support\Facades\Http::withHeaders([
+                'User-Agent' => 'Culinaire-Laravel-App',
+                'Accept' => 'application/vnd.github.v3+json',
+            ])->timeout(8)->get('https://api.github.com/repos/Qwerty1508/Website-Restaurant/commits', [
+                'per_page' => 15
+            ]);
+            
+            if ($response->successful()) {
+                $commits = $response->json();
+                $id = 1;
+                
+                foreach ($commits as $commit) {
+                    $message = $commit['commit']['message'] ?? 'No message';
+                    $firstLine = explode("\n", $message)[0];
+                    $date = isset($commit['commit']['committer']['date']) 
+                        ? date('Y-m-d', strtotime($commit['commit']['committer']['date'])) 
+                        : date('Y-m-d');
+                    $sha = substr($commit['sha'] ?? '', 0, 7);
+                    
+                    // Detect update type from commit message
+                    $updateType = 'commit';
+                    if (str_starts_with($firstLine, 'feat:') || str_starts_with($firstLine, 'feat(')) $updateType = 'feature';
+                    else if (str_starts_with($firstLine, 'fix:') || str_starts_with($firstLine, 'fix(')) $updateType = 'fix';
+                    else if (str_starts_with($firstLine, 'style:')) $updateType = 'style';
+                    else if (str_starts_with($firstLine, 'chore:')) $updateType = 'chore';
+                    else if (str_starts_with($firstLine, 'docs:')) $updateType = 'docs';
+                    
+                    $updates[] = [
+                        'id' => $id++,
+                        'title' => $firstLine,
+                        'description' => 'Commit ' . $sha . ' • ' . $date,
+                        'file_path' => 'github.com/Qwerty1508/Website-Restaurant',
+                        'update_type' => $updateType,
+                        'update_date' => $date,
+                    ];
+                }
+                
+                // Cache for 5 minutes
+                cache()->put($cacheKey, $updates, now()->addMinutes(5));
+                return $updates;
+            }
+        } catch (\Exception $e) {
+            // GitHub API failed, try database
+        }
+        
+        // Fallback: Read from database
+        try {
+            $dbUpdates = DB::table('project_updates')
+                ->orderBy('update_date', 'desc')
+                ->orderBy('id', 'desc')
+                ->limit(15)
+                ->get();
+            
+            if ($dbUpdates->count() > 0) {
+                $id = 1;
+                foreach ($dbUpdates as $update) {
+                    $updates[] = [
+                        'id' => $id++,
+                        'title' => $update->title,
+                        'description' => $update->description,
+                        'file_path' => $update->file_path,
+                        'update_type' => $update->update_type,
+                        'update_date' => $update->update_date,
+                    ];
+                }
+                return $updates;
+            }
+        } catch (\Exception $e) {
+            // Database also failed
+        }
+        
+        // Ultimate fallback: hardcoded data
         return [
-            ['id' => 1, 'title' => 'feat: use GitHub API for Code Updates', 'description' => 'Menggunakan GitHub API untuk menampilkan commits terbaru', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
-            ['id' => 2, 'title' => 'style: make dropdown more transparent', 'description' => 'Dropdown profile sekarang lebih transparan (0.4 opacity)', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
-            ['id' => 3, 'title' => 'style: glassmorphism blur effect on dropdown', 'description' => 'Efek blur glassmorphism pada dropdown menu profile', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'style', 'update_date' => '2025-12-21'],
-            ['id' => 4, 'title' => 'fix: add overflow visible to navbar', 'description' => 'Memperbaiki dropdown yang terpotong di batas navbar', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-            ['id' => 5, 'title' => 'fix: solid background for profile dropdown', 'description' => 'Background dropdown diperbaiki agar lebih terlihat jelas', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-            ['id' => 6, 'title' => 'chore: FINALIZE navbar component', 'description' => 'Navbar component telah di-finalisasi dan production ready', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
-            ['id' => 7, 'title' => 'fix: navbar dropdown click functionality', 'description' => 'Manual JavaScript handler untuk profile dropdown', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-            ['id' => 8, 'title' => 'feat: filter code updates to 800 steps', 'description' => 'Filter updates hanya menampilkan file dari 800 langkah', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
+            ['id' => 1, 'title' => 'feat: GitHub API + Database Fallback', 'description' => 'Implementasi sistem hybrid untuk Code Updates', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => date('Y-m-d')],
+            ['id' => 2, 'title' => 'fix: unlock Code Updates section', 'description' => 'Section Code Updates sekarang selalu terbuka', 'file_path' => 'resources/views/project/index.blade.php', 'update_type' => 'fix', 'update_date' => date('Y-m-d')],
         ];
     }
 
