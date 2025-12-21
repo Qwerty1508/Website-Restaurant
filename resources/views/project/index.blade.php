@@ -874,6 +874,68 @@
             @endforeach
         </div>
         
+        <div class="updates-section glass-ultra" id="updates-section" style="margin-top: 24px; border-radius: 24px; overflow: hidden;">
+            <div class="member-header" onclick="toggleUpdates()" style="cursor: pointer;">
+                <div class="member-info">
+                    <div class="avatar-wrap">
+                        <div class="avatar-luxury" style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%);">
+                            <div class="avatar-inner" style="color: #FF6B6B;" id="updates-avatar">⚡</div>
+                        </div>
+                        <div class="locked-overlay" id="updates-lock-overlay" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 1C8.676 1 6 3.676 6 7v2H4v14h16V9h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg>
+                        </div>
+                    </div>
+                    <div class="member-details">
+                        <h2 style="color: #FF6B6B;">Code Updates</h2>
+                        <p>Perubahan code setelah 800 langkah selesai</p>
+                    </div>
+                </div>
+                <div class="member-stats">
+                    <div class="stat-box">
+                        <div class="label">Updates</div>
+                        <div class="value">{{ count($updates) }}</div>
+                    </div>
+                    <div class="arrow-toggle" id="arrow-updates">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="member-content" id="content-updates">
+                <div class="content-inner">
+                    <div class="glow-line" style="margin-bottom: 24px; background: linear-gradient(90deg, transparent, #FF6B6B, transparent);"></div>
+                    <div id="updates-list-container">
+                        <div class="steps-list scroll-luxury">
+                            @foreach($updates as $update)
+                            <div class="step-row" id="update-{{ $update['id'] }}" style="border-left-color: #FF6B6B;">
+                                <div class="step-top" onclick="toggleUpdate({{ $update['id'] }})">
+                                    <div class="step-left">
+                                        <div class="step-num" style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%); color: #000;">{{ $update['id'] }}</div>
+                                        <div class="step-info">
+                                            <div class="action" style="color: #FF6B6B;">{{ $update['title'] }}</div>
+                                            <div class="file">{{ $update['file'] }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-right">
+                                        <span class="step-lines" style="color: #FFE66D;">{{ $update['date'] }}</span>
+                                        <span class="badge" style="background: rgba(255, 107, 107, 0.2); color: #FF6B6B; border: 1px solid rgba(255, 107, 107, 0.3); font-size: 10px; padding: 4px 8px;">{{ strtoupper($update['type']) }}</span>
+                                    </div>
+                                </div>
+                                <div class="step-code" id="update-code-{{ $update['id'] }}">
+                                    <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">{{ $update['description'] }}</p>
+                                    <div class="code-container">
+                                        <pre class="scroll-luxury"><code>{{ $update['code'] }}</code></pre>
+                                        <button class="copy-btn" onclick="copyUpdateCode({{ $update['id'] }})">Copy</button>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <footer class="footer-section">
             <button class="reset-btn" onclick="resetProgress()">Reset All Progress</button>
         </footer>
@@ -1015,6 +1077,49 @@
                     card.style.pointerEvents = 'auto';
                     if (lockOverlay) lockOverlay.style.display = 'none';
                 }
+            });
+            
+            applyUpdatesLock(progressData);
+        }
+
+        function applyUpdatesLock(progressData) {
+            const allComplete = progressData[1] === 100 && progressData[2] === 100 && progressData[3] === 100 && progressData[4] === 100;
+            const updatesSection = document.getElementById('updates-section');
+            const updatesLockOverlay = document.getElementById('updates-lock-overlay');
+            const updatesListContainer = document.getElementById('updates-list-container');
+            
+            if (!allComplete) {
+                updatesSection.classList.add('locked');
+                updatesSection.style.pointerEvents = 'none';
+                if (updatesLockOverlay) updatesLockOverlay.style.display = 'flex';
+                if (updatesListContainer) {
+                    const remaining = 800 - completedSteps.size;
+                    updatesListContainer.innerHTML = `<div class="locked-message"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C8.676 1 6 3.676 6 7v2H4v14h16V9h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg><p>Updates Terkunci</p><span>Selesaikan semua 800 langkah untuk membuka section ini (${remaining} tersisa)</span></div>`;
+                }
+            } else {
+                updatesSection.classList.remove('locked');
+                updatesSection.style.pointerEvents = 'auto';
+                if (updatesLockOverlay) updatesLockOverlay.style.display = 'none';
+            }
+        }
+
+        function toggleUpdates() {
+            const content = document.getElementById('content-updates');
+            const arrow = document.getElementById('arrow-updates');
+            content.classList.toggle('open');
+            arrow.classList.toggle('open');
+        }
+
+        function toggleUpdate(id) {
+            document.getElementById(`update-code-${id}`).classList.toggle('open');
+        }
+
+        function copyUpdateCode(id) {
+            const code = document.querySelector(`#update-code-${id} code`).textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector(`#update-code-${id} .copy-btn`);
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 1500);
             });
         }
 

@@ -11,6 +11,7 @@ class ProjectController extends Controller
     public function index()
     {
         $steps = $this->generateAllSteps();
+        $updates = $this->generateUpdates();
         
         $members = [
             [
@@ -43,7 +44,7 @@ class ProjectController extends Controller
             ],
         ];
 
-        return view('project.index', compact('members'));
+        return view('project.index', compact('members', 'updates'));
     }
 
     public function getProgress()
@@ -231,5 +232,56 @@ class ProjectController extends Controller
         }
 
         return $currentStep;
+    }
+
+    private function generateUpdates(): array
+    {
+        $updates = [];
+        
+        $updateFiles = [
+            [
+                'id' => 1,
+                'title' => 'Navbar Enhancement',
+                'description' => 'Perbaikan tampilan navbar untuk responsif di mobile',
+                'date' => '2025-12-21',
+                'file' => 'resources/views/components/navbar.blade.php',
+                'type' => 'modify'
+            ],
+            [
+                'id' => 2,
+                'title' => 'CSS App Updates',
+                'description' => 'Update styling untuk luxury theme',
+                'date' => '2025-12-21',
+                'file' => 'public/css/app.css',
+                'type' => 'modify'
+            ],
+        ];
+        
+        foreach ($updateFiles as $update) {
+            $filePath = base_path($update['file']);
+            $code = '';
+            
+            if (File::exists($filePath)) {
+                $content = File::get($filePath);
+                $lines = explode("\n", $content);
+                $previewLines = array_slice($lines, 0, 50);
+                $code = implode("\n", $previewLines);
+                if (count($lines) > 50) {
+                    $code .= "\n\n... (+" . (count($lines) - 50) . " more lines)";
+                }
+            }
+            
+            $updates[] = [
+                'id' => $update['id'],
+                'title' => $update['title'],
+                'description' => $update['description'],
+                'date' => $update['date'],
+                'file' => $update['file'],
+                'type' => $update['type'],
+                'code' => $code
+            ];
+        }
+        
+        return $updates;
     }
 }
