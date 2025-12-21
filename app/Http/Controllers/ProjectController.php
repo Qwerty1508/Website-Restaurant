@@ -147,8 +147,12 @@ class ProjectController extends Controller
         }
         
         return [
-            ['id' => 1, 'title' => 'feat: GitHub API + Database Fallback', 'description' => 'Implementasi sistem hybrid untuk Code Updates', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => date('Y-m-d')],
-            ['id' => 2, 'title' => 'fix: unlock Code Updates section', 'description' => 'Section Code Updates sekarang selalu terbuka', 'file_path' => 'resources/views/project/index.blade.php', 'update_type' => 'fix', 'update_date' => date('Y-m-d')],
+            ['id' => 1, 'title' => 'feat: Add glassmorphism effect to experience badge', 'description' => 'Badge now uses same CSS variables as navbar for consistent glass effect', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 2, 'title' => 'fix: About section scroll issue - add overflow hidden', 'description' => 'Added overflow-hidden to video container and repositioned badge', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
+            ['id' => 3, 'title' => 'chore: Complete project comment cleanup', 'description' => 'Removed all comments from navbar, controllers, JS, and CSS files', 'file_path' => 'Multiple files', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
+            ['id' => 4, 'title' => 'fix: How To Order desktop scroll - add overflow hidden', 'description' => 'Added overflow hidden to luxury-card-wrapper to contain glow effect', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 5, 'title' => 'fix: How To Order desktop bug - cards clipped on sides', 'description' => 'Wrapped 100vw styles in mobile-only media query', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 6, 'title' => 'feat: Add comprehensive mobile responsiveness CSS fixes', 'description' => 'Added 338 lines of mobile CSS for all pages', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-21'],
         ];
     }
 
