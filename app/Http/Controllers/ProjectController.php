@@ -236,13 +236,11 @@ class ProjectController extends Controller
 
     private function generateUpdates(): array
     {
-        $updates = [];
-        
-        $updateFiles = [
+        return [
             [
                 'id' => 1,
                 'title' => 'Navbar Enhancement',
-                'description' => 'Perbaikan tampilan navbar untuk responsif di mobile',
+                'description' => 'Perbaikan tampilan navbar untuk responsif di mobile. Menambahkan hamburger menu, memperbaiki spacing, dan animasi smooth untuk transisi.',
                 'date' => '2025-12-21',
                 'file' => 'resources/views/components/navbar.blade.php',
                 'type' => 'modify'
@@ -250,38 +248,11 @@ class ProjectController extends Controller
             [
                 'id' => 2,
                 'title' => 'CSS App Updates',
-                'description' => 'Update styling untuk luxury theme',
+                'description' => 'Update styling untuk luxury theme. Menambahkan variabel warna baru, glassmorphism effect, dan perbaikan responsive design.',
                 'date' => '2025-12-21',
                 'file' => 'public/css/app.css',
                 'type' => 'modify'
             ],
         ];
-        
-        foreach ($updateFiles as $update) {
-            $filePath = base_path($update['file']);
-            $code = '';
-            
-            if (File::exists($filePath)) {
-                $content = File::get($filePath);
-                $lines = explode("\n", $content);
-                $previewLines = array_slice($lines, 0, 50);
-                $code = implode("\n", $previewLines);
-                if (count($lines) > 50) {
-                    $code .= "\n\n... (+" . (count($lines) - 50) . " more lines)";
-                }
-            }
-            
-            $updates[] = [
-                'id' => $update['id'],
-                'title' => $update['title'],
-                'description' => $update['description'],
-                'date' => $update['date'],
-                'file' => $update['file'],
-                'type' => $update['type'],
-                'code' => $code
-            ];
-        }
-        
-        return $updates;
     }
 }

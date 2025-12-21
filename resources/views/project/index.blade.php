@@ -922,11 +922,7 @@
                                     </div>
                                 </div>
                                 <div class="step-code" id="update-code-{{ $update['id'] }}">
-                                    <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">{{ $update['description'] }}</p>
-                                    <div class="code-container">
-                                        <pre class="scroll-luxury"><code>{{ $update['code'] }}</code></pre>
-                                        <button class="copy-btn" onclick="copyUpdateCode({{ $update['id'] }})">Copy</button>
-                                    </div>
+                                    <p style="font-size: 13px; color: var(--text-light); padding: 16px; background: rgba(16, 16, 24, 0.6); border-radius: 12px; line-height: 1.6;">{{ $update['description'] }}</p>
                                 </div>
                             </div>
                             @endforeach
