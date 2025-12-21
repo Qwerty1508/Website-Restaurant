@@ -101,16 +101,16 @@
     .navbar-culinaire {
         padding: 18px 0;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        /* Transparan di atas */
         background: transparent;
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
         border-bottom: none;
         box-shadow: none;
+        z-index: 9999;
+        position: relative;
     }
 
     .navbar-culinaire.scrolled {
-        /* Glassmorphism muncul saat scroll - sama dengan contact form */
         background: rgba(255, 255, 255, 0.30);
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
@@ -119,7 +119,6 @@
         padding: 12px 0;
     }
 
-    /* Default navbar text colors (on transparent glass) */
     .navbar-brand {
         font-family: var(--font-heading, "Playfair Display", serif);
         font-weight: 700;
@@ -157,11 +156,17 @@
         color: #0C2A36;
     }
 
-    /* Dropdown button styling */
+    .navbar-culinaire .dropdown {
+        position: relative;
+        z-index: 10000;
+    }
+
     .navbar-culinaire .btn-outline-primary {
         color: #0C2A36 !important;
         border-color: rgba(12, 42, 54, 0.3) !important;
         background: rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        pointer-events: auto;
     }
 
     .navbar-culinaire .btn-outline-primary:hover {
@@ -175,6 +180,8 @@
         backdrop-filter: blur(50px);
         -webkit-backdrop-filter: blur(50px);
         border: 1px solid rgba(12, 42, 54, 0.1);
+        z-index: 10001;
+        position: absolute;
     }
 
     .navbar-culinaire .dropdown-item {
