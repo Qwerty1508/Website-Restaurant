@@ -3455,22 +3455,32 @@ img {
 
 .luxury-testimonial-container {
     display: flex;
-    gap: 2rem;
-    justify-content: center;
-    padding: 1rem 0;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.luxury-testimonial-container::-webkit-scrollbar {
+    display: none;
 }
 
 .luxury-testimonial-card {
-    flex: 0 0 380px;
-    max-width: 380px;
+    flex: 0 0 340px;
+    max-width: 340px;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(200, 155, 58, 0.2);
     border-radius: 24px;
-    padding: 2.5rem;
+    padding: 2rem;
     position: relative;
     transition: all 0.4s ease;
+    scroll-snap-align: start;
 }
 
 .luxury-testimonial-card:hover {

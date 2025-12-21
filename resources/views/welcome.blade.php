@@ -744,44 +744,11 @@
         
         for (let i = cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            container.appendChild(cards[j]);
-            cards.splice(j, 1);
+            [cards[i], cards[j]] = [cards[j], cards[i]];
         }
         
-        const allCards = Array.from(container.querySelectorAll('.luxury-testimonial-card'));
-        const firstClone = allCards[0].cloneNode(true);
-        const lastClone = allCards[allCards.length - 1].cloneNode(true);
-        firstClone.setAttribute('data-clone', 'first');
-        lastClone.setAttribute('data-clone', 'last');
-        container.appendChild(firstClone);
-        container.insertBefore(lastClone, container.firstElementChild);
-        
-        let isScrolling = false;
-        container.addEventListener('scroll', function() {
-            if (isScrolling) return;
-            
-            const scrollLeft = container.scrollLeft;
-            const scrollWidth = container.scrollWidth;
-            const clientWidth = container.clientWidth;
-            const maxScroll = scrollWidth - clientWidth;
-            
-            if (scrollLeft <= 10) {
-                isScrolling = true;
-                container.style.scrollBehavior = 'auto';
-                container.scrollLeft = maxScroll - clientWidth - 10;
-                setTimeout(function() {
-                    container.style.scrollBehavior = 'smooth';
-                    isScrolling = false;
-                }, 50);
-            } else if (scrollLeft >= maxScroll - 10) {
-                isScrolling = true;
-                container.style.scrollBehavior = 'auto';
-                container.scrollLeft = clientWidth + 10;
-                setTimeout(function() {
-                    container.style.scrollBehavior = 'smooth';
-                    isScrolling = false;
-                }, 50);
-            }
+        cards.forEach(function(card) {
+            container.appendChild(card);
         });
     });
 </script>
