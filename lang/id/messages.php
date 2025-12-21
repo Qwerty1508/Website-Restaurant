@@ -111,9 +111,11 @@ return [
     'testimonial_1' => '"Rendang di sini adalah yang terbaik yang pernah saya coba! Bumbu meresap sempurna dan dagingnya sangat empuk. Pasti akan kembali lagi!"',
     'testimonial_2' => '"Suasana restoran sangat nyaman dan Instagramable. Pelayanannya ramah dan cepat. Cocok untuk dinner romantis atau gathering keluarga."',
     'testimonial_3' => '"Reservasi online sangat mudah! Saya bisa pilih meja favorit dan langsung dapat konfirmasi. Sistemnya modern dan user-friendly."',
+    'testimonial_4' => '"Setiap hidangan adalah karya seni. Rasanya kompleks namun seimbang. Ini benar-benar fine dining terbaik. Worth every penny!"',
     'cust_loyal' => 'Pelanggan Setia',
     'cust_blogger' => 'Food Blogger',
     'cust_regular' => 'Regular Customer',
+    'cust_executive' => 'Business Executive',
 
     'cta_ready_title' => 'Siap untuk Pengalaman Kuliner Tak Terlupakan?',
     'cta_ready_desc' => 'Reservasi meja sekarang dan nikmati hidangan istimewa kami. Dapatkan konfirmasi instan dan pengalaman dining yang menyenangkan!',

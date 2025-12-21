@@ -437,6 +437,29 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="luxury-testimonial-card">
+                <div class="testimonial-quote-icon">
+                    <i class="bi bi-quote"></i>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_4">{{ __('messages.testimonial_4') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://i.pravatar.cc/100?img=9" alt="Diana Kusuma">
+                    </div>
+                    <div class="author-info">
+                        <h5>Diana Kusuma</h5>
+                        <span data-i18n="cust_executive">{{ __('messages.cust_executive') }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

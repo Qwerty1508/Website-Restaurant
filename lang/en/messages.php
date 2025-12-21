@@ -111,9 +111,11 @@ return [
     'testimonial_1' => '"The Rendang here is the best I\'ve ever tasted! The spices absorb perfectly and the meat is very tender. Definitely coming back!"',
     'testimonial_2' => '"The restaurant atmosphere is very comfortable and Instagramable. Service is friendly and fast. Perfect for romantic dinner or family gathering."',
     'testimonial_3' => '"Online reservation is very easy! I can choose my favorite table and get instant confirmation. The system is modern and user-friendly."',
+    'testimonial_4' => '"Every dish is a work of art. The flavors are complex yet balanced. This is truly fine dining at its best. Worth every penny!"',
     'cust_loyal' => 'Loyal Customer',
     'cust_blogger' => 'Food Blogger',
     'cust_regular' => 'Regular Customer',
+    'cust_executive' => 'Business Executive',
 
     'cta_ready_title' => 'Ready for Unforgettable Culinary Experience?',
     'cta_ready_desc' => 'Reserve a table now and enjoy our special dishes. Get instant confirmation and a delightful dining experience!',
