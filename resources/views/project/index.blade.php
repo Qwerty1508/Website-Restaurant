@@ -893,7 +893,7 @@
                 <div class="member-stats">
                     <div class="stat-box">
                         <div class="label">Updates</div>
-                        <div class="value">{{ count($updates) }}</div>
+                        <div class="value">0</div>
                     </div>
                     <div class="arrow-toggle" id="arrow-updates">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
