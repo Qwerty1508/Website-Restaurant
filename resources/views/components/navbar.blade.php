@@ -106,8 +106,7 @@
         -webkit-backdrop-filter: none;
         border-bottom: none;
         box-shadow: none;
-        z-index: 9999;
-        position: relative;
+        z-index: 9999 !important;
     }
 
     .navbar-culinaire.scrolled {
