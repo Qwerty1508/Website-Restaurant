@@ -330,6 +330,7 @@
             text-align: center;
             position: relative;
             z-index: 1;
+            margin: auto 0;
         }
 
         .navbar-nav .nav-item {
