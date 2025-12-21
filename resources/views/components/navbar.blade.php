@@ -50,13 +50,13 @@
                     </button>
 
                     @auth
-                        <div class="dropdown">
+                        <div class="dropdown" id="profileDropdown">
                             <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 text-truncate" 
-                                    type="button" data-bs-toggle="dropdown" aria-expanded="false" style="max-width: 200px;">
+                                    type="button" id="profileDropdownBtn" aria-expanded="false" style="max-width: 200px;">
                                 <i class="bi bi-person-circle"></i>
                                 <span class="d-none d-md-inline text-truncate">{{ Auth::user()->name ?? 'User' }}</span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <ul class="dropdown-menu dropdown-menu-end shadow" id="profileDropdownMenu">
                                 <li>
                                     <a class="dropdown-item" href="{{ Auth::user()->isAdmin() ? url('/admin/dashboard') : url('/dashboard') }}">
                                         <i class="bi bi-speedometer2 me-2"></i><span data-i18n="dashboard">{{ __('messages.dashboard') }}</span>
@@ -318,20 +318,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    const dropdownBtn = document.querySelector('.navbar-culinaire .dropdown .dropdown-toggle');
-    const dropdownMenu = document.querySelector('.navbar-culinaire .dropdown .dropdown-menu');
+    const dropdownBtn = document.getElementById('profileDropdownBtn');
+    const dropdownMenu = document.getElementById('profileDropdownMenu');
     
     if (dropdownBtn && dropdownMenu) {
         dropdownBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
+            const isOpen = dropdownMenu.classList.contains('show');
             dropdownMenu.classList.toggle('show');
-            this.setAttribute('aria-expanded', dropdownMenu.classList.contains('show'));
+            dropdownMenu.style.display = isOpen ? 'none' : 'block';
+            this.setAttribute('aria-expanded', !isOpen);
         });
 
         document.addEventListener('click', function(e) {
-            if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            if (dropdownBtn && dropdownMenu && !dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
                 dropdownMenu.classList.remove('show');
+                dropdownMenu.style.display = 'none';
                 dropdownBtn.setAttribute('aria-expanded', 'false');
             }
         });
