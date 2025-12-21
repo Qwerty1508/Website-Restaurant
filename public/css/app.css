@@ -2807,6 +2807,7 @@ img {
     border-radius: 24px;
     background: transparent;
     perspective: 1000px;
+    overflow: hidden;
 }
 
 .luxury-card-content {
