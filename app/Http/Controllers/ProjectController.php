@@ -73,53 +73,56 @@ class ProjectController extends Controller
         $updates = [];
         
         try {
-            $gitLog = shell_exec('cd ' . base_path() . ' && git log --oneline --name-only -30 2>&1');
+            $apiUrl = 'https://api.github.com/repos/Qwerty1508/Website-Restaurant/commits?per_page=20';
             
-            if ($gitLog) {
-                $lines = explode("\n", $gitLog);
-                $currentCommit = null;
+            $context = stream_context_create([
+                'http' => [
+                    'method' => 'GET',
+                    'header' => [
+                        'User-Agent: PHP',
+                        'Accept: application/vnd.github.v3+json'
+                    ],
+                    'timeout' => 10
+                ]
+            ]);
+            
+            $response = @file_get_contents($apiUrl, false, $context);
+            
+            if ($response) {
+                $commits = json_decode($response, true);
                 $id = 1;
-                $seenFiles = [];
                 
-                foreach ($lines as $line) {
-                    $line = trim($line);
-                    if (empty($line)) continue;
-                    
-                    if (preg_match('/^[a-f0-9]{7,}\s+(.+)$/', $line, $matches)) {
-                        $currentCommit = $matches[1];
-                    } else if ($currentCommit && !empty($line) && strpos($line, ' ') === false) {
-                        if (!isset($seenFiles[$line])) {
-                            $seenFiles[$line] = true;
-                            $updates[] = [
-                                'id' => $id++,
-                                'title' => $currentCommit,
-                                'description' => 'Perubahan terbaru pada: ' . $line,
-                                'file_path' => $line,
-                                'update_type' => 'modify',
-                                'update_date' => date('Y-m-d'),
-                            ];
-                            
-                            if ($id > 15) break;
-                        }
+                if (is_array($commits)) {
+                    foreach ($commits as $commit) {
+                        $message = $commit['commit']['message'] ?? 'No message';
+                        $message = explode("\n", $message)[0];
+                        $date = isset($commit['commit']['committer']['date']) 
+                            ? date('Y-m-d', strtotime($commit['commit']['committer']['date'])) 
+                            : date('Y-m-d');
+                        $sha = substr($commit['sha'] ?? '', 0, 7);
+                        
+                        $updates[] = [
+                            'id' => $id++,
+                            'title' => $message,
+                            'description' => 'Commit: ' . $sha,
+                            'file_path' => 'github.com/Qwerty1508/Website-Restaurant',
+                            'update_type' => 'commit',
+                            'update_date' => $date,
+                        ];
+                        
+                        if ($id > 15) break;
                     }
                 }
             }
         } catch (\Exception $e) {
-            $updates[] = [
-                'id' => 1,
-                'title' => 'Error reading git log',
-                'description' => $e->getMessage(),
-                'file_path' => 'N/A',
-                'update_type' => 'error',
-                'update_date' => date('Y-m-d'),
-            ];
+            // Fallback: no updates
         }
         
         if (empty($updates)) {
             $updates[] = [
                 'id' => 1,
-                'title' => 'No recent updates',
-                'description' => 'Belum ada perubahan code terbaru yang terdeteksi.',
+                'title' => 'Tidak dapat memuat updates',
+                'description' => 'Coba refresh halaman.',
                 'file_path' => 'N/A',
                 'update_type' => 'info',
                 'update_date' => date('Y-m-d'),
