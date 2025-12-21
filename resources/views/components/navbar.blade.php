@@ -317,5 +317,24 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch(this.href).catch(err => console.error('Background session sync failed', err));
         });
     });
+
+    const dropdownBtn = document.querySelector('.navbar-culinaire .dropdown .dropdown-toggle');
+    const dropdownMenu = document.querySelector('.navbar-culinaire .dropdown .dropdown-menu');
+    
+    if (dropdownBtn && dropdownMenu) {
+        dropdownBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+            this.setAttribute('aria-expanded', dropdownMenu.classList.contains('show'));
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('show');
+                dropdownBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 });
 </script>
