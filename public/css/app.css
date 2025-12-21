@@ -3405,7 +3405,8 @@ img {
     background: linear-gradient(135deg, #0C2A36 0%, #0a1f28 50%, #071419 100%);
     padding: 6rem 0;
     position: relative;
-    overflow: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
 }
 
 .luxury-testimonials::before {
@@ -3585,6 +3586,10 @@ img {
 
     .luxury-section-title {
         font-size: 2rem;
+    }
+
+    .luxury-testimonials {
+        overflow-x: visible;
     }
 }
 
