@@ -92,6 +92,7 @@ return [
     'about_point_2' => 'Organic and fresh ingredients from local farmers',
     'about_point_3' => 'Comfortable and instagramable restaurant atmosphere',
     'about_point_4' => 'Private dining for your special events',
+    'years_experience' => 'Years of Experience',
     'contact_us' => 'Contact Us',
 
     'how_to_order' => 'How to Order',

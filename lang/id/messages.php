@@ -92,6 +92,7 @@ return [
     'about_point_2' => 'Bahan-bahan organik dan fresh dari petani lokal',
     'about_point_3' => 'Suasana restoran yang nyaman dan instagramable',
     'about_point_4' => 'Private dining untuk acara spesial Anda',
+    'years_experience' => 'Tahun Pengalaman',
     'contact_us' => 'Hubungi Kami',
 
     'how_to_order' => 'Cara Memesan',

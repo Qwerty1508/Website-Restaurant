@@ -221,8 +221,8 @@
                     
                     <div class="position-absolute glass-badge text-white rounded-4 p-4 shadow-lg" 
                          style="bottom: 20px; right: 20px;">
-                        <h2 class="mb-0 text-white">15+</h2>
-                        <small>Tahun Pengalaman</small>
+                        <h2 class="mb-0">15+</h2>
+                        <small data-i18n="years_experience">{{ __('messages.years_experience') }}</small>
                     </div>
                 </div>
             </div>
@@ -357,80 +357,83 @@
     </div>
 </section>
 
-<section class="section bg-cream">
+<section class="section luxury-testimonials">
     <div class="container">
-        <div class="section-title">
-            <h2 data-i18n="testimonials_title">{{ __('messages.testimonials_title') }}</h2>
-            <p class="subtitle" data-i18n="testimonials_desc">{{ __('messages.testimonials_desc') }}</p>
-            <div class="divider"></div>
+        <div class="section-title text-center mb-5">
+            <span class="luxury-badge-sm">
+                <i class="bi bi-star-fill"></i>
+                <span data-i18n="testimonials_desc">{{ __('messages.testimonials_desc') }}</span>
+            </span>
+            <h2 class="luxury-section-title mt-3" data-i18n="testimonials_title">{{ __('messages.testimonials_title') }}</h2>
+            <div class="luxury-divider mx-auto mt-4"></div>
         </div>
         
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100 p-4">
-                    <div class="rating-stars mb-3">
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
+        <div class="luxury-testimonial-container">
+            <div class="luxury-testimonial-card">
+                <div class="testimonial-quote-icon">
+                    <i class="bi bi-quote"></i>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_1">{{ __('messages.testimonial_1') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://i.pravatar.cc/100?img=1" alt="Sarah Wijaya">
                     </div>
-                    <p class="text-muted mb-4" data-i18n="testimonial_1">
-                        {{ __('messages.testimonial_1') }}
-                    </p>
-                    <div class="d-flex align-items-center mt-auto">
-                        <img src="https://i.pravatar.cc/60?img=1" alt="Customer" class="rounded-circle me-3" 
-                             style="width: 50px; height: 50px; object-fit: cover;">
-                        <div>
-                            <strong>Sarah Wijaya</strong>
-                            <small class="text-muted d-block" data-i18n="cust_loyal">{{ __('messages.cust_loyal') }}</small>
-                        </div>
+                    <div class="author-info">
+                        <h5>Sarah Wijaya</h5>
+                        <span data-i18n="cust_loyal">{{ __('messages.cust_loyal') }}</span>
                     </div>
                 </div>
             </div>
             
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100 p-4">
-                    <div class="rating-stars mb-3">
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
+            <div class="luxury-testimonial-card">
+                <div class="testimonial-quote-icon">
+                    <i class="bi bi-quote"></i>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_2">{{ __('messages.testimonial_2') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://i.pravatar.cc/100?img=3" alt="Budi Santoso">
                     </div>
-                    <p class="text-muted mb-4" data-i18n="testimonial_2">
-                        {{ __('messages.testimonial_2') }}
-                    </p>
-                    <div class="d-flex align-items-center mt-auto">
-                        <img src="https://i.pravatar.cc/60?img=3" alt="Customer" class="rounded-circle me-3" 
-                             style="width: 50px; height: 50px; object-fit: cover;">
-                        <div>
-                            <strong>Budi Santoso</strong>
-                            <small class="text-muted d-block" data-i18n="cust_blogger">{{ __('messages.cust_blogger') }}</small>
-                        </div>
+                    <div class="author-info">
+                        <h5>Budi Santoso</h5>
+                        <span data-i18n="cust_blogger">{{ __('messages.cust_blogger') }}</span>
                     </div>
                 </div>
             </div>
             
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100 p-4">
-                    <div class="rating-stars mb-3">
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-fill filled"></i>
-                        <i class="bi bi-star-half filled"></i>
+            <div class="luxury-testimonial-card">
+                <div class="testimonial-quote-icon">
+                    <i class="bi bi-quote"></i>
+                </div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_3">{{ __('messages.testimonial_3') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://i.pravatar.cc/100?img=5" alt="Andi Pratama">
                     </div>
-                    <p class="text-muted mb-4" data-i18n="testimonial_3">
-                        {{ __('messages.testimonial_3') }}
-                    </p>
-                    <div class="d-flex align-items-center mt-auto">
-                        <img src="https://i.pravatar.cc/60?img=5" alt="Customer" class="rounded-circle me-3" 
-                             style="width: 50px; height: 50px; object-fit: cover;">
-                        <div>
-                            <strong>Andi Pratama</strong>
-                            <small class="text-muted d-block" data-i18n="cust_regular">{{ __('messages.cust_regular') }}</small>
-                        </div>
+                    <div class="author-info">
+                        <h5>Andi Pratama</h5>
+                        <span data-i18n="cust_regular">{{ __('messages.cust_regular') }}</span>
                     </div>
                 </div>
             </div>
