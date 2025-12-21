@@ -70,93 +70,19 @@ class ProjectController extends Controller
 
     private function getGitUpdates(): array
     {
-        $cacheKey = 'github_commits_cache';
-        $cached = cache()->get($cacheKey);
-        
-        if ($cached !== null) {
-            return $cached;
-        }
-        
-        $updates = [];
-        
-        try {
-            $response = \Illuminate\Support\Facades\Http::withHeaders([
-                'User-Agent' => 'Culinaire-Laravel-App',
-                'Accept' => 'application/vnd.github.v3+json',
-            ])->timeout(8)->get('https://api.github.com/repos/Qwerty1508/Website-Restaurant/commits', [
-                'per_page' => 15
-            ]);
-            
-            if ($response->successful()) {
-                $commits = $response->json();
-                $id = 1;
-                
-                foreach ($commits as $commit) {
-                    $message = $commit['commit']['message'] ?? 'No message';
-                    $firstLine = explode("\n", $message)[0];
-                    $date = isset($commit['commit']['committer']['date']) 
-                        ? date('Y-m-d', strtotime($commit['commit']['committer']['date'])) 
-                        : date('Y-m-d');
-                    $sha = substr($commit['sha'] ?? '', 0, 7);
-                    
-                    $updateType = 'commit';
-                    if (str_starts_with($firstLine, 'feat:') || str_starts_with($firstLine, 'feat(')) $updateType = 'feature';
-                    else if (str_starts_with($firstLine, 'fix:') || str_starts_with($firstLine, 'fix(')) $updateType = 'fix';
-                    else if (str_starts_with($firstLine, 'style:')) $updateType = 'style';
-                    else if (str_starts_with($firstLine, 'chore:')) $updateType = 'chore';
-                    else if (str_starts_with($firstLine, 'docs:')) $updateType = 'docs';
-                    
-                    $updates[] = [
-                        'id' => $id++,
-                        'title' => $firstLine,
-                        'description' => 'Commit ' . $sha . ' • ' . $date,
-                        'file_path' => 'github.com/Qwerty1508/Website-Restaurant',
-                        'update_type' => $updateType,
-                        'update_date' => $date,
-                    ];
-                }
-                
-                cache()->put($cacheKey, $updates, now()->addMinutes(5));
-                return $updates;
-            }
-        } catch (\Exception $e) {
-        }
-        
-        try {
-            $dbUpdates = DB::table('project_updates')
-                ->orderBy('update_date', 'desc')
-                ->orderBy('id', 'desc')
-                ->limit(15)
-                ->get();
-            
-            if ($dbUpdates->count() > 0) {
-                $id = 1;
-                foreach ($dbUpdates as $update) {
-                    $updates[] = [
-                        'id' => $id++,
-                        'title' => $update->title,
-                        'description' => $update->description,
-                        'file_path' => $update->file_path,
-                        'update_type' => $update->update_type,
-                        'update_date' => $update->update_date,
-                    ];
-                }
-                return $updates;
-            }
-        } catch (\Exception $e) {
-        }
-        
         return [
-            ['id' => 1, 'title' => 'feat: Luxury fullscreen mobile navbar redesign', 'description' => 'Added fullscreen glassmorphism overlay, gold accents, staggered animations, close button with rotate hover effect', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
-            ['id' => 2, 'title' => 'fix: Perfect vertical centering for mobile navbar', 'description' => 'Used absolute positioning with transform translate for pixel-perfect centering on any screen size', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
-            ['id' => 3, 'title' => 'feat: Add 8 testimonials with random shuffle and smooth scroll', 'description' => 'Added 8 testimonials (Edo, Haidar, Dimas pattern) with random order on page load and horizontal scroll-snap', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
-            ['id' => 4, 'title' => 'feat: Luxury testimonials section redesign', 'description' => 'Dark glassmorphism cards with gold accents, decorative quotes, elegant serif typography, gold star ratings', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
-            ['id' => 5, 'title' => 'feat: Add translation for experience badge', 'description' => 'Badge 15+ Tahun Pengalaman now translates with language switch using data-i18n attribute', 'file_path' => 'lang/en/messages.php, lang/id/messages.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
-            ['id' => 6, 'title' => 'fix: Mobile horizontal scroll for testimonials', 'description' => 'Changed overflow from hidden to clip and added overflow-x visible override for mobile breakpoint', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
-            ['id' => 7, 'title' => 'feat: Add glassmorphism effect to experience badge', 'description' => 'Badge now uses hardcoded values matching navbar scrolled state exactly for both light and dark modes', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
-            ['id' => 8, 'title' => 'fix: How To Order desktop scroll bug', 'description' => 'Added overflow hidden to luxury-card-wrapper and moved 100vw styles to mobile-only media query', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-            ['id' => 9, 'title' => 'fix: About section Our Journey scroll issue', 'description' => 'Added overflow-hidden to video container and repositioned badge from -20px to 20px', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
-            ['id' => 10, 'title' => 'chore: Complete project comment cleanup', 'description' => 'Removed all comments from navbar, controllers, middleware, JS, and CSS files', 'file_path' => 'Multiple files', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
+            ['id' => 1, 'title' => 'feat: Project page admin access and delete functionality', 'description' => 'Added admin@super.admin to allowed emails, added delete route for updates', 'file_path' => 'app/Http/Middleware/ProjectAccess.php, routes/web.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 2, 'title' => 'fix: Simplified code updates to use manual array only', 'description' => 'Removed GitHub API and database lookups, now using manual fallback array for full control', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
+            ['id' => 3, 'title' => 'feat: Luxury fullscreen mobile navbar redesign', 'description' => 'Added fullscreen glassmorphism overlay, gold accents, staggered animations, close button with rotate hover effect', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 4, 'title' => 'fix: Perfect vertical centering for mobile navbar', 'description' => 'Used absolute positioning with transform translate for pixel-perfect centering on any screen size', 'file_path' => 'resources/views/components/navbar.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
+            ['id' => 5, 'title' => 'feat: Add 8 testimonials with random shuffle and smooth scroll', 'description' => 'Added 8 testimonials (Edo, Haidar, Dimas pattern) with random order on page load and horizontal scroll-snap', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 6, 'title' => 'feat: Luxury testimonials section redesign', 'description' => 'Dark glassmorphism cards with gold accents, decorative quotes, elegant serif typography, gold star ratings', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 7, 'title' => 'feat: Add translation for experience badge', 'description' => 'Badge 15+ Tahun Pengalaman now translates with language switch using data-i18n attribute', 'file_path' => 'lang/en/messages.php, lang/id/messages.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 8, 'title' => 'fix: Mobile horizontal scroll for testimonials', 'description' => 'Changed overflow from hidden to clip and added overflow-x visible override for mobile breakpoint', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
+            ['id' => 9, 'title' => 'feat: Add glassmorphism effect to experience badge', 'description' => 'Badge now uses hardcoded values matching navbar scrolled state exactly for both light and dark modes', 'file_path' => 'public/css/app.css', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
+            ['id' => 10, 'title' => 'fix: How To Order desktop scroll bug', 'description' => 'Added overflow hidden to luxury-card-wrapper and moved 100vw styles to mobile-only media query', 'file_path' => 'public/css/app.css', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 11, 'title' => 'fix: About section Our Journey scroll issue', 'description' => 'Added overflow-hidden to video container and repositioned badge from -20px to 20px', 'file_path' => 'resources/views/welcome.blade.php', 'update_type' => 'fix', 'update_date' => '2025-12-21'],
+            ['id' => 12, 'title' => 'chore: Complete project comment cleanup', 'description' => 'Removed all comments from navbar, controllers, middleware, JS, and CSS files', 'file_path' => 'Multiple files', 'update_type' => 'chore', 'update_date' => '2025-12-21'],
         ];
     }
 
