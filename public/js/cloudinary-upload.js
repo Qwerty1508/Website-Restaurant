@@ -1,9 +1,9 @@
 
 const CloudinaryUploader = {
     cloudName: 'dh9ysyfit',
-    uploadPreset: 'culinaire_uploads', // Ganti sesuai upload preset Anda
+    uploadPreset: 'culinaire_uploads',
 
-    
+
     async compressImage(file, options = {}) {
         const {
             maxWidth = 1200,
@@ -17,7 +17,6 @@ const CloudinaryUploader = {
             reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
-                    // Calculate new dimensions
                     let { width, height } = img;
 
                     if (width > maxWidth) {
@@ -29,7 +28,6 @@ const CloudinaryUploader = {
                         height = maxHeight;
                     }
 
-                    // Create canvas and compress
                     const canvas = document.createElement('canvas');
                     canvas.width = width;
                     canvas.height = height;
@@ -58,7 +56,7 @@ const CloudinaryUploader = {
         });
     },
 
-    
+
     async upload(file, options = {}) {
         const {
             folder = 'uploads',
@@ -67,7 +65,6 @@ const CloudinaryUploader = {
             compressionOptions = {}
         } = options;
 
-        // Compress image if enabled and it's an image
         let uploadFile = file;
         if (compress && file.type && file.type.startsWith('image/')) {
             try {
@@ -85,7 +82,6 @@ const CloudinaryUploader = {
 
             const xhr = new XMLHttpRequest();
 
-            // Progress tracking
             xhr.upload.addEventListener('progress', (e) => {
                 if (e.lengthComputable) {
                     const percent = Math.round((e.loaded / e.total) * 100);
@@ -124,7 +120,7 @@ const CloudinaryUploader = {
         });
     },
 
-    
+
     createProgressBar(containerId) {
         const container = document.getElementById(containerId);
         if (!container) return null;
@@ -190,8 +186,6 @@ const CloudinaryUploader = {
     }
 };
 
-// Export for use in modules if needed
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = CloudinaryUploader;
 }
-

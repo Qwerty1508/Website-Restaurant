@@ -2729,14 +2729,11 @@ body {
 
 .luxury-scroll-container {
     scrollbar-width: none;
-
     -ms-overflow-style: none;
-
 }
 
 .luxury-scroll-container::-webkit-scrollbar {
     display: none;
-
     width: 0;
     height: 0;
 }
@@ -2749,16 +2746,17 @@ body {
     display: none;
 }
 
-.luxury-scroll-container {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    padding-left: 20px;
-
-    padding-right: 20px;
+@media (max-width: 991.98px) {
+    .luxury-scroll-container {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 html,
@@ -3033,12 +3031,6 @@ img {
     }
 }
 
-/* ============================================
-   MOBILE RESPONSIVENESS SYNC - 2024-12-21
-   Comprehensive fixes for all pages
-   ============================================ */
-
-/* --- CONTACT PAGE MOBILE FIXES --- */
 @media (max-width: 767.98px) {
     .scroll-spacer {
         height: 150vh !important;
@@ -3099,7 +3091,6 @@ img {
     }
 }
 
-/* --- ABOUT PAGE MOBILE FIXES --- */
 @media (max-width: 767.98px) {
     .display-giant {
         font-size: 14vw !important;
@@ -3156,7 +3147,6 @@ img {
     }
 }
 
-/* --- MENU PAGE MOBILE FIXES --- */
 @media (max-width: 767.98px) {
     .bg-cream .d-flex.gap-2.flex-wrap.justify-content-lg-end {
         flex-wrap: nowrap !important;
@@ -3192,7 +3182,6 @@ img {
     }
 }
 
-/* --- RESERVATION PAGE MOBILE FIXES --- */
 @media (max-width: 991.98px) {
 
     .section.bg-cream .row.g-5>.col-lg-7,
@@ -3241,7 +3230,6 @@ img {
     }
 }
 
-/* --- CUSTOMER DASHBOARD MOBILE FIXES --- */
 @media (max-width: 767.98px) {
     .section.bg-cream .row.g-4.mb-4>.col-md-3 {
         flex: 0 0 50%;
@@ -3290,7 +3278,6 @@ img {
     }
 }
 
-/* --- ADDITIONAL GLOBAL MOBILE IMPROVEMENTS --- */
 @media (max-width: 575.98px) {
     .container-fluid.px-4.px-lg-5 {
         padding-left: 0.75rem !important;
@@ -3344,7 +3331,6 @@ img {
     }
 }
 
-/* --- AUTH PAGES MOBILE FIXES --- */
 @media (max-width: 767.98px) {
     .card.shadow-lg.p-5 {
         padding: 1.5rem !important;
@@ -3355,7 +3341,6 @@ img {
     }
 }
 
-/* --- ADMIN PANEL ADDITIONAL MOBILE FIXES --- */
 @media (max-width: 575.98px) {
     .main-content-admin .card {
         margin-bottom: 1rem;

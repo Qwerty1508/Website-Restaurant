@@ -1099,7 +1099,7 @@
             });
             
             applyUpdatesLock(progressData);
-        }
+        } 
 
         function applyUpdatesLock(progressData) {
             const updatesSection = document.getElementById('updates-section');

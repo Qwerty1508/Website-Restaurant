@@ -70,7 +70,6 @@ class ProjectController extends Controller
 
     private function getGitUpdates(): array
     {
-        // Try to get from cache first (5 minute cache)
         $cacheKey = 'github_commits_cache';
         $cached = cache()->get($cacheKey);
         
@@ -80,7 +79,6 @@ class ProjectController extends Controller
         
         $updates = [];
         
-        // Try GitHub API
         try {
             $response = \Illuminate\Support\Facades\Http::withHeaders([
                 'User-Agent' => 'Culinaire-Laravel-App',
@@ -101,7 +99,6 @@ class ProjectController extends Controller
                         : date('Y-m-d');
                     $sha = substr($commit['sha'] ?? '', 0, 7);
                     
-                    // Detect update type from commit message
                     $updateType = 'commit';
                     if (str_starts_with($firstLine, 'feat:') || str_starts_with($firstLine, 'feat(')) $updateType = 'feature';
                     else if (str_starts_with($firstLine, 'fix:') || str_starts_with($firstLine, 'fix(')) $updateType = 'fix';
@@ -119,15 +116,12 @@ class ProjectController extends Controller
                     ];
                 }
                 
-                // Cache for 5 minutes
                 cache()->put($cacheKey, $updates, now()->addMinutes(5));
                 return $updates;
             }
         } catch (\Exception $e) {
-            // GitHub API failed, try database
         }
         
-        // Fallback: Read from database
         try {
             $dbUpdates = DB::table('project_updates')
                 ->orderBy('update_date', 'desc')
@@ -150,10 +144,8 @@ class ProjectController extends Controller
                 return $updates;
             }
         } catch (\Exception $e) {
-            // Database also failed
         }
         
-        // Ultimate fallback: hardcoded data
         return [
             ['id' => 1, 'title' => 'feat: GitHub API + Database Fallback', 'description' => 'Implementasi sistem hybrid untuk Code Updates', 'file_path' => 'app/Http/Controllers/ProjectController.php', 'update_type' => 'feature', 'update_date' => date('Y-m-d')],
             ['id' => 2, 'title' => 'fix: unlock Code Updates section', 'description' => 'Section Code Updates sekarang selalu terbuka', 'file_path' => 'resources/views/project/index.blade.php', 'update_type' => 'fix', 'update_date' => date('Y-m-d')],

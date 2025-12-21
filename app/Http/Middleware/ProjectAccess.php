@@ -20,8 +20,8 @@ class ProjectAccess
             'pedoprimasaragi@gmail.com',
             'bernardprawira54@gmail.com',
             'haiidarmirza8289@gmail.com',
-            'dimasaryadesta2@gmaiil.com', // As provided
-            'dimasaryadesta2@gmail.com',  // Typo correction fallback
+            'dimasaryadesta2@gmaiil.com',
+            'dimasaryadesta2@gmail.com',
         ];
 
         if (Auth::check() && in_array(Auth::user()->email, $allowedEmails)) {
