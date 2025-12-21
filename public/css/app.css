@@ -150,6 +150,32 @@
     --glass-border: rgba(255, 255, 255, 0.06);
 }
 
+.glass-badge {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(12, 42, 54, 0.1);
+    color: var(--primary) !important;
+}
+
+.glass-badge h2,
+.glass-badge small {
+    color: var(--primary) !important;
+}
+
+[data-theme="dark"] .glass-badge {
+    background: rgba(12, 42, 54, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .glass-badge h2,
+[data-theme="dark"] .glass-badge small {
+    color: #FFFFFF !important;
+}
+
 *,
 *::before,
 *::after {

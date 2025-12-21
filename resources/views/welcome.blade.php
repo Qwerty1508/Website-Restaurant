@@ -219,7 +219,7 @@
                         Your browser does not support the video tag.
                     </video>
                     
-                    <div class="position-absolute bg-gradient-primary text-white rounded-4 p-4 shadow-lg" 
+                    <div class="position-absolute glass-badge text-white rounded-4 p-4 shadow-lg" 
                          style="bottom: 20px; right: 20px;">
                         <h2 class="mb-0 text-white">15+</h2>
                         <small>Tahun Pengalaman</small>
