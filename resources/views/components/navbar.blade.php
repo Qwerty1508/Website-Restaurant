@@ -10,6 +10,9 @@
         </button>
         
         <div class="collapse navbar-collapse" id="navbarNav">
+            <button class="mobile-nav-close d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Close menu">
+                <i class="bi bi-x-lg"></i>
+            </button>
             <ul class="navbar-nav ms-auto align-items-center gap-3">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}" data-i18n="home">
@@ -260,6 +263,39 @@
             display: flex !important;
             opacity: 1;
             visibility: visible;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(200, 155, 58, 0.3);
+            background: rgba(200, 155, 58, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100000;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-close i {
+            font-size: 1.25rem;
+            color: #C89B3A;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav-close:hover {
+            background: rgba(200, 155, 58, 0.2);
+            border-color: #C89B3A;
+            transform: rotate(90deg);
+        }
+
+        .mobile-nav-close:hover i {
+            transform: scale(1.1);
         }
 
         .navbar-collapse::before {
