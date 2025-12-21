@@ -368,95 +368,123 @@
             <div class="luxury-divider mx-auto mt-4"></div>
         </div>
         
-        <div class="luxury-testimonial-container">
-            <div class="luxury-testimonial-card">
-                <div class="testimonial-quote-icon">
-                    <i class="bi bi-quote"></i>
-                </div>
+        <div class="luxury-testimonial-container" id="testimonialContainer">
+            <div class="luxury-testimonial-card" data-testimonial-id="1">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                 </div>
                 <p class="testimonial-text" data-i18n="testimonial_1">{{ __('messages.testimonial_1') }}</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">
-                        <img src="https://i.pravatar.cc/100?img=1" alt="Sarah Wijaya">
-                    </div>
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=11" alt="Edo"></div>
                     <div class="author-info">
-                        <h5>Sarah Wijaya</h5>
-                        <span data-i18n="cust_loyal">{{ __('messages.cust_loyal') }}</span>
+                        <h5 data-i18n="cust_name_1">{{ __('messages.cust_name_1') }}</h5>
+                        <span data-i18n="cust_role_1">{{ __('messages.cust_role_1') }}</span>
                     </div>
                 </div>
             </div>
             
-            <div class="luxury-testimonial-card">
-                <div class="testimonial-quote-icon">
-                    <i class="bi bi-quote"></i>
-                </div>
+            <div class="luxury-testimonial-card" data-testimonial-id="2">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                 </div>
                 <p class="testimonial-text" data-i18n="testimonial_2">{{ __('messages.testimonial_2') }}</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">
-                        <img src="https://i.pravatar.cc/100?img=3" alt="Budi Santoso">
-                    </div>
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=12" alt="Haidar"></div>
                     <div class="author-info">
-                        <h5>Budi Santoso</h5>
-                        <span data-i18n="cust_blogger">{{ __('messages.cust_blogger') }}</span>
+                        <h5 data-i18n="cust_name_2">{{ __('messages.cust_name_2') }}</h5>
+                        <span data-i18n="cust_role_2">{{ __('messages.cust_role_2') }}</span>
                     </div>
                 </div>
             </div>
             
-            <div class="luxury-testimonial-card">
-                <div class="testimonial-quote-icon">
-                    <i class="bi bi-quote"></i>
-                </div>
+            <div class="luxury-testimonial-card" data-testimonial-id="3">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
                 </div>
                 <p class="testimonial-text" data-i18n="testimonial_3">{{ __('messages.testimonial_3') }}</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">
-                        <img src="https://i.pravatar.cc/100?img=5" alt="Andi Pratama">
-                    </div>
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=13" alt="Dimas"></div>
                     <div class="author-info">
-                        <h5>Andi Pratama</h5>
-                        <span data-i18n="cust_regular">{{ __('messages.cust_regular') }}</span>
+                        <h5 data-i18n="cust_name_3">{{ __('messages.cust_name_3') }}</h5>
+                        <span data-i18n="cust_role_3">{{ __('messages.cust_role_3') }}</span>
                     </div>
                 </div>
             </div>
             
-            <div class="luxury-testimonial-card">
-                <div class="testimonial-quote-icon">
-                    <i class="bi bi-quote"></i>
-                </div>
+            <div class="luxury-testimonial-card" data-testimonial-id="4">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                 </div>
                 <p class="testimonial-text" data-i18n="testimonial_4">{{ __('messages.testimonial_4') }}</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">
-                        <img src="https://i.pravatar.cc/100?img=9" alt="Diana Kusuma">
-                    </div>
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=14" alt="Edo"></div>
                     <div class="author-info">
-                        <h5>Diana Kusuma</h5>
-                        <span data-i18n="cust_executive">{{ __('messages.cust_executive') }}</span>
+                        <h5 data-i18n="cust_name_4">{{ __('messages.cust_name_4') }}</h5>
+                        <span data-i18n="cust_role_4">{{ __('messages.cust_role_4') }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="luxury-testimonial-card" data-testimonial-id="5">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_5">{{ __('messages.testimonial_5') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=15" alt="Haidar"></div>
+                    <div class="author-info">
+                        <h5 data-i18n="cust_name_5">{{ __('messages.cust_name_5') }}</h5>
+                        <span data-i18n="cust_role_5">{{ __('messages.cust_role_5') }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="luxury-testimonial-card" data-testimonial-id="6">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_6">{{ __('messages.testimonial_6') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=16" alt="Dimas"></div>
+                    <div class="author-info">
+                        <h5 data-i18n="cust_name_6">{{ __('messages.cust_name_6') }}</h5>
+                        <span data-i18n="cust_role_6">{{ __('messages.cust_role_6') }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="luxury-testimonial-card" data-testimonial-id="7">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_7">{{ __('messages.testimonial_7') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=17" alt="Edo"></div>
+                    <div class="author-info">
+                        <h5 data-i18n="cust_name_7">{{ __('messages.cust_name_7') }}</h5>
+                        <span data-i18n="cust_role_7">{{ __('messages.cust_role_7') }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="luxury-testimonial-card" data-testimonial-id="8">
+                <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
+                <div class="testimonial-rating">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p class="testimonial-text" data-i18n="testimonial_8">{{ __('messages.testimonial_8') }}</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"><img src="https://i.pravatar.cc/100?img=18" alt="Haidar"></div>
+                    <div class="author-info">
+                        <h5 data-i18n="cust_name_8">{{ __('messages.cust_name_8') }}</h5>
+                        <span data-i18n="cust_role_8">{{ __('messages.cust_role_8') }}</span>
                     </div>
                 </div>
             </div>
@@ -705,6 +733,56 @@
             titleContainer.innerHTML = titleContainer.ariaLabel;
             subtitleContainer.innerHTML = subtitleContainer.dataset.text;
         }
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('testimonialContainer');
+        if (!container) return;
+        
+        const cards = Array.from(container.querySelectorAll('.luxury-testimonial-card'));
+        if (cards.length === 0) return;
+        
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            container.appendChild(cards[j]);
+            cards.splice(j, 1);
+        }
+        
+        const allCards = Array.from(container.querySelectorAll('.luxury-testimonial-card'));
+        const firstClone = allCards[0].cloneNode(true);
+        const lastClone = allCards[allCards.length - 1].cloneNode(true);
+        firstClone.setAttribute('data-clone', 'first');
+        lastClone.setAttribute('data-clone', 'last');
+        container.appendChild(firstClone);
+        container.insertBefore(lastClone, container.firstElementChild);
+        
+        let isScrolling = false;
+        container.addEventListener('scroll', function() {
+            if (isScrolling) return;
+            
+            const scrollLeft = container.scrollLeft;
+            const scrollWidth = container.scrollWidth;
+            const clientWidth = container.clientWidth;
+            const maxScroll = scrollWidth - clientWidth;
+            
+            if (scrollLeft <= 10) {
+                isScrolling = true;
+                container.style.scrollBehavior = 'auto';
+                container.scrollLeft = maxScroll - clientWidth - 10;
+                setTimeout(function() {
+                    container.style.scrollBehavior = 'smooth';
+                    isScrolling = false;
+                }, 50);
+            } else if (scrollLeft >= maxScroll - 10) {
+                isScrolling = true;
+                container.style.scrollBehavior = 'auto';
+                container.scrollLeft = clientWidth + 10;
+                setTimeout(function() {
+                    container.style.scrollBehavior = 'smooth';
+                    isScrolling = false;
+                }, 50);
+            }
+        });
     });
 </script>
 @endpush
