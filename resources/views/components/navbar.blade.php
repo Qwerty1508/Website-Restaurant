@@ -227,7 +227,7 @@
             background: linear-gradient(165deg, rgba(12, 42, 54, 0.97) 0%, rgba(8, 28, 36, 0.99) 100%);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            display: flex !important;
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -239,10 +239,25 @@
             box-shadow: none;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: opacity, visibility;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                        visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .navbar-collapse.collapsing {
+            display: flex !important;
+            height: auto !important;
+            overflow: visible !important;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar-collapse.collapse.show,
         .navbar-collapse.show {
+            display: flex !important;
             opacity: 1;
             visibility: visible;
         }
