@@ -158,6 +158,14 @@
     .navbar-culinaire .dropdown {
         position: relative;
         z-index: 10000;
+        overflow: visible !important;
+    }
+
+    .navbar-culinaire,
+    .navbar-culinaire .container-fluid,
+    .navbar-culinaire .navbar-collapse,
+    .navbar-culinaire .navbar-nav {
+        overflow: visible !important;
     }
 
     .navbar-culinaire .btn-outline-primary {
