@@ -354,4 +354,5 @@ return [
     'no_menu_list' => 'No menu available',
     'add_first_menu' => 'Add First Menu',
     'back_dashboard' => 'Back to Dashboard',
+    'developer' => 'Developer',
 ];
