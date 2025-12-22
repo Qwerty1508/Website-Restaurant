@@ -23,7 +23,10 @@ class ViewerMiddleware
             }
 
             // Block all write operations for viewers
-            if (!$request->isMethod('GET')) {
+            // Check for method spoofing too
+            $method = $request->authoritativeMethod() ?? $request->method();
+            
+            if (!in_array(strtoupper($method), ['GET', 'HEAD', 'OPTIONS'])) {
                 if ($request->expectsJson()) {
                     return response()->json([
                         'message' => 'Akses ditolak. Akun Viewer hanya dapat melihat, tidak dapat melakukan perubahan.',
