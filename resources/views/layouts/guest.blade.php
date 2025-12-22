@@ -152,5 +152,9 @@
         });
     </script>
     @stack('scripts')
+    
+    @if(request()->has('cms_mode') || session('cms_mode'))
+        <script src="{{ asset('js/cms-iframe.js') }}"></script>
+    @endif
 </body>
 </html>

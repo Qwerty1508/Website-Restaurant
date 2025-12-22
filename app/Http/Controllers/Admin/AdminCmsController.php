@@ -338,4 +338,52 @@ class AdminCmsController extends Controller
         CmsSetting::set('login_page_content', $request->except('_token'));
         return redirect()->back()->with('success', 'Halaman Login berhasil diperbarui!');
     }
+
+    /**
+     * API: Update content from Visual Editor
+     */
+    public function apiUpdateContent(Request $request)
+    {
+        $request->validate([
+            'key' => 'required|string',
+            'content' => 'required', // Can be string or array
+        ]);
+
+        CmsSetting::updateOrCreate(
+            ['key' => $request->key],
+            [
+                'value' => $request->content,
+                'group' => 'cms_content', // Mark as visually edited content
+                'type' => 'text'
+            ]
+        );
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * API: Upload image from Visual Editor
+     */
+    public function apiUploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|max:5120', // 5MB max
+        ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+            
+            // Store in specific cms folder
+            $path = $file->storeAs('cms/uploads', $filename, 'public');
+            $url = Storage::url($path);
+
+            return response()->json([
+                'success' => true,
+                'url' => $url
+            ]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No image uploaded'], 400);
+    }
 }
