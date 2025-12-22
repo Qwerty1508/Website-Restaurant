@@ -1,70 +1,68 @@
 /**
  * CULINAIRE PERFORMANCE CORE & HEAT MANAGEMENT SYSTEM
  * ----------------------------------------------------
- * Monitors device temperature (via FPS proxies) and network status to 
- * optimize resource loading.
+ * PERMANENT COOLING MODE ENABLED
  * 
- * UPDATE: "Cooling Mode" now optimizes BACKGROUND TASKS only.
- * It does NOT degrade visual quality (animations/videos stay premium).
+ * As requested, this script now forces the site into "Cooling Mode" permanently.
+ * - Animations Checked & Disabled.
+ * - Videos Paused by default.
+ * - Background downloads throttled.
+ * 
+ * This ensures maximum lightness and minimum temperature for all devices.
  */
 
 window.CulinaireOptimizer = (function () {
     // Configuration
     const CONFIG = {
-        fpsThreshold: 30, // Drop below this triggers "Cooling Mode"
-        coolingModeEnabled: false,
-        batchSize: 3, // Number of images to preload at once
-        idleTimeout: 2000 // Time to wait for user interaction to stop before heavy tasks
+        batchSize: 2, // Conservative batch size
+        idleTimeout: 1000
     };
 
     // State
-    let lastTime = performance.now();
-    let frames = 0;
     let loadQueue = [];
     let isProcessingQueue = false;
 
-    // --- 1. HEAT DETECTION (FPS MONITOR) ---
-    function monitorTemperature() {
-        const time = performance.now();
-        frames++;
+    // --- 1. PERMANENT COOLING ENFORCEMENT ---
+    function enforceCoolingMode() {
+        console.log("❄️ PERMANENT COOLING MODE ACTIVED.");
+        document.body.classList.add('cooling-mode-active');
 
-        if (time >= lastTime + 1000) {
-            const fps = Math.round((frames * 1000) / (time - lastTime));
+        // 1. Force Disable Animations via CSS Variable Injection
+        // This is cleaner than !important on every element
+        document.documentElement.style.setProperty('--animation-speed', '0s');
 
-            // Check if device is struggling
-            if (fps < CONFIG.fpsThreshold && !CONFIG.coolingModeEnabled) {
-                activateCoolingMode(fps);
-            } else if (fps > 55 && CONFIG.coolingModeEnabled) {
-                deactivateCoolingMode();
+        // 2. Inject global style to kill all movement if CSS vars aren't enough
+        const style = document.createElement('style');
+        style.id = 'cooling-mode-styles';
+        style.textContent = `
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
             }
+            video {
+                display: none !important; /* Optional: Hide videos or just pause? Pause is safer for layout. */
+            }
+            .video-bg-container video {
+                display: none !important; /* Hide heavy backgrounds */
+            }
+        `;
+        document.head.appendChild(style);
 
-            // Reset
-            frames = 0;
-            lastTime = time;
-        }
-
-        requestAnimationFrame(monitorTemperature);
+        // 3. Pause all videos
+        pauseAllVideos();
     }
 
-    // --- 2. ACTIVATING "COOLING MODE" (RESOURCE THROTTLE ONLY) ---
-    function activateCoolingMode(currentFps) {
-        // Only throttle background tasks (networking), do NOT kill visuals
-        if (!CONFIG.coolingModeEnabled) {
-            console.warn(`🔥 High Load Detected (FPS: ${currentFps}). Throttling background downloads.`);
-            CONFIG.coolingModeEnabled = true;
-            // Removed: Animation/Video disabling. Visuals stay PREMIUM.
-        }
+    function pauseAllVideos() {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(v => {
+            v.pause();
+            v.removeAttribute('autoplay');
+        });
     }
 
-    function deactivateCoolingMode() {
-        if (CONFIG.coolingModeEnabled) {
-            console.log(`❄️ Load Stabilized. Resuming aggressive preloading.`);
-            CONFIG.coolingModeEnabled = false;
-        }
-    }
-
-    // --- 3. SMART PRELOADER (FAST DOWNLOADS) ---
-    // Uses requestIdleCallback to download assets only when CPU is free
+    // --- 2. SMART PRELOADER (THROTTLED) ---
     function queueAsset(url) {
         loadQueue.push(url);
         processQueue();
@@ -73,47 +71,45 @@ window.CulinaireOptimizer = (function () {
     function processQueue() {
         if (isProcessingQueue || loadQueue.length === 0) return;
 
-        // Only download if network is idle-ish and device isn't hot
-        if (CONFIG.coolingModeEnabled) {
-            setTimeout(processQueue, 5000); // Retry later if hot
-            return;
-        }
-
+        // Always throttle
         if ('requestIdleCallback' in window) {
-            requestIdleCallback(downloadNextBatch);
+            requestIdleCallback(downloadNextBatch, { timeout: 2000 });
         } else {
-            setTimeout(downloadNextBatch, 500);
+            setTimeout(downloadNextBatch, 2000);
         }
     }
 
-    function downloadNextBatch(deadline) {
+    function downloadNextBatch() {
         isProcessingQueue = true;
-        // Download a batch
         const batch = loadQueue.splice(0, CONFIG.batchSize);
 
         const promises = batch.map(url => {
             return new Promise((resolve) => {
                 const img = new Image();
                 img.onload = resolve;
-                img.onerror = resolve; // Continue even if fail
+                img.onerror = resolve;
                 img.src = url;
             });
         });
 
         Promise.all(promises).then(() => {
             isProcessingQueue = false;
-            if (loadQueue.length > 0) {
-                processQueue(); // Continue
-            } else {
-                console.log("✅ All Cached: Site is ready for offline-like speeds.");
-            }
+            // Add slight delay between batches to let CPU rest
+            setTimeout(() => {
+                if (loadQueue.length > 0) processQueue();
+            }, 1000);
         });
     }
 
-    // --- 4. INITIALIZATION ---
+    // --- 3. INITIALIZATION ---
     function init() {
-        console.log("🚀 Culinaire Optimizer Started");
-        monitorTemperature();
+        enforceCoolingMode();
+
+        // Watch for new videos added to DOM (e.g. via navigation) and kill them
+        const observer = new MutationObserver((mutations) => {
+            pauseAllVideos();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
     }
 
     return {
