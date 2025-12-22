@@ -177,6 +177,19 @@
         </div>
         
         <div class="editor-content" id="editor-panel">
+            <!-- Page Selector -->
+            <div class="mb-4">
+                <label class="small text-muted fw-bold mb-2 text-uppercase">Halaman Aktif</label>
+                <select class="form-select" id="page-selector">
+                    <option value="{{ url('/') }}">Beranda (Home)</option>
+                    <option value="{{ url('/menu') }}">Daftar Menu</option>
+                    <option value="{{ url('/reservation') }}">Reservasi</option>
+                    <option value="{{ url('/about') }}">Tentang Kami</option>
+                    <option value="{{ url('/contact') }}">Hubungi Kami</option>
+                    <option value="{{ url('/login') }}">Login / Register</option>
+                </select>
+            </div>
+            
             <div class="no-selection-state">
                 <i class="bi bi-cursor"></i>
                 <h6>Pilih Elemen</h6>

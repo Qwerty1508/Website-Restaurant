@@ -15,11 +15,49 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentElement = null;
     let hasUnsavedChanges = false;
 
+    // Page Selection Logic
+    const pageSelector = document.getElementById('page-selector');
+
+    pageSelector.addEventListener('change', function () {
+        const url = this.value;
+        const currentUrl = new URL(url);
+        currentUrl.searchParams.set('cms_mode', 'true');
+
+        iframe.src = currentUrl.toString();
+
+        // Reset Editor State
+        noSelectionState.style.display = 'block';
+        editForm.style.display = 'none';
+        currentElement = null;
+    });
+
     // Listen for messages from Iframe
     window.addEventListener('message', function (event) {
         // Security check (domain matching) - skipped for localhost flexibility but recommended for prod
 
         const data = event.data;
+
+        if (data.type === 'cms_url_changed' || (data.type === 'cms_handshake' && data.url)) {
+            const newUrl = data.url; // This comes from the iframe
+            document.getElementById('current-url').textContent = newUrl;
+
+            // Sync dropdown if possible
+            const originBase = window.location.origin;
+            // Create a relative path or full URL check
+            // Our options values are full URLs: http://.../menu
+
+            // Try to find matching option
+            for (let i = 0; i < pageSelector.options.length; i++) {
+                // Check if option value matches the new URL (ignoring query params)
+                const optUrl = new URL(pageSelector.options[i].value);
+                const navUrl = new URL(newUrl);
+
+                if (optUrl.pathname === navUrl.pathname) {
+                    pageSelector.selectedIndex = i;
+                    break;
+                }
+            }
+        }
 
         if (data.type === 'cms_handshake') {
             connectionStatus.textContent = 'Connected';
