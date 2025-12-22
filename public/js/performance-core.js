@@ -1,68 +1,41 @@
 /**
  * CULINAIRE PERFORMANCE CORE & HEAT MANAGEMENT SYSTEM
  * ----------------------------------------------------
- * PERMANENT COOLING MODE ENABLED
+ * "INVISIBLE COOLING" MODE
  * 
- * As requested, this script now forces the site into "Cooling Mode" permanently.
- * - Animations Checked & Disabled.
- * - Videos Paused by default.
- * - Background downloads throttled.
+ * Strategy:
+ * 1. VISUALS: UNTOUCHED. Animations & Videos run at MAXIMUM quality/speed.
+ * 2. COOLING: Achieved by aggressively throttling BACKGROUND tasks only.
  * 
- * This ensures maximum lightness and minimum temperature for all devices.
+ * This ensures the device feels fast and premium, while the "heavy lifting" 
+ * of downloading future assets happens slowly and efficiently in the background,
+ * preventing CPU spikes (Heat).
  */
 
 window.CulinaireOptimizer = (function () {
     // Configuration
     const CONFIG = {
-        batchSize: 2, // Conservative batch size
-        idleTimeout: 1000
+        batchSize: 1, // Ultra-conservative: Only 1 fetch at a time (Keeps CPU cool)
+        idleTimeout: 3000,
+        enableVisuals: true // STRICTLY TRUE: Do not touch animations
     };
 
     // State
     let loadQueue = [];
     let isProcessingQueue = false;
 
-    // --- 1. PERMANENT COOLING ENFORCEMENT ---
+    // --- 1. INVISIBLE COOLING ENFORCEMENT ---
     function enforceCoolingMode() {
-        console.log("❄️ PERMANENT COOLING MODE ACTIVED.");
-        document.body.classList.add('cooling-mode-active');
+        console.log("❄️ BACKGROUND COOLING SYSTEM ACTIVE. Visuals: MAX.");
 
-        // 1. Force Disable Animations via CSS Variable Injection
-        // This is cleaner than !important on every element
-        document.documentElement.style.setProperty('--animation-speed', '0s');
+        // We do NOT add the 'drying/static' CSS classes.
+        // We do NOT pause videos.
 
-        // 2. Inject global style to kill all movement if CSS vars aren't enough
-        const style = document.createElement('style');
-        style.id = 'cooling-mode-styles';
-        style.textContent = `
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            video {
-                display: none !important; /* Optional: Hide videos or just pause? Pause is safer for layout. */
-            }
-            .video-bg-container video {
-                display: none !important; /* Hide heavy backgrounds */
-            }
-        `;
-        document.head.appendChild(style);
-
-        // 3. Pause all videos
-        pauseAllVideos();
+        // Instead, we just ensure the background process knows to take it easy.
+        document.body.classList.add('background-cooling-active');
     }
 
-    function pauseAllVideos() {
-        const videos = document.querySelectorAll('video');
-        videos.forEach(v => {
-            v.pause();
-            v.removeAttribute('autoplay');
-        });
-    }
-
-    // --- 2. SMART PRELOADER (THROTTLED) ---
+    // --- 2. SMART PRELOADER (ULTRA-EFFICIENT) ---
     function queueAsset(url) {
         loadQueue.push(url);
         processQueue();
@@ -71,16 +44,25 @@ window.CulinaireOptimizer = (function () {
     function processQueue() {
         if (isProcessingQueue || loadQueue.length === 0) return;
 
-        // Always throttle
+        // Check if user is interacting (scroll/mouse)
+        // If they are, WAIT. Don't use CPU for downloads while user is animating stuff.
+        if (navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending()) {
+            setTimeout(processQueue, 1000);
+            return;
+        }
+
         if ('requestIdleCallback' in window) {
-            requestIdleCallback(downloadNextBatch, { timeout: 2000 });
+            // Wait for a long idle period
+            requestIdleCallback(downloadNextBatch, { timeout: 4000 });
         } else {
-            setTimeout(downloadNextBatch, 2000);
+            setTimeout(downloadNextBatch, 2500);
         }
     }
 
     function downloadNextBatch() {
         isProcessingQueue = true;
+
+        // Download ONE item at a time to minimize network thread usage
         const batch = loadQueue.splice(0, CONFIG.batchSize);
 
         const promises = batch.map(url => {
@@ -94,22 +76,16 @@ window.CulinaireOptimizer = (function () {
 
         Promise.all(promises).then(() => {
             isProcessingQueue = false;
-            // Add slight delay between batches to let CPU rest
+            // Long rest between tasks to let CPU cool down
             setTimeout(() => {
                 if (loadQueue.length > 0) processQueue();
-            }, 1000);
+            }, 1500); // 1.5s cool-down period between downloads
         });
     }
 
     // --- 3. INITIALIZATION ---
     function init() {
         enforceCoolingMode();
-
-        // Watch for new videos added to DOM (e.g. via navigation) and kill them
-        const observer = new MutationObserver((mutations) => {
-            pauseAllVideos();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
     }
 
     return {
