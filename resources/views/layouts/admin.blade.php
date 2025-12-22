@@ -42,6 +42,12 @@
                 </div>
                 
                 <div class="d-flex align-items-center gap-3 ms-auto">
+                    {{-- CMS Button --}}
+                    <a href="{{ url('/admin/cms') }}" class="btn btn-cms-navbar d-flex align-items-center gap-2" title="Content Management System">
+                        <i class="bi bi-collection"></i>
+                        <span class="d-none d-lg-inline">CMS</span>
+                    </a>
+                    
                     <button class="theme-toggle" id="themeToggle">
                         <i class="bi bi-moon-fill icon-moon"></i>
                         <i class="bi bi-sun-fill icon-sun"></i>
