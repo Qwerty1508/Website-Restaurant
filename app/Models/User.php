@@ -37,7 +37,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->is_admin === true;
+        return $this->is_admin === true || $this->role === 'viewer';
     }
 
     public function isBlocked(): bool
