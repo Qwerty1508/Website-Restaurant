@@ -158,6 +158,24 @@ Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\AdminMiddleware
     Route::put('/reservations/{id}/status', [AdminReservationController::class, 'updateStatus']);
     
     Route::get('/activities', [AdminActivityController::class, 'index']);
+    
+    // CMS Routes
+    Route::get('/cms', [\App\Http\Controllers\Admin\AdminCmsController::class, 'index']);
+    Route::get('/cms/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'pages']);
+    Route::get('/cms/pages/create', [\App\Http\Controllers\Admin\AdminCmsController::class, 'createPage']);
+    Route::post('/cms/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'storePage']);
+    Route::get('/cms/pages/{id}/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editPage']);
+    Route::put('/cms/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updatePage']);
+    Route::delete('/cms/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroyPage']);
+    Route::post('/cms/sections', [\App\Http\Controllers\Admin\AdminCmsController::class, 'storeSection']);
+    Route::put('/cms/sections/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateSection']);
+    Route::post('/cms/sections/reorder', [\App\Http\Controllers\Admin\AdminCmsController::class, 'reorderSections']);
+    Route::delete('/cms/sections/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroySection']);
+    Route::get('/cms/media', [\App\Http\Controllers\Admin\AdminCmsController::class, 'media']);
+    Route::post('/cms/media', [\App\Http\Controllers\Admin\AdminCmsController::class, 'uploadMedia']);
+    Route::delete('/cms/media/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroyMedia']);
+    Route::get('/cms/settings', [\App\Http\Controllers\Admin\AdminCmsController::class, 'settings']);
+    Route::post('/cms/settings', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateSettings']);
 });
 
 Route::get('lang/{locale}', function ($locale) { 

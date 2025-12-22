@@ -99,6 +99,40 @@
             
             <li class="sidebar-nav-item mt-4">
                 <small class="text-uppercase text-light opacity-50 px-3 mb-2 d-block" style="font-size: 0.7rem;">
+                    Content Management
+                </small>
+            </li>
+            
+            <li class="sidebar-nav-item">
+                <a href="{{ url('/admin/cms') }}" class="sidebar-nav-link {{ request()->is('admin/cms') ? 'active' : '' }}">
+                    <i class="bi bi-collection"></i>
+                    <span>CMS Dashboard</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-nav-item">
+                <a href="{{ url('/admin/cms/pages') }}" class="sidebar-nav-link {{ request()->is('admin/cms/pages*') ? 'active' : '' }}">
+                    <i class="bi bi-file-richtext"></i>
+                    <span>Pages</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-nav-item">
+                <a href="{{ url('/admin/cms/media') }}" class="sidebar-nav-link {{ request()->is('admin/cms/media*') ? 'active' : '' }}">
+                    <i class="bi bi-images"></i>
+                    <span>Media Library</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-nav-item">
+                <a href="{{ url('/admin/cms/settings') }}" class="sidebar-nav-link {{ request()->is('admin/cms/settings*') ? 'active' : '' }}">
+                    <i class="bi bi-sliders"></i>
+                    <span>Site Settings</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-nav-item mt-4">
+                <small class="text-uppercase text-light opacity-50 px-3 mb-2 d-block" style="font-size: 0.7rem;">
                     Pengaturan
                 </small>
             </li>
