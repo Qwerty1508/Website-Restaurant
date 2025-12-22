@@ -894,6 +894,18 @@ a:hover {
     padding: var(--space-xl);
     min-height: 100vh;
     background: var(--gray-100);
+    position: relative;
+    z-index: 1;
+}
+
+.main-content-admin>nav.navbar {
+    position: relative;
+    z-index: 1050;
+    overflow: visible;
+}
+
+.main-content-admin .dropdown-menu {
+    z-index: 1060;
 }
 
 @keyframes float {
