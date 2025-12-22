@@ -86,7 +86,7 @@
                                             <span class="input-group-text bg-light border-end-0">
                                                 <i class="bi bi-envelope text-muted"></i>
                                             </span>
-                                            <input type="email" 
+                                            <input type="text" 
                                                    class="form-control border-start-0 ps-0 @error('email') is-invalid @enderror" 
                                                    id="email" 
                                                    name="email" 
