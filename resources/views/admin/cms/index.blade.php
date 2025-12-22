@@ -645,47 +645,61 @@
 <script src="{{ asset('js/cms-editor.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const sidebar = document.querySelector('.editor-sidebar');
-        const previewArea = document.querySelector('.preview-area');
+        // Target the MAIN Admin Sidebar (ID: sidebar), not the CMS panel
+        const mainSidebar = document.getElementById('sidebar'); 
+        const mainContent = document.querySelector('.main-content-admin');
         const openBtn = document.getElementById('btn-open-sidebar');
         
-        // 1. Create Close Button and append to Sidebar
+        // 1. Create Close Button and append to Main Sidebar
         const closeBtn = document.createElement('button');
         closeBtn.className = 'btn-close-sidebar';
         closeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
         closeBtn.title = 'Close Menu';
-        closeBtn.onclick = toggleSidebar;
+        closeBtn.onclick = toggleMainSidebar;
         
         // Ensure sidebar exists before appending
-        if(sidebar) {
-            sidebar.appendChild(closeBtn);
-            // 2. Default State: Collapsed
-            toggleSidebar(); 
+        if(mainSidebar) {
+            // Check if button already exists to prevent duplicates
+            if(!mainSidebar.querySelector('.btn-close-sidebar')) {
+                mainSidebar.appendChild(closeBtn);
+            }
+            
+            // 2. Default State: Collapsed (Auto-Hide)
+            // Add 'collapsed' class to sidebar
+            mainSidebar.classList.add('collapsed');
+            
+            // Adjust Content Margin immediately
+            if(mainContent) {
+                mainContent.style.marginLeft = '0';
+                mainContent.style.width = '100%';
+            }
         }
 
         // 3. Toggle Logic
-        function toggleSidebar() {
-            if(!sidebar) return;
+        function toggleMainSidebar() {
+            if(!mainSidebar) return;
             
-            sidebar.classList.toggle('collapsed');
-            // Assuming 'sidebar-closed' class on body is for global styling
-            document.body.classList.toggle('sidebar-closed'); 
+            mainSidebar.classList.toggle('collapsed');
             
-            // Adjust layout for CMS
-            if(previewArea) {
-                if(sidebar.classList.contains('collapsed')) {
-                    previewArea.style.marginLeft = '0';
-                    previewArea.style.width = '100%';
+            // Adjust Global Content Layout
+            if(mainContent) {
+                if(mainSidebar.classList.contains('collapsed')) {
+                    mainContent.style.marginLeft = '0';
+                    mainContent.style.width = '100%';
                 } else {
-                    previewArea.style.marginLeft = '280px';
-                    previewArea.style.width = 'calc(100% - 280px)';
+                    // Restore default admin layout
+                    // Check if mobile or desktop? Default desktop is 280px
+                    if(window.innerWidth > 992) {
+                        mainContent.style.marginLeft = '280px';
+                        mainContent.style.width = 'calc(100% - 280px)';
+                    }
                 }
             }
         }
         
         // Bind Open Button
         if(openBtn) {
-            openBtn.addEventListener('click', toggleSidebar);
+            openBtn.addEventListener('click', toggleMainSidebar);
         }
     
     // Device Definitions
