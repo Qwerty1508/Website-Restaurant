@@ -13,7 +13,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -133,13 +134,12 @@
     
     <script src="{{ asset('js/cursor.js') }}"></script>
     <script>
-        // Ultimate UI Protection (Disable Right Click, Drag, Select, Inspect)
+        // Ultimate UI Protection
         document.addEventListener('dragstart', e => e.preventDefault());
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('selectstart', e => e.preventDefault());
         
         document.addEventListener('keydown', function(e) {
-            // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
             if (
                 e.key === 'F12' ||
                 (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
@@ -148,6 +148,52 @@
             ) {
                 e.preventDefault();
                 return false;
+            }
+        });
+
+        // --- SMART RESOURCE PRELOADER ---
+        // Downloads site-wide assets in background to satisfy "Download All" without overheating
+        window.addEventListener('load', () => {
+            const heavyAssets = [
+                // About Page Hero & History
+                'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_1920,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1505935428862-770b6f24f629',
+                'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1516455590571-18256e5bb9ff',
+                'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1559339352-11d035aa65de',
+                'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b',
+                // Common Placeholders
+                'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_400,h_300,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
+            ];
+
+            // Helper to fetch image in background
+            const prefetchImage = (url) => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = url;
+                    // Low priority decode
+                    img.decoding = 'async'; 
+                    img.onload = resolve;
+                    img.onerror = resolve; // Continue even if fail
+                });
+            };
+
+            const runSmartPreload = async () => {
+                // Wait 2 seconds for main page to settle interactive state
+                await new Promise(r => setTimeout(r, 2000));
+                
+                // Fetch sequentially (One by one) to prevent CPU spikes/Heat
+                for(const url of heavyAssets) {
+                    await prefetchImage(url);
+                    // Small breathing room between fetches
+                    await new Promise(r => setTimeout(r, 200)); 
+                }
+                console.log('Site assets preloaded in background.');
+            };
+
+            // Use requestIdleCallback if available for maximum efficiency
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(runSmartPreload);
+            } else {
+                runSmartPreload();
             }
         });
     </script>
