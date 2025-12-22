@@ -92,6 +92,13 @@
             </li>
             
             <li class="sidebar-nav-item">
+                <a href="{{ url('/admin/developer') }}" class="sidebar-nav-link {{ request()->is('admin/developer') ? 'active' : '' }}">
+                    <i class="bi bi-code-slash"></i>
+                    <span>{{ __('messages.developer') }}</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-nav-item">
                 <a href="#" class="sidebar-nav-link">
                     <i class="bi bi-file-earmark-text"></i>
                     <span>Laporan</span>
