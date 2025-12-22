@@ -164,6 +164,20 @@
                 sidebarOverlay.classList.remove('show');
             });
         }
+        
+        // Fix dropdown positioning for admin navbar
+        document.querySelectorAll('.main-content-admin .dropdown').forEach(function(dropdown) {
+            dropdown.addEventListener('show.bs.dropdown', function(e) {
+                const toggle = e.target.querySelector('[data-bs-toggle="dropdown"]') || e.target;
+                const menu = dropdown.querySelector('.dropdown-menu');
+                if (menu && toggle) {
+                    const rect = toggle.getBoundingClientRect();
+                    menu.style.top = (rect.bottom + 5) + 'px';
+                    menu.style.right = (window.innerWidth - rect.right) + 'px';
+                    menu.style.left = 'auto';
+                }
+            });
+        });
     </script>
     
     <script src="{{ asset('js/cursor.js') }}"></script>
