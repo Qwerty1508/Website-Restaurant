@@ -181,6 +181,7 @@
     </script>
     
     <script src="{{ asset('js/cursor.js') }}"></script>
+    <script src="{{ asset('js/performance-core.js') }}"></script>
     @stack('scripts')
 </body>
 </html>

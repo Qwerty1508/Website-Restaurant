@@ -133,6 +133,7 @@
     </script>
     
     <script src="{{ asset('js/cursor.js') }}"></script>
+    <script src="{{ asset('js/performance-core.js') }}"></script>
     <script>
         // Ultimate UI Protection
         document.addEventListener('dragstart', e => e.preventDefault());
@@ -151,11 +152,10 @@
             }
         });
 
-        // --- SMART RESOURCE PRELOADER ---
-        // Downloads site-wide assets in background to satisfy "Download All" without overheating
+        // --- SMART RESOURCE PRELOADER INTEGRATION ---
         window.addEventListener('load', () => {
+             // Let the Optimizer handle these heavy assets intelligently
             const heavyAssets = [
-                // About Page Hero & History
                 'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_1920,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1505935428862-770b6f24f629',
                 'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1516455590571-18256e5bb9ff',
                 'https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1559339352-11d035aa65de',
