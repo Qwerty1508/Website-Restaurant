@@ -486,26 +486,28 @@
         position: relative;
     }
 
+    /* Force Hide Overlay on this page */
+    #sidebarOverlay { display: none !important; }
+
     /* Toggle Button to OPEN sidebar - Top Left Position */
     .btn-toggle-sidebar {
         position: fixed;
-        top: 20px; /* Aligned nicely */
+        top: 20px;
         left: 20px;
-        z-index: 9999; /* Max Priority */
+        z-index: 2147483647; /* Maximum Integer Value */
         background: var(--cms-gold);
         color: #fff;
         border: none;
-        width: 48px; /* Slightly larger clickable area */
+        width: 48px;
         height: 48px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 25px rgba(0,0,0,0.5);
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         opacity: 1;
-        pointer-events: auto;
+        pointer-events: auto !important; /* Force clickable */
     }
 
     /* Hide OPEN button when sidebar is OPEN */
@@ -745,7 +747,7 @@
             </div>
         </div>
         <!-- Toggle Button to Open Sidebar (Directly Bound) -->
-        <button class="btn-toggle-sidebar" id="btn-open-sidebar" title="Open Admin Menu" onclick="toggleMainSidebar()">
+        <button class="btn-toggle-sidebar" id="btn-open-sidebar" title="Open Admin Menu" onclick="forceToggleSidebar(event)">
             <i class="bi bi-list fs-4"></i>
         </button>
     </div>
@@ -755,10 +757,23 @@
 @push('scripts')
 <script src="{{ asset('js/cms-editor.js') }}"></script>
 <script>
-    // DEFINE GLOBAL FUNCTION
-    window.toggleMainSidebar = function() {
-        console.log("Toggle Sidebar Clicked");
-        document.body.classList.toggle('sidebar-force-open');
+    // DEFINE GLOBAL FUNCTION with FORCE LOGIC
+    window.forceToggleSidebar = function(e) {
+        if(e) { e.preventDefault(); e.stopPropagation(); }
+        console.log("FORCE Toggle Sidebar Clicked");
+        
+        const body = document.body;
+        const mainSidebar = document.getElementById('sidebar');
+        
+        // 1. Toggle Class on Body
+        body.classList.toggle('sidebar-force-open');
+        
+        // 2. FORCE STYLE on Sidebar if class fails
+        if (body.classList.contains('sidebar-force-open')) {
+            if(mainSidebar) mainSidebar.style.transform = 'translateX(0)';
+        } else {
+             if(mainSidebar) mainSidebar.style.transform = ''; // Revert to CSS
+        }
     };
 
     document.addEventListener('DOMContentLoaded', () => {
