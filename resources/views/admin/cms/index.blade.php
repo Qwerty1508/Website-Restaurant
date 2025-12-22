@@ -489,22 +489,21 @@
     /* Toggle Button to OPEN sidebar - Top Left Position */
     .btn-toggle-sidebar {
         position: fixed;
-        top: 24px; /* Align with header text */
-        left: 24px;
-        bottom: auto; /* Unset bottom */
-        z-index: 3000; /* Super high priority */
+        top: 20px; /* Aligned nicely */
+        left: 20px;
+        z-index: 9999; /* Max Priority */
         background: var(--cms-gold);
         color: #fff;
         border: none;
-        width: 40px;
-        height: 40px;
+        width: 48px; /* Slightly larger clickable area */
+        height: 48px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         opacity: 1;
         pointer-events: auto;
     }
@@ -745,9 +744,9 @@
                 <iframe src="{{ url('/') }}?cms_mode=true" id="site-preview" title="Site Preview" style="width: 100%; height: 100%; border: none;"></iframe>
             </div>
         </div>
-        <!-- Toggle Button to Open Sidebar -->
-        <button class="btn-toggle-sidebar" id="btn-open-sidebar" title="Open Menu">
-            <i class="bi bi-list fs-5"></i>
+        <!-- Toggle Button to Open Sidebar (Directly Bound) -->
+        <button class="btn-toggle-sidebar" id="btn-open-sidebar" title="Open Admin Menu" onclick="toggleMainSidebar()">
+            <i class="bi bi-list fs-4"></i>
         </button>
     </div>
 </div>
@@ -756,6 +755,12 @@
 @push('scripts')
 <script src="{{ asset('js/cms-editor.js') }}"></script>
 <script>
+    // DEFINE GLOBAL FUNCTION
+    window.toggleMainSidebar = function() {
+        console.log("Toggle Sidebar Clicked");
+        document.body.classList.toggle('sidebar-force-open');
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
         const body = document.body;
         const mainSidebar = document.getElementById('sidebar');
