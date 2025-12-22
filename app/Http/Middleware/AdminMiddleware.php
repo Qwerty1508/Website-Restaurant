@@ -15,7 +15,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || !auth()->user()->isAdmin()) {
+        // Allow access if user is Admin OR Viewer (Viewer is read-only restricted by ViewerMiddleware)
+        if (!auth()->check() || (!auth()->user()->isAdmin() && !auth()->user()->isViewer())) {
             abort(403, 'Unauthorized. Admin access required.');
         }
 
