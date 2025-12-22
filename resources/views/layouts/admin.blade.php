@@ -97,7 +97,7 @@
                     </div>
                     
                     <div class="dropdown">
-                        <button class="btn btn-link p-0 d-flex align-items-center gap-2 text-decoration-none" data-bs-toggle="dropdown">
+                        <button class="btn btn-link p-0 d-flex align-items-center gap-2 text-decoration-none" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
                             <img src="https://i.pravatar.cc/40?img=12" alt="Admin" class="rounded-circle" 
                                  style="width: 40px; height: 40px; object-fit: cover;">
                             <div class="d-none d-md-block text-start">
