@@ -138,6 +138,8 @@ Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\AdminMiddleware
     });
     
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+    Route::get('/profile', [\App\Http\Controllers\Admin\AdminProfileController::class, 'index']);
+    Route::put('/profile', [\App\Http\Controllers\Admin\AdminProfileController::class, 'update']);
     
     Route::get('/menus', [AdminMenuController::class, 'index']);
     Route::get('/menus/create', [AdminMenuController::class, 'create']);

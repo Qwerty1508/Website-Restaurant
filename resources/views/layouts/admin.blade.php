@@ -107,7 +107,7 @@
                             <i class="bi bi-chevron-down text-muted small"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow">
-                            <li><a class="dropdown-item" href="{{ url('/admin/users') }}"><i class="bi bi-person me-2"></i>Profil</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/admin/profile') }}"><i class="bi bi-person me-2"></i>Profil</a></li>
                             <li><a class="dropdown-item" href="{{ url('/admin/developer/settings') }}"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
