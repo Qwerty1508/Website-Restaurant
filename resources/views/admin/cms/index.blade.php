@@ -441,6 +441,121 @@
     }
     
     /* Device Specific Bezels */
+    /* --- SIDEBAR TOGGLE LOGIC --- */
+    
+    /* 1. Sidebar Transition */
+    .sidebar {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2000 !important; /* Above everything */
+    }
+    
+    /* When Closed */
+    body.sidebar-closed .sidebar {
+        transform: translateX(-100%);
+    }
+
+    /* 2. Main Content Adjustment */
+    .main-content-admin {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0 !important; /* Always 0 padding for CMS */
+        
+        /* Default Open State */
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
+    }
+
+    /* When Closed: Full Width */
+    body.sidebar-closed .main-content-admin {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Mobile Override */
+    @media (max-width: 991.98px) {
+        .main-content-admin {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+        .sidebar {
+            transform: translateX(-100%);
+        }
+        .sidebar.show {
+            transform: translateX(0);
+        }
+    }
+
+    /* Override for this specific page */
+    .visual-editor-container {
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        position: relative;
+    }
+
+    /* Toggle Button */
+    .btn-toggle-sidebar {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1500;
+        background: var(--cms-gold);
+        color: #fff;
+        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        transform: scale(0.8);
+        pointer-events: none;
+    }
+
+    /* Show button when sidebar is closed */
+    body.sidebar-closed .btn-toggle-sidebar {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+    }
+
+    .btn-toggle-sidebar:hover {
+        background: #fff;
+        color: var(--cms-gold);
+        transform: scale(1.1);
+    }
+    
+    .btn-close-sidebar {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.2);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #fff;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .btn-close-sidebar:hover {
+        background: var(--cms-gold);
+        color: #fff;
+        border-color: var(--cms-gold);
+    }
+
+    /* Hide Top Admin Navbar on this page specifically */
+    .main-content-admin > nav.navbar {
+        display: none !important;
+    }
+    
     /* Device Specific Bezels */
     .mode-mobile .device-bezel {
         border-radius: 40px;
@@ -645,62 +760,40 @@
 <script src="{{ asset('js/cms-editor.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Target the MAIN Admin Sidebar (ID: sidebar), not the CMS panel
-        const mainSidebar = document.getElementById('sidebar'); 
-        const mainContent = document.querySelector('.main-content-admin');
+        const body = document.body;
+        const mainSidebar = document.getElementById('sidebar');
         const openBtn = document.getElementById('btn-open-sidebar');
         
-        // 1. Create Close Button and append to Main Sidebar
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'btn-close-sidebar';
-        closeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
-        closeBtn.title = 'Close Menu';
-        closeBtn.onclick = toggleMainSidebar;
-        
-        // Ensure sidebar exists before appending
-        if(mainSidebar) {
-            // Check if button already exists to prevent duplicates
-            if(!mainSidebar.querySelector('.btn-close-sidebar')) {
-                mainSidebar.appendChild(closeBtn);
-            }
+        // --- 1. Setup Close Button ---
+        // We need to inject a close button into the main sidebar if it doesn't exist
+        if (mainSidebar && !mainSidebar.querySelector('.btn-close-sidebar')) {
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'btn-close-sidebar';
+            closeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+            closeBtn.title = 'Close Sidebar';
+            closeBtn.onclick = toggleMainSidebar;
             
-            // 2. Default State: Collapsed (Auto-Hide)
-            // Add 'collapsed' class to sidebar
-            mainSidebar.classList.add('collapsed');
-            
-            // Adjust Content Margin immediately
-            if(mainContent) {
-                mainContent.style.marginLeft = '0';
-                mainContent.style.width = '100%';
-            }
+            // Append as first child or near top
+            mainSidebar.appendChild(closeBtn);
         }
 
-        // 3. Toggle Logic
+        // --- 2. Default State: Closed ---
+        // Add 'sidebar-closed' to body immediately
+        body.classList.add('sidebar-closed'); 
+        if(mainSidebar) mainSidebar.classList.add('collapsed'); // Just in case CSS needs it helper
+
+        // --- 3. Toggle Function ---
         function toggleMainSidebar() {
-            if(!mainSidebar) return;
-            
-            mainSidebar.classList.toggle('collapsed');
-            
-            // Adjust Global Content Layout
-            if(mainContent) {
-                if(mainSidebar.classList.contains('collapsed')) {
-                    mainContent.style.marginLeft = '0';
-                    mainContent.style.width = '100%';
-                } else {
-                    // Restore default admin layout
-                    // Check if mobile or desktop? Default desktop is 280px
-                    if(window.innerWidth > 992) {
-                        mainContent.style.marginLeft = '280px';
-                        mainContent.style.width = 'calc(100% - 280px)';
-                    }
-                }
-            }
+            body.classList.toggle('sidebar-closed');
+            // Sync specific class on sidebar if needed (though CSS handles it via body selector)
+            if(mainSidebar) mainSidebar.classList.toggle('collapsed');
         }
-        
-        // Bind Open Button
-        if(openBtn) {
+
+        // --- 4. Event Listeners ---
+        if (openBtn) {
             openBtn.addEventListener('click', toggleMainSidebar);
         }
+
     
     // Device Definitions
     const devices = {
