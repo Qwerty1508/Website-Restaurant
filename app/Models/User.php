@@ -18,6 +18,7 @@ class User extends Authenticatable
         'google_id',
         'is_admin',
         'status',
+        'role',
     ];
 
     protected $hidden = [
@@ -52,5 +53,10 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return $this->status === 'active' || $this->status === null;
+    }
+
+    public function isViewer(): bool
+    {
+        return $this->role === 'viewer';
     }
 }
