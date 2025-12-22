@@ -3,7 +3,26 @@
 @section('title', 'Visual Content Editor')
 
 @push('styles')
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+    :root {
+        --cms-bg-dark: #0f172a;
+        --cms-sidebar-bg: #1e293b;
+        --cms-card-bg: #334155;
+        --cms-border: #475569;
+        --cms-text-primary: #f1f5f9;
+        --cms-text-secondary: #94a3b8;
+        --cms-gold: #C89B3A;
+        --cms-gold-hover: #b08629;
+        --cms-danger: #ef4444;
+    }
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        background-color: var(--cms-bg-dark);
+        overflow: hidden; /* Prevent body scroll */
+    }
+
     /* Reset Admin Layout for Full Screen Editor */
     .main-content-admin {
         padding: 0 !important;
@@ -30,30 +49,66 @@
     .visual-editor-container {
         flex: 1;
         display: flex;
-        height: 100%;
+        height: 100vh;
         width: 100%;
-        background-color: #f8f9fa;
+        background-color: var(--cms-bg-dark);
         overflow: hidden;
     }
 
-    /* Sidebar Editor Panel */
+    /* --- LUXURY SIDEBAR --- */
     .editor-sidebar {
-        width: 350px;
-        background: white;
-        border-right: 1px solid #dee2e6;
+        width: 380px;
+        background: var(--cms-sidebar-bg);
+        border-right: 1px solid var(--cms-border);
         display: flex;
         flex-direction: column;
         z-index: 100;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
     }
 
     .editor-header {
-        padding: 1rem;
-        border-bottom: 1px solid #dee2e6;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--cms-border);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #fff;
+        background: rgba(30, 41, 59, 0.95);
+        backdrop-filter: blur(10px);
+    }
+
+    .brand-title {
+        color: var(--cms-gold);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .connection-badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        border-radius: 20px;
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 600;
+    }
+    
+    .connection-badge::before {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        background: #10b981;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #10b981;
     }
 
     .editor-content {
@@ -61,260 +116,337 @@
         overflow-y: auto;
         padding: 1.5rem;
     }
+    
+    /* Scrollbar Style */
+    .editor-content::-webkit-scrollbar { width: 6px; }
+    .editor-content::-webkit-scrollbar-track { background: var(--cms-sidebar-bg); }
+    .editor-content::-webkit-scrollbar-thumb { background: var(--cms-border); border-radius: 3px; }
 
-    .editor-footer {
-        padding: 1rem;
-        border-top: 1px solid #dee2e6;
-        background: #f8f9fa;
+    /* Page Selector Style */
+    .page-select-wrapper {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+    
+    .page-select-label {
+        color: var(--cms-text-secondary);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .custom-select {
+        background-color: var(--cms-card-bg);
+        border: 1px solid var(--cms-border);
+        color: var(--cms-text-primary);
+        padding: 12px 16px;
+        border-radius: 12px;
+        width: 100%;
+        font-size: 0.95rem;
+        appearance: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+    }
+    
+    .custom-select:hover, .custom-select:focus {
+        border-color: var(--cms-gold);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(200, 155, 58, 0.15);
     }
 
-    /* Iframe Preview Area */
+    /* Editor Fields */
+    .editor-card {
+        background: var(--cms-card-bg);
+        border: 1px solid var(--cms-border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-dark-control {
+        background: var(--cms-sidebar-bg);
+        border: 1px solid var(--cms-border);
+        color: var(--cms-text-primary);
+        border-radius: 8px;
+        padding: 10px 14px;
+        width: 100%;
+        transition: all 0.2s;
+    }
+    
+    .form-dark-control:focus {
+        background: var(--cms-sidebar-bg);
+        border-color: var(--cms-gold);
+        color: var(--cms-text-primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(200, 155, 58, 0.15);
+    }
+    
+    .form-dark-label {
+        color: var(--cms-text-secondary);
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .no-selection-state {
+        text-align: center;
+        color: var(--cms-text-secondary);
+        padding-top: 4rem;
+    }
+
+    .no-selection-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        background: rgba(200, 155, 58, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        border: 1px dashed var(--cms-gold);
+    }
+    
+    /* Footer & Save Button */
+    .editor-footer {
+        padding: 1.5rem;
+        border-top: 1px solid var(--cms-border);
+        background: var(--cms-sidebar-bg);
+    }
+
+    .btn-gold-gradient {
+        background: linear-gradient(135deg, #C89B3A 0%, #a47e2c 100%);
+        color: #fff;
+        border: none;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(200, 155, 58, 0.3);
+        transition: all 0.3s;
+    }
+    
+    .btn-gold-gradient:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(200, 155, 58, 0.4);
+        color: #fff;
+    }
+    
+    .btn-gold-gradient:disabled {
+        background: var(--cms-card-bg);
+        color: var(--cms-text-secondary);
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+
+    /* --- PREVIEW AREA --- */
     .preview-area {
         flex: 1;
         display: flex;
         flex-direction: column;
-        background: #e9ecef;
+        background-color: #0c0f16;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(200, 155, 58, 0.03) 0%, transparent 20%),
+            radial-gradient(var(--cms-border) 1px, transparent 1px);
+        background-size: 100% 100%, 30px 30px;
         position: relative;
     }
 
+    /* Floating Toolbar */
     .preview-toolbar {
-        height: 50px;
-        background: white;
-        border-bottom: 1px solid #dee2e6;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 50;
+        background: rgba(30, 41, 59, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 8px 12px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
         align-items: center;
-        padding: 0 1rem;
-        gap: 1rem;
-    }
-
-    .url-bar {
-        flex: 1;
-        background: #f1f3f5;
-        border-radius: 4px;
-        padding: 0.25rem 0.75rem;
-        font-size: 0.85rem;
-        color: #6c757d;
-        display: flex;
-        align-items: center;
-    }
-
-    .device-toggles .btn {
-        padding: 0.2rem 0.5rem;
-    }
-
-    .iframe-wrapper {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        padding: 1rem;
-        overflow: auto;
-    }
-
-    iframe#site-preview {
-        width: 100%;
-        height: 100%;
-        border: none;
-        background: white;
-        box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        transition: width 0.3s ease;
-    }
-
-    /* Advanced Preview Toolbar */
-    .preview-toolbar {
-        height: 60px;
-        background: white;
-        border-bottom: 1px solid #e9ecef;
-        display: flex;
-        align-items: center;
-        padding: 0 1.5rem;
-        gap: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        gap: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     }
     
-    .url-bar-container {
-        flex: 1;
-        min-width: 200px;
-    }
-    
-    .url-bar {
-        background: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 0.4rem 1rem;
-        font-size: 0.85rem;
-        color: #495057;
+    .toolbar-group {
         display: flex;
         align-items: center;
-        transition: all 0.2s;
-    }
-    
-    .url-bar:hover {
-        border-color: #ced4da;
-        background: #fff;
-    }
-    
-    /* Device Controls */
-    .device-controls-group {
-        display: flex;
-        align-items: center;
-        background: #f8f9fa;
-        padding: 4px;
+        background: rgba(15, 23, 42, 0.5);
         border-radius: 10px;
-        border: 1px solid #dee2e6;
+        padding: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
-    
+
     .device-btn {
-        border: none;
         background: transparent;
-        padding: 6px 12px;
+        border: none;
+        color: var(--cms-text-secondary);
+        padding: 8px 12px;
         border-radius: 8px;
-        color: #6c757d;
         transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.9rem;
     }
     
     .device-btn:hover {
-        background: #e9ecef;
-        color: #212529;
+        color: #fff;
+        background: rgba(255,255,255,0.05);
     }
     
     .device-btn.active {
-        background: #fff;
-        color: #0d6efd;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        font-weight: 500;
+        background: var(--cms-card-bg);
+        color: var(--cms-gold);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
     
-    .model-selector-wrapper {
-        margin-left: 1rem;
-        position: relative;
-        min-width: 160px;
-        transition: all 0.3s ease;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateX(-10px);
+    .url-display {
+        color: var(--cms-text-secondary);
+        font-size: 0.8rem;
+        padding: 0 12px;
+        border-right: 1px solid var(--cms-border);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .model-select {
+        background: transparent;
+        color: var(--cms-text-primary);
+        border: none;
+        font-size: 0.85rem;
+        padding: 6px 20px 6px 10px;
+        cursor: pointer;
     }
     
-    .model-selector-wrapper.visible {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(0);
-    }
-    
-    .btn-rotate {
+    .video-rotate-btn {
         width: 36px;
         height: 36px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 50%;
-        border: 1px solid #dee2e6;
-        background: white;
-        color: #6c757d;
-        cursor: pointer;
-        transition: all 0.2s;
-        margin-left: 0.5rem;
+        background: var(--cms-card-bg);
+        color: var(--cms-text-secondary);
+        border: 1px solid var(--cms-border);
+        transition: all 0.3s;
     }
     
-    .btn-rotate:hover {
-        background: #f8f9fa;
-        color: #0d6efd;
-        transform: rotate(15deg);
+    .video-rotate-btn:hover {
+        background: var(--cms-gold);
+        color: #fff;
+        border-color: var(--cms-gold);
     }
 
-    /* Realistic Device Bezel */
+    /* Iframe & Bezel */
     .iframe-wrapper {
         flex: 1;
         display: flex;
         justify-content: center;
-        align-items: center; /* Center vertically too */
-        padding: 2rem;
+        align-items: center;
+        padding: 100px 20px 40px; /* Top padding for toolbar */
         overflow: auto;
-        background-color: #e9ecef;
-        background-image: radial-gradient(#dee2e6 1px, transparent 1px);
-        background-size: 20px 20px;
-        transition: all 0.3s ease;
     }
-
+    
     .device-bezel {
-        background: #111;
-        padding: 12px; /* Bezel Thickness */
-        border-radius: 4px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+        background: #000;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Device Specific Bezels */
+    .mode-mobile .device-bezel {
+        border-radius: 40px;
+        border: 8px solid #1a1a1a;
+        padding: 0;
+        /* Reflection */
         position: relative;
     }
     
-    .device-bezel::after { 
-        /* Notch/Camera indicator */
+    .mode-mobile .device-bezel::before {
         content: '';
-        display: block;
-        width: 30px;
-        height: 4px;
-        background: #333;
         position: absolute;
-        top: 6px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 4px;
-        opacity: 0; /* Hidden on desktop */
+        top: 0; left: 50%; transform: translateX(-50%);
+        width: 120px; height: 24px;
+        background: #000;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        z-index: 10;
+        pointer-events: none;
     }
     
-    /* Device Specific Styles */
-    .mode-mobile .device-bezel {
-        border-radius: 36px;
-        padding: 12px;
-        border: 4px solid #333;
-    }
-    
-    .mode-mobile .device-bezel::after { opacity: 1; width: 80px; height: 16px; top: 12px; border-radius: 10px; }
-
     .mode-tablet .device-bezel {
         border-radius: 20px;
-        padding: 16px;
+        border: 12px solid #1a1a1a;
     }
-
+    
     .mode-desktop .device-bezel {
         width: 100%;
         height: 100%;
-        padding: 0;
-        background: transparent;
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-    iframe#site-preview {
-        width: 100%;
-        height: 100%;
         border: none;
-        background: white;
-        border-radius: 2px; /* Inner radius */
-        display: block;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0 2rem 2rem;
     }
     
-    .mode-mobile iframe#site-preview { border-radius: 24px; }
-    .mode-tablet iframe#site-preview { border-radius: 12px; }
+    .mode-desktop iframe {
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    iframe {
+        background: #fff;
+        border-radius: 32px; /* Inner matches mobile radius */
+    }
+    
+    .mode-desktop iframe { border-radius: 8px; }
 
+    /* Loading Overlay */
+    .saving-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(4px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        display: none;
+        color: #fff;
+    }
+    
+    .saving-overlay.active { display: flex; }
+    
 </style>
 @endpush
 
 @section('content')
 <div class="visual-editor-container">
-    <!-- Sidebar -->
+    <!-- Luxury Sidebar -->
     <div class="editor-sidebar">
         <div class="editor-header">
-            <h5 class="mb-0 fw-bold"><i class="bi bi-pencil-square me-2 text-primary"></i>Editor</h5>
-            <span class="badge bg-light text-dark border" id="connection-status">Disconnected</span>
+            <div class="brand-title">
+                <i class="bi bi-gem"></i> Culinaire CMS
+            </div>
+            <span class="connection-badge" id="connection-status">
+                Connected
+            </span>
         </div>
         
         <div class="editor-content" id="editor-panel">
             <!-- Page Selector -->
-            <div class="mb-4">
-                <label class="small text-muted fw-bold mb-2 text-uppercase">Halaman Aktif</label>
-                <select class="form-select" id="page-selector">
+            <div class="page-select-wrapper">
+                <label class="page-select-label">Halaman Yang Diedit</label>
+                <select class="custom-select" id="page-selector">
                     <option value="{{ url('/') }}">Beranda (Home)</option>
                     <option value="{{ url('/menu') }}">Daftar Menu</option>
                     <option value="{{ url('/reservation') }}">Reservasi</option>
@@ -325,92 +457,97 @@
             </div>
             
             <div class="no-selection-state">
-                <i class="bi bi-cursor"></i>
-                <h6>Pilih Elemen</h6>
-                <p class="small">Klik elemen apapun di halaman sebelah kanan untuk mulai mengedit kontennya.</p>
+                <div class="no-selection-icon-wrapper">
+                    <i class="bi bi-cursor-fill text-gold fs-2" style="color: var(--cms-gold);"></i>
+                </div>
+                <h6 class="text-white mb-2">Pilih Konten</h6>
+                <p class="small text-muted">Klik bagian website di sebelah kanan yang ingin Anda ubah.</p>
             </div>
             
             <form id="edit-form" style="display: none;">
                 <input type="hidden" id="field-key" name="key">
                 <input type="hidden" id="field-type" name="type">
                 
-                <div class="editor-field">
-                    <label>Key ID</label>
-                    <input type="text" class="form-control form-control-sm bg-light" id="field-key-display" readonly>
+                <div class="editor-card">
+                    <div class="mb-3">
+                        <label class="form-dark-label">ID Element</label>
+                        <input type="text" class="form-dark-control" id="field-key-display" readonly style="opacity: 0.6; cursor: not-allowed;">
+                    </div>
                 </div>
-                
-                <div class="editor-field" id="input-container">
-                    <!-- Dynamic Input will be injected here -->
-                </div>
-                
-                <div class="editor-field" id="image-upload-container" style="display: none;">
-                    <label>Upload New Image</label>
-                    <input type="file" class="form-control" id="image-uploader" accept="image/*">
-                    <small class="text-muted mt-1 d-block">Max 5MB. Formats: JPG, PNG, WEBP.</small>
+
+                <div class="editor-card">
+                    <div class="mb-2" id="input-container">
+                        <!-- Dynamic Input will be injected here -->
+                    </div>
+                    
+                    <div id="image-upload-container" style="display: none;">
+                        <hr style="border-color: var(--cms-border);">
+                        <label class="form-dark-label">Upload Gambar Baru</label>
+                        <input type="file" class="form-dark-control" id="image-uploader" accept="image/*">
+                        <small class="text-muted mt-2 d-block" style="font-size: 0.7rem;">
+                            <i class="bi bi-info-circle me-1"></i> Max 5MB. Formats: JPG, PNG, WEBP.
+                        </small>
+                    </div>
                 </div>
             </form>
         </div>
         
         <div class="editor-footer">
-            <div class="d-grid gap-2">
-                <button type="button" class="btn btn-primary" id="btn-save" disabled>
-                    <i class="bi bi-save me-2"></i>Simpan Perubahan
-                </button>
-            </div>
+            <button type="button" class="btn-gold-gradient" id="btn-save" disabled>
+                <i class="bi bi-save2 me-2"></i>Simpan Perubahan
+            </button>
         </div>
     </div>
 
     <!-- Preview Area -->
     <div class="preview-area">
         <div class="saving-overlay">
-            <div class="spinner-border text-primary me-2" role="status"></div>
-            <span class="fw-bold">Menyimpan...</span>
+            <div class="spinner-border text-warning mb-3" role="status"></div>
+            <span class="fw-bold tracking-wider">MENYIMPAN PERUBAHAN...</span>
         </div>
         
+        <!-- Floating Luxury Toolbar -->
         <div class="preview-toolbar">
-            <div class="url-bar-container">
-                <div class="url-bar">
-                    <i class="bi bi-globe me-2 text-primary"></i>
-                    <span id="current-url">{{ url('/') }}</span>
-                </div>
+            <div class="url-display">
+                <i class="bi bi-globe2 me-2 text-muted"></i>
+                <span id="current-url">{{ url('/') }}</span>
             </div>
             
-            <!-- Type Selector -->
-            <div class="device-controls-group">
-                <button class="device-btn active" onclick="setDeviceType('desktop')" id="btn-desktop" title="Desktop View">
-                    <i class="bi bi-laptop"></i> Desktop
+            <div class="toolbar-group">
+                <button class="device-btn active" onclick="setDeviceType('desktop')" id="btn-desktop" data-bs-toggle="tooltip" title="Desktop">
+                    <i class="bi bi-laptop"></i>
                 </button>
-                <div style="width: 1px; height: 16px; background: #dee2e6; margin: 0 4px;"></div>
-                <button class="device-btn" onclick="setDeviceType('tablet')" id="btn-tablet" title="Tablet View">
-                    <i class="bi bi-tablet"></i> Tablet
+                <button class="device-btn" onclick="setDeviceType('tablet')" id="btn-tablet" data-bs-toggle="tooltip" title="Tablet">
+                    <i class="bi bi-tablet"></i>
                 </button>
-                <button class="device-btn" onclick="setDeviceType('mobile')" id="btn-mobile" title="Mobile View">
-                    <i class="bi bi-phone"></i> Mobile
+                <button class="device-btn" onclick="setDeviceType('mobile')" id="btn-mobile" data-bs-toggle="tooltip" title="Mobile">
+                    <i class="bi bi-phone"></i>
                 </button>
             </div>
 
             <!-- Model Selector (Hidden unless tablet/mobile) -->
             <div class="model-selector-wrapper" id="model-wrapper">
-                <select class="form-select form-select-sm" id="model-selector" onchange="setDeviceModel(this.value)">
-                    <!-- Options populated via JS -->
+                <select class="model-select" id="model-selector" onchange="setDeviceModel(this.value)">
+                    <!-- Options via JS -->
                 </select>
             </div>
             
-            <!-- Rotate (Hidden unless tablet/mobile) -->
-            <div class="model-selector-wrapper" id="rotate-wrapper" style="min-width: auto; margin-left: 0;">
-                <button class="btn-rotate" onclick="toggleOrientation()" title="Rotate Device">
-                    <i class="bi bi-arrow-repeat"></i>
+            <div class="model-selector-wrapper" id="rotate-wrapper">
+                <button class="video-rotate-btn" onclick="toggleOrientation()" title="Rotate Device">
+                    <i class="bi bi-phone-flip"></i>
                 </button>
             </div>
             
-            <a href="{{ url('/') }}" target="_blank" class="btn btn-primary d-flex align-items-center ms-auto">
-                <i class="bi bi-box-arrow-up-right me-2"></i> Preview Real
+            <div style="width: 1px; height: 24px; background: rgba(255,255,255,0.1); margin: 0 4px;"></div>
+            
+            <a href="{{ url('/') }}" target="_blank" class="device-btn text-warning" title="Open Real Site">
+                <i class="bi bi-box-arrow-up-right"></i>
             </a>
         </div>
         
         <div class="iframe-wrapper mode-desktop" id="iframe-wrapper">
             <div class="device-bezel" id="device-entity" style="width: 100%; height: 100%;">
-                <iframe src="{{ url('/') }}?cms_mode=true" id="site-preview" title="Site Preview"></iframe>
+                <iframe src="{{ url('/') }}?cms_mode=true" id="site-preview" title="Site Preview" style="width: 100%; height: 100%; border: none;"></iframe>
             </div>
         </div>
     </div>
