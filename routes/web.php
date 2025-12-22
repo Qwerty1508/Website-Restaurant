@@ -164,6 +164,21 @@ Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\AdminMiddleware
     Route::get('/cms/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'pages']);
     Route::get('/cms/pages/create', [\App\Http\Controllers\Admin\AdminCmsController::class, 'createPage']);
     Route::post('/cms/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'storePage']);
+    
+    // Specific page edit routes
+    Route::get('/cms/pages/homepage/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editHomepage']);
+    Route::post('/cms/pages/homepage', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateHomepage']);
+    Route::get('/cms/pages/menu/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editMenuPage']);
+    Route::post('/cms/pages/menu', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateMenuPage']);
+    Route::get('/cms/pages/about/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editAboutPage']);
+    Route::post('/cms/pages/about', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateAboutPage']);
+    Route::get('/cms/pages/contact/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editContactPage']);
+    Route::post('/cms/pages/contact', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateContactPage']);
+    Route::get('/cms/pages/reservation/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editReservationPage']);
+    Route::post('/cms/pages/reservation', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateReservationPage']);
+    Route::get('/cms/pages/login/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editLoginPage']);
+    Route::post('/cms/pages/login', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateLoginPage']);
+    
     Route::get('/cms/pages/{id}/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editPage']);
     Route::put('/cms/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updatePage']);
     Route::delete('/cms/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroyPage']);

@@ -265,4 +265,77 @@ class AdminCmsController extends Controller
         
         return back()->with('success', 'Section berhasil dihapus!');
     }
+
+    // Specific Page Editors
+    public function editHomepage()
+    {
+        $pageData = CmsSetting::get('homepage_content', []);
+        return view('admin.cms.pages.edit-homepage', compact('pageData'));
+    }
+
+    public function updateHomepage(Request $request)
+    {
+        CmsSetting::set('homepage_content', $request->except('_token'));
+        return redirect()->back()->with('success', 'Homepage berhasil diperbarui!');
+    }
+
+    public function editMenuPage()
+    {
+        $pageData = CmsSetting::get('menu_page_content', []);
+        return view('admin.cms.pages.edit-menu', compact('pageData'));
+    }
+
+    public function updateMenuPage(Request $request)
+    {
+        CmsSetting::set('menu_page_content', $request->except('_token'));
+        return redirect()->back()->with('success', 'Halaman Menu berhasil diperbarui!');
+    }
+
+    public function editAboutPage()
+    {
+        $pageData = CmsSetting::get('about_page_content', []);
+        return view('admin.cms.pages.edit-about', compact('pageData'));
+    }
+
+    public function updateAboutPage(Request $request)
+    {
+        CmsSetting::set('about_page_content', $request->except('_token'));
+        return redirect()->back()->with('success', 'Halaman About berhasil diperbarui!');
+    }
+
+    public function editContactPage()
+    {
+        $pageData = CmsSetting::get('contact_page_content', []);
+        return view('admin.cms.pages.edit-contact', compact('pageData'));
+    }
+
+    public function updateContactPage(Request $request)
+    {
+        CmsSetting::set('contact_page_content', $request->except('_token'));
+        return redirect()->back()->with('success', 'Halaman Contact berhasil diperbarui!');
+    }
+
+    public function editReservationPage()
+    {
+        $pageData = CmsSetting::get('reservation_page_content', []);
+        return view('admin.cms.pages.edit-reservation', compact('pageData'));
+    }
+
+    public function updateReservationPage(Request $request)
+    {
+        CmsSetting::set('reservation_page_content', $request->except('_token'));
+        return redirect()->back()->with('success', 'Halaman Reservation berhasil diperbarui!');
+    }
+
+    public function editLoginPage()
+    {
+        $pageData = CmsSetting::get('login_page_content', []);
+        return view('admin.cms.pages.edit-login', compact('pageData'));
+    }
+
+    public function updateLoginPage(Request $request)
+    {
+        CmsSetting::set('login_page_content', $request->except('_token'));
+        return redirect()->back()->with('success', 'Halaman Login berhasil diperbarui!');
+    }
 }
