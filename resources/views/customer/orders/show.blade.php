@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Detail Pesanan #' . $order->order_number)
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -31,7 +29,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row">
             <div class="col-lg-8">
                 <div class="card mb-4">
@@ -67,7 +64,6 @@
                         </div>
                     </div>
                 </div>
-                
                 @if($order->notes)
                 <div class="card mb-4">
                     <div class="card-header bg-white">
@@ -79,7 +75,6 @@
                 </div>
                 @endif
             </div>
-            
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-header bg-white">
@@ -112,7 +107,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="card">
                     <div class="card-header bg-white">
                         <h5 class="mb-0"><i class="bi bi-credit-card me-2 text-primary"></i>Pembayaran</h5>
@@ -128,7 +122,6 @@
                             <span class="badge bg-danger">Gagal</span>
                             @endif
                         </div>
-                        
                         @if($order->payment_status === 'pending')
                         <button class="btn btn-primary w-100">
                             <i class="bi bi-credit-card me-2"></i>Bayar Sekarang

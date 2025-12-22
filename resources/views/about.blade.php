@@ -1,11 +1,8 @@
 @extends('layouts.guest')
-
 @section('title', 'About • Cylinaire')
-
 @section('content')
 <div class="cursor-follower"></div>
 <div class="cursor-dot"></div>
-
 <div class="preloader">
     <div class="preloader-content">
         <h1 class="preloader-brand font-display">CULINAIRE</h1>
@@ -13,15 +10,11 @@
         <div class="preloader-counter font-mono">0%</div>
     </div>
 </div>
-
 <div class="noise-overlay"></div>
-
     <div class="main-content">
-
         <section class="hero-section text-center text-white position-relative" data-scroll-section style="background-color: #0C2A36;">
             <div class="hero-bg parallax-img" style="background-image: url('https://res.cloudinary.com/dh9ysyfit/image/fetch/w_1920,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1505935428862-770b6f24f629'); opacity: 0.6;" data-speed="0.5"></div>
             <div class="hero-overlay" style="background: linear-gradient(to bottom, rgba(12,42,54,0.3), #0C2A36);"></div>
-            
             <div class="container-fluid h-100 px-4 px-lg-5 d-flex flex-column justify-content-center align-items-center position-relative z-2">
                 <div class="hero-text-wrapper overflow-hidden">
                     <h6 class="text-gold tracking-widest font-mono mb-4 text-hero-sup animate-fadeInUp" data-i18n="about_hero_subtitle">{{ __('messages.about_hero_subtitle') }}</h6>
@@ -37,7 +30,6 @@
                 </div>
             </div>
         </section>
-
         <section class="history-chapter section-padding position-relative text-white" style="background-color: #1a3d4d;" data-scroll-section>
             <div class="container-fluid px-4 px-lg-5">
                 <div class="row align-items-center">
@@ -63,9 +55,7 @@
                 </div>
             </div>
         </section>
-
         <div class="transition-spacer" style="height: 100px; background: linear-gradient(to bottom, #1a3d4d, #2a5060);" data-scroll-section></div>
-
         <section class="history-chapter section-padding position-relative text-white" style="background-color: #2a5060;" data-scroll-section>
             <div class="container-fluid px-4 px-lg-5">
                 <div class="row align-items-center flex-row-reverse">
@@ -91,9 +81,7 @@
                 </div>
             </div>
         </section>
-
         <div class="transition-spacer" style="height: 100px; background: linear-gradient(to bottom, #2a5060, #F6F2EE);" data-scroll-section></div>
-
         <section class="history-chapter section-padding position-relative" style="background-color: #F6F2EE;" data-scroll-section>
             <div class="container-fluid px-4 px-lg-5">
                 <div class="row align-items-center">
@@ -119,7 +107,6 @@
                 </div>
             </div>
         </section>
-
         <section class="quote-section section-padding bg-gold text-dark overflow-hidden position-relative" data-scroll-section>
             <div class="marquee-wrapper">
                 <div class="marquee-text font-display">
@@ -127,7 +114,6 @@
                     CULINAIRE • EXCELLENCE • PASSION • TRADITION • FUTURE •
                 </div>
             </div>
-            
             <div class="container-fluid position-relative z-2 px-4 px-lg-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 text-center">
@@ -141,11 +127,9 @@
                 </div>
             </div>
         </section>
-        
         <div style="height: 10vh;" data-scroll-section></div>
     </div>
 @endsection
-
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -153,14 +137,11 @@
         const counter = document.querySelector('.preloader-counter');
         const line = document.querySelector('.preloader-line');
         let width = 0;
-        
         function updateLoader() {
             width += Math.random() * 5;
             if(width > 100) width = 100;
-            
             counter.textContent = Math.floor(width) + '%';
             line.style.width = width + '%';
-            
             if(width < 100) {
                 requestAnimationFrame(updateLoader);
             } else {
@@ -172,7 +153,6 @@
             }
         }
         requestAnimationFrame(updateLoader);
-
         function initAnimations() {
             const heroChars = document.querySelectorAll('.recruit-char');
             heroChars.forEach((char, index) => {
@@ -181,45 +161,34 @@
                     char.style.transitionDelay = (index * 0.05) + 's';
                 }, 500);
             });
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if(entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        
                         if(entry.target.querySelector('.recruit-char')) {
                             entry.target.classList.add('is-visible');
                         }
                     }
                 });
             }, { threshold: 0.1 });
-            
-
             const timelineSection = document.querySelector('.timeline-section');
             const svgPath = document.querySelector('.timeline-path');
-            
             if(timelineSection && svgPath) {
                 const pathLength = svgPath.getTotalLength();
-                
                 svgPath.style.strokeDasharray = pathLength;
                 svgPath.style.strokeDashoffset = pathLength;
-                
                 window.addEventListener('scroll', () => {
                     const sectionTop = timelineSection.offsetTop;
                     const sectionHeight = timelineSection.offsetHeight;
                     const scrollY = window.scrollY;
                     const windowHeight = window.innerHeight;
-                    
                     let percentage = (scrollY + windowHeight / 2 - sectionTop) / (sectionHeight * 0.8);
-                    
                     if(percentage < 0) percentage = 0;
                     if(percentage > 1) percentage = 1;
-                    
                     const drawLength = pathLength * (1 - percentage);
                     svgPath.style.strokeDashoffset = drawLength;
                 });
             }
-            
             document.querySelectorAll('.img-reveal-wrapper, .split-text, .reveal-type, .quote-anim, .heritage-section, .manifesto-section, .history-chapter, .timeline-item').forEach(el => observer.observe(el));
         }
     });

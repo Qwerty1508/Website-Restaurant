@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', __('messages.create_order_title'))
-
 @section('content')
 <section class="bg-gradient-primary text-white py-4">
     <div class="container">
@@ -13,7 +11,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-cream">
     <div class="container">
         <div class="row g-4">
@@ -37,7 +34,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div id="tableSelection" class="mt-4">
                             <h5 class="mb-3" data-i18n="select_table">{{ __('messages.select_table') }}</h5>
                             <div class="row g-2">
@@ -81,7 +77,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="card">
                     <div class="card-header bg-white">
                         <ul class="nav nav-pills gap-2" role="tablist">
@@ -139,7 +134,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-4">
                 <div class="card sticky-top" style="top: 100px;">
                     <div class="card-header bg-white">
@@ -156,12 +150,10 @@
                                 <small>Pilih menu untuk memulai</small>
                             </div>
                         </div>
-                        
                         <div class="mb-4">
                             <label class="form-label" data-i18n="note_optional">{{ __('messages.note_optional') }}</label>
                             <textarea class="form-control" rows="2" placeholder="{{ __('messages.note_placeholder') }}" id="orderNotes"></textarea>
                         </div>
-                        
                         <div class="border-top pt-3">
                             <div class="d-flex justify-content-between mb-2">
                                 <span data-i18n="subtotal">{{ __('messages.subtotal') }}</span>
@@ -175,11 +167,9 @@
                                 <span data-i18n="total">{{ __('messages.total') }}</span>
                                 <span class="text-primary" id="totalAmount">Rp 0</span>
                             </div>
-                            
                             <button class="btn btn-primary btn-lg w-100" id="payButton" disabled>
                                 <i class="bi bi-credit-card me-2"></i><span data-i18n="pay_now">{{ __('messages.pay_now') }}</span>
                             </button>
-                            
                             <div class="text-center mt-3">
                                 <small class="text-muted">
                                     <i class="bi bi-shield-check me-1"></i><span data-i18n="secure_payment">{{ __('messages.secure_payment') }}</span>
@@ -193,51 +183,42 @@
     </div>
 </section>
 @endsection
-
 @push('styles')
 <style>
     .order-type-card {
         cursor: pointer;
         transition: all 0.3s ease;
     }
-    
     .order-type-card:hover,
     .order-type-card.active {
         border-color: var(--primary) !important;
         background: rgba(139, 0, 0, 0.05);
     }
-    
     .order-type-card.active {
         box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
     }
-    
     .table-select {
         cursor: pointer;
         transition: all 0.3s ease;
     }
-    
     .table-select.available:hover,
     .table-select.available.active {
         border-color: var(--primary) !important;
         background: rgba(139, 0, 0, 0.1);
     }
-    
     .table-select.occupied {
         opacity: 0.5;
         cursor: not-allowed;
     }
-    
     .menu-item {
         transition: all 0.3s ease;
     }
-    
     .menu-item:hover {
         border-color: var(--primary) !important;
         box-shadow: var(--shadow-sm);
     }
 </style>
 @endpush
-
 @push('scripts')
 <script>
 (function() {
@@ -245,12 +226,10 @@
     const cart = {};
     let selectedOrderType = 'dine_in';
     let selectedTable = '3';
-    
     // Format currency
     function formatRupiah(amount) {
         return 'Rp ' + amount.toLocaleString('id-ID');
     }
-    
     // Update cart display
     function updateCart() {
         const container = document.getElementById('cartItemsContainer');
@@ -260,9 +239,7 @@
         const taxEl = document.getElementById('taxAmount');
         const totalEl = document.getElementById('totalAmount');
         const payBtn = document.getElementById('payButton');
-        
         const items = Object.values(cart).filter(item => item.qty > 0);
-        
         if (items.length === 0) {
             container.innerHTML = `
                 <div class="text-center py-4 text-muted" id="emptyCartMessage">
@@ -278,16 +255,13 @@
             payBtn.disabled = true;
             return;
         }
-        
         let html = '';
         let subtotal = 0;
         let totalItems = 0;
-        
         items.forEach(item => {
             const itemTotal = item.price * item.qty;
             subtotal += itemTotal;
             totalItems += item.qty;
-            
             html += `
                 <div class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
                     <div class="flex-grow-1">
@@ -303,19 +277,15 @@
                 </div>
             `;
         });
-        
         container.innerHTML = html;
-        
         const tax = Math.round(subtotal * 0.1);
         const total = subtotal + tax;
-        
         cartCount.textContent = totalItems;
         subtotalEl.textContent = formatRupiah(subtotal);
         taxEl.textContent = formatRupiah(tax);
         totalEl.textContent = formatRupiah(total);
         payBtn.disabled = false;
     }
-    
     // Remove item from cart
     window.removeFromCart = function(id) {
         if (cart[id]) {
@@ -328,14 +298,12 @@
             updateCart();
         }
     };
-    
     // Order type selection
     document.querySelectorAll('.order-type-card').forEach(card => {
         card.addEventListener('click', function() {
             document.querySelectorAll('.order-type-card').forEach(c => c.classList.remove('active'));
             this.classList.add('active');
             selectedOrderType = this.dataset.type;
-            
             // Show/hide table selection
             const tableSection = document.getElementById('tableSelection');
             if (selectedOrderType === 'take_away') {
@@ -345,7 +313,6 @@
             }
         });
     });
-    
     // Table selection
     document.querySelectorAll('.table-select.available').forEach(table => {
         table.addEventListener('click', function() {
@@ -354,7 +321,6 @@
             selectedTable = this.querySelector('strong').textContent;
         });
     });
-    
     // Quantity buttons
     document.querySelectorAll('.qty-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -364,32 +330,26 @@
             const price = parseInt(menuItem.dataset.price);
             const qtyEl = menuItem.querySelector('.qty-value');
             let qty = parseInt(qtyEl.textContent);
-            
             if (this.dataset.action === 'plus') {
                 qty++;
             } else if (this.dataset.action === 'minus' && qty > 0) {
                 qty--;
             }
-            
             qtyEl.textContent = qty;
-            
             // Update cart
             if (qty > 0) {
                 cart[id] = { id, name, price, qty };
             } else {
                 delete cart[id];
             }
-            
             updateCart();
         });
     });
-    
     // Category filter
     document.querySelectorAll('.nav-pills .nav-link').forEach(tab => {
         tab.addEventListener('click', function() {
             const target = this.dataset.bsTarget;
             const category = target.replace('#', '').toLowerCase();
-            
             document.querySelectorAll('.menu-item-container').forEach(item => {
                 if (category === 'semua') {
                     item.style.display = 'block';
@@ -401,7 +361,6 @@
                         'lauk': ['appetizer', 'dessert'],
                         'minum': ['minuman']
                     };
-                    
                     if (categoryMap[category] && categoryMap[category].includes(itemCategory)) {
                         item.style.display = 'block';
                     } else if (category === 'semua') {
@@ -413,16 +372,13 @@
             });
         });
     });
-    
     // Pay button
     document.getElementById('payButton').addEventListener('click', function() {
         const btn = this;
-        
         if (Object.keys(cart).length === 0 || Object.values(cart).every(item => item.qty === 0)) {
             alert('Keranjang masih kosong!');
             return;
         }
-        
         // Prepare order data
         const items = Object.entries(cart)
             .filter(([id, item]) => item.qty > 0)
@@ -430,18 +386,15 @@
                 menu_id: parseInt(id),
                 quantity: item.qty
             }));
-        
         const orderData = {
             type: selectedOrderType,
             table_number: selectedOrderType === 'dine_in' ? selectedTable : null,
             items: items,
             notes: document.getElementById('orderNotes').value
         };
-        
         // Disable button and show loading
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memproses...';
-        
         // Submit order via AJAX
         fetch('/customer/orders', {
             method: 'POST',
@@ -457,7 +410,6 @@
             if (data.success) {
                 // Show success message
                 alert('✅ Pesanan berhasil dibuat!\\n\\nNomor Pesanan: ' + data.order_number + '\\nTotal: Rp ' + data.total.toLocaleString('id-ID'));
-                
                 // Redirect to orders page
                 window.location.href = '/customer/orders';
             } else {
@@ -471,7 +423,6 @@
             btn.innerHTML = '<i class="bi bi-credit-card me-2"></i>Bayar Sekarang';
         });
     });
-    
     // Initialize
     updateCart();
 })();

@@ -1,18 +1,7 @@
-/**
- * CMS Iframe Script (Child)
- * Injected into the public site when cms_mode=true
- */
-
 console.log('CMS Iframe Script Loaded');
-
 (function () {
-    // Notify Parent we are ready
     window.parent.postMessage({ type: 'cms_handshake' }, '*');
-
-    // Notify Parent about URL changes
     window.parent.postMessage({ type: 'cms_url_changed', url: window.location.href }, '*');
-
-    // Add Styles for Editable Elements
     const style = document.createElement('style');
     style.textContent = `
         [data-cms-key] {
@@ -42,7 +31,6 @@ console.log('CMS Iframe Script Loaded');
         [data-cms-key]:hover::after {
             opacity: 1;
         }
-        /* Flash animation for save success */
         @keyframes cms-flash-success {
             0% { background-color: rgba(25, 135, 84, 0.5); }
             100% { background-color: transparent; }
@@ -52,27 +40,19 @@ console.log('CMS Iframe Script Loaded');
         }
     `;
     document.head.appendChild(style);
-
-    // Click Handler interrogation
     document.addEventListener('click', function (e) {
-        // Find nearest editable element
         const target = e.target.closest('[data-cms-key]');
-
         if (target) {
             e.preventDefault();
             e.stopPropagation();
-
-            // Send details to parent
             const key = target.getAttribute('data-cms-key');
             const type = target.getAttribute('data-cms-type') || 'text';
             let content = '';
-
             if (type === 'image') {
                 content = target.getAttribute('src');
             } else {
-                content = target.innerHTML; // Or innerText depending on need
+                content = target.innerHTML; 
             }
-
             window.parent.postMessage({
                 type: 'cms_element_selected',
                 payload: {
@@ -81,17 +61,12 @@ console.log('CMS Iframe Script Loaded');
                     content: content
                 }
             }, '*');
-
-            // Visual feedback
             document.querySelectorAll('[data-cms-key]').forEach(el => el.style.outline = '');
             target.style.outline = '4px solid #0d6efd';
         }
-    }, true); // Capture phase
-
-    // Message Listener from Parent
+    }, true); 
     window.addEventListener('message', function (event) {
         const data = event.data;
-
         if (data.type === 'cms_update_preview') {
             const elements = document.querySelectorAll(`[data-cms-key="${data.key}"]`);
             elements.forEach(el => {
@@ -103,7 +78,6 @@ console.log('CMS Iframe Script Loaded');
                 }
             });
         }
-
         if (data.type === 'cms_save_success') {
             const elements = document.querySelectorAll(`[data-cms-key="${data.key}"]`);
             elements.forEach(el => {
@@ -112,21 +86,16 @@ console.log('CMS Iframe Script Loaded');
             });
         }
     });
-
-    // Helper: Persist cms_mode on navigation
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('a').forEach(link => {
-            // Only internal links
             if (link.host === window.location.host) {
                 try {
                     const url = new URL(link.href);
                     url.searchParams.set('cms_mode', 'true');
                     link.href = url.toString();
                 } catch (e) {
-                    // Ignore invalid URLs
                 }
             }
         });
     });
-
 })();

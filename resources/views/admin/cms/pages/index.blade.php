@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', 'Manage Pages')
-
 @push('styles')
 <style>
 .cms-page-header {
@@ -12,7 +10,6 @@
     flex-wrap: wrap;
     gap: 1rem;
 }
-
 .cms-page-header h1 {
     margin: 0;
     font-size: 1.75rem;
@@ -20,11 +17,9 @@
     align-items: center;
     gap: 0.75rem;
 }
-
 .cms-page-header h1 i {
     color: var(--accent);
 }
-
 .cms-pages-container {
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(20px);
@@ -33,7 +28,6 @@
     border-radius: 1.5rem;
     overflow: hidden;
 }
-
 .cms-pages-toolbar {
     padding: 1.25rem 1.5rem;
     background: linear-gradient(135deg, rgba(12, 42, 54, 0.03) 0%, rgba(200, 155, 58, 0.05) 100%);
@@ -44,13 +38,11 @@
     flex-wrap: wrap;
     gap: 1rem;
 }
-
 .cms-search-box {
     position: relative;
     max-width: 300px;
     width: 100%;
 }
-
 .cms-search-box input {
     width: 100%;
     padding: 0.75rem 1rem 0.75rem 2.75rem;
@@ -59,13 +51,11 @@
     background: rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
 }
-
 .cms-search-box input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(200, 155, 58, 0.15);
     outline: none;
 }
-
 .cms-search-box i {
     position: absolute;
     left: 1rem;
@@ -73,7 +63,6 @@
     transform: translateY(-50%);
     color: var(--text-muted);
 }
-
 .cms-page-row {
     display: flex;
     align-items: center;
@@ -82,15 +71,12 @@
     transition: all 0.3s ease;
     gap: 1rem;
 }
-
 .cms-page-row:hover {
     background: linear-gradient(135deg, rgba(200, 155, 58, 0.05) 0%, rgba(12, 42, 54, 0.02) 100%);
 }
-
 .cms-page-row:last-child {
     border-bottom: none;
 }
-
 .cms-page-drag {
     cursor: grab;
     padding: 0.5rem;
@@ -98,11 +84,9 @@
     opacity: 0.5;
     transition: opacity 0.2s;
 }
-
 .cms-page-row:hover .cms-page-drag {
     opacity: 1;
 }
-
 .cms-page-icon-wrap {
     width: 48px;
     height: 48px;
@@ -115,64 +99,53 @@
     font-size: 1.25rem;
     flex-shrink: 0;
 }
-
 .cms-page-details {
     flex-grow: 1;
     min-width: 0;
 }
-
 .cms-page-name {
     font-weight: 600;
     color: var(--primary);
     margin-bottom: 0.25rem;
     font-size: 1rem;
 }
-
 .cms-page-slug {
     font-size: 0.8rem;
     color: var(--text-muted);
     font-family: 'Monaco', 'Consolas', monospace;
 }
-
 .cms-page-stats {
     display: flex;
     gap: 1.5rem;
     flex-shrink: 0;
 }
-
 .cms-page-stat {
     text-align: center;
 }
-
 .cms-page-stat-value {
     font-weight: 700;
     font-size: 1rem;
     color: var(--primary);
 }
-
 .cms-page-stat-label {
     font-size: 0.7rem;
     color: var(--text-muted);
     text-transform: uppercase;
 }
-
 .cms-page-status {
     flex-shrink: 0;
 }
-
 .cms-toggle {
     position: relative;
     width: 50px;
     height: 26px;
     display: inline-block;
 }
-
 .cms-toggle input {
     opacity: 0;
     width: 0;
     height: 0;
 }
-
 .cms-toggle-slider {
     position: absolute;
     cursor: pointer;
@@ -184,7 +157,6 @@
     transition: 0.3s;
     border-radius: 26px;
 }
-
 .cms-toggle-slider:before {
     position: absolute;
     content: "";
@@ -197,21 +169,17 @@
     border-radius: 50%;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-
 .cms-toggle input:checked + .cms-toggle-slider {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
 }
-
 .cms-toggle input:checked + .cms-toggle-slider:before {
     transform: translateX(24px);
 }
-
 .cms-page-actions {
     display: flex;
     gap: 0.5rem;
     flex-shrink: 0;
 }
-
 .cms-action-btn {
     width: 36px;
     height: 36px;
@@ -225,94 +193,76 @@
     cursor: pointer;
     transition: all 0.2s ease;
 }
-
 .cms-action-btn:hover {
     background: var(--accent);
     color: var(--text-on-accent);
     transform: scale(1.1);
 }
-
 .cms-action-btn.delete:hover {
     background: var(--danger);
     color: white;
 }
-
 .cms-empty-pages {
     padding: 4rem 2rem;
     text-align: center;
 }
-
 .cms-empty-pages i {
     font-size: 4rem;
     color: var(--text-muted);
     opacity: 0.3;
     margin-bottom: 1rem;
 }
-
 .cms-empty-pages h4 {
     margin-bottom: 0.5rem;
 }
-
 .cms-empty-pages p {
     color: var(--text-muted);
     margin-bottom: 1.5rem;
 }
-
 [data-theme="dark"] .cms-pages-container {
     background: rgba(22, 37, 43, 0.9);
     border-color: rgba(255, 255, 255, 0.1);
 }
-
 [data-theme="dark"] .cms-pages-toolbar {
     background: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.06);
 }
-
 [data-theme="dark"] .cms-search-box input {
     background: rgba(22, 37, 43, 0.8);
     border-color: rgba(255, 255, 255, 0.1);
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-page-row {
     border-color: rgba(255, 255, 255, 0.06);
 }
-
 [data-theme="dark"] .cms-page-name {
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-page-stat-value {
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-action-btn {
     background: rgba(255, 255, 255, 0.08);
 }
-
 @media (max-width: 768px) {
     .cms-page-row {
         flex-wrap: wrap;
     }
-    
     .cms-page-stats {
         width: 100%;
         justify-content: flex-start;
         margin-top: 0.5rem;
         gap: 1rem;
     }
-    
     .cms-page-actions {
         margin-top: 0.5rem;
     }
-    
     .cms-page-drag {
         display: none;
     }
 }
 </style>
 @endpush
-
 @section('content')
 <div class="cms-page-header">
     <h1><i class="bi bi-file-richtext"></i> Pages</h1>
@@ -320,14 +270,12 @@
         <i class="bi bi-plus-lg me-2"></i>New Page
     </a>
 </div>
-
 @if(session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 @endif
-
 <div class="cms-pages-container">
     <div class="cms-pages-toolbar">
         <div class="cms-search-box">
@@ -338,7 +286,6 @@
             <span class="badge bg-secondary">{{ $pages->count() }} pages</span>
         </div>
     </div>
-    
     @if($pages->count() > 0)
     <div class="cms-pages-list" id="pagesList">
         @foreach($pages as $page)
@@ -387,13 +334,11 @@
     </div>
     @endif
 </div>
-
 <form id="deleteForm" method="POST" style="display: none;">
     @csrf
     @method('DELETE')
 </form>
 @endsection
-
 @push('scripts')
 <script>
 document.getElementById('searchPages')?.addEventListener('input', function(e) {
@@ -403,7 +348,6 @@ document.getElementById('searchPages')?.addEventListener('input', function(e) {
         row.style.display = title.includes(search) ? 'flex' : 'none';
     });
 });
-
 function togglePublish(id, status) {
     fetch(`/admin/cms/pages/${id}`, {
         method: 'PUT',
@@ -419,7 +363,6 @@ function togglePublish(id, status) {
         }
     });
 }
-
 function confirmDelete(id, title) {
     if (confirm(`Are you sure you want to delete "${title}"?`)) {
         const form = document.getElementById('deleteForm');

@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Profil Saya')
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -11,7 +9,6 @@
                 <p class="text-muted mb-0" data-i18n="profile_desc">{{ __('messages.profile_desc') }}</p>
             </div>
         </div>
-        
         <div class="row g-4">
             <div class="col-lg-4">
                 <div class="card text-center p-4">
@@ -41,7 +38,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header bg-white">
@@ -83,7 +79,6 @@
                         </form>
                     </div>
                 </div>
-                
                 <div class="card mt-4">
                     <div class="card-header bg-white">
                         <h5 class="mb-0">
@@ -124,7 +119,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row mt-4">
             <div class="col-12">
                 <a href="{{ url('/customer/dashboard') }}" class="btn btn-outline-secondary">

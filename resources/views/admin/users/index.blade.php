@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Daftar Users')
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -15,14 +13,12 @@
                 </div>
             </div>
         </div>
-        
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        
         <div class="row g-4 mb-4">
             <div class="col-md-4">
                 <div class="card text-center p-3">
@@ -43,7 +39,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="card mb-4">
             <div class="card-body">
                 <div class="d-flex gap-2">
@@ -62,7 +57,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -154,7 +148,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="card mt-4">
             <div class="card-body">
                 <h6 class="mb-3">Keterangan Status:</h6>
@@ -174,11 +167,9 @@
                 </div>
             </div>
         </div>
-        
         <div class="mt-4">
             {{ $users->appends(['filter' => $filter])->links() }}
         </div>
-        
         <div class="mt-4">
             <a href="/admin/dashboard" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-2"></i>Kembali ke Dashboard

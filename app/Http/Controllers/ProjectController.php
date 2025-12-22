@@ -1,17 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
-
 class ProjectController extends Controller
 {
     public function index()
     {
         $steps = $this->generateAllSteps();
-        
         $members = [
             [
                 'id' => 1,
@@ -42,15 +38,12 @@ class ProjectController extends Controller
                 'steps' => array_filter($steps, fn($s) => $s['step'] >= 601 && $s['step'] <= 800),
             ],
         ];
-
         return view('project.index', compact('members'));
     }
-
     public function getProgress()
     {
         $progress = DB::table('project_progress')->first();
         $updates = $this->getGitUpdates();
-        
         if (!$progress) {
             return response()->json([
                 'completed_steps' => [],
@@ -59,7 +52,6 @@ class ProjectController extends Controller
                 'updated_at' => now()->toISOString()
             ]);
         }
-
         return response()->json([
             'completed_steps' => json_decode($progress->completed_steps, true) ?? [],
             'repo_submissions' => json_decode($progress->repo_submissions, true) ?? [],
@@ -67,7 +59,6 @@ class ProjectController extends Controller
             'updated_at' => $progress->updated_at
         ]);
     }
-
     private function getGitUpdates(): array
     {
         return [
@@ -98,14 +89,11 @@ class ProjectController extends Controller
             ['id' => 25, 'title' => 'feat: Visual CMS with Live Preview', 'description' => 'Added visual editor for public site, split-view admin interface, and real-time content updates API', 'file_path' => 'app/Helpers/GlobalHelpers.php, public/js/cms-editor.js, resources/views/admin/cms/index.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-23'],
         ];
     }
-
     public function saveProgress(Request $request)
     {
         $completedSteps = $request->input('completed_steps', []);
         $repoSubmissions = $request->input('repo_submissions', []);
-
         $exists = DB::table('project_progress')->exists();
-
         if ($exists) {
             DB::table('project_progress')->update([
                 'completed_steps' => json_encode($completedSteps),
@@ -119,33 +107,26 @@ class ProjectController extends Controller
                 'updated_at' => now()
             ]);
         }
-
         return response()->json(['success' => true, 'updated_at' => now()->toISOString()]);
     }
-
     public function getUpdates()
     {
         $updates = DB::table('project_updates')->orderBy('id', 'desc')->get();
         return response()->json(['updates' => $updates]);
     }
-
     public function deleteUpdate($id)
     {
         $user = auth()->user();
         if (!$user || $user->email !== 'admin@super.admin') {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
         }
-
         DB::table('project_updates')->where('id', $id)->delete();
-        
         return response()->json(['success' => true, 'message' => 'Update deleted successfully']);
     }
-
     private function generateAllSteps(): array
     {
         $steps = [];
         $stepNumber = 1;
-
         $edoFiles = [
             '.env.example',
             'composer.json',
@@ -163,7 +144,6 @@ class ProjectController extends Controller
             'resources/views/auth/register.blade.php',
         ];
         $stepNumber = $this->processFilesIntoSteps($edoFiles, $steps, $stepNumber, 200);
-
         $haidarFiles = [
             'database/migrations/0001_01_01_000000_create_users_table.php',
             'database/migrations/0001_01_01_000001_create_cache_table.php',
@@ -191,7 +171,6 @@ class ProjectController extends Controller
             'resources/views/admin/reservations/show.blade.php',
         ];
         $stepNumber = $this->processFilesIntoSteps($haidarFiles, $steps, $stepNumber, 400);
-
         $dimasFiles = [
             'app/Http/Controllers/ReservationController.php',
             'app/Http/Controllers/OrderController.php',
@@ -206,7 +185,6 @@ class ProjectController extends Controller
             'resources/views/customer/reservations/show.blade.php',
         ];
         $stepNumber = $this->processFilesIntoSteps($dimasFiles, $steps, $stepNumber, 600);
-
         $bernardFiles = [
             'resources/views/welcome.blade.php',
             'resources/views/about.blade.php',
@@ -217,18 +195,14 @@ class ProjectController extends Controller
             'public/js/cursor.js',
         ];
         $stepNumber = $this->processFilesIntoSteps($bernardFiles, $steps, $stepNumber, 800);
-
         return $steps;
     }
-
     private function processFilesIntoSteps(array $files, array &$steps, int $startStep, int $maxStep): int
     {
         $currentStep = $startStep;
         $targetSteps = $maxStep - $startStep + 1;
-        
         $allFileContents = [];
         $totalLines = 0;
-        
         foreach ($files as $filePath) {
             $absolutePath = base_path($filePath);
             if (File::exists($absolutePath)) {
@@ -238,22 +212,17 @@ class ProjectController extends Controller
                 $totalLines += count($lines);
             }
         }
-
         if ($totalLines === 0) {
             return $currentStep;
         }
-
         $linesPerStep = max(1, ceil($totalLines / $targetSteps));
-
         foreach ($allFileContents as $filePath => $lines) {
             $lineCount = count($lines);
             $currentLine = 0;
-
             while ($currentLine < $lineCount && $currentStep <= $maxStep) {
                 $endLine = min($currentLine + $linesPerStep, $lineCount);
                 $chunk = array_slice($lines, $currentLine, $endLine - $currentLine);
                 $codeContent = implode("\n", $chunk);
-
                 if (trim($codeContent) !== '') {
                     $steps[] = [
                         'step' => $currentStep,
@@ -265,11 +234,9 @@ class ProjectController extends Controller
                     ];
                     $currentStep++;
                 }
-
                 $currentLine = $endLine;
             }
         }
-
         while ($currentStep <= $maxStep) {
             $steps[] = [
                 'step' => $currentStep,
@@ -281,8 +248,6 @@ class ProjectController extends Controller
             ];
             $currentStep++;
         }
-
         return $currentStep;
     }
 }
-

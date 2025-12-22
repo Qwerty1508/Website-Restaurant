@@ -4,34 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
     <title>@yield('title', 'Dashboard') - Culinaire Admin</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    
     @stack('styles')
 </head>
 <body>
     @include('components.sidebar')
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
     <div class="main-content-admin">
         <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded-3 mb-4 px-4" style="overflow: visible;">
             <div class="container-fluid">
                 <button class="btn btn-link d-lg-none p-0 me-3" id="sidebarToggle">
                     <i class="bi bi-list fs-4"></i>
                 </button>
-                
                 <div class="d-none d-md-flex flex-grow-1" style="max-width: 400px;">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-0">
@@ -40,13 +31,11 @@
                         <input type="text" class="form-control bg-light border-0" placeholder="Cari...">
                     </div>
                 </div>
-                
                 <div class="d-flex align-items-center gap-3 ms-auto">
                     <button class="theme-toggle" id="themeToggle">
                         <i class="bi bi-moon-fill icon-moon"></i>
                         <i class="bi bi-sun-fill icon-sun"></i>
                     </button>
-                    
                     <div class="dropdown">
                         <button class="btn btn-link p-0 position-relative" data-bs-toggle="dropdown">
                             <i class="bi bi-bell fs-5 text-muted"></i>
@@ -95,7 +84,6 @@
                             </a>
                         </div>
                     </div>
-                    
                     <div class="dropdown">
                         <button class="btn btn-link p-0 d-flex align-items-center gap-2 text-decoration-none" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
                             <img src="https://i.pravatar.cc/40?img=12" alt="Admin" class="rounded-circle" 
@@ -123,18 +111,14 @@
                 </div>
             </div>
         </nav>
-        
         @yield('content')
     </div>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
         const savedTheme = localStorage.getItem('theme') || 'light';
         htmlElement.setAttribute('data-theme', savedTheme);
-        
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
                 const currentTheme = htmlElement.getAttribute('data-theme');
@@ -143,11 +127,9 @@
                 localStorage.setItem('theme', newTheme);
             });
         }
-        
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.querySelector('.sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
-        
         if (sidebarToggle && sidebar) {
             sidebarToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('show');
@@ -156,7 +138,6 @@
                 }
             });
         }
-        
         // Close sidebar when clicking on overlay
         if (sidebarOverlay) {
             sidebarOverlay.addEventListener('click', () => {
@@ -164,7 +145,6 @@
                 sidebarOverlay.classList.remove('show');
             });
         }
-        
         // Fix dropdown positioning for admin navbar
         document.querySelectorAll('.main-content-admin .dropdown').forEach(function(dropdown) {
             dropdown.addEventListener('show.bs.dropdown', function(e) {
@@ -179,7 +159,6 @@
             });
         });
     </script>
-    
     <script src="{{ asset('js/cursor.js') }}"></script>
     <script src="{{ asset('js/performance-core.js') }}"></script>
     @stack('scripts')

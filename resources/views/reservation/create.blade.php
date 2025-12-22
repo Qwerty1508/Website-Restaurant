@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Reservasi Meja')
-
 @section('content')
 <section class="bg-gradient-primary text-white py-5">
     <div class="container-fluid px-4 px-lg-5">
@@ -23,7 +21,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-cream">
     <div class="container">
         @if(session('success'))
@@ -32,7 +29,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        
         <div class="row g-5">
             <div class="col-lg-7">
                 <div class="card shadow-lg p-4 p-lg-5">
@@ -40,7 +36,6 @@
                         <i class="bi bi-calendar-plus text-gold me-2"></i>
                         <span data-i18n="form_title">{{ __('messages.form_title') }}</span>
                     </h4>
-                    
                     @guest
                     <div class="alert alert-warning d-flex align-items-center mb-4">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -49,10 +44,8 @@
                         </div>
                     </div>
                     @endguest
-                    
                     <form method="POST" action="{{ url('/reservation') }}" enctype="multipart/form-data">
                         @csrf
-                        
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="name" class="form-label"><span data-i18n="reservation_name">{{ __('messages.reservation_name') }}</span> <span class="text-danger">*</span></label>
@@ -63,7 +56,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="col-md-6">
                                 <label for="phone" class="form-label"><span data-i18n="reservation_phone">{{ __('messages.reservation_phone') }}</span> <span class="text-danger">*</span></label>
                                 <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" 
@@ -73,7 +65,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="col-12">
                                 <label for="email" class="form-label"><span data-i18n="reservation_email">{{ __('messages.reservation_email') }}</span> <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" 
@@ -84,7 +75,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="col-md-6">
                                 <label for="date" class="form-label"><span data-i18n="reservation_date">{{ __('messages.reservation_date') }}</span> <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" name="date" 
@@ -94,7 +84,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="col-md-6">
                                 <label for="time" class="form-label"><span data-i18n="reservation_time">{{ __('messages.reservation_time') }}</span> <span class="text-danger">*</span></label>
                                 <select class="form-select @error('time') is-invalid @enderror" id="time" name="time" required>
@@ -114,7 +103,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="col-md-6">
                                 <label for="guests" class="form-label"><span data-i18n="reservation_guests">{{ __('messages.reservation_guests') }}</span> <span class="text-danger">*</span></label>
                                 <select class="form-select @error('guests') is-invalid @enderror" id="guests" name="guests" required>
@@ -127,7 +115,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="col-md-6">
                                 <label for="table" class="form-label" data-i18n="reservation_table">{{ __('messages.reservation_table') }}</label>
                                 <select class="form-select" id="table" name="table_id">
@@ -140,20 +127,16 @@
                                     <option value="6" data-i18n="table_6_label">{{ __('messages.table_6_label') }}</option>
                                 </select>
                             </div>
-                            
                             <div class="col-12">
                                 <label for="notes" class="form-label" data-i18n="special_request">{{ __('messages.special_request') }}</label>
                                 <textarea class="form-control" id="notes" name="notes" rows="3" 
                                           placeholder="{{ __('messages.notes_placeholder') }}" data-i18n="notes_placeholder">{{ old('notes') }}</textarea>
                             </div>
-                            
                             <div class="col-12">
                                 <label for="payment_proof_file" class="form-label"><span data-i18n="payment_proof">{{ __('messages.payment_proof') }}</span> <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('payment_proof') is-invalid @enderror" 
                                        id="payment_proof_file" accept="image/*">
                                 <input type="hidden" name="payment_proof" id="payment_proof_url" required>
-                                
-
                                 <div class="mt-3 p-3 bg-light rounded">
                                     <label class="form-label fw-semibold mb-2">
                                         <i class="bi bi-sliders me-1"></i>Mode Upload:
@@ -175,14 +158,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                
                                 @error('payment_proof')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
-                                
-
                                 <div id="uploadProgressContainer" class="mt-2"></div>
-                                
                                 <div id="paymentPreviewContainer" class="mt-2" style="display: none;">
                                     <label class="form-label small" data-i18n="preview_label">{{ __('messages.preview_label') }}</label>
                                     <div class="border rounded p-2">
@@ -191,7 +170,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="alert alert-info mt-4 d-flex">
                             <i class="bi bi-info-circle-fill me-3 fs-4"></i>
                             <div>
@@ -206,7 +184,6 @@
                                 </ul>
                             </div>
                         </div>
-                        
                         @auth
                         <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">
                             <i class="bi bi-calendar-check me-2"></i><span data-i18n="make_reservation_btn">{{ __('messages.make_reservation_btn') }}</span>
@@ -219,7 +196,6 @@
                     </form>
                 </div>
             </div>
-            
             <div class="col-lg-5">
                 <div class="card mb-4 overflow-hidden">
                     <img src="https://res.cloudinary.com/dh9ysyfit/image/fetch/w_600,h_300,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" 
@@ -234,7 +210,6 @@
                         </p>
                     </div>
                 </div>
-                
                 <div class="card">
                     <div class="card-body">
                         <h5 class="mb-3">
@@ -269,7 +244,6 @@
     </div>
 </section>
 @endsection
-
 @push('scripts')
 <script src="{{ asset('js/cloudinary-upload.js') }}"></script>
 <script>
@@ -280,10 +254,8 @@
         const submitBtn = form.querySelector('button[type="submit"]');
         let isUploading = false;
         let uploadedUrl = null;
-
         // Initialize progress bar
         const progressBar = CloudinaryUploader.createProgressBar('uploadProgressContainer');
-
         fileInput.addEventListener('change', async function(e) {
             const file = e.target.files[0];
             if (!file) {
@@ -292,14 +264,12 @@
                 uploadedUrl = null;
                 return;
             }
-
             // Validate file size (30MB max)
             if (file.size > 30 * 1024 * 1024) {
                 alert('Ukuran file maksimal 30MB');
                 fileInput.value = '';
                 return;
             }
-
             // Show preview
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -307,17 +277,14 @@
                 document.getElementById('paymentPreviewContainer').style.display = 'block';
             };
             reader.readAsDataURL(file);
-
             // Start upload to Cloudinary
             isUploading = true;
             submitBtn.disabled = true;
             progressBar.reset();
             progressBar.show();
-
             try {
                 // Check compression mode
                 const isCompressed = document.getElementById('modeCompressed').checked;
-                
                 const result = await CloudinaryUploader.upload(file, {
                     folder: 'reservations_payments',
                     onProgress: (percent, loaded, total) => {
@@ -330,15 +297,12 @@
                         quality: 0.98   // 98% quality
                     }
                 });
-
                 uploadedUrl = result.secure_url;
                 urlInput.value = uploadedUrl;
                 progressBar.success('Upload berhasil!');
                 submitBtn.disabled = false;
-                
                 // Update preview with Cloudinary URL
                 document.getElementById('paymentPreview').src = uploadedUrl;
-                
             } catch (error) {
                 console.error('Upload error:', error);
                 progressBar.error(error.message || 'Upload gagal, coba lagi');
@@ -350,7 +314,6 @@
                 isUploading = false;
             }
         });
-
         // Prevent form submission if still uploading
         form.addEventListener('submit', function(e) {
             if (isUploading) {

@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Edit Menu')
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -11,7 +9,6 @@
                 <p class="text-muted mb-0">Perbarui informasi menu</p>
             </div>
         </div>
-        
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
@@ -19,7 +16,6 @@
                         <form action="/admin/menus/{{ $menu->slug }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Menu <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" 
@@ -28,7 +24,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="mb-3">
                                 <label for="description" class="form-label">Deskripsi</label>
                                 <textarea class="form-control @error('description') is-invalid @enderror" 
@@ -37,7 +32,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="price" class="form-label">Harga (Rp) <span class="text-danger">*</span></label>
@@ -47,7 +41,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
                                 <div class="col-md-6 mb-3">
                                     <label for="category" class="form-label">Kategori <span class="text-danger">*</span></label>
                                     <select class="form-select @error('category') is-invalid @enderror" 
@@ -62,7 +55,6 @@
                                     @enderror
                                 </div>
                             </div>
-                            
                             @if($menu->image_url)
                                 <div class="mb-3">
                                     <label class="form-label">Gambar Saat Ini</label>
@@ -71,7 +63,6 @@
                                     </div>
                                 </div>
                             @endif
-                            
                             <div class="mb-3">
                                 <label class="form-label">Ganti Gambar</label>
                                 <ul class="nav nav-tabs" id="imageTab" role="tablist">
@@ -92,8 +83,6 @@
                                     <div class="tab-pane fade show active" id="upload" role="tabpanel">
                                         <input type="file" class="form-control" id="image_file_input" accept="image/*">
                                         <input type="hidden" name="image_url" id="uploaded_image_url">
-                                        
-
                                         <div class="mt-3 p-3 bg-light rounded">
                                             <label class="form-label fw-semibold mb-2">
                                                 <i class="bi bi-sliders me-1"></i>Mode Upload:
@@ -115,8 +104,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-
                                         <div id="uploadProgressContainer" class="mt-2"></div>
                                     </div>
                                     <div class="tab-pane fade" id="url" role="tabpanel">
@@ -134,14 +121,12 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="mb-3" id="imagePreviewContainer" style="display: none;">
                                 <label class="form-label">Preview Gambar Baru</label>
                                 <div class="border rounded p-2">
                                     <img id="imagePreview" src="" alt="Preview" class="img-fluid rounded" style="max-height: 200px;">
                                 </div>
                             </div>
-                            
                             <div class="mb-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="is_available" name="is_available" value="1" 
@@ -151,7 +136,6 @@
                                     </label>
                                 </div>
                             </div>
-                            
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="bi bi-check-lg me-2"></i>Simpan Perubahan
@@ -165,7 +149,6 @@
         </div>
     </div>
 </section>
-
 @push('scripts')
 <script src="{{ asset('js/cloudinary-upload.js') }}"></script>
 <script>
@@ -176,21 +159,17 @@
     const form = document.querySelector('form');
     const submitBtn = form.querySelector('button[type="submit"]');
     let isUploading = false;
-
     // Initialize progress bar
     const progressBar = CloudinaryUploader.createProgressBar('uploadProgressContainer');
-
     fileInput.addEventListener('change', async function(e) {
         const file = e.target.files[0];
         if (!file) return;
-
         // Validate file size (10MB max)
         if (file.size > 10 * 1024 * 1024) {
             alert('Ukuran file maksimal 10MB');
             fileInput.value = '';
             return;
         }
-
         // Show preview immediately
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -198,17 +177,14 @@
             document.getElementById('imagePreviewContainer').style.display = 'block';
         };
         reader.readAsDataURL(file);
-
         // Start upload
         isUploading = true;
         submitBtn.disabled = true;
         progressBar.reset();
         progressBar.show();
-
         try {
             // Check compression mode
             const isCompressed = document.getElementById('modeCompressed').checked;
-            
             const result = await CloudinaryUploader.upload(file, {
                 folder: 'culinaire/menus',
                 onProgress: (percent, loaded, total) => {
@@ -221,7 +197,6 @@
                     quality: 0.98   // 98% quality
                 }
             });
-
             urlInput.value = result.secure_url;
             progressBar.success('Upload berhasil!');
             document.getElementById('imagePreview').src = result.secure_url;
@@ -235,7 +210,6 @@
             submitBtn.disabled = false;
         }
     });
-
     // Manual URL input
     manualUrlInput.addEventListener('input', function(e) {
         const url = e.target.value;
@@ -247,7 +221,6 @@
             document.getElementById('imagePreviewContainer').style.display = 'none';
         }
     });
-
     // Prevent form submission during upload
     form.addEventListener('submit', function(e) {
         if (isUploading) {

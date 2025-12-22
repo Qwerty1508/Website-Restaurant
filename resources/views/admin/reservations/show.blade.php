@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Detail Reservasi')
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -14,14 +12,12 @@
                 <p class="text-muted mb-0">Lihat detail dan kelola status reservasi</p>
             </div>
         </div>
-        
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        
         <div class="row g-4">
             <div class="col-lg-8">
                 <div class="card mb-4">
@@ -89,7 +85,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Perbarui Status</h5>
@@ -98,7 +93,6 @@
                         <form action="/admin/reservations/{{ $reservation->id }}/status" method="POST">
                             @csrf
                             @method('PUT')
-                            
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                                 <select class="form-select" id="status" name="status" required>
@@ -107,14 +101,12 @@
                                     <option value="rejected" {{ $reservation->status === 'rejected' ? 'selected' : '' }}>Ditolak</option>
                                 </select>
                             </div>
-                            
                             <div class="mb-3">
                                 <label for="admin_notes" class="form-label">Catatan Admin</label>
                                 <textarea class="form-control" id="admin_notes" name="admin_notes" rows="3" 
                                           placeholder="Catatan untuk pelanggan (opsional)">{{ $reservation->admin_notes }}</textarea>
                                 <small class="text-muted">Catatan ini akan ditampilkan ke pelanggan.</small>
                             </div>
-                            
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-check-lg me-2"></i>Simpan Perubahan
                             </button>
@@ -122,7 +114,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
@@ -152,7 +143,6 @@
                         @endif
                     </div>
                 </div>
-                
                 @if($reservation->status === 'pending')
                 <div class="card mt-4">
                     <div class="card-header">

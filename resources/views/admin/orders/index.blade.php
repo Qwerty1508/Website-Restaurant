@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', 'Kelola Pesanan')
-
 @section('content')
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -10,8 +8,6 @@
             <p class="text-muted mb-0">Kelola semua pesanan pelanggan</p>
         </div>
     </div>
-    
-
     <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="card bg-primary text-white">
@@ -66,15 +62,12 @@
             </div>
         </div>
     </div>
-    
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     @endif
-    
-
     <div class="card mb-4">
         <div class="card-body">
             <form action="" method="GET" class="row g-3 align-items-end">
@@ -105,8 +98,6 @@
             </form>
         </div>
     </div>
-    
-
     <div class="card">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -228,7 +219,6 @@
                 </table>
             </div>
         </div>
-        
         @if($orders->hasPages())
         <div class="card-footer">
             {{ $orders->links() }}

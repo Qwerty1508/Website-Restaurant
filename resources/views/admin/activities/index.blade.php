@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Log Aktivitas')
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -15,7 +13,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row g-4 mb-4">
             <div class="col-md-4">
                 <div class="card text-center p-3">
@@ -36,7 +33,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="card mb-4">
             <div class="card-body">
                 <div class="d-flex gap-2">
@@ -55,7 +51,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -107,11 +102,9 @@
                 </div>
             </div>
         </div>
-        
         <div class="mt-4">
             {{ $activities->appends(['filter' => $filter])->links() }}
         </div>
-        
         <div class="mt-4">
             <a href="/admin/dashboard" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-2"></i>Kembali ke Dashboard

@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', isset($page) ? 'Edit Page' : 'Create Page')
-
 @push('styles')
 <style>
 .cms-form-container {
@@ -10,7 +8,6 @@
     gap: 1.5rem;
     align-items: start;
 }
-
 .cms-form-main {
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(20px);
@@ -19,13 +16,11 @@
     border-radius: 1.5rem;
     padding: 2rem;
 }
-
 .cms-form-sidebar {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
-
 .cms-form-card {
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(20px);
@@ -34,7 +29,6 @@
     border-radius: 1rem;
     overflow: hidden;
 }
-
 .cms-form-card-header {
     padding: 1rem 1.25rem;
     background: linear-gradient(135deg, rgba(12, 42, 54, 0.03) 0%, rgba(200, 155, 58, 0.05) 100%);
@@ -44,15 +38,12 @@
     align-items: center;
     gap: 0.5rem;
 }
-
 .cms-form-card-header i {
     color: var(--accent);
 }
-
 .cms-form-card-body {
     padding: 1.25rem;
 }
-
 .cms-form-header {
     display: flex;
     justify-content: space-between;
@@ -61,7 +52,6 @@
     flex-wrap: wrap;
     gap: 1rem;
 }
-
 .cms-form-header h1 {
     margin: 0;
     font-size: 1.75rem;
@@ -69,27 +59,22 @@
     align-items: center;
     gap: 0.75rem;
 }
-
 .cms-form-header h1 i {
     color: var(--accent);
 }
-
 .cms-form-group {
     margin-bottom: 1.5rem;
 }
-
 .cms-form-label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--primary);
 }
-
 .cms-form-label small {
     font-weight: 400;
     color: var(--text-muted);
 }
-
 .cms-form-input {
     width: 100%;
     padding: 0.875rem 1rem;
@@ -99,42 +84,35 @@
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.8);
 }
-
 .cms-form-input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(200, 155, 58, 0.15);
     outline: none;
 }
-
 .cms-form-input.title-input {
     font-size: 1.5rem;
     font-weight: 600;
     font-family: var(--font-heading);
 }
-
 .cms-form-textarea {
     min-height: 120px;
     resize: vertical;
 }
-
 .cms-slug-preview {
     font-size: 0.85rem;
     color: var(--text-muted);
     margin-top: 0.5rem;
     font-family: 'Monaco', 'Consolas', monospace;
 }
-
 .cms-slug-preview span {
     color: var(--accent);
 }
-
 .cms-content-editor {
     border: 2px solid rgba(12, 42, 54, 0.1);
     border-radius: 0.75rem;
     overflow: hidden;
     min-height: 400px;
 }
-
 .cms-editor-toolbar {
     background: linear-gradient(135deg, rgba(12, 42, 54, 0.03) 0%, rgba(200, 155, 58, 0.05) 100%);
     padding: 0.75rem;
@@ -143,7 +121,6 @@
     gap: 0.25rem;
     flex-wrap: wrap;
 }
-
 .cms-editor-btn {
     width: 36px;
     height: 36px;
@@ -157,22 +134,18 @@
     color: var(--text-secondary);
     transition: all 0.2s;
 }
-
 .cms-editor-btn:hover {
     background: var(--accent);
     color: var(--text-on-accent);
 }
-
 .cms-editor-content {
     padding: 1.25rem;
     min-height: 350px;
     outline: none;
 }
-
 .cms-editor-content:focus {
     background: rgba(200, 155, 58, 0.02);
 }
-
 .cms-publish-toggle {
     display: flex;
     align-items: center;
@@ -182,21 +155,17 @@
     border-radius: 0.75rem;
     margin-bottom: 1rem;
 }
-
 .cms-publish-info h6 {
     margin: 0 0 0.25rem;
     font-weight: 600;
 }
-
 .cms-publish-info small {
     color: var(--text-muted);
 }
-
 .cms-template-select {
     display: grid;
     gap: 0.5rem;
 }
-
 .cms-template-option {
     padding: 0.75rem 1rem;
     border: 2px solid rgba(12, 42, 54, 0.1);
@@ -207,93 +176,75 @@
     align-items: center;
     gap: 0.75rem;
 }
-
 .cms-template-option:hover {
     border-color: var(--accent);
     background: rgba(200, 155, 58, 0.05);
 }
-
 .cms-template-option.selected {
     border-color: var(--accent);
     background: linear-gradient(135deg, rgba(200, 155, 58, 0.15) 0%, rgba(200, 155, 58, 0.05) 100%);
 }
-
 .cms-template-option input {
     display: none;
 }
-
 .cms-template-option i {
     font-size: 1.25rem;
     color: var(--accent);
 }
-
 .cms-btn-group {
     display: flex;
     gap: 0.75rem;
     margin-top: 1rem;
 }
-
 .cms-btn-group .btn {
     flex: 1;
 }
-
 [data-theme="dark"] .cms-form-main,
 [data-theme="dark"] .cms-form-card {
     background: rgba(22, 37, 43, 0.9);
     border-color: rgba(255, 255, 255, 0.1);
 }
-
 [data-theme="dark"] .cms-form-card-header {
     background: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.06);
 }
-
 [data-theme="dark"] .cms-form-input {
     background: rgba(22, 37, 43, 0.8);
     border-color: rgba(255, 255, 255, 0.1);
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-form-label {
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-content-editor {
     border-color: rgba(255, 255, 255, 0.1);
 }
-
 [data-theme="dark"] .cms-editor-toolbar {
     background: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.06);
 }
-
 [data-theme="dark"] .cms-editor-content {
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-template-option {
     border-color: rgba(255, 255, 255, 0.1);
 }
-
 @media (max-width: 992px) {
     .cms-form-container {
         grid-template-columns: 1fr;
     }
-    
     .cms-form-sidebar {
         order: -1;
     }
 }
 </style>
 @endpush
-
 @section('content')
 <form action="{{ isset($page) ? url('/admin/developer/pages/' . $page->id) : url('/admin/developer/pages') }}" method="POST">
     @csrf
     @if(isset($page))
         @method('PUT')
     @endif
-    
     <div class="cms-form-header">
         <h1>
             <i class="bi bi-{{ isset($page) ? 'pencil-square' : 'plus-circle' }}"></i>
@@ -308,7 +259,6 @@
             </button>
         </div>
     </div>
-
     @if($errors->any())
     <div class="alert alert-danger mb-4">
         <ul class="mb-0">
@@ -318,7 +268,6 @@
         </ul>
     </div>
     @endif
-
     <div class="cms-form-container">
         <div class="cms-form-main">
             <div class="cms-form-group">
@@ -331,9 +280,7 @@
                     URL: /<span id="slugPreview">{{ old('slug', $page->slug ?? 'page-url') }}</span>
                 </div>
             </div>
-            
             <input type="hidden" name="slug" id="pageSlug" value="{{ old('slug', $page->slug ?? '') }}">
-            
             <div class="cms-form-group">
                 <label class="cms-form-label">Page Content</label>
                 <div class="cms-content-editor">
@@ -376,7 +323,6 @@
                 <input type="hidden" name="content[body]" id="contentBody">
             </div>
         </div>
-        
         <div class="cms-form-sidebar">
             <div class="cms-form-card">
                 <div class="cms-form-card-header">
@@ -401,7 +347,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="cms-form-card">
                 <div class="cms-form-card-header">
                     <i class="bi bi-layout-text-window"></i> Template
@@ -429,7 +374,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="cms-form-card">
                 <div class="cms-form-card-header">
                     <i class="bi bi-search"></i> SEO Settings
@@ -452,7 +396,6 @@
     </div>
 </form>
 @endsection
-
 @push('scripts')
 <script>
 const titleInput = document.getElementById('pageTitle');
@@ -460,7 +403,6 @@ const slugPreview = document.getElementById('slugPreview');
 const slugInput = document.getElementById('pageSlug');
 const contentEditor = document.getElementById('contentEditor');
 const contentBody = document.getElementById('contentBody');
-
 titleInput?.addEventListener('input', function() {
     const slug = this.value.toLowerCase()
         .replace(/[^a-z0-9\s-]/g, '')
@@ -469,25 +411,21 @@ titleInput?.addEventListener('input', function() {
     slugPreview.textContent = slug || 'page-url';
     slugInput.value = slug;
 });
-
 document.querySelector('form')?.addEventListener('submit', function() {
     if (contentEditor && contentBody) {
         contentBody.value = contentEditor.innerHTML;
     }
 });
-
 function execCmd(command, value = null) {
     document.execCommand(command, false, value);
     contentEditor.focus();
 }
-
 function insertLink() {
     const url = prompt('Enter URL:');
     if (url) {
         execCmd('createLink', url);
     }
 }
-
 document.querySelectorAll('.cms-template-option').forEach(option => {
     option.addEventListener('click', function() {
         document.querySelectorAll('.cms-template-option').forEach(o => o.classList.remove('selected'));

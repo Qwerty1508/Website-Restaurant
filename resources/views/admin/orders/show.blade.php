@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', 'Detail Pesanan #' . $order->order_number)
-
 @section('content')
 <div class="container-fluid py-4">
     <div class="mb-4">
@@ -9,17 +7,14 @@
             <i class="bi bi-arrow-left me-2"></i>Kembali
         </a>
     </div>
-    
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     @endif
-    
     <div class="row">
         <div class="col-lg-8">
-
             <div class="card mb-4">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <div>
@@ -88,7 +83,6 @@
                     </div>
                 </div>
             </div>
-            
             @if($order->notes)
             <div class="card mb-4">
                 <div class="card-header bg-white">
@@ -100,9 +94,7 @@
             </div>
             @endif
         </div>
-        
         <div class="col-lg-4">
-
             <div class="card mb-4">
                 <div class="card-header bg-white">
                     <h6 class="mb-0"><i class="bi bi-person me-2 text-primary"></i>Info Pelanggan</h6>
@@ -126,8 +118,6 @@
                     @endif
                 </div>
             </div>
-            
-
             <div class="card mb-4">
                 <div class="card-header bg-white">
                     <h6 class="mb-0"><i class="bi bi-info-circle me-2 text-primary"></i>Detail Pesanan</h6>
@@ -163,8 +153,6 @@
                     </div>
                 </div>
             </div>
-            
-
             @if($order->status !== 'completed' && $order->status !== 'cancelled')
             <div class="card">
                 <div class="card-header bg-white">

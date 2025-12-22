@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Manajemen Reservasi')
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -11,14 +9,12 @@
                 <p class="text-muted mb-0">Kelola permintaan reservasi dari pelanggan</p>
             </div>
         </div>
-        
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        
         <div class="row g-3 mb-4">
             <div class="col-md-3">
                 <div class="card bg-warning bg-opacity-10 border-warning">
@@ -53,7 +49,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="d-flex gap-2 mb-4 flex-wrap">
             <a href="/admin/reservations?filter=all" 
                class="btn {{ $filter === 'all' ? 'btn-primary' : 'btn-outline-primary' }}">
@@ -76,7 +71,6 @@
                 <i class="bi bi-calendar-day me-1"></i>Hari Ini
             </a>
         </div>
-        
         <div class="card">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -162,7 +156,6 @@
                 </table>
             </div>
         </div>
-        
         <div class="d-flex justify-content-center mt-4">
             {{ $reservations->appends(['filter' => $filter])->links() }}
         </div>

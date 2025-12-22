@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Masuk')
-
 @section('content')
 <section class="min-vh-100 d-flex align-items-center bg-cream py-5">
     <div class="container">
@@ -41,7 +39,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center mb-5">
@@ -52,7 +49,6 @@
                                     </a>
                                     <p class="text-muted" data-i18n="login_to_account">{{ __('messages.login_to_account') }}</p>
                                 </div>
-                                
                                 <a href="{{ route('auth.google') }}" class="btn btn-outline-secondary w-100 py-3 mb-4 d-flex align-items-center justify-content-center gap-2">
                                     <svg width="20" height="20" viewBox="0 0 24 24">
                                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -62,24 +58,20 @@
                                     </svg>
                                         <span data-i18n="login_with_google">{{ __('messages.login_with_google') }}</span>
                                     </a>
-                                
                                 <div class="text-center my-4 position-relative">
                                     <hr class="my-0">
                                     <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small" data-i18n="login_with_email">
                                         {{ __('messages.login_with_email') }}
                                     </span>
                                 </div>
-                                
                                 @if(session('error'))
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                         {{ session('error') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                     </div>
                                 @endif
-                                
                                 <form method="POST" action="{{ route('login.post') }}">
                                     @csrf
-                                    
                                     <div class="mb-4">
                                         <label for="email" class="form-label" data-i18n="email">{{ __('messages.email') }}</label>
                                         <div class="input-group">
@@ -99,7 +91,6 @@
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
                                     <div class="mb-4">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             <label for="password" class="form-label mb-0" data-i18n="password">{{ __('messages.password') }}</label>
@@ -125,7 +116,6 @@
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
                                     <div class="mb-4">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="remember" id="remember">
@@ -134,12 +124,10 @@
                                             </label>
                                         </div>
                                     </div>
-                                    
                                     <button type="submit" class="btn btn-primary w-100 py-3 mb-4">
                                         <i class="bi bi-box-arrow-in-right me-2"></i><span data-i18n="login">{{ __('messages.login') }}</span>
                                     </button>
                                 </form>
-                                
                                 <p class="text-center text-muted mb-0">
                                     <span data-i18n="dont_have_account">{{ __('messages.dont_have_account') }}</span>
                                     <a href="{{ route('register') ?? url('/register') }}" class="text-primary fw-semibold" data-i18n="register_now">
@@ -155,17 +143,14 @@
     </div>
 </section>
 @endsection
-
 @push('scripts')
 <script>
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
-    
     if (togglePassword) {
         togglePassword.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            
             const icon = this.querySelector('i');
             icon.classList.toggle('bi-eye');
             icon.classList.toggle('bi-eye-slash');

@@ -1,18 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 class ReservationController extends Controller
 {
     public function create()
     {
         return view('reservation.create');
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -29,9 +25,7 @@ class ReservationController extends Controller
             'payment_proof.required' => 'Bukti transfer wajib diupload.',
             'payment_proof.url' => 'URL bukti transfer tidak valid.',
         ]);
-
         $paymentProofPath = $request->payment_proof;
-
         DB::table('reservations')->insert([
             'user_id' => Auth::id(),
             'name' => $request->name,
@@ -47,7 +41,6 @@ class ReservationController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
         DB::table('activity_logs')->insert([
             'user_id' => Auth::id(),
             'action' => 'reservation_created',
@@ -56,31 +49,25 @@ class ReservationController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
         return redirect('/customer/reservations')->with('success', 'Reservasi berhasil dibuat! Menunggu konfirmasi admin.');
     }
-
     public function index()
     {
         $reservations = DB::table('reservations')
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
-
         return view('customer.reservations.index', compact('reservations'));
     }
-
     public function show($id)
     {
         $reservation = DB::table('reservations')
             ->where('id', $id)
             ->where('user_id', Auth::id())
             ->first();
-
         if (!$reservation) {
             abort(404);
         }
-
         return view('customer.reservations.show', compact('reservation'));
     }
 }

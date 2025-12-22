@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -16,23 +13,18 @@ class AuthController extends Controller
             'email' => 'required|string',
             'password' => 'required',
         ]);
-
         $user = User::where('email', $request->email)->first();
-
         if (!$user || !Hash::check($request->password, $user->password)) {
             return back()->withErrors([
                 'email' => 'Email atau password salah.',
             ])->withInput($request->only('email'));
         }
-
         if ($user->isBlocked()) {
             return back()->withErrors([
                 'email' => 'Akun Anda telah diblokir. Silakan hubungi admin untuk informasi lebih lanjut.',
             ])->withInput($request->only('email'));
         }
-
         Auth::login($user, $request->boolean('remember'));
-
         \DB::table('activity_logs')->insert([
             'user_id' => $user->id,
             'action' => 'login',
@@ -41,18 +33,14 @@ class AuthController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
         if ($user->is_admin) {
             return redirect('/admin/dashboard');
         }
-
         if ($user->isSuspended()) {
             return redirect('/')->with('warning', 'Peringatan: Akun Anda sedang dalam status suspend karena terdeteksi adanya aktivitas yang melanggar ketentuan layanan. Harap perbaiki perilaku Anda atau akun akan diblokir permanen.');
         }
-
         return redirect('/');
     }
-
     public function logout(Request $request)
     {
         if (Auth::check()) {
@@ -65,11 +53,9 @@ class AuthController extends Controller
                 'updated_at' => now(),
             ]);
         }
-
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect('/');
     }
 }

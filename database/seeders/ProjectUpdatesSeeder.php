@@ -1,10 +1,7 @@
 <?php
-
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
 class ProjectUpdatesSeeder extends Seeder
 {
     public function run(): void
@@ -65,7 +62,6 @@ class ProjectUpdatesSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ];
-
         DB::table('project_updates')->insert($updates);
     }
 }

@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', __('messages.my_reservations'))
-
 @section('content')
 <section class="bg-gradient-primary text-white py-5">
     <div class="container">
@@ -18,7 +16,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-cream">
     <div class="container">
         @if(session('success'))
@@ -27,13 +24,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        
         <div class="d-flex gap-3 mb-4 flex-wrap">
             <span class="badge bg-warning text-dark px-3 py-2"><i class="bi bi-clock me-1"></i> <span data-i18n="status_pending">{{ __('messages.status_pending') }}</span></span>
             <span class="badge bg-success px-3 py-2"><i class="bi bi-check-circle me-1"></i> <span data-i18n="status_accepted">{{ __('messages.status_accepted') }}</span></span>
             <span class="badge bg-danger px-3 py-2"><i class="bi bi-x-circle me-1"></i> <span data-i18n="status_rejected">{{ __('messages.status_rejected') }}</span></span>
         </div>
-        
         @if($reservations->count() > 0)
             <div class="row g-4">
                 @foreach($reservations as $reservation)
@@ -67,14 +62,12 @@
                                 </li>
                                 @endif
                             </ul>
-                            
                             @if($reservation->admin_notes)
                             <div class="alert alert-{{ $reservation->status === 'accepted' ? 'success' : ($reservation->status === 'rejected' ? 'danger' : 'info') }} small py-2">
                                 <strong>{{ __('messages.admin_notes') }}:</strong><br>
                                 {{ $reservation->admin_notes }}
                             </div>
                             @endif
-                            
                             <p class="text-muted small mb-0">
                                 <i class="bi bi-clock-history me-1"></i>
                                 <span data-i18n="created_at">{{ __('messages.created_at') }}</span>: {{ \Carbon\Carbon::parse($reservation->created_at)->format('d/m/Y H:i') }}

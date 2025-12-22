@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Dashboard')
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -42,7 +40,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row g-4 mb-4">
             <div class="col-md-3">
                 <div class="card h-100 text-center p-4">
@@ -73,7 +70,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row g-4">
             <div class="col-lg-8">
                 <div class="card">
@@ -136,7 +132,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-header bg-white">
@@ -165,7 +160,6 @@
                         </a>
                     </div>
                 </div>
-                
                 <div class="card">
                     <div class="card-header bg-white">
                         <h5 class="mb-0">

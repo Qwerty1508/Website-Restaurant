@@ -24,7 +24,6 @@
                     </a>
                 </div>
             </div>
-            
             <div class="col-lg-2 col-md-6">
                 <h5>Menu</h5>
                 <ul class="footer-links">
@@ -34,7 +33,6 @@
                     <li><a href="#about">Tentang Kami</a></li>
                 </ul>
             </div>
-            
             <div class="col-lg-2 col-md-6">
                 <h5>Layanan</h5>
                 <ul class="footer-links">
@@ -44,7 +42,6 @@
                     <li><a href="#">Private Dining</a></li>
                 </ul>
             </div>
-            
             <div class="col-lg-4 col-md-6">
                 <h5>Hubungi Kami</h5>
                 <ul class="footer-links">
@@ -67,7 +64,6 @@
                 </ul>
             </div>
         </div>
-        
         <div class="footer-bottom">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start">

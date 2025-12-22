@@ -1,9 +1,6 @@
-
 const CloudinaryUploader = {
     cloudName: 'dh9ysyfit',
     uploadPreset: 'culinaire_uploads',
-
-
     async compressImage(file, options = {}) {
         const {
             maxWidth = 1200,
@@ -11,14 +8,12 @@ const CloudinaryUploader = {
             quality = 0.85,
             type = 'image/jpeg'
         } = options;
-
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
                     let { width, height } = img;
-
                     if (width > maxWidth) {
                         height = (height * maxWidth) / width;
                         width = maxWidth;
@@ -27,14 +22,11 @@ const CloudinaryUploader = {
                         width = (width * maxHeight) / height;
                         height = maxHeight;
                     }
-
                     const canvas = document.createElement('canvas');
                     canvas.width = width;
                     canvas.height = height;
-
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-
                     canvas.toBlob(
                         (blob) => {
                             if (blob) {
@@ -55,8 +47,6 @@ const CloudinaryUploader = {
             reader.readAsDataURL(file);
         });
     },
-
-
     async upload(file, options = {}) {
         const {
             folder = 'uploads',
@@ -64,7 +54,6 @@ const CloudinaryUploader = {
             compress = true,
             compressionOptions = {}
         } = options;
-
         let uploadFile = file;
         if (compress && file.type && file.type.startsWith('image/')) {
             try {
@@ -73,22 +62,18 @@ const CloudinaryUploader = {
                 console.warn('Compression failed, uploading original:', err);
             }
         }
-
         return new Promise((resolve, reject) => {
             const formData = new FormData();
             formData.append('file', uploadFile);
             formData.append('upload_preset', this.uploadPreset);
             formData.append('folder', folder);
-
             const xhr = new XMLHttpRequest();
-
             xhr.upload.addEventListener('progress', (e) => {
                 if (e.lengthComputable) {
                     const percent = Math.round((e.loaded / e.total) * 100);
                     onProgress(percent, e.loaded, e.total);
                 }
             });
-
             xhr.addEventListener('load', () => {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     try {
@@ -106,25 +91,19 @@ const CloudinaryUploader = {
                     reject(new Error(errorMsg));
                 }
             });
-
             xhr.addEventListener('error', () => {
                 reject(new Error('Network error during upload'));
             });
-
             xhr.addEventListener('abort', () => {
                 reject(new Error('Upload cancelled'));
             });
-
             xhr.open('POST', `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`);
             xhr.send(formData);
         });
     },
-
-
     createProgressBar(containerId) {
         const container = document.getElementById(containerId);
         if (!container) return null;
-
         container.innerHTML = `
             <div class="upload-progress-wrapper" style="display: none;">
                 <div class="d-flex align-items-center mb-2">
@@ -142,12 +121,10 @@ const CloudinaryUploader = {
                 <small class="upload-size text-muted mt-1 d-block"></small>
             </div>
         `;
-
         const wrapper = container.querySelector('.upload-progress-wrapper');
         const bar = container.querySelector('.progress-bar');
         const status = container.querySelector('.upload-status');
         const sizeInfo = container.querySelector('.upload-size');
-
         return {
             show() {
                 wrapper.style.display = 'block';
@@ -185,7 +162,6 @@ const CloudinaryUploader = {
         };
     }
 };
-
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = CloudinaryUploader;
 }

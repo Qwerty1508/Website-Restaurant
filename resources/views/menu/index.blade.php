@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', __('messages.our_menu'))
-
 @section('content')
 <section class="bg-gradient-primary text-white pb-5" style="margin-top: -80px; padding-top: 120px;">
     <div class="container-fluid px-4 px-lg-5">
@@ -15,7 +13,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-cream">
     <div class="container-fluid px-4 px-lg-5">
         <div class="row mb-5">
@@ -38,7 +35,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row g-4" id="menuGrid">
             @forelse($menus as $index => $menu)
             <div class="col-lg-3 col-md-4 col-sm-6 menu-item" data-category="{{ strtolower($menu->category) }}">
@@ -90,7 +86,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-gradient-primary text-white text-center">
     <div class="container-fluid px-4 px-lg-5">
         <div class="row justify-content-center">
@@ -118,7 +113,6 @@
     </div>
 </section>
 @endsection
-
 @push('styles')
 <style>
     .pagination .page-link {
@@ -128,22 +122,18 @@
         margin: 0 0.25rem;
         border-radius: var(--radius-md);
     }
-    
     .pagination .page-link:hover {
         background: var(--gray-200);
         color: var(--primary);
     }
-    
     .pagination .page-item.active .page-link {
         background: var(--primary);
         color: var(--white);
     }
 </style>
 @endpush
-
 @push('styles')
 <style>
-
     .navbar-culinaire:not(.scrolled) .nav-link,
     .navbar-culinaire:not(.scrolled) .navbar-brand {
         color: #ffffff !important;
@@ -161,18 +151,15 @@
     }
 </style>
 @endpush
-
 @push('scripts')
 <script>
     document.querySelectorAll('[data-category]').forEach(btn => {
         btn.addEventListener('click', function() {
             const category = this.dataset.category;
-            
             document.querySelectorAll('[data-category]').forEach(b => b.classList.remove('active', 'btn-primary'));
             document.querySelectorAll('[data-category]').forEach(b => b.classList.add('btn-outline-primary'));
             this.classList.remove('btn-outline-primary');
             this.classList.add('active', 'btn-primary');
-            
             document.querySelectorAll('.menu-item').forEach(item => {
                 if (category === 'all' || item.dataset.category.includes(category)) {
                     item.style.display = 'block';
@@ -182,7 +169,6 @@
             });
         });
     });
-    
     document.getElementById('searchMenu').addEventListener('input', function() {
         const query = this.value.toLowerCase();
         document.querySelectorAll('.menu-item').forEach(item => {

@@ -3,12 +3,10 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             Culinaire<span>.</span>
         </a>
-        
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-list fs-4"></i>
         </button>
-        
         <div class="collapse navbar-collapse" id="navbarNav">
             <button class="mobile-nav-close d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Close menu">
                 <i class="bi bi-x-lg"></i>
@@ -39,19 +37,16 @@
                         {{ __('messages.contact') }}
                     </a>
                 </li>
-
                 <li class="nav-item d-flex align-items-center gap-3 ms-lg-2">
                     <div class="lang-switch d-flex align-items-center">
                         <a href="{{ route('lang.switch', 'en') }}" class="lang-link {{ app()->getLocale() == 'en' ? 'active-lang' : '' }}">EN</a>
                         <span class="mx-1 text-muted">|</span>
                         <a href="{{ route('lang.switch', 'id') }}" class="lang-link {{ app()->getLocale() == 'id' ? 'active-lang' : '' }}">ID</a>
                     </div>
-
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                         <i class="bi bi-moon-fill icon-moon"></i>
                         <i class="bi bi-sun-fill icon-sun"></i>
                     </button>
-
                     @auth
                         <div class="dropdown" id="profileDropdown">
                             <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 text-truncate" 
@@ -99,7 +94,6 @@
         </div>
     </div>
 </nav>
-
 <style>
     .navbar-culinaire {
         padding: 18px 0;
@@ -111,7 +105,6 @@
         box-shadow: none;
         z-index: 9999 !important;
     }
-
     .navbar-culinaire.scrolled {
         background: rgba(255, 255, 255, 0.30);
         backdrop-filter: blur(4px);
@@ -120,27 +113,22 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.18);
         padding: 12px 0;
     }
-
     .navbar-brand {
         font-family: var(--font-heading, "Playfair Display", serif);
         font-weight: 700;
         font-size: 1.75rem;
         color: #0C2A36 !important;
     }
-    
     .navbar-brand span {
         color: #C89B3A !important;
     }
-
     .navbar-nav .nav-link {
         color: #0C2A36 !important;
     }
-
     .navbar-nav .nav-link:hover,
     .navbar-nav .nav-link.active {
         color: #C89B3A !important;
     }
-
     .lang-link {
         font-size: 0.85rem;
         font-weight: 600;
@@ -148,29 +136,24 @@
         text-decoration: none;
         transition: color 0.12s ease;
     }
-
     .lang-link:hover,
     .lang-link.active-lang {
         color: #C89B3A;
     }
-
     .navbar-toggler i {
         color: #0C2A36;
     }
-
     .navbar-culinaire .dropdown {
         position: relative;
         z-index: 10000;
         overflow: visible !important;
     }
-
     .navbar-culinaire,
     .navbar-culinaire .container-fluid,
     .navbar-culinaire .navbar-collapse,
     .navbar-culinaire .navbar-nav {
         overflow: visible !important;
     }
-
     .navbar-culinaire .btn-outline-primary {
         color: #0C2A36 !important;
         border-color: rgba(12, 42, 54, 0.3) !important;
@@ -178,13 +161,11 @@
         cursor: pointer;
         pointer-events: auto;
     }
-
     .navbar-culinaire .btn-outline-primary:hover {
         background: rgba(200, 155, 58, 0.2) !important;
         border-color: #C89B3A !important;
         color: #C89B3A !important;
     }
-
     .navbar-culinaire .dropdown-menu {
         background: rgba(255, 255, 255, 0.4);
         backdrop-filter: blur(24px);
@@ -197,27 +178,22 @@
         min-width: 180px;
         padding: 8px 0;
     }
-
     .navbar-culinaire .dropdown-item {
         color: #0C2A36;
     }
-
     .navbar-culinaire .dropdown-item:hover {
         background: rgba(200, 155, 58, 0.15);
         color: #C89B3A;
     }
-
     .navbar-culinaire .dropdown-divider {
         border-color: rgba(12, 42, 54, 0.1);
     }
-
     .navbar-nav .nav-link {
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-weight: 500;
     }
-
     @media (max-width: 991.98px) {
         .navbar-collapse {
             position: fixed;
@@ -250,21 +226,18 @@
             transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
                         visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .navbar-collapse.collapsing {
             display: flex !important;
             height: auto !important;
             overflow: visible !important;
             transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .navbar-collapse.collapse.show,
         .navbar-collapse.show {
             display: flex !important;
             opacity: 1;
             visibility: visible;
         }
-
         .mobile-nav-close {
             position: absolute;
             top: 1.5rem;
@@ -281,23 +254,19 @@
             z-index: 100000;
             transition: all 0.3s ease;
         }
-
         .mobile-nav-close i {
             font-size: 1.25rem;
             color: #C89B3A;
             transition: transform 0.3s ease;
         }
-
         .mobile-nav-close:hover {
             background: rgba(200, 155, 58, 0.2);
             border-color: #C89B3A;
             transform: rotate(90deg);
         }
-
         .mobile-nav-close:hover i {
             transform: scale(1.1);
         }
-
         .navbar-collapse::before {
             content: '';
             position: absolute;
@@ -309,7 +278,6 @@
                         radial-gradient(ellipse at 70% 80%, rgba(200, 155, 58, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
-
         .navbar-collapse::after {
             content: '';
             position: absolute;
@@ -322,7 +290,6 @@
             border-radius: 50%;
             pointer-events: none;
         }
-
         .navbar-nav {
             position: absolute;
             top: 50%;
@@ -336,27 +303,23 @@
             width: 100%;
             padding: 0 2rem;
         }
-
         .navbar-nav .nav-item {
             opacity: 0;
             transform: translateY(20px);
             animation: navItemFadeIn 0.5s ease forwards;
         }
-
         .navbar-collapse.show .navbar-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }
         .navbar-collapse.show .navbar-nav .nav-item:nth-child(2) { animation-delay: 0.15s; }
         .navbar-collapse.show .navbar-nav .nav-item:nth-child(3) { animation-delay: 0.2s; }
         .navbar-collapse.show .navbar-nav .nav-item:nth-child(4) { animation-delay: 0.25s; }
         .navbar-collapse.show .navbar-nav .nav-item:nth-child(5) { animation-delay: 0.3s; }
         .navbar-collapse.show .navbar-nav .nav-item:nth-child(6) { animation-delay: 0.35s; }
-
         @keyframes navItemFadeIn {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
         .navbar-collapse .nav-link {
             color: rgba(255, 255, 255, 0.85) !important;
             font-family: var(--font-heading, "Playfair Display", serif);
@@ -368,7 +331,6 @@
             position: relative;
             transition: all 0.3s ease;
         }
-
         .navbar-collapse .nav-link::after {
             content: '';
             position: absolute;
@@ -380,17 +342,14 @@
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
-
         .navbar-collapse .nav-link:hover,
         .navbar-collapse .nav-link.active {
             color: #C89B3A !important;
         }
-
         .navbar-collapse .nav-link:hover::after,
         .navbar-collapse .nav-link.active::after {
             width: 60%;
         }
-
         .nav-item.d-flex.gap-3.ms-lg-2 {
             margin-left: 0 !important;
             margin-top: 2.5rem;
@@ -402,25 +361,21 @@
             gap: 1.5rem !important;
             width: auto;
         }
-
         .navbar-collapse .lang-switch {
             background: rgba(200, 155, 58, 0.1);
             border: 1px solid rgba(200, 155, 58, 0.2);
             padding: 0.5rem 1rem;
             border-radius: 30px;
         }
-
         .navbar-collapse .lang-link {
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
             font-weight: 600;
         }
-
         .navbar-collapse .lang-link:hover,
         .navbar-collapse .lang-link.active-lang {
             color: #C89B3A;
         }
-
         .navbar-collapse .theme-toggle {
             background: rgba(200, 155, 58, 0.1);
             border: 1px solid rgba(200, 155, 58, 0.2);
@@ -431,7 +386,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .navbar-collapse .btn-primary {
             background: linear-gradient(135deg, #C89B3A 0%, #D4AF5A 100%);
             border: none;
@@ -441,7 +395,6 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 15px rgba(200, 155, 58, 0.3);
         }
-
         .navbar-collapse .btn-outline-primary {
             background: rgba(200, 155, 58, 0.1);
             border: 1px solid rgba(200, 155, 58, 0.3);
@@ -449,42 +402,33 @@
             padding: 0.6rem 1.5rem;
             border-radius: 30px;
         }
-
         .navbar-collapse .dropdown-menu {
             background: rgba(12, 42, 54, 0.95);
             border: 1px solid rgba(200, 155, 58, 0.2);
             border-radius: 12px;
         }
-
         .navbar-collapse .dropdown-item {
             color: rgba(255, 255, 255, 0.85);
         }
-
         .navbar-collapse .dropdown-item:hover {
             background: rgba(200, 155, 58, 0.15);
             color: #C89B3A;
         }
-
         [data-theme="dark"] .navbar-collapse {
             background: linear-gradient(165deg, rgba(11, 14, 16, 0.98) 0%, rgba(5, 7, 9, 0.99) 100%);
         }
     }
 </style>
-
 <div style="height: 80px;"></div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const langLinks = document.querySelectorAll('.lang-link');
-    
     langLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetLang = this.textContent.trim().toLowerCase();
-            
             if (window.translations && window.translations[targetLang]) {
                 const terms = window.translations[targetLang];
-                
                 document.querySelectorAll('[data-i18n]').forEach(el => {
                     const key = el.getAttribute('data-i18n');
                     if (terms[key]) {
@@ -499,20 +443,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         }, 50);
                     }
                 });
-
                 document.querySelectorAll('.lang-link').forEach(l => l.classList.remove('active-lang'));
                 this.classList.add('active-lang');
-                
                 document.documentElement.lang = targetLang === 'id' ? 'id-ID' : 'en-US';
             }
-
             fetch(this.href).catch(err => console.error('Background session sync failed', err));
         });
     });
-
     const dropdownBtn = document.getElementById('profileDropdownBtn');
     const dropdownMenu = document.getElementById('profileDropdownMenu');
-    
     if (dropdownBtn && dropdownMenu) {
         dropdownBtn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -522,7 +461,6 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdownMenu.style.display = isOpen ? 'none' : 'block';
             this.setAttribute('aria-expanded', !isOpen);
         });
-
         document.addEventListener('click', function(e) {
             if (dropdownBtn && dropdownMenu && !dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
                 dropdownMenu.classList.remove('show');

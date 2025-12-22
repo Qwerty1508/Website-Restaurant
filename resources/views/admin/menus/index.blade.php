@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', __('messages.manage_menus'))
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -18,14 +16,12 @@
                 </div>
             </div>
         </div>
-        
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -97,7 +93,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="mt-4">
             <a href="/admin/dashboard" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-2"></i>{{ __('messages.back_dashboard') }}

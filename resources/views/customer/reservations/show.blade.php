@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', __('messages.reservation_details_title'))
-
 @section('content')
 <section class="bg-gradient-primary text-white py-5">
     <div class="container">
@@ -18,7 +16,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-cream">
     <div class="container">
         <div class="row g-4">
@@ -84,7 +81,6 @@
                         </div>
                     </div>
                 </div>
-                
                 @if($reservation->admin_notes)
                 <div class="card mb-4">
                     <div class="card-header">
@@ -98,7 +94,6 @@
                 </div>
                 @endif
             </div>
-            
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
@@ -119,7 +114,6 @@
                         @endif
                     </div>
                 </div>
-                
                 <div class="card mt-4">
                     <div class="card-header">
                         <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i><span data-i18n="timeline_title">{{ __('messages.timeline_title') }}</span></h5>

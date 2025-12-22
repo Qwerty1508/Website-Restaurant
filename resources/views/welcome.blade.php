@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', 'Beranda')
-
 @section('content')
 <section class="hero-section" id="home">
     <div class="container-fluid px-4 px-lg-5">
@@ -10,14 +8,12 @@
                 <span class="badge bg-gradient-secondary text-dark mb-3 px-3 py-2 rounded-pill animate-fadeInUp">
                     <i class="bi bi-star-fill me-1"></i> {!! cms('homepage.hero.subtitle', __('messages.hero_subtitle')) !!}
                 </span>
-                <!-- Typing Animation Containers -->
                 <h1 class="hero-title animate-fadeInUp delay-1 text-white min-h-title">
                     <span id="typing-title-content">
                         {!! cms('homepage.hero.title', __('messages.hero_title_1') . ' ' . __('messages.hero_title_2') . ' ' . __('messages.hero_title_3'), 'richtext') !!}
                     </span>
                     <span class="typing-cursor" id="title-cursor">|</span>
                 </h1>
-                
                 <p class="hero-subtitle animate-fadeInUp delay-2 text-light opacity-75 min-h-subtitle">
                     <span id="typing-subtitle-content">
                         {!! cms('homepage.hero.description', __('messages.hero_desc'), 'richtext') !!}
@@ -28,12 +24,10 @@
                     <a href="{{ url('/menu') }}" class="btn btn-lg rounded-pill px-5 me-3 shadow-lg btn-glass-gold">
                         <i class="bi bi-book me-2"></i><span data-i18n="explore_menu">{{ __('messages.explore_menu') }}</span>
                     </a>
-                    
                     <a href="{{ url('/reservation') }}" class="btn btn-lg rounded-pill px-5 shadow-sm btn-glass-light">
                         <i class="bi bi-calendar-check me-2"></i><span data-i18n="reservation">{{ __('messages.reservation') }}</span>
                     </a>
                 </div>
-                
                 <div class="row mt-5 animate-fadeInUp delay-4">
                     <div class="col-4">
                         <h3 class="text-gold mb-0 display-6 fw-bold">50+</h3>
@@ -49,10 +43,7 @@
                     </div>
                 </div>
             </div>
-            
-
     </div>
-    
     <div class="position-absolute" style="top: 20%; left: 5%; opacity: 0.1;">
         <i class="bi bi-flower1 display-1 text-gold"></i>
     </div>
@@ -60,7 +51,6 @@
         <i class="bi bi-flower2 display-1 text-gold"></i>
     </div>
 </section>
-
 <section class="section bg-white" id="trending">
     <div class="container">
         <div class="section-title">
@@ -71,7 +61,6 @@
             <p class="subtitle" data-i18n="best_selling_desc">{{ __('messages.best_selling_desc') }}</p>
             <div class="divider"></div>
         </div>
-        
         <div class="row g-4">
             @forelse($featuredMenus as $index => $menu)
             <div class="col-lg-4 col-md-6">
@@ -130,7 +119,6 @@
             </div>
             @endforelse
         </div>
-        
         <div class="text-center mt-5">
             <a href="{{ url('/menu') }}" class="btn btn-primary btn-lg">
                 <span data-i18n="see_all_menu">{{ __('messages.see_all_menu') }}</span> <i class="bi bi-arrow-right ms-2"></i>
@@ -138,7 +126,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-cream">
     <div class="container">
         <div class="section-title">
@@ -146,7 +133,6 @@
             <p class="subtitle" data-i18n="why_choose_desc">{{ __('messages.why_choose_desc') }}</p>
             <div class="divider"></div>
         </div>
-        
         <div class="row g-4">
             <div class="col-lg-3 col-md-6">
                 <div class="card card-glass h-100 text-center p-4 hover-lift">
@@ -162,7 +148,6 @@
                     </p>
                 </div>
             </div>
-            
             <div class="col-lg-3 col-md-6">
                 <div class="card card-glass h-100 text-center p-4 hover-lift">
                     <div class="mb-3">
@@ -177,7 +162,6 @@
                     </p>
                 </div>
             </div>
-            
             <div class="col-lg-3 col-md-6">
                 <div class="card card-glass h-100 text-center p-4 hover-lift">
                     <div class="mb-3">
@@ -192,7 +176,6 @@
                     </p>
                 </div>
             </div>
-            
             <div class="col-lg-3 col-md-6">
                 <div class="card card-glass h-100 text-center p-4 hover-lift">
                     <div class="mb-3">
@@ -210,7 +193,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-white" id="about">
     <div class="container">
         <div class="row align-items-center g-5">
@@ -220,7 +202,6 @@
                         <source src="https://res.cloudinary.com/dh9ysyfit/video/upload/v1766171775/gemini_generated_video_1C6E4459_ge0iic.mov" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    
                     <div class="position-absolute glass-badge text-white rounded-4 p-4 shadow-lg" 
                          style="bottom: 20px; right: 20px;">
                         <h2 class="mb-0">15+</h2>
@@ -228,7 +209,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-6">
                 <span class="badge bg-gradient-secondary text-dark mb-3 px-3 py-2 rounded-pill">
                     <i class="bi bi-info-circle me-1"></i> <span data-i18n="about">{{ __('messages.about') }}</span>
@@ -255,7 +235,6 @@
                         <span data-i18n="about_point_4">{{ __('messages.about_point_4') }}</span>
                     </li>
                 </ul>
-                
                 <a href="#contact" class="btn btn-primary btn-lg mt-3">
                     <i class="bi bi-telephone me-2"></i><span data-i18n="contact_us">{{ __('messages.contact_us') }}</span>
                 </a>
@@ -263,7 +242,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-brown text-white">
     <div class="container">
         <div class="section-title">
@@ -271,9 +249,7 @@
             <p class="subtitle text-light opacity-75" data-i18n="how_to_order_desc">{{ __('messages.how_to_order_desc') }}</p>
             <div class="divider"></div>
         </div>
-        
         <div class="row g-4 luxury-scroll-container">
-            <!-- Step 1 -->
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="luxury-card-wrapper h-100">
                     <div class="luxury-card-border"></div>
@@ -293,8 +269,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Step 2 -->
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="luxury-card-wrapper h-100">
                     <div class="luxury-card-border"></div>
@@ -314,8 +288,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Step 3 -->
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="luxury-card-wrapper h-100">
                     <div class="luxury-card-border"></div>
@@ -335,8 +307,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Step 4 -->
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="luxury-card-wrapper h-100">
                     <div class="luxury-card-border"></div>
@@ -358,7 +328,6 @@
             </div>
     </div>
 </section>
-
 <section class="section luxury-testimonials">
     <div class="container">
         <div class="section-title text-center mb-5">
@@ -369,7 +338,6 @@
             <h2 class="luxury-section-title mt-3" data-i18n="testimonials_title">{{ __('messages.testimonials_title') }}</h2>
             <div class="luxury-divider mx-auto mt-4"></div>
         </div>
-        
         <div class="luxury-testimonial-container" id="testimonialContainer">
             <div class="luxury-testimonial-card" data-testimonial-id="1">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
@@ -385,7 +353,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="luxury-testimonial-card" data-testimonial-id="2">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
@@ -400,7 +367,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="luxury-testimonial-card" data-testimonial-id="3">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
@@ -415,7 +381,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="luxury-testimonial-card" data-testimonial-id="4">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
@@ -430,7 +395,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="luxury-testimonial-card" data-testimonial-id="5">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
@@ -445,7 +409,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="luxury-testimonial-card" data-testimonial-id="6">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
@@ -460,7 +423,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="luxury-testimonial-card" data-testimonial-id="7">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
@@ -475,7 +437,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="luxury-testimonial-card" data-testimonial-id="8">
                 <div class="testimonial-quote-icon"><i class="bi bi-quote"></i></div>
                 <div class="testimonial-rating">
@@ -493,7 +454,6 @@
         </div>
     </div>
 </section>
-
 <section class="section bg-gradient-primary text-white text-center">
     <div class="container">
         <div class="row justify-content-center">
@@ -515,7 +475,6 @@
     </div>
 </section>
 @endsection
-
 @push('styles')
 <link rel="preload" as="image" href="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766046687/IMG_7856_esb0xz.jpg">
 <style>
@@ -527,11 +486,9 @@
         background-position: center;
         background-repeat: no-repeat;
     }
-    
     .hero-section .container {
         padding-top: 80px;
     }
-
     /* Navbar transparent state on hero */
     .navbar-culinaire:not(.scrolled) .nav-link,
     .navbar-culinaire:not(.scrolled) .navbar-brand {
@@ -558,16 +515,13 @@
     .navbar-culinaire:not(.scrolled) .navbar-toggler i {
         color: #F6F2EE;
     }
-
     .highlight {
         color: #C89B3A !important;
         text-shadow: 0 2px 4px rgba(12, 42, 54, 0.5);
     }
-    
     .hero-title {
         text-shadow: 0 2px 10px rgba(12, 42, 54, 0.5);
     }
-
     /* Glass buttons with Metallic Gold accent */
     .btn-glass-gold {
         background: rgba(200, 155, 58, 0.25) !important;
@@ -577,13 +531,11 @@
         color: #C89B3A !important;
         transition: all 0.12s ease;
     }
-    
     .btn-glass-gold:hover {
         background: rgba(200, 155, 58, 0.5) !important;
         color: #F6F2EE !important;
         box-shadow: 0 8px 32px rgba(200, 155, 58, 0.3);
     }
-
     .btn-glass-light {
         background: rgba(246, 242, 238, 0.2) !important;
         backdrop-filter: blur(4px);
@@ -592,22 +544,18 @@
         color: #F6F2EE !important;
         transition: all 0.12s ease;
     }
-    
     .btn-glass-light:hover {
         background: rgba(246, 242, 238, 0.4) !important;
         color: #0C2A36 !important;
         box-shadow: 0 8px 32px rgba(246, 242, 238, 0.2);
     }
-
     /* Text gold utility */
     .text-gold {
         color: #C89B3A !important;
     }
-
     [data-theme="dark"] .text-gold {
         color: #D4AF37 !important;
     }
-
     /* Luxury Typing Styles - Ethereal Edition */
     .typing-cursor {
         display: inline-block;
@@ -620,7 +568,6 @@
         opacity: 0.6;
         box-shadow: 0 0 5px rgba(200, 155, 58, 0.5); /* Subtle glow */
     }
-    
     .char-reveal {
         display: inline-block;
         opacity: 0;
@@ -628,7 +575,6 @@
         white-space: pre; 
         will-change: transform, opacity, filter;
     }
-    
     @keyframes etherealReveal {
         0% { 
             opacity: 0; 
@@ -644,55 +590,43 @@
             filter: blur(0); 
         }
     }
-
     @keyframes smoothBlink {
         0%, 100% { opacity: 0.2; }
         50% { opacity: 0.8; }
     }
-    
     .min-h-title { min-height: 1.2em; }
     .min-h-subtitle { min-height: 3em; }
-
 </style>
 @endpush
-
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Luxuriously smooth typing animation
-        
         const titleContainer = document.getElementById('typing-title-content');
         const subtitleContainer = document.getElementById('typing-subtitle-content');
         const titleCursor = document.getElementById('title-cursor');
         const subtitleCursor = document.getElementById('subtitle-cursor');
-        
         // 1. Check for CMS/Edit Mode
         // If we are in CMS mode (url has ?cms_mode=true or iframe parent communication),
         // we should DISABLE animation so the admin can click and edit the text easily.
         const isCmsMode = window.location.search.includes('cms_mode=true') || 
                           document.querySelector('[data-cms-key]') !== null;
-
         if (isCmsMode) {
             console.log('CMS Mode detected: Typing animation disabled.');
             if(titleCursor) titleCursor.style.display = 'none';
             if(subtitleCursor) subtitleCursor.style.display = 'none';
             return; // Exit script, show full static text
         }
-
         if (!titleContainer || !subtitleContainer) return;
-
         // 2. Prepare Content
         const titleText = titleContainer.innerText.trim();
         const subtitleText = subtitleContainer.innerText.trim();
-
         // Clear content for animation start
         titleContainer.innerHTML = '';
         subtitleContainer.innerHTML = '';
-        
         // Ensure cursor state
         if(titleCursor) titleCursor.style.display = 'inline-block';
         if(subtitleCursor) subtitleCursor.style.display = 'none';
-
         // 3. Animation Configuration
         const config = {
             baseSpeed: 50,      // Base speed in ms (lower is faster)
@@ -702,7 +636,6 @@
             punctuationPause: 400, // Pause at comma/period
             spacePause: 30     // Pause at space
         };
-
         // 4. Start Animation Sequence
         setTimeout(() => {
             typeText(titleContainer, titleText, () => {
@@ -712,7 +645,6 @@
                     titleCursor.style.opacity = 0;
                     setTimeout(() => titleCursor.style.display = 'none', 500);
                 }
-                
                 // Start Subtitle
                 setTimeout(() => {
                     if(subtitleCursor) {
@@ -729,59 +661,44 @@
                 }, config.subtitleDelay);
             });
         }, config.startDelay);
-
-
         // --- Helper Function: Type Text ---
         function typeText(element, text, onComplete) {
             let index = 0;
-            
             function typeChar() {
                 if (index >= text.length) {
                     onComplete();
                     return;
                 }
-
                 const char = text.charAt(index);
-                
                 // Create span for each char for "ethereal" fade-in effect via CSS
                 const span = document.createElement('span');
                 span.textContent = char;
                 span.className = 'char-reveal'; // Uses existing CSS animation
                 element.appendChild(span);
-
                 index++;
-
                 // Calculate Delay
                 let delay = config.baseSpeed + (Math.random() * config.variance * 2 - config.variance);
-                
                 // Add pauses for rhythm
                 if (char === ' ') delay += config.spacePause;
                 if (['.', ',', '!', '?'].includes(char)) delay += config.punctuationPause;
-
                 setTimeout(typeChar, delay);
             }
-            
             typeChar();
         }
     });
-    
     // Existing Testimonials Shuffle Script
     document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('testimonialContainer');
         if (!container) return;
-        
         const cards = Array.from(container.querySelectorAll('.luxury-testimonial-card'));
         if (cards.length === 0) return;
-        
         for (let i = cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [cards[i], cards[j]] = [cards[j], cards[i]];
         }
-        
         cards.forEach(function(card) {
             container.appendChild(card);
         });
     });
 </script>
 @endpush
-

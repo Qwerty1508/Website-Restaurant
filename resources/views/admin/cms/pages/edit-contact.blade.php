@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', 'Edit Contact Page')
-
 @push('styles')
 <style>
 .cms-edit-header {
@@ -12,7 +10,6 @@
     flex-wrap: wrap;
     gap: 1rem;
 }
-
 .cms-edit-header h1 {
     margin: 0;
     font-size: 1.75rem;
@@ -20,11 +17,9 @@
     align-items: center;
     gap: 0.75rem;
 }
-
 .cms-edit-header h1 i {
     color: var(--accent);
 }
-
 .cms-section-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -33,13 +28,11 @@
     margin-bottom: 1.5rem;
     overflow: hidden;
 }
-
 .cms-section-header {
     padding: 1.25rem 1.5rem;
     background: linear-gradient(135deg, rgba(12, 42, 54, 0.03) 0%, rgba(200, 155, 58, 0.05) 100%);
     border-bottom: 1px solid rgba(12, 42, 54, 0.08);
 }
-
 .cms-section-header h3 {
     margin: 0;
     font-size: 1.1rem;
@@ -47,30 +40,24 @@
     align-items: center;
     gap: 0.5rem;
 }
-
 .cms-section-header h3 i {
     color: var(--accent);
 }
-
 .cms-section-body {
     padding: 1.5rem;
 }
-
 .cms-form-group {
     margin-bottom: 1.25rem;
 }
-
 .cms-form-group:last-child {
     margin-bottom: 0;
 }
-
 .cms-form-label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--primary);
 }
-
 .cms-form-input {
     width: 100%;
     padding: 0.875rem 1rem;
@@ -79,18 +66,15 @@
     font-size: 1rem;
     transition: all 0.3s ease;
 }
-
 .cms-form-input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(200, 155, 58, 0.15);
     outline: none;
 }
-
 .cms-form-textarea {
     min-height: 120px;
     resize: vertical;
 }
-
 .cms-save-bar {
     position: sticky;
     bottom: 0;
@@ -104,33 +88,27 @@
     gap: 1rem;
     margin-top: 2rem;
 }
-
 [data-theme="dark"] .cms-section-card {
     background: rgba(22, 37, 43, 0.95);
     border-color: rgba(255, 255, 255, 0.1);
 }
-
 [data-theme="dark"] .cms-section-header {
     background: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.06);
 }
-
 [data-theme="dark"] .cms-form-input {
     background: rgba(22, 37, 43, 0.8);
     border-color: rgba(255, 255, 255, 0.1);
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-form-label {
     color: var(--text-light);
 }
-
 [data-theme="dark"] .cms-save-bar {
     background: rgba(22, 37, 43, 0.95);
 }
 </style>
 @endpush
-
 @section('content')
 <div class="cms-edit-header">
     <h1><i class="bi bi-envelope"></i> Edit Contact Page</h1>
@@ -138,17 +116,14 @@
         <i class="bi bi-arrow-left me-2"></i>Kembali
     </a>
 </div>
-
 @if(session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 @endif
-
 <form action="{{ url('/admin/developer/pages/contact') }}" method="POST">
     @csrf
-
     <div class="cms-section-card">
         <div class="cms-section-header">
             <h3><i class="bi bi-image"></i> Hero Section</h3>
@@ -167,7 +142,6 @@
             </div>
         </div>
     </div>
-
     <div class="cms-section-card">
         <div class="cms-section-header">
             <h3><i class="bi bi-geo-alt"></i> Contact Information</h3>
@@ -198,7 +172,6 @@
             </div>
         </div>
     </div>
-
     <div class="cms-section-card">
         <div class="cms-section-header">
             <h3><i class="bi bi-map"></i> Map Location</h3>
@@ -224,7 +197,6 @@
             </div>
         </div>
     </div>
-
     <div class="cms-save-bar">
         <a href="{{ url('/contact') }}" target="_blank" class="btn btn-outline-primary">
             <i class="bi bi-eye me-2"></i>Preview

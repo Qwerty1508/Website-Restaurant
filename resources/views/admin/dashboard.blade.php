@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', __('messages.admin_dashboard'))
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -17,8 +15,6 @@
                 </div>
             </div>
         </div>
-        
-
         <div class="row g-4 mb-4">
             <div class="col-md-3">
                 <div class="card h-100 p-4 border-start border-4 border-success">
@@ -65,7 +61,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row g-4 mb-4">
             <div class="col-md-3">
                 <a href="/admin/menus" class="card text-decoration-none h-100 p-4 text-center hover-shadow">
@@ -95,7 +90,6 @@
                 </a>
             </div>
         </div>
-        
         <div class="row g-4">
             <div class="col-lg-6">
                 <div class="card">
@@ -140,7 +134,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header bg-white">

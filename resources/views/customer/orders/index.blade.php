@@ -1,7 +1,5 @@
 @extends('layouts.guest')
-
 @section('title', __('messages.my_orders'))
-
 @section('content')
 <section class="section bg-cream">
     <div class="container">
@@ -18,7 +16,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="card">
             <div class="card-body p-0">
                 <div class="list-group list-group-flush">
@@ -88,7 +85,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="row mt-4">
             <div class="col-12">
                 <a href="{{ url('/customer/dashboard') }}" class="btn btn-outline-secondary">

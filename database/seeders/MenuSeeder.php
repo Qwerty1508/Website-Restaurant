@@ -1,10 +1,7 @@
 <?php
-
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
 class MenuSeeder extends Seeder
 {
     public function run(): void
@@ -75,7 +72,6 @@ class MenuSeeder extends Seeder
                 'is_available' => true,
             ],
         ];
-
         foreach ($menus as $menu) {
             DB::table('menus')->updateOrInsert(
                 ['name' => $menu['name']],
