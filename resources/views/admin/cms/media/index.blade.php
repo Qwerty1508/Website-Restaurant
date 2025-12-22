@@ -350,7 +350,7 @@
 </div>
 @endif
 
-<form action="{{ url('/admin/cms/media') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+<form action="{{ url('/admin/developer/media') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
     @csrf
     <div class="cms-dropzone" id="dropzone">
         <div class="cms-dropzone-content">

@@ -288,7 +288,7 @@
 @endpush
 
 @section('content')
-<form action="{{ isset($page) ? url('/admin/cms/pages/' . $page->id) : url('/admin/cms/pages') }}" method="POST">
+<form action="{{ isset($page) ? url('/admin/developer/pages/' . $page->id) : url('/admin/developer/pages') }}" method="POST">
     @csrf
     @if(isset($page))
         @method('PUT')
@@ -300,7 +300,7 @@
             {{ isset($page) ? 'Edit Page' : 'Create New Page' }}
         </h1>
         <div class="d-flex gap-2">
-            <a href="{{ url('/admin/cms/pages') }}" class="btn btn-outline-secondary">
+            <a href="{{ url('/admin/developer/pages') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-2"></i>Back
             </a>
             <button type="submit" class="btn btn-primary">

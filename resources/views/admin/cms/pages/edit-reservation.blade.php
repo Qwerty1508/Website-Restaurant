@@ -134,7 +134,7 @@
 @section('content')
 <div class="cms-edit-header">
     <h1><i class="bi bi-calendar-check"></i> Edit Reservation Page</h1>
-    <a href="{{ url('/admin/cms') }}" class="btn btn-outline-secondary">
+    <a href="{{ url('/admin/developer') }}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left me-2"></i>Kembali
     </a>
 </div>
@@ -146,7 +146,7 @@
 </div>
 @endif
 
-<form action="{{ url('/admin/cms/pages/reservation') }}" method="POST">
+<form action="{{ url('/admin/developer/pages/reservation') }}" method="POST">
     @csrf
 
     <div class="cms-section-card">

@@ -105,28 +105,28 @@
             </li>
             
             <li class="sidebar-nav-item">
-                <a href="{{ url('/admin/cms') }}" class="sidebar-nav-link {{ request()->is('admin/cms') ? 'active' : '' }}">
+                <a href="{{ url('/admin/developer') }}" class="sidebar-nav-link {{ request()->is('admin/developer') ? 'active' : '' }}">
                     <i class="bi bi-collection"></i>
                     <span>CMS Dashboard</span>
                 </a>
             </li>
             
             <li class="sidebar-nav-item">
-                <a href="{{ url('/admin/cms/pages') }}" class="sidebar-nav-link {{ request()->is('admin/cms/pages*') ? 'active' : '' }}">
+                <a href="{{ url('/admin/developer/pages') }}" class="sidebar-nav-link {{ request()->is('admin/developer/pages*') ? 'active' : '' }}">
                     <i class="bi bi-file-richtext"></i>
                     <span>Pages</span>
                 </a>
             </li>
             
             <li class="sidebar-nav-item">
-                <a href="{{ url('/admin/cms/media') }}" class="sidebar-nav-link {{ request()->is('admin/cms/media*') ? 'active' : '' }}">
+                <a href="{{ url('/admin/developer/media') }}" class="sidebar-nav-link {{ request()->is('admin/developer/media*') ? 'active' : '' }}">
                     <i class="bi bi-images"></i>
                     <span>Media Library</span>
                 </a>
             </li>
             
             <li class="sidebar-nav-item">
-                <a href="{{ url('/admin/cms/settings') }}" class="sidebar-nav-link {{ request()->is('admin/cms/settings*') ? 'active' : '' }}">
+                <a href="{{ url('/admin/developer/settings') }}" class="sidebar-nav-link {{ request()->is('admin/developer/settings*') ? 'active' : '' }}">
                     <i class="bi bi-sliders"></i>
                     <span>Site Settings</span>
                 </a>

@@ -313,11 +313,11 @@
 <div class="cms-quick-settings">
     <h3><i class="bi bi-lightning"></i> Aksi Cepat</h3>
     <div class="cms-settings-grid">
-        <a href="{{ url('/admin/cms/settings') }}" class="cms-setting-item">
+        <a href="{{ url('/admin/developer/settings') }}" class="cms-setting-item">
             <i class="bi bi-gear"></i>
             <span>Site Settings</span>
         </a>
-        <a href="{{ url('/admin/cms/media') }}" class="cms-setting-item">
+        <a href="{{ url('/admin/developer/media') }}" class="cms-setting-item">
             <i class="bi bi-images"></i>
             <span>Media Library</span>
         </a>
@@ -364,7 +364,7 @@
                 </div>
             </div>
             <div class="cms-page-actions">
-                <a href="{{ url('/admin/cms/pages/homepage/edit') }}" class="cms-btn-edit">
+                <a href="{{ url('/admin/developer/pages/homepage/edit') }}" class="cms-btn-edit">
                     <i class="bi bi-pencil-square"></i> Edit Page
                 </a>
                 <a href="{{ url('/') }}" target="_blank" class="cms-btn-view">
@@ -399,7 +399,7 @@
                 </div>
             </div>
             <div class="cms-page-actions">
-                <a href="{{ url('/admin/cms/pages/menu/edit') }}" class="cms-btn-edit">
+                <a href="{{ url('/admin/developer/pages/menu/edit') }}" class="cms-btn-edit">
                     <i class="bi bi-pencil-square"></i> Edit Page
                 </a>
                 <a href="{{ url('/menu') }}" target="_blank" class="cms-btn-view">
@@ -438,7 +438,7 @@
                 </div>
             </div>
             <div class="cms-page-actions">
-                <a href="{{ url('/admin/cms/pages/about/edit') }}" class="cms-btn-edit">
+                <a href="{{ url('/admin/developer/pages/about/edit') }}" class="cms-btn-edit">
                     <i class="bi bi-pencil-square"></i> Edit Page
                 </a>
                 <a href="{{ url('/about') }}" target="_blank" class="cms-btn-view">
@@ -477,7 +477,7 @@
                 </div>
             </div>
             <div class="cms-page-actions">
-                <a href="{{ url('/admin/cms/pages/contact/edit') }}" class="cms-btn-edit">
+                <a href="{{ url('/admin/developer/pages/contact/edit') }}" class="cms-btn-edit">
                     <i class="bi bi-pencil-square"></i> Edit Page
                 </a>
                 <a href="{{ url('/contact') }}" target="_blank" class="cms-btn-view">
@@ -512,7 +512,7 @@
                 </div>
             </div>
             <div class="cms-page-actions">
-                <a href="{{ url('/admin/cms/pages/reservation/edit') }}" class="cms-btn-edit">
+                <a href="{{ url('/admin/developer/pages/reservation/edit') }}" class="cms-btn-edit">
                     <i class="bi bi-pencil-square"></i> Edit Page
                 </a>
                 <a href="{{ url('/reservation') }}" target="_blank" class="cms-btn-view">
@@ -543,7 +543,7 @@
                 </div>
             </div>
             <div class="cms-page-actions">
-                <a href="{{ url('/admin/cms/pages/login/edit') }}" class="cms-btn-edit">
+                <a href="{{ url('/admin/developer/pages/login/edit') }}" class="cms-btn-edit">
                     <i class="bi bi-pencil-square"></i> Edit Page
                 </a>
                 <a href="{{ url('/login') }}" target="_blank" class="cms-btn-view">
@@ -557,19 +557,19 @@
 <div class="cms-quick-settings">
     <h3><i class="bi bi-puzzle"></i> Komponen Global</h3>
     <div class="cms-settings-grid">
-        <a href="{{ url('/admin/cms/components/navbar') }}" class="cms-setting-item">
+        <a href="{{ url('/admin/developer/components/navbar') }}" class="cms-setting-item">
             <i class="bi bi-layout-text-window-reverse"></i>
             <span>Navbar</span>
         </a>
-        <a href="{{ url('/admin/cms/components/footer') }}" class="cms-setting-item">
+        <a href="{{ url('/admin/developer/components/footer') }}" class="cms-setting-item">
             <i class="bi bi-layout-text-sidebar-reverse"></i>
             <span>Footer</span>
         </a>
-        <a href="{{ url('/admin/cms/settings') }}" class="cms-setting-item">
+        <a href="{{ url('/admin/developer/settings') }}" class="cms-setting-item">
             <i class="bi bi-share"></i>
             <span>Social Media</span>
         </a>
-        <a href="{{ url('/admin/cms/settings') }}" class="cms-setting-item">
+        <a href="{{ url('/admin/developer/settings') }}" class="cms-setting-item">
             <i class="bi bi-palette"></i>
             <span>Theme Colors</span>
         </a>

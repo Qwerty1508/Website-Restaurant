@@ -159,38 +159,38 @@ Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\AdminMiddleware
     
     Route::get('/activities', [AdminActivityController::class, 'index']);
     
-    // CMS Routes
-    Route::get('/cms', [\App\Http\Controllers\Admin\AdminCmsController::class, 'index']);
-    Route::get('/cms/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'pages']);
-    Route::get('/cms/pages/create', [\App\Http\Controllers\Admin\AdminCmsController::class, 'createPage']);
-    Route::post('/cms/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'storePage']);
+    // Developer Routes
+    Route::get('/developer', [\App\Http\Controllers\Admin\AdminCmsController::class, 'index']);
+    Route::get('/developer/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'pages']);
+    Route::get('/developer/pages/create', [\App\Http\Controllers\Admin\AdminCmsController::class, 'createPage']);
+    Route::post('/developer/pages', [\App\Http\Controllers\Admin\AdminCmsController::class, 'storePage']);
     
     // Specific page edit routes
-    Route::get('/cms/pages/homepage/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editHomepage']);
-    Route::post('/cms/pages/homepage', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateHomepage']);
-    Route::get('/cms/pages/menu/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editMenuPage']);
-    Route::post('/cms/pages/menu', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateMenuPage']);
-    Route::get('/cms/pages/about/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editAboutPage']);
-    Route::post('/cms/pages/about', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateAboutPage']);
-    Route::get('/cms/pages/contact/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editContactPage']);
-    Route::post('/cms/pages/contact', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateContactPage']);
-    Route::get('/cms/pages/reservation/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editReservationPage']);
-    Route::post('/cms/pages/reservation', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateReservationPage']);
-    Route::get('/cms/pages/login/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editLoginPage']);
-    Route::post('/cms/pages/login', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateLoginPage']);
+    Route::get('/developer/pages/homepage/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editHomepage']);
+    Route::post('/developer/pages/homepage', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateHomepage']);
+    Route::get('/developer/pages/menu/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editMenuPage']);
+    Route::post('/developer/pages/menu', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateMenuPage']);
+    Route::get('/developer/pages/about/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editAboutPage']);
+    Route::post('/developer/pages/about', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateAboutPage']);
+    Route::get('/developer/pages/contact/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editContactPage']);
+    Route::post('/developer/pages/contact', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateContactPage']);
+    Route::get('/developer/pages/reservation/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editReservationPage']);
+    Route::post('/developer/pages/reservation', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateReservationPage']);
+    Route::get('/developer/pages/login/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editLoginPage']);
+    Route::post('/developer/pages/login', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateLoginPage']);
     
-    Route::get('/cms/pages/{id}/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editPage']);
-    Route::put('/cms/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updatePage']);
-    Route::delete('/cms/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroyPage']);
-    Route::post('/cms/sections', [\App\Http\Controllers\Admin\AdminCmsController::class, 'storeSection']);
-    Route::put('/cms/sections/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateSection']);
-    Route::post('/cms/sections/reorder', [\App\Http\Controllers\Admin\AdminCmsController::class, 'reorderSections']);
-    Route::delete('/cms/sections/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroySection']);
-    Route::get('/cms/media', [\App\Http\Controllers\Admin\AdminCmsController::class, 'media']);
-    Route::post('/cms/media', [\App\Http\Controllers\Admin\AdminCmsController::class, 'uploadMedia']);
-    Route::delete('/cms/media/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroyMedia']);
-    Route::get('/cms/settings', [\App\Http\Controllers\Admin\AdminCmsController::class, 'settings']);
-    Route::post('/cms/settings', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateSettings']);
+    Route::get('/developer/pages/{id}/edit', [\App\Http\Controllers\Admin\AdminCmsController::class, 'editPage']);
+    Route::put('/developer/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updatePage']);
+    Route::delete('/developer/pages/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroyPage']);
+    Route::post('/developer/sections', [\App\Http\Controllers\Admin\AdminCmsController::class, 'storeSection']);
+    Route::put('/developer/sections/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateSection']);
+    Route::post('/developer/sections/reorder', [\App\Http\Controllers\Admin\AdminCmsController::class, 'reorderSections']);
+    Route::delete('/developer/sections/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroySection']);
+    Route::get('/developer/media', [\App\Http\Controllers\Admin\AdminCmsController::class, 'media']);
+    Route::post('/developer/media', [\App\Http\Controllers\Admin\AdminCmsController::class, 'uploadMedia']);
+    Route::delete('/developer/media/{id}', [\App\Http\Controllers\Admin\AdminCmsController::class, 'destroyMedia']);
+    Route::get('/developer/settings', [\App\Http\Controllers\Admin\AdminCmsController::class, 'settings']);
+    Route::post('/developer/settings', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateSettings']);
 });
 
 Route::get('lang/{locale}', function ($locale) { 

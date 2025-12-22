@@ -62,7 +62,7 @@ class AdminCmsController extends Controller
             'order' => CmsPage::max('order') + 1,
         ]);
 
-        return redirect('/admin/cms/pages')->with('success', 'Halaman berhasil dibuat!');
+        return redirect('/admin/developer/pages')->with('success', 'Halaman berhasil dibuat!');
     }
 
     public function editPage($id)
@@ -95,7 +95,7 @@ class AdminCmsController extends Controller
             'template' => $request->template ?? 'default',
         ]);
 
-        return redirect('/admin/cms/pages')->with('success', 'Halaman berhasil diperbarui!');
+        return redirect('/admin/developer/pages')->with('success', 'Halaman berhasil diperbarui!');
     }
 
     public function destroyPage($id)
@@ -103,7 +103,7 @@ class AdminCmsController extends Controller
         $page = CmsPage::findOrFail($id);
         $page->delete();
         
-        return redirect('/admin/cms/pages')->with('success', 'Halaman berhasil dihapus!');
+        return redirect('/admin/developer/pages')->with('success', 'Halaman berhasil dihapus!');
     }
 
     public function media()
@@ -147,7 +147,7 @@ class AdminCmsController extends Controller
             return response()->json(['success' => true, 'media' => $media]);
         }
         
-        return redirect('/admin/cms/media')->with('success', 'File berhasil diupload!');
+        return redirect('/admin/developer/media')->with('success', 'File berhasil diupload!');
     }
 
     public function destroyMedia($id)
@@ -160,7 +160,7 @@ class AdminCmsController extends Controller
             return response()->json(['success' => true]);
         }
         
-        return redirect('/admin/cms/media')->with('success', 'File berhasil dihapus!');
+        return redirect('/admin/developer/media')->with('success', 'File berhasil dihapus!');
     }
 
     public function settings()
@@ -196,7 +196,7 @@ class AdminCmsController extends Controller
             CmsSetting::set($key, $value);
         }
         
-        return redirect('/admin/cms/settings')->with('success', 'Pengaturan berhasil disimpan!');
+        return redirect('/admin/developer/settings')->with('success', 'Pengaturan berhasil disimpan!');
     }
 
     public function storeSection(Request $request)

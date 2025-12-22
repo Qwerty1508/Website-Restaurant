@@ -314,7 +314,7 @@
 </div>
 @endif
 
-<form action="{{ url('/admin/cms/settings') }}" method="POST">
+<form action="{{ url('/admin/developer/settings') }}" method="POST">
     @csrf
     
     <div class="cms-settings-container">
@@ -379,7 +379,7 @@
                                     @endif
                                 </div>
                                 <div class="cms-logo-actions">
-                                    <a href="{{ url('/admin/cms/media') }}" class="btn btn-outline-primary btn-sm">
+                                    <a href="{{ url('/admin/developer/media') }}" class="btn btn-outline-primary btn-sm">
                                         <i class="bi bi-folder2-open me-1"></i>Choose from Media
                                     </a>
                                     <input type="hidden" name="site_logo" value="{{ $settings['general']['site_logo'] ?? '' }}">

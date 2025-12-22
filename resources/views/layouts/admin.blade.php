@@ -43,7 +43,7 @@
                 
                 <div class="d-flex align-items-center gap-3 ms-auto">
                     {{-- Developer Button --}}
-                    <a href="{{ url('/admin/cms') }}" class="btn btn-cms-navbar d-flex align-items-center gap-2" title="{{ __('messages.developer') }}">
+                    <a href="{{ url('/admin/developer') }}" class="btn btn-cms-navbar d-flex align-items-center gap-2" title="{{ __('messages.developer') }}">
                         <i class="bi bi-code-slash"></i>
                         <span class="d-none d-lg-inline">{{ __('messages.developer') }}</span>
                     </a>

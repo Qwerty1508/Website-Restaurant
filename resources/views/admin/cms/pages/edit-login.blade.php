@@ -134,7 +134,7 @@
 @section('content')
 <div class="cms-edit-header">
     <h1><i class="bi bi-door-open"></i> Edit Login Page</h1>
-    <a href="{{ url('/admin/cms') }}" class="btn btn-outline-secondary">
+    <a href="{{ url('/admin/developer') }}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left me-2"></i>Kembali
     </a>
 </div>
@@ -146,7 +146,7 @@
 </div>
 @endif
 
-<form action="{{ url('/admin/cms/pages/login') }}" method="POST">
+<form action="{{ url('/admin/developer/pages/login') }}" method="POST">
     @csrf
 
     <div class="cms-section-card">

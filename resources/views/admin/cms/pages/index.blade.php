@@ -316,7 +316,7 @@
 @section('content')
 <div class="cms-page-header">
     <h1><i class="bi bi-file-richtext"></i> Pages</h1>
-    <a href="{{ url('/admin/cms/pages/create') }}" class="btn btn-primary">
+    <a href="{{ url('/admin/developer/pages/create') }}" class="btn btn-primary">
         <i class="bi bi-plus-lg me-2"></i>New Page
     </a>
 </div>
@@ -366,7 +366,7 @@
                 </label>
             </div>
             <div class="cms-page-actions">
-                <a href="{{ url('/admin/cms/pages/' . $page->id . '/edit') }}" class="cms-action-btn" title="Edit">
+                <a href="{{ url('/admin/developer/pages/' . $page->id . '/edit') }}" class="cms-action-btn" title="Edit">
                     <i class="bi bi-pencil"></i>
                 </a>
                 <button class="cms-action-btn delete" title="Delete" onclick="confirmDelete({{ $page->id }}, '{{ $page->title }}')">
@@ -381,7 +381,7 @@
         <i class="bi bi-file-earmark-plus"></i>
         <h4>No pages yet</h4>
         <p>Start building your website by creating your first page</p>
-        <a href="{{ url('/admin/cms/pages/create') }}" class="btn btn-primary">
+        <a href="{{ url('/admin/developer/pages/create') }}" class="btn btn-primary">
             <i class="bi bi-plus-lg me-2"></i>Create First Page
         </a>
     </div>
