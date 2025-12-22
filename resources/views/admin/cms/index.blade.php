@@ -441,46 +441,40 @@
     }
     
     /* Device Specific Bezels */
-    /* --- SIDEBAR TOGGLE LOGIC --- */
+    /* --- SIDEBAR TOGGLE LOGIC (DEFAULT CLOSED STRATEGY) --- */
     
-    /* 1. Sidebar Transition */
-    .sidebar {
+    /* 1. Sidebar: HIDDEN BY DEFAULT on this page */
+    #sidebar {
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 2000 !important; /* Above everything */
+        z-index: 2000 !important;
+        transform: translateX(-100%) !important; /* Force Start State: Hidden */
     }
     
-    /* When Closed */
-    body.sidebar-closed .sidebar {
-        transform: translateX(-100%);
+    /* When Forces Open */
+    body.sidebar-force-open #sidebar {
+        transform: translateX(0) !important;
     }
 
-    /* 2. Main Content Adjustment */
+    /* 2. Main Content: FULL WIDTH BY DEFAULT */
     .main-content-admin {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 0 !important; /* Always 0 padding for CMS */
-        
-        /* Default Open State */
-        margin-left: 280px !important;
-        width: calc(100% - 280px) !important;
+        padding: 0 !important;
+        margin: 0 !important; /* Force Start State: No Margin */
+        margin-left: 0 !important;
+        width: 100% !important; /* Force Start State: Full Width */
     }
 
-    /* When Closed: Full Width */
-    body.sidebar-closed .main-content-admin {
-        margin-left: 0 !important;
-        width: 100% !important;
+    /* When Sidebar Open: Push Content */
+    body.sidebar-force-open .main-content-admin {
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
     }
     
     /* Mobile Override */
     @media (max-width: 991.98px) {
-        .main-content-admin {
+        body.sidebar-force-open .main-content-admin {
             margin-left: 0 !important;
             width: 100% !important;
-        }
-        .sidebar {
-            transform: translateX(-100%);
-        }
-        .sidebar.show {
-            transform: translateX(0);
         }
     }
 
@@ -492,7 +486,7 @@
         position: relative;
     }
 
-    /* Toggle Button */
+    /* Toggle Button to OPEN sidebar */
     .btn-toggle-sidebar {
         position: fixed;
         bottom: 20px;
@@ -509,17 +503,19 @@
         justify-content: center;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        opacity: 0;
-        transform: scale(0.8);
-        pointer-events: none;
-    }
-
-    /* Show button when sidebar is closed */
-    body.sidebar-closed .btn-toggle-sidebar {
+        transition: all 0.3s ease;
+        
+        /* Visible by default since sidebar is hidden */
         opacity: 1;
         transform: scale(1);
         pointer-events: auto;
+    }
+
+    /* Hide OPEN button when sidebar is OPEN */
+    body.sidebar-force-open .btn-toggle-sidebar {
+        opacity: 0;
+        transform: scale(0.8);
+        pointer-events: none;
     }
 
     .btn-toggle-sidebar:hover {
@@ -543,6 +539,7 @@
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
+        z-index: 2001; /* Above sidebar content */
     }
     
     .btn-close-sidebar:hover {
@@ -551,10 +548,8 @@
         border-color: var(--cms-gold);
     }
 
-    /* Hide Top Admin Navbar on this page specifically */
-    .main-content-admin > nav.navbar {
-        display: none !important;
-    }
+    /* Hide top nav */
+    .main-content-admin > nav.navbar { display: none !important; }
     
     /* Device Specific Bezels */
     .mode-mobile .device-bezel {
@@ -765,28 +760,22 @@
         const openBtn = document.getElementById('btn-open-sidebar');
         
         // --- 1. Setup Close Button ---
-        // We need to inject a close button into the main sidebar if it doesn't exist
         if (mainSidebar && !mainSidebar.querySelector('.btn-close-sidebar')) {
             const closeBtn = document.createElement('button');
             closeBtn.className = 'btn-close-sidebar';
             closeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
             closeBtn.title = 'Close Sidebar';
             closeBtn.onclick = toggleMainSidebar;
-            
-            // Append as first child or near top
             mainSidebar.appendChild(closeBtn);
         }
 
-        // --- 2. Default State: Closed ---
-        // Add 'sidebar-closed' to body immediately
-        body.classList.add('sidebar-closed'); 
-        if(mainSidebar) mainSidebar.classList.add('collapsed'); // Just in case CSS needs it helper
+        // --- 2. Remove any previous classes (Just in case) ---
+        body.classList.remove('sidebar-closed'); 
+        if(mainSidebar) mainSidebar.classList.remove('collapsed');
 
         // --- 3. Toggle Function ---
         function toggleMainSidebar() {
-            body.classList.toggle('sidebar-closed');
-            // Sync specific class on sidebar if needed (though CSS handles it via body selector)
-            if(mainSidebar) mainSidebar.classList.toggle('collapsed');
+            body.classList.toggle('sidebar-force-open');
         }
 
         // --- 4. Event Listeners ---
