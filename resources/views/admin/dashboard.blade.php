@@ -18,36 +18,6 @@
             </div>
         </div>
         
-        <div class="row g-4 mb-4">
-            <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <i class="bi bi-people fs-1 text-primary mb-2"></i>
-                    <h4 class="mb-1">{{ $totalUsers ?? 0 }}</h4>
-                    <small class="text-muted" data-i18n="total_users">{{ __('messages.total_users') }}</small>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <i class="bi bi-person-plus fs-1 text-success mb-2"></i>
-                    <h4 class="mb-1">{{ $todayUsers ?? 0 }}</h4>
-                    <small class="text-muted" data-i18n="today_registration">{{ __('messages.today_registration') }}</small>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <i class="bi bi-calendar-check fs-1 text-info mb-2"></i>
-                    <h4 class="mb-1">{{ $last30DaysUsers ?? 0 }}</h4>
-                    <small class="text-muted" data-i18n="registrations_30_days">{{ __('messages.registrations_30_days') }}</small>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <i class="bi bi-book fs-1 text-warning mb-2"></i>
-                    <h4 class="mb-1">{{ $totalMenus ?? 0 }}</h4>
-                    <small class="text-muted" data-i18n="total_menus">{{ __('messages.total_menus') }}</small>
-                </div>
-            </div>
-        </div>
 
         <div class="row g-4 mb-4">
             <div class="col-md-3">
