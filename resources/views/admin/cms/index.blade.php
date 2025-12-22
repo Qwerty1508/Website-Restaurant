@@ -665,6 +665,7 @@
                 deviceEntity.style.border = 'none';
                 deviceEntity.style.borderRadius = '0';
                 deviceEntity.style.boxShadow = 'none';
+                wrapper.style.overflow = 'auto'; // Allow scroll for full width
             } else {
                 deviceEntity.style.width = currentModel.width + 'px';
                 deviceEntity.style.height = currentModel.height + 'px';
@@ -672,11 +673,15 @@
                 deviceEntity.style.border = '16px solid #1a1a1a'; 
                 deviceEntity.style.borderRadius = '8px';
                 deviceEntity.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
+                deviceEntity.style.transformOrigin = 'center top'; // Scale from top center to nicely fit
                 
                 // Scale Down Logic
                 setTimeout(() => {
-                    const availableWidth = wrapper.clientWidth - 40; // Padding
-                    const availableHeight = wrapper.clientHeight - 40;
+                    // Update wrapper overflow to hidden to prevent scrollbars when scaling down large content
+                    wrapper.style.overflow = 'hidden';
+                    
+                    const availableWidth = wrapper.clientWidth - 60; // Padding side
+                    const availableHeight = wrapper.clientHeight - 80; // Padding top/bottom
                     
                     const scaleX = availableWidth / currentModel.width;
                     const scaleY = availableHeight / currentModel.height;
@@ -684,6 +689,15 @@
                     
                     if(scale < 1) {
                         deviceEntity.style.transform = `scale(${scale})`;
+                        // Add margin top to center vertically if needed
+                        const heightDiff = (availableHeight - (currentModel.height * scale)) / 2;
+                        if(heightDiff > 0) {
+                            deviceEntity.style.marginTop = `${heightDiff}px`;
+                        } else {
+                            deviceEntity.style.marginTop = '20px';
+                        }
+                    } else {
+                         deviceEntity.style.marginTop = '20px';
                     }
                 }, 10);
             }
@@ -700,10 +714,13 @@
         deviceEntity.style.width = width + 'px';
         deviceEntity.style.height = height + 'px';
         deviceEntity.style.border = ''; // Reset to class default
-        deviceEntity.style.borderRadius = ''; 
+        deviceEntity.style.borderRadius = '';
+        deviceEntity.style.transformOrigin = 'center center'; 
         
         // Scale logic for mobile/tablet
         setTimeout(() => {
+            wrapper.style.overflow = 'hidden'; // Ensure hidden overflow for clean scaling
+            
             const availableWidth = wrapper.clientWidth - 40;
             const availableHeight = wrapper.clientHeight - 40;
             
@@ -714,12 +731,36 @@
             if(scale < 1) {
                 deviceEntity.style.transform = `scale(${scale})`;
             }
+             deviceEntity.style.marginTop = '0';
         }, 10);
     }
     
+    // Auto Recalculate on Resize
+    window.addEventListener('resize', () => { // Debounce could be added here for performance
+        applyDimensions();
+    });
+    
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-        // Just empty init if needed, currently setDeviceType default is desktop via HTML
+        setDeviceType('desktop');
+        
+        // Listen for iframe url changes
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'cms_url_changed' && event.data.url) {
+                document.getElementById('current-url').textContent = event.data.url;
+                
+                // Update select if matches
+                const selector = document.getElementById('page-selector');
+                const fullUrl = event.data.url;
+                // Try to match value
+                for(let i=0; i<selector.options.length; i++) {
+                    if(fullUrl.includes(selector.options[i].value)) {
+                         selector.selectedIndex = i;
+                         break;
+                    }
+                }
+            }
+        });
     });
 </script>
 @endpush
