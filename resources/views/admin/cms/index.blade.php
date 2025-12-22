@@ -594,12 +594,9 @@
         wrapper.className = 'iframe-wrapper mode-' + type;
 
         if (type === 'desktop') {
-            modelWrapper.classList.remove('visible');
-            rotateWrapper.classList.remove('visible');
-            deviceEntity.style.width = '100%';
-            deviceEntity.style.height = '100%';
+            modelWrapper.classList.add('visible'); // Allow resolution selection for desktop too
+            populateModels('desktop');
         } else {
-            // Show Selector
             modelWrapper.classList.add('visible');
             rotateWrapper.classList.add('visible');
             populateModels(type);
@@ -610,12 +607,33 @@
         const selector = document.getElementById('model-selector');
         selector.innerHTML = ''; // Clear
         
-        devices[type].forEach((device, index) => {
-            const option = document.createElement('option');
-            option.value = index;
-            option.text = device.name + ` (${device.width}x${device.height})`;
-            selector.appendChild(option);
-        });
+        if(type === 'desktop') {
+             // Desktop Specific Options
+             const desktopOptions = [
+                 { name: 'Full Width', width: '100%', height: '100%' },
+                 { name: 'Laptop (1366x768)', width: 1366, height: 768 },
+                 { name: 'FHD Monitor (1920x1080)', width: 1920, height: 1080 },
+                 { name: 'MacBook Pro 16 (1728x1117)', width: 1728, height: 1117 }
+             ];
+             
+             desktopOptions.forEach((device, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.text = device.name;
+                selector.appendChild(option);
+             });
+             
+             // Store for later usage
+             devices['desktop'] = desktopOptions;
+
+        } else {
+            devices[type].forEach((device, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.text = device.name + ` (${device.width}x${device.height})`;
+                selector.appendChild(option);
+            });
+        }
         
         // Select first by default
         setDeviceModel(0);
@@ -631,19 +649,44 @@
     function toggleOrientation() {
         isLandscape = !isLandscape;
         applyDimensions();
-        
-        // Rotate Icon Animation
-        const icon = document.querySelector('.btn-rotate i');
-        icon.style.transform = isLandscape ? 'rotate(90deg)' : 'rotate(0deg)';
-        icon.style.transition = 'transform 0.3s';
     }
 
     function applyDimensions() {
         const deviceEntity = document.getElementById('device-entity');
+        const wrapper = document.getElementById('iframe-wrapper');
+        
+        // Reset Transforms
+        deviceEntity.style.transform = 'none';
         
         if (currentType === 'desktop') {
-            deviceEntity.style.width = '100%';
-            deviceEntity.style.height = '100%';
+            if (currentModel.width === '100%') {
+                deviceEntity.style.width = '100%';
+                deviceEntity.style.height = '100%';
+                deviceEntity.style.border = 'none';
+                deviceEntity.style.borderRadius = '0';
+                deviceEntity.style.boxShadow = 'none';
+            } else {
+                deviceEntity.style.width = currentModel.width + 'px';
+                deviceEntity.style.height = currentModel.height + 'px';
+                // Add bezel for fixed sizes
+                deviceEntity.style.border = '16px solid #1a1a1a'; 
+                deviceEntity.style.borderRadius = '8px';
+                deviceEntity.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
+                
+                // Scale Down Logic
+                setTimeout(() => {
+                    const availableWidth = wrapper.clientWidth - 40; // Padding
+                    const availableHeight = wrapper.clientHeight - 40;
+                    
+                    const scaleX = availableWidth / currentModel.width;
+                    const scaleY = availableHeight / currentModel.height;
+                    const scale = Math.min(scaleX, scaleY, 1); // Never scale up, only down
+                    
+                    if(scale < 1) {
+                        deviceEntity.style.transform = `scale(${scale})`;
+                    }
+                }, 10);
+            }
             return;
         }
 
@@ -651,12 +694,27 @@
         let height = currentModel.height;
         
         if (isLandscape) {
-            // Swap
             [width, height] = [height, width];
         }
-
+        
         deviceEntity.style.width = width + 'px';
         deviceEntity.style.height = height + 'px';
+        deviceEntity.style.border = ''; // Reset to class default
+        deviceEntity.style.borderRadius = ''; 
+        
+        // Scale logic for mobile/tablet
+        setTimeout(() => {
+            const availableWidth = wrapper.clientWidth - 40;
+            const availableHeight = wrapper.clientHeight - 40;
+            
+            const scaleX = availableWidth / width;
+            const scaleY = availableHeight / height;
+            const scale = Math.min(scaleX, scaleY, 1); 
+            
+            if(scale < 1) {
+                deviceEntity.style.transform = `scale(${scale})`;
+            }
+        }, 10);
     }
     
     // Initialize
