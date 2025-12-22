@@ -95,6 +95,7 @@ class ProjectController extends Controller
             ['id' => 22, 'title' => 'feat: ViewerMiddleware to block write operations', 'description' => 'Middleware blocks all non-GET requests for viewer accounts, returns 403 with message', 'file_path' => 'app/Http/Middleware/ViewerMiddleware.php, bootstrap/app.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
             ['id' => 23, 'title' => 'feat: ViewerSeeder for test@ account', 'description' => 'Seeder creates viewer account with email test@ and password test for demo purposes', 'file_path' => 'database/seeders/ViewerSeeder.php, database/seeders/DatabaseSeeder.php', 'update_type' => 'feature', 'update_date' => '2025-12-22'],
             ['id' => 24, 'title' => 'fix: Allow non-email format login for viewer', 'description' => 'Changed login input type from email to text, removed email validation rule for test@ format', 'file_path' => 'resources/views/auth/login.blade.php, app/Http/Controllers/Auth/AuthController.php', 'update_type' => 'fix', 'update_date' => '2025-12-22'],
+            ['id' => 25, 'title' => 'feat: Visual CMS with Live Preview', 'description' => 'Added visual editor for public site, split-view admin interface, and real-time content updates API', 'file_path' => 'app/Helpers/GlobalHelpers.php, public/js/cms-editor.js, resources/views/admin/cms/index.blade.php', 'update_type' => 'feature', 'update_date' => '2025-12-23'],
         ];
     }
 
