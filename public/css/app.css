@@ -827,12 +827,16 @@ a:hover {
     width: 280px;
     background: linear-gradient(180deg, #0C2A36 0%, #1a3d4d 100%);
     min-height: 100vh;
+    height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
     padding: var(--space-lg);
     z-index: 1000;
     transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 .sidebar-brand {
