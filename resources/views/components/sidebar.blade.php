@@ -1,3 +1,4 @@
+{{-- CMS Menu Added - Cache Rebuild v2 --}}
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
         <a href="{{ url('/admin') }}" class="text-decoration-none">
