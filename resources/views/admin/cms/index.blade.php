@@ -4,17 +4,36 @@
 
 @push('styles')
 <style>
-    /* Reset some admin layout styles to fit full screen editor */
+    /* Reset Admin Layout for Full Screen Editor */
+    .main-content-admin {
+        padding: 0 !important;
+        margin-top: 0 !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Hide Standard Admin Navbar */
+    .main-content-admin > .navbar {
+        display: none !important;
+    }
+
     .container-fluid {
         padding: 0 !important;
-        height: calc(100vh - 70px); /* Adjust based on navbar height */
+        flex: 1;
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
     }
     
     .visual-editor-container {
+        flex: 1;
         display: flex;
         height: 100%;
+        width: 100%;
         background-color: #f8f9fa;
+        overflow: hidden;
     }
 
     /* Sidebar Editor Panel */
