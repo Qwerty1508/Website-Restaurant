@@ -23,6 +23,84 @@
         overflow: hidden; /* Prevent body scroll */
     }
 
+    /* Hide Default Admin Navbar by default but allow toggling */
+    .sidebar {
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+    
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+
+    /* Main content expands when sidebar is collapsed */
+    .main-content-admin {
+        margin-left: 280px; /* Default width */
+        transition: margin-left 0.3s ease-in-out;
+        width: calc(100% - 280px);
+    }
+    
+    .sidebar.collapsed + .sidebar-overlay + .main-content-admin,
+    .sidebar.collapsed ~ .main-content-admin { /* Handle both DOM structures */
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* Override for this specific page */
+    .visual-editor-container {
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        position: relative;
+    }
+
+    /* Toggle Button */
+    .btn-toggle-sidebar {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1100;
+        background: var(--cms-gold);
+        color: #fff;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: all 0.2s;
+        opacity: 0; /* Hidden when sidebar is open */
+        pointer-events: none;
+    }
+
+    .sidebar.collapsed ~ .visual-editor-container .btn-toggle-sidebar,
+    body.sidebar-closed .btn-toggle-sidebar {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .btn-toggle-sidebar:hover {
+        transform: scale(1.1);
+        background: #fff;
+        color: var(--cms-gold);
+    }
+    
+    /* Close button inside sidebar */
+    .btn-close-sidebar {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        color: rgba(255,255,255,0.5);
+        cursor: pointer;
+    }
+    
+    .btn-close-sidebar:hover { color: #fff !important; }
+
     /* Reset Admin Layout for Full Screen Editor */
     .main-content-admin {
         padding: 0 !important;
@@ -555,6 +633,10 @@
                 <iframe src="{{ url('/') }}?cms_mode=true" id="site-preview" title="Site Preview" style="width: 100%; height: 100%; border: none;"></iframe>
             </div>
         </div>
+        <!-- Toggle Button to Open Sidebar -->
+        <button class="btn-toggle-sidebar" id="btn-open-sidebar" title="Open Menu">
+            <i class="bi bi-list fs-5"></i>
+        </button>
     </div>
 </div>
 @endsection
@@ -562,6 +644,50 @@
 @push('scripts')
 <script src="{{ asset('js/cms-editor.js') }}"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.querySelector('.editor-sidebar');
+        const previewArea = document.querySelector('.preview-area');
+        const openBtn = document.getElementById('btn-open-sidebar');
+        
+        // 1. Create Close Button and append to Sidebar
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'btn-close-sidebar';
+        closeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+        closeBtn.title = 'Close Menu';
+        closeBtn.onclick = toggleSidebar;
+        
+        // Ensure sidebar exists before appending
+        if(sidebar) {
+            sidebar.appendChild(closeBtn);
+            // 2. Default State: Collapsed
+            toggleSidebar(); 
+        }
+
+        // 3. Toggle Logic
+        function toggleSidebar() {
+            if(!sidebar) return;
+            
+            sidebar.classList.toggle('collapsed');
+            // Assuming 'sidebar-closed' class on body is for global styling
+            document.body.classList.toggle('sidebar-closed'); 
+            
+            // Adjust layout for CMS
+            if(previewArea) {
+                if(sidebar.classList.contains('collapsed')) {
+                    previewArea.style.marginLeft = '0';
+                    previewArea.style.width = '100%';
+                } else {
+                    previewArea.style.marginLeft = '280px';
+                    previewArea.style.width = 'calc(100% - 280px)';
+                }
+            }
+        }
+        
+        // Bind Open Button
+        if(openBtn) {
+            openBtn.addEventListener('click', toggleSidebar);
+        }
+    
     // Device Definitions
     const devices = {
         mobile: [
