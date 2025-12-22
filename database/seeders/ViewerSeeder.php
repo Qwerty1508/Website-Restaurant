@@ -11,10 +11,10 @@ class ViewerSeeder extends Seeder
     public function run(): void
     {
         User::updateOrCreate(
-            ['email' => 'tet'],
+            ['email' => 'test@'],
             [
                 'name' => 'Viewer Account',
-                'email' => 'tet',
+                'email' => 'test@',
                 'password' => Hash::make('test'),
                 'is_admin' => true, // Allow access to admin pages
                 'role' => 'viewer', // But readonly
