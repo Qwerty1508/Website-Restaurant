@@ -363,11 +363,11 @@
     }
     
     /* Device Specific Bezels */
+    /* Device Specific Bezels */
     .mode-mobile .device-bezel {
         border-radius: 40px;
         border: 8px solid #1a1a1a;
         padding: 0;
-        /* Reflection */
         position: relative;
     }
     
@@ -388,26 +388,31 @@
         border: 12px solid #1a1a1a;
     }
     
+    /* Desktop Mode: Maximized Space */
+    .mode-desktop {
+        padding: 80px 0 0 0 !important; /* Only top padding for toolbar */
+        display: block !important;
+        overflow: hidden !important;
+    }
+
     .mode-desktop .device-bezel {
         width: 100%;
         height: 100%;
         border: none;
         border-radius: 0;
         box-shadow: none;
-        padding: 0 2rem 2rem;
+        padding: 0; /* No internal padding */
     }
     
     .mode-desktop iframe {
-        border-radius: 12px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        border-radius: 0; /* Sharp corners like browser */
+        box-shadow: none;
     }
     
     iframe {
         background: #fff;
-        border-radius: 32px; /* Inner matches mobile radius */
+        border-radius: 32px; 
     }
-    
-    .mode-desktop iframe { border-radius: 8px; }
 
     /* Loading Overlay */
     .saving-overlay {
@@ -610,7 +615,7 @@
         if(type === 'desktop') {
              // Desktop Specific Options
              const desktopOptions = [
-                 { name: 'Full Width', width: '100%', height: '100%' },
+                 { name: 'Responsive (Fit Screen)', width: '100%', height: '100%' },
                  { name: 'Laptop (1366x768)', width: 1366, height: 768 },
                  { name: 'FHD Monitor (1920x1080)', width: 1920, height: 1080 },
                  { name: 'MacBook Pro 16 (1728x1117)', width: 1728, height: 1117 }
