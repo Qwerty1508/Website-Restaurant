@@ -24,7 +24,11 @@ class ViewerMiddleware
 
             // Block all write operations for viewers
             // Check for method spoofing too
-            $method = $request->authoritativeMethod() ?? $request->method();
+            $method = $request->method();
+            // If explicit _method field exists in POST, consider that as the intended method too
+            if ($request->isMethod('POST') && $request->has('_method')) {
+                $method = strtoupper($request->input('_method'));
+            }
             
             if (!in_array(strtoupper($method), ['GET', 'HEAD', 'OPTIONS'])) {
                 if ($request->expectsJson()) {
