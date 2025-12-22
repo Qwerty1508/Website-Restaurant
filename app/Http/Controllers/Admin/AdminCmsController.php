@@ -346,7 +346,7 @@ class AdminCmsController extends Controller
     {
         $request->validate([
             'key' => 'required|string',
-            'content' => 'required', // Can be string or array
+            'content' => 'nullable', // Allow empty content
         ]);
 
         CmsSetting::updateOrCreate(

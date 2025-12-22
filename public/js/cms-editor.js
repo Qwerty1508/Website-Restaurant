@@ -242,11 +242,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         savingOverlay.classList.add('active');
 
+        // Failsafe: Remove overlay after 10 seconds even if request hangs
+        const failsafe = setTimeout(() => {
+            savingOverlay.classList.remove('active');
+            saveButton.disabled = false;
+        }, 10000);
+
         try {
             const response = await fetch('/admin/developer/api/content', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest', // Force JSON response
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: JSON.stringify({
@@ -254,6 +262,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     content: content
                 })
             });
+
+            clearTimeout(failsafe); // Clear failsafe on response
 
             const result = await response.json();
 
@@ -268,14 +278,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, '*');
 
             } else {
-                alert('Failed to save changes.');
+                alert('Failed to save changes: ' + (result.message || 'Unknown error'));
             }
         } catch (error) {
             console.error('Save error:', error);
-            alert('Error saving changes.');
+            alert('Error saving changes. Check console for details.');
         } finally {
+            clearTimeout(failsafe);
             setTimeout(() => {
                 savingOverlay.classList.remove('active');
+                saveButton.disabled = false;
             }, 500);
         }
     });
