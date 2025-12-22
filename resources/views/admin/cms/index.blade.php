@@ -119,51 +119,185 @@
         transition: width 0.3s ease;
     }
 
-    /* Device Widths */
-    .mode-desktop iframe#site-preview { width: 100%; }
-    .mode-tablet iframe#site-preview { width: 768px; }
-    .mode-mobile iframe#site-preview { width: 375px; }
-
-    /* Editor Inputs */
-    .editor-field {
-        margin-bottom: 1.5rem;
+    /* Advanced Preview Toolbar */
+    .preview-toolbar {
+        height: 60px;
+        background: white;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        padding: 0 1.5rem;
+        gap: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
     
-    .editor-field label {
-        font-weight: 600;
+    .url-bar-container {
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    .url-bar {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 0.4rem 1rem;
         font-size: 0.85rem;
-        margin-bottom: 0.5rem;
         color: #495057;
-        display: block;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
     }
     
-    .no-selection-state {
-        text-align: center;
-        color: #adb5bd;
-        padding-top: 3rem;
+    .url-bar:hover {
+        border-color: #ced4da;
+        background: #fff;
     }
     
-    .no-selection-state i {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        opacity: 0.5;
+    /* Device Controls */
+    .device-controls-group {
+        display: flex;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 4px;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
     }
     
-    /* Loading overlay */
-    .saving-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(255,255,255,0.8);
+    .device-btn {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 8px;
+        color: #6c757d;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9rem;
+    }
+    
+    .device-btn:hover {
+        background: #e9ecef;
+        color: #212529;
+    }
+    
+    .device-btn.active {
+        background: #fff;
+        color: #0d6efd;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        font-weight: 500;
+    }
+    
+    .model-selector-wrapper {
+        margin-left: 1rem;
+        position: relative;
+        min-width: 160px;
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-10px);
+    }
+    
+    .model-selector-wrapper.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+    }
+    
+    .btn-rotate {
+        width: 36px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 1000;
-        display: none;
+        border-radius: 50%;
+        border: 1px solid #dee2e6;
+        background: white;
+        color: #6c757d;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-left: 0.5rem;
     }
     
-    .saving-overlay.active {
-        display: flex;
+    .btn-rotate:hover {
+        background: #f8f9fa;
+        color: #0d6efd;
+        transform: rotate(15deg);
     }
+
+    /* Realistic Device Bezel */
+    .iframe-wrapper {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Center vertically too */
+        padding: 2rem;
+        overflow: auto;
+        background-color: #e9ecef;
+        background-image: radial-gradient(#dee2e6 1px, transparent 1px);
+        background-size: 20px 20px;
+        transition: all 0.3s ease;
+    }
+
+    .device-bezel {
+        background: #111;
+        padding: 12px; /* Bezel Thickness */
+        border-radius: 4px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+    }
+    
+    .device-bezel::after { 
+        /* Notch/Camera indicator */
+        content: '';
+        display: block;
+        width: 30px;
+        height: 4px;
+        background: #333;
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 4px;
+        opacity: 0; /* Hidden on desktop */
+    }
+    
+    /* Device Specific Styles */
+    .mode-mobile .device-bezel {
+        border-radius: 36px;
+        padding: 12px;
+        border: 4px solid #333;
+    }
+    
+    .mode-mobile .device-bezel::after { opacity: 1; width: 80px; height: 16px; top: 12px; border-radius: 10px; }
+
+    .mode-tablet .device-bezel {
+        border-radius: 20px;
+        padding: 16px;
+    }
+
+    .mode-desktop .device-bezel {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    iframe#site-preview {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: white;
+        border-radius: 2px; /* Inner radius */
+        display: block;
+    }
+    
+    .mode-mobile iframe#site-preview { border-radius: 24px; }
+    .mode-tablet iframe#site-preview { border-radius: 12px; }
+
 </style>
 @endpush
 
@@ -234,42 +368,163 @@
         </div>
         
         <div class="preview-toolbar">
-            <div class="url-bar">
-                <i class="bi bi-globe me-2"></i>
-                <span id="current-url">{{ url('/') }}</span>
+            <div class="url-bar-container">
+                <div class="url-bar">
+                    <i class="bi bi-globe me-2 text-primary"></i>
+                    <span id="current-url">{{ url('/') }}</span>
+                </div>
             </div>
             
-            <div class="device-toggles btn-group">
-                <button class="btn btn-outline-secondary active" onclick="setDeviceMode('desktop')" title="Desktop">
-                    <i class="bi bi-laptop"></i>
+            <!-- Type Selector -->
+            <div class="device-controls-group">
+                <button class="device-btn active" onclick="setDeviceType('desktop')" id="btn-desktop" title="Desktop View">
+                    <i class="bi bi-laptop"></i> Desktop
                 </button>
-                <button class="btn btn-outline-secondary" onclick="setDeviceMode('tablet')" title="Tablet">
-                    <i class="bi bi-tablet"></i>
+                <div style="width: 1px; height: 16px; background: #dee2e6; margin: 0 4px;"></div>
+                <button class="device-btn" onclick="setDeviceType('tablet')" id="btn-tablet" title="Tablet View">
+                    <i class="bi bi-tablet"></i> Tablet
                 </button>
-                <button class="btn btn-outline-secondary" onclick="setDeviceMode('mobile')" title="Mobile">
-                    <i class="bi bi-phone"></i>
+                <button class="device-btn" onclick="setDeviceType('mobile')" id="btn-mobile" title="Mobile View">
+                    <i class="bi bi-phone"></i> Mobile
+                </button>
+            </div>
+
+            <!-- Model Selector (Hidden unless tablet/mobile) -->
+            <div class="model-selector-wrapper" id="model-wrapper">
+                <select class="form-select form-select-sm" id="model-selector" onchange="setDeviceModel(this.value)">
+                    <!-- Options populated via JS -->
+                </select>
+            </div>
+            
+            <!-- Rotate (Hidden unless tablet/mobile) -->
+            <div class="model-selector-wrapper" id="rotate-wrapper" style="min-width: auto; margin-left: 0;">
+                <button class="btn-rotate" onclick="toggleOrientation()" title="Rotate Device">
+                    <i class="bi bi-arrow-repeat"></i>
                 </button>
             </div>
             
-            <a href="{{ url('/') }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-box-arrow-up-right"></i> Open Real Site
+            <a href="{{ url('/') }}" target="_blank" class="btn btn-primary d-flex align-items-center ms-auto">
+                <i class="bi bi-box-arrow-up-right me-2"></i> Preview Real
             </a>
         </div>
         
         <div class="iframe-wrapper mode-desktop" id="iframe-wrapper">
-            <iframe src="{{ url('/') }}?cms_mode=true" id="site-preview" title="Site Preview"></iframe>
+            <div class="device-bezel" id="device-entity" style="width: 100%; height: 100%;">
+                <iframe src="{{ url('/') }}?cms_mode=true" id="site-preview" title="Site Preview"></iframe>
+            </div>
         </div>
     </div>
 </div>
 @endsection
 
 @push('scripts')
-<Script src="{{ asset('js/cms-editor.js') }}"></script>
+<script src="{{ asset('js/cms-editor.js') }}"></script>
 <script>
-    function setDeviceMode(mode) {
-        document.getElementById('iframe-wrapper').className = 'iframe-wrapper mode-' + mode;
-        document.querySelectorAll('.device-toggles .btn').forEach(b => b.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+    // Device Definitions
+    const devices = {
+        mobile: [
+            { name: 'iPhone SE', width: 375, height: 667 },
+            { name: 'iPhone 13/14', width: 390, height: 844 },
+            { name: 'iPhone 14 Pro Max', width: 430, height: 932 },
+            { name: 'Pixel 7', width: 412, height: 915 },
+            { name: 'Samsung Galaxy S23 Ultra', width: 412, height: 915 }
+        ],
+        tablet: [
+            { name: 'iPad Mini', width: 768, height: 1024 },
+            { name: 'iPad Air', width: 820, height: 1180 },
+            { name: 'iPad Pro 11"', width: 834, height: 1194 },
+            { name: 'iPad Pro 12.9"', width: 1024, height: 1366 },
+            { name: 'Galaxy Tab S8', width: 800, height: 1280 }
+        ]
+    };
+
+    let currentType = 'desktop';
+    let currentModel = null;
+    let isLandscape = false;
+
+    function setDeviceType(type) {
+        currentType = type;
+        const modelWrapper = document.getElementById('model-wrapper');
+        const rotateWrapper = document.getElementById('rotate-wrapper');
+        const deviceEntity = document.getElementById('device-entity');
+        const wrapper = document.getElementById('iframe-wrapper');
+        
+        // Update Buttons
+        document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + type).classList.add('active');
+
+        // Update Wrapper Class
+        wrapper.className = 'iframe-wrapper mode-' + type;
+
+        if (type === 'desktop') {
+            modelWrapper.classList.remove('visible');
+            rotateWrapper.classList.remove('visible');
+            deviceEntity.style.width = '100%';
+            deviceEntity.style.height = '100%';
+        } else {
+            // Show Selector
+            modelWrapper.classList.add('visible');
+            rotateWrapper.classList.add('visible');
+            populateModels(type);
+        }
     }
+
+    function populateModels(type) {
+        const selector = document.getElementById('model-selector');
+        selector.innerHTML = ''; // Clear
+        
+        devices[type].forEach((device, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.text = device.name + ` (${device.width}x${device.height})`;
+            selector.appendChild(option);
+        });
+        
+        // Select first by default
+        setDeviceModel(0);
+    }
+
+    function setDeviceModel(index) {
+        if (!devices[currentType]) return;
+        
+        currentModel = devices[currentType][index];
+        applyDimensions();
+    }
+
+    function toggleOrientation() {
+        isLandscape = !isLandscape;
+        applyDimensions();
+        
+        // Rotate Icon Animation
+        const icon = document.querySelector('.btn-rotate i');
+        icon.style.transform = isLandscape ? 'rotate(90deg)' : 'rotate(0deg)';
+        icon.style.transition = 'transform 0.3s';
+    }
+
+    function applyDimensions() {
+        const deviceEntity = document.getElementById('device-entity');
+        
+        if (currentType === 'desktop') {
+            deviceEntity.style.width = '100%';
+            deviceEntity.style.height = '100%';
+            return;
+        }
+
+        let width = currentModel.width;
+        let height = currentModel.height;
+        
+        if (isLandscape) {
+            // Swap
+            [width, height] = [height, width];
+        }
+
+        deviceEntity.style.width = width + 'px';
+        deviceEntity.style.height = height + 'px';
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        // Just empty init if needed, currently setDeviceType default is desktop via HTML
+    });
 </script>
 @endpush
