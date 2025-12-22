@@ -17,6 +17,11 @@ class ViewerMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check() && auth()->user()->isViewer()) {
+            // Allow logout
+            if ($request->routeIs('logout')) {
+                return $next($request);
+            }
+
             // Block all write operations for viewers
             if (!$request->isMethod('GET')) {
                 if ($request->expectsJson()) {
