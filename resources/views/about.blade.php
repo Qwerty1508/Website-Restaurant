@@ -56,7 +56,8 @@
                             <div class="position-absolute w-100 h-100 border border-gold" style="top: 20px; left: 20px; opacity: 0.3; z-index: 0;"></div>
                             <img src="https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1516455590571-18256e5bb9ff" 
                                  class="img-fluid position-relative z-1 shadow-2xl" 
-                                 alt="Rustic Wooden Interior" style="filter: sepia(30%) contrast(1.1);">
+                                 alt="Rustic Wooden Interior" style="filter: sepia(30%) contrast(1.1);"
+                                 loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
@@ -83,7 +84,8 @@
                              <div class="position-absolute w-100 h-100 bg-dark" style="top: -20px; right: -20px; opacity: 0.5; z-index: 0;"></div>
                             <img src="https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1559339352-11d035aa65de" 
                                  class="img-fluid position-relative z-1 shadow-2xl grayscale-hover" 
-                                 alt="Brick Restaurant Interior">
+                                 alt="Brick Restaurant Interior"
+                                 loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
@@ -110,7 +112,8 @@
                              <div class="position-absolute rounded-circle border border-gold" style="width: 150px; height: 150px; top: -40px; right: -40px; z-index: 2; opacity: 0.6;"></div>
                             <img src="https://res.cloudinary.com/dh9ysyfit/image/fetch/w_800,c_fill,f_auto,q_80/https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b" 
                                  class="img-fluid position-relative z-1 shadow-gold rounded-4" 
-                                 alt="Luxury Fine Dining">
+                                 alt="Luxury Fine Dining"
+                                 loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>

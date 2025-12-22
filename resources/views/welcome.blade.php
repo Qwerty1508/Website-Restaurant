@@ -80,6 +80,7 @@
                         @if($menu->image_url)
                             <img src="{{ $menu->image_url }}" 
                                  class="card-img-top" alt="{{ $menu->name }}" style="height: 250px; object-fit: cover;"
+                                 loading="lazy" decoding="async"
                                  onerror="this.onerror=null; this.src='https://res.cloudinary.com/dh9ysyfit/image/fetch/w_400,h_300,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1546069901-ba9599a7e63c';">
                         @else
                             <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
