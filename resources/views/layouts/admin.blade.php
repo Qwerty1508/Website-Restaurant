@@ -26,7 +26,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <div class="main-content-admin">
-        <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded-3 mb-4 px-4">
+        <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded-3 mb-4 px-4" style="overflow: visible;">
             <div class="container-fluid">
                 <button class="btn btn-link d-lg-none p-0 me-3" id="sidebarToggle">
                     <i class="bi bi-list fs-4"></i>
