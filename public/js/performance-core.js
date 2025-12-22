@@ -2,7 +2,10 @@
  * CULINAIRE PERFORMANCE CORE & HEAT MANAGEMENT SYSTEM
  * ----------------------------------------------------
  * Monitors device temperature (via FPS proxies) and network status to 
- * optimize resource loading and animation intensity.
+ * optimize resource loading.
+ * 
+ * UPDATE: "Cooling Mode" now optimizes BACKGROUND TASKS only.
+ * It does NOT degrade visual quality (animations/videos stay premium).
  */
 
 window.CulinaireOptimizer = (function () {
@@ -43,31 +46,21 @@ window.CulinaireOptimizer = (function () {
         requestAnimationFrame(monitorTemperature);
     }
 
-    // --- 2. ACTIVATING "COOLING MODE" ---
+    // --- 2. ACTIVATING "COOLING MODE" (RESOURCE THROTTLE ONLY) ---
     function activateCoolingMode(currentFps) {
-        console.warn(`🔥 Device Heating Up (FPS: ${currentFps}). Activating Cooling Mode...`);
-        CONFIG.coolingModeEnabled = true;
-        document.body.classList.add('cooling-mode-active');
-
-        // Disable heavy animations
-        document.documentElement.style.setProperty('--animation-speed', '0s');
-
-        // Pause any heavy video backgrounds if they exist
-        const videos = document.querySelectorAll('video[autoplay]');
-        videos.forEach(v => v.pause());
-
-        // Notify user via console or small UI
-        console.log("❄️ Performance Optimized for Device Temperature.");
+        // Only throttle background tasks (networking), do NOT kill visuals
+        if (!CONFIG.coolingModeEnabled) {
+            console.warn(`🔥 High Load Detected (FPS: ${currentFps}). Throttling background downloads.`);
+            CONFIG.coolingModeEnabled = true;
+            // Removed: Animation/Video disabling. Visuals stay PREMIUM.
+        }
     }
 
     function deactivateCoolingMode() {
-        console.log(`❄️ Device Cooled Down. Restoring visual fidelity.`);
-        CONFIG.coolingModeEnabled = false;
-        document.body.classList.remove('cooling-mode-active');
-        document.documentElement.style.removeProperty('--animation-speed');
-
-        const videos = document.querySelectorAll('video[paused]');
-        videos.forEach(v => v.play().catch(() => { }));
+        if (CONFIG.coolingModeEnabled) {
+            console.log(`❄️ Load Stabilized. Resuming aggressive preloading.`);
+            CONFIG.coolingModeEnabled = false;
+        }
     }
 
     // --- 3. SMART PRELOADER (FAST DOWNLOADS) ---
@@ -121,13 +114,6 @@ window.CulinaireOptimizer = (function () {
     function init() {
         console.log("🚀 Culinaire Optimizer Started");
         monitorTemperature();
-
-        // Scan page for high-priority images to cache immediately
-        // Scanning for all links to preload future pages
-        const links = document.querySelectorAll('a[href^="' + window.location.origin + '"]');
-        links.forEach(link => {
-            // detailed prefetch logic could go here
-        });
     }
 
     return {
