@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.admin')
 
 @section('title', __('messages.admin_dashboard'))
 
