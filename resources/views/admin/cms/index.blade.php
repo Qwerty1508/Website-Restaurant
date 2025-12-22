@@ -486,17 +486,18 @@
         position: relative;
     }
 
-    /* Toggle Button to OPEN sidebar */
+    /* Toggle Button to OPEN sidebar - Top Left Position */
     .btn-toggle-sidebar {
         position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1500;
+        top: 24px; /* Align with header text */
+        left: 24px;
+        bottom: auto; /* Unset bottom */
+        z-index: 3000; /* Super high priority */
         background: var(--cms-gold);
         color: #fff;
         border: none;
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -504,17 +505,13 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         cursor: pointer;
         transition: all 0.3s ease;
-        
-        /* Visible by default since sidebar is hidden */
         opacity: 1;
-        transform: scale(1);
         pointer-events: auto;
     }
 
     /* Hide OPEN button when sidebar is OPEN */
     body.sidebar-force-open .btn-toggle-sidebar {
         opacity: 0;
-        transform: scale(0.8);
         pointer-events: none;
     }
 
@@ -522,6 +519,11 @@
         background: #fff;
         color: var(--cms-gold);
         transform: scale(1.1);
+    }
+    
+    /* Adjust Editor Header to make room for button */
+    .editor-header {
+        padding-left: 80px !important; /* Push logo to right */
     }
     
     .btn-close-sidebar {
@@ -539,7 +541,7 @@
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
-        z-index: 2001; /* Above sidebar content */
+        z-index: 3001; 
     }
     
     .btn-close-sidebar:hover {
