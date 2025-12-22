@@ -12,11 +12,17 @@
                 </span>
                 <!-- Typing Animation Containers -->
                 <h1 class="hero-title animate-fadeInUp delay-1 text-white min-h-title">
-                    {!! cms('homepage.hero.title', __('messages.hero_title_1') . ' ' . __('messages.hero_title_2') . ' ' . __('messages.hero_title_3'), 'richtext') !!}
+                    <span id="typing-title-content">
+                        {!! cms('homepage.hero.title', __('messages.hero_title_1') . ' ' . __('messages.hero_title_2') . ' ' . __('messages.hero_title_3'), 'richtext') !!}
+                    </span>
+                    <span class="typing-cursor" id="title-cursor">|</span>
                 </h1>
                 
                 <p class="hero-subtitle animate-fadeInUp delay-2 text-light opacity-75 min-h-subtitle">
-                    {!! cms('homepage.hero.description', __('messages.hero_desc'), 'richtext') !!}
+                    <span id="typing-subtitle-content">
+                        {!! cms('homepage.hero.description', __('messages.hero_desc'), 'richtext') !!}
+                    </span>
+                    <span class="typing-cursor" id="subtitle-cursor" style="display:none">|</span>
                 </p>
                 <div class="hero-actions animate-fadeInUp delay-3">
                     <a href="{{ url('/menu') }}" class="btn btn-lg rounded-pill px-5 me-3 shadow-lg btn-glass-gold">
@@ -652,84 +658,113 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const titleContainer = document.getElementById('typing-title');
-        const subtitleContainer = document.getElementById('typing-subtitle');
+        // Luxuriously smooth typing animation
+        
+        const titleContainer = document.getElementById('typing-title-content');
+        const subtitleContainer = document.getElementById('typing-subtitle-content');
+        const titleCursor = document.getElementById('title-cursor');
         const subtitleCursor = document.getElementById('subtitle-cursor');
         
-        // Luxury Configuration - "Elegance takes time"
-        const baseSpeed = 90; // Slower, more confident
-        const variance = 40; // More natural variance
-        const startDelay = 800; // Let the page breathe first
+        // 1. Check for CMS/Edit Mode
+        // If we are in CMS mode (url has ?cms_mode=true or iframe parent communication),
+        // we should DISABLE animation so the admin can click and edit the text easily.
+        const isCmsMode = window.location.search.includes('cms_mode=true') || 
+                          document.querySelector('[data-cms-key]') !== null;
+
+        if (isCmsMode) {
+            console.log('CMS Mode detected: Typing animation disabled.');
+            if(titleCursor) titleCursor.style.display = 'none';
+            if(subtitleCursor) subtitleCursor.style.display = 'none';
+            return; // Exit script, show full static text
+        }
+
+        if (!titleContainer || !subtitleContainer) return;
+
+        // 2. Prepare Content
+        const titleText = titleContainer.innerText.trim();
+        const subtitleText = subtitleContainer.innerText.trim();
+
+        // Clear content for animation start
+        titleContainer.innerHTML = '';
+        subtitleContainer.innerHTML = '';
         
-        try {
-            const titleSegments = JSON.parse(titleContainer.dataset.segments);
-            const subtitleText = subtitleContainer.dataset.text;
+        // Ensure cursor state
+        if(titleCursor) titleCursor.style.display = 'inline-block';
+        if(subtitleCursor) subtitleCursor.style.display = 'none';
+
+        // 3. Animation Configuration
+        const config = {
+            baseSpeed: 50,      // Base speed in ms (lower is faster)
+            variance: 20,       // Randomness +/- ms
+            startDelay: 500,    // Delay before starting title
+            subtitleDelay: 300, // Delay between title finish and subtitle start
+            punctuationPause: 400, // Pause at comma/period
+            spacePause: 30     // Pause at space
+        };
+
+        // 4. Start Animation Sequence
+        setTimeout(() => {
+            typeText(titleContainer, titleText, () => {
+                // Title Finished
+                if(titleCursor) {
+                    titleCursor.style.animation = 'none';
+                    titleCursor.style.opacity = 0;
+                    setTimeout(() => titleCursor.style.display = 'none', 500);
+                }
+                
+                // Start Subtitle
+                setTimeout(() => {
+                    if(subtitleCursor) {
+                        subtitleCursor.style.display = 'inline-block';
+                        typeText(subtitleContainer, subtitleText, () => {
+                            // Subtitle Finished
+                            // Keep subtitle cursor blinking or fade out? User usually prefers blinking termination or fade.
+                            // Let's fade it out after a while.
+                            setTimeout(() => {
+                                if(subtitleCursor) subtitleCursor.style.opacity = 0;
+                            }, 2000);
+                        });
+                    }
+                }, config.subtitleDelay);
+            });
+        }, config.startDelay);
+
+
+        // --- Helper Function: Type Text ---
+        function typeText(element, text, onComplete) {
+            let index = 0;
             
-            // Clear
-            titleContainer.innerHTML = '';
-            subtitleContainer.innerHTML = '';
-            
-            setTimeout(() => processTitleSegments(0), startDelay);
-            
-            function processTitleSegments(index) {
-                if (index >= titleSegments.length) {
-                    // Transition to subtitle
-                    const tCursor = document.querySelector('.hero-title .typing-cursor');
-                    if(tCursor) tCursor.style.opacity = '0';
-                    setTimeout(() => {
-                         if(tCursor) tCursor.style.display = 'none';
-                         if(subtitleCursor) {
-                             subtitleCursor.style.display = 'inline-block';
-                             typeString(subtitleContainer, subtitleText, 0, () => {
-                                 // Vanish immediately
-                                 subtitleCursor.style.display = 'none';
-                             });
-                         }
-                    }, 800);
+            function typeChar() {
+                if (index >= text.length) {
+                    onComplete();
                     return;
                 }
-                
-                const segment = titleSegments[index];
-                const span = document.createElement('span');
-                if (segment.class) span.className = segment.class;
-                titleContainer.appendChild(span);
-                
-                typeString(span, segment.text, 0, () => {
-                    setTimeout(() => processTitleSegments(index + 1), 100);
-                });
-            }
-            
-            function typeString(container, text, index, callback) {
-                if (index >= text.length) {
-                     callback();
-                     return;
-                }
-                
+
                 const char = text.charAt(index);
-                const charSpan = document.createElement('span');
-                charSpan.textContent = char;
-                charSpan.classList.add('char-reveal');
-                container.appendChild(charSpan);
                 
-                // Humanize timing - Slower = More Luxury
-                let delay = baseSpeed + (Math.random() * variance * 2 - variance);
+                // Create span for each char for "ethereal" fade-in effect via CSS
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.className = 'char-reveal'; // Uses existing CSS animation
+                element.appendChild(span);
+
+                index++;
+
+                // Calculate Delay
+                let delay = config.baseSpeed + (Math.random() * config.variance * 2 - config.variance);
                 
-                // Pause gracefully on punctuation
-                if (char === ',' || char === '.') delay += 300;
-                if (char === ' ') delay += 30; // Slight micro-pause between words
-                
-                setTimeout(() => {
-                    typeString(container, text, index + 1, callback);
-                }, delay);
+                // Add pauses for rhythm
+                if (char === ' ') delay += config.spacePause;
+                if (['.', ',', '!', '?'].includes(char)) delay += config.punctuationPause;
+
+                setTimeout(typeChar, delay);
             }
             
-        } catch (e) {
-            console.error(e);
-            titleContainer.innerHTML = titleContainer.ariaLabel;
-            subtitleContainer.innerHTML = subtitleContainer.dataset.text;
+            typeChar();
         }
     });
     
+    // Existing Testimonials Shuffle Script
     document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('testimonialContainer');
         if (!container) return;
