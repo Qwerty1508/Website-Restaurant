@@ -56,6 +56,11 @@
                         </span>
                         @endif
                         <span class="price-tag">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
+                        <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 shadow-sm btn-favorite" 
+                                style="width: 35px; height: 35px; padding: 0; display: flex; align-items: center; justify-content: center;"
+                                onclick="toggleFavorite(this, {{ $menu->id }})">
+                            <i class="bi {{ in_array($menu->id, $favorites ?? []) ? 'bi-heart-fill text-danger' : 'bi-heart' }}" style="font-size: 1.1rem; color: #dc3545;"></i>
+                        </button>
                     </div>
                     <div class="card-body">
                         <span class="badge bg-light text-muted mb-2">{{ $menu->category }}</span>
@@ -180,5 +185,89 @@
             }
         });
     });
+
+    function toggleFavorite(btn, menuId) {
+        // CSRF Token
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        // Optimistic UI Update
+        const icon = btn.querySelector('i');
+        const isFav = icon.classList.contains('bi-heart-fill');
+        
+        // Toggle Icon immediately
+        if (isFav) {
+            icon.classList.remove('bi-heart-fill', 'text-danger');
+            icon.classList.add('bi-heart');
+            icon.style.color = ''; // Reset color
+        } else {
+            icon.classList.remove('bi-heart');
+            icon.classList.add('bi-heart-fill', 'text-danger');
+            icon.style.color = '#dc3545';
+        }
+        
+        // Add animation class
+        btn.classList.add('animate-pulse');
+        setTimeout(() => btn.classList.remove('animate-pulse'), 300);
+
+        fetch(`/customer/favorite/${menuId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token,
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.status === 401 || response.status === 419) {
+                // Unauthorized - Redirect to login
+                window.location.href = "{{ route('login') }}";
+                return;
+            }
+            if (!response.ok) {
+                // Revert on failure
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.message) {
+                // Optional: Show toast
+                console.log(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Revert UI on error
+            if (isFav) {
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill', 'text-danger');
+                icon.style.color = '#dc3545';
+            } else {
+                icon.classList.remove('bi-heart-fill', 'text-danger');
+                icon.classList.add('bi-heart');
+                icon.style.color = '';
+            }
+            alert('Failed to update favorite. Please try again.');
+        });
+    }
 </script>
+<style>
+    .animate-pulse {
+        animation: pulse 0.3s ease-in-out;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    .btn-favorite {
+        transition: all 0.2s ease;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(4px);
+    }
+    .btn-favorite:hover {
+        transform: scale(1.1);
+        background: white;
+    }
+</style>
 @endpush

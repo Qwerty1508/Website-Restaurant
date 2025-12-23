@@ -58,4 +58,38 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'phone' => 'nullable|string|max:20',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'role' => 'customer', // Default role
+            'is_admin' => false,
+            'is_blocked' => false,
+            'is_suspended' => false,
+        ]);
+
+        \DB::table('activity_logs')->insert([
+            'user_id' => $user->id,
+            'action' => 'register',
+            'description' => 'User registered',
+            'ip_address' => $request->ip(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/customer/dashboard')->with('success', 'Registration successful! Welcome to ' . config('app.name'));
+    }
 }

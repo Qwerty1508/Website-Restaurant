@@ -16,7 +16,11 @@ Route::get('/', function () {
 });
 Route::get('/menu', function () {
     $menus = \DB::table('menus')->where('is_available', true)->orderBy('category')->get();
-    return view('menu.index', compact('menus'));
+    $favorites = [];
+    if (auth()->check()) {
+        $favorites = \App\Models\Favorite::where('user_id', auth()->id())->pluck('menu_id')->toArray();
+    }
+    return view('menu.index', compact('menus', 'favorites'));
 });
 Route::get('/about', function () {
     return view('about');
@@ -41,6 +45,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -147,15 +152,21 @@ Route::prefix('customer')->middleware('auth')->group(function () {
         if ($favorite) {
             $favorite->delete();
             $status = 'removed';
+            $message = 'Removed from favorites';
         } else {
             \App\Models\Favorite::create([
                 'user_id' => $user->id,
                 'menu_id' => $menuId
             ]);
             $status = 'added';
+            $message = 'Added to favorites';
         }
 
-        return redirect()->back()->with('success', 'Favorites updated');
+        if (request()->wantsJson()) {
+            return response()->json(['status' => $status, 'message' => $message]);
+        }
+
+        return redirect()->back()->with('success', $message);
     });
 });
 Route::get('/dashboard', function () {
