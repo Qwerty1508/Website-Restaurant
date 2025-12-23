@@ -157,10 +157,10 @@
         height: 32px;
         padding: 0 10px;
         border-radius: 50px;
-        background: rgba(12, 42, 54, 0.08);
+        background: #ffffff;
         box-shadow: 
-            inset 1px 1px 3px rgba(0, 0, 0, 0.1),
-            inset -1px -1px 2px rgba(255, 255, 255, 0.5);
+            inset 1px 1px 3px rgba(0, 0, 0, 0.08),
+            inset -1px -1px 2px rgba(0, 0, 0, 0.03);
         transition: all 0.3s ease;
     }
     .lang-toggle-thumb {
@@ -215,10 +215,10 @@
         display: none;
     }
     .lang-toggle-3d:hover .lang-toggle-track {
-        background: rgba(12, 42, 54, 0.12);
+        background: #f8f8f8;
         box-shadow: 
-            inset 1px 1px 3px rgba(0, 0, 0, 0.12),
-            inset -1px -1px 2px rgba(255, 255, 255, 0.3);
+            inset 1px 1px 4px rgba(0, 0, 0, 0.1),
+            inset -1px -1px 2px rgba(0, 0, 0, 0.04);
     }
     .lang-toggle-3d:hover .lang-toggle-thumb {
         box-shadow: 
