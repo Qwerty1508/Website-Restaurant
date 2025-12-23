@@ -541,12 +541,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (langToggle) {
         const thumb = langToggle.querySelector('.lang-toggle-thumb');
         let isDragging = false;
+        let hasMoved = false;
         let startX = 0;
         let thumbStartLeft = 0;
         const trackWidth = 80;
         const thumbWidth = 28;
         const maxLeft = trackWidth - thumbWidth - 2;
         const minLeft = 2;
+        const dragThreshold = 5;
         
         function switchLanguage(newLang) {
             langToggle.setAttribute('data-current', newLang);
@@ -581,51 +583,64 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function handleDragStart(e) {
             isDragging = true;
+            hasMoved = false;
             startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
             const currentLang = langToggle.getAttribute('data-current');
             thumbStartLeft = currentLang === 'en' ? minLeft : maxLeft;
-            thumb.style.transition = 'none';
-            e.preventDefault();
         }
         
         function handleDragMove(e) {
             if (!isDragging) return;
             const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
             const deltaX = currentX - startX;
-            let newLeft = thumbStartLeft + deltaX;
-            newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
-            thumb.style.left = newLeft + 'px';
+            if (Math.abs(deltaX) > dragThreshold) {
+                hasMoved = true;
+                thumb.style.transition = 'none';
+                let newLeft = thumbStartLeft + deltaX;
+                newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+                thumb.style.left = newLeft + 'px';
+                if (e.cancelable) e.preventDefault();
+            }
         }
         
         function handleDragEnd(e) {
             if (!isDragging) return;
             isDragging = false;
-            thumb.style.transition = 'left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            const currentLeft = parseFloat(thumb.style.left) || minLeft;
-            const midPoint = (maxLeft + minLeft) / 2;
-            const currentLang = langToggle.getAttribute('data-current');
             
-            if (currentLeft > midPoint) {
-                if (currentLang !== 'id') switchLanguage('id');
+            if (hasMoved) {
+                thumb.style.transition = 'left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                const currentLeft = parseFloat(thumb.style.left) || minLeft;
+                const midPoint = (maxLeft + minLeft) / 2;
+                const currentLang = langToggle.getAttribute('data-current');
+                
+                if (currentLeft > midPoint) {
+                    if (currentLang !== 'id') switchLanguage('id');
+                } else {
+                    if (currentLang !== 'en') switchLanguage('en');
+                }
+                thumb.style.left = '';
             } else {
-                if (currentLang !== 'en') switchLanguage('en');
+                const currentLang = langToggle.getAttribute('data-current');
+                const newLang = currentLang === 'en' ? 'id' : 'en';
+                switchLanguage(newLang);
             }
-            thumb.style.left = '';
+            hasMoved = false;
         }
         
         thumb.addEventListener('mousedown', handleDragStart);
-        thumb.addEventListener('touchstart', handleDragStart, { passive: false });
+        thumb.addEventListener('touchstart', handleDragStart, { passive: true });
         document.addEventListener('mousemove', handleDragMove);
         document.addEventListener('touchmove', handleDragMove, { passive: false });
         document.addEventListener('mouseup', handleDragEnd);
         document.addEventListener('touchend', handleDragEnd);
         
         langToggle.addEventListener('click', function(e) {
-            if (isDragging) return;
             e.preventDefault();
-            const currentLang = this.getAttribute('data-current');
-            const newLang = currentLang === 'en' ? 'id' : 'en';
-            switchLanguage(newLang);
+            if (!hasMoved && !isDragging) {
+                const currentLang = this.getAttribute('data-current');
+                const newLang = currentLang === 'en' ? 'id' : 'en';
+                switchLanguage(newLang);
+            }
         });
     }
     const dropdownBtn = document.getElementById('profileDropdownBtn');
