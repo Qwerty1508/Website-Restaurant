@@ -42,29 +42,29 @@
         </div>
         <div class="row g-4 mb-4">
             <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509041/IMG_8022_2_x5rhdp.png" class="mb-3" alt="Orders" style="width: 60px; height: 60px; object-fit: contain;">
+                <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center">
+                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509041/IMG_8022_2_x5rhdp.png" class="mb-3" alt="Orders" style="width: 80px; height: 80px; object-fit: contain;">
                     <h4 class="mb-1">{{ $totalOrders ?? 0 }}</h4>
                     <small class="text-muted" data-i18n="total_orders">{{ __('messages.total_orders') }}</small>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509120/IMG_8021_l1abhj.png" class="mb-3" alt="Points" style="width: 60px; height: 60px; object-fit: contain;">
+                <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center">
+                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509120/IMG_8021_l1abhj.png" class="mb-3" alt="Points" style="width: 80px; height: 80px; object-fit: contain;">
                     <h4 class="mb-1">{{ ($totalOrders ?? 0) * 50 }}</h4>
                     <small class="text-muted" data-i18n="reward_points">{{ __('messages.reward_points') }}</small>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509326/IMG_8023_c7nvaa.png" class="mb-3" alt="Reservations" style="width: 60px; height: 60px; object-fit: contain;">
+                <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center">
+                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509326/IMG_8023_c7nvaa.png" class="mb-3" alt="Reservations" style="width: 80px; height: 80px; object-fit: contain;">
                     <h4 class="mb-1">{{ $totalReservations ?? 0 }}</h4>
                     <small class="text-muted" data-i18n="total_reservations">{{ __('messages.total_reservations') }}</small>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card h-100 text-center p-4">
-                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509327/IMG_8024_tcrsza.png" class="mb-3" alt="Favorites" style="width: 60px; height: 60px; object-fit: contain;">
+                <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center">
+                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509327/IMG_8024_tcrsza.png" class="mb-3" alt="Favorites" style="width: 80px; height: 80px; object-fit: contain;">
                     <h4 class="mb-1">0</h4>
                     <small class="text-muted" data-i18n="favorite_menu">{{ __('messages.favorite_menu') }}</small>
                 </div>
