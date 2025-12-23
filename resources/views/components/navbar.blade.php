@@ -201,7 +201,7 @@
     .lang-label {
         font-size: 10px;
         font-weight: 700;
-        color: rgba(12, 42, 54, 0.5);
+        color: #0C2A36;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         z-index: 1;
@@ -268,7 +268,7 @@
             0 0 0 4px rgba(212, 175, 55, 0.35);
     }
     [data-theme="dark"] .lang-label {
-        color: rgba(255, 255, 255, 0.4);
+        color: #FFFFFF;
     }
     [data-theme="dark"] .lang-label.active {
         color: #D4AF37;
