@@ -539,13 +539,21 @@
 document.addEventListener('DOMContentLoaded', function() {
     const langToggle = document.getElementById('langToggle3D');
     if (langToggle) {
-        langToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            const currentLang = this.getAttribute('data-current');
-            const newLang = currentLang === 'en' ? 'id' : 'en';
-            this.setAttribute('data-current', newLang);
-            const enLabel = this.querySelector('.lang-en');
-            const idLabel = this.querySelector('.lang-id');
+        const thumb = langToggle.querySelector('.lang-toggle-thumb');
+        const track = langToggle.querySelector('.lang-toggle-track');
+        let isDragging = false;
+        let startX = 0;
+        let currentX = 0;
+        let thumbStartLeft = 0;
+        const trackWidth = 120;
+        const thumbWidth = 54;
+        const maxLeft = trackWidth - thumbWidth - 6;
+        const minLeft = 3;
+        
+        function switchLanguage(newLang) {
+            langToggle.setAttribute('data-current', newLang);
+            const enLabel = langToggle.querySelector('.lang-en');
+            const idLabel = langToggle.querySelector('.lang-id');
             if (enLabel && idLabel) {
                 enLabel.classList.toggle('active', newLang === 'en');
                 idLabel.classList.toggle('active', newLang === 'id');
@@ -572,6 +580,55 @@ document.addEventListener('DOMContentLoaded', function() {
             if (langLink && langLink.href) {
                 fetch(langLink.href).catch(err => console.error('Language sync failed', err));
             }
+        }
+        
+        function handleDragStart(e) {
+            isDragging = true;
+            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const currentLang = langToggle.getAttribute('data-current');
+            thumbStartLeft = currentLang === 'en' ? minLeft : maxLeft;
+            thumb.style.transition = 'none';
+            e.preventDefault();
+        }
+        
+        function handleDragMove(e) {
+            if (!isDragging) return;
+            currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const deltaX = currentX - startX;
+            let newLeft = thumbStartLeft + deltaX;
+            newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+            thumb.style.left = newLeft + 'px';
+        }
+        
+        function handleDragEnd(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            thumb.style.transition = 'left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            const currentLeft = parseFloat(thumb.style.left) || minLeft;
+            const midPoint = (maxLeft + minLeft) / 2;
+            const currentLang = langToggle.getAttribute('data-current');
+            
+            if (currentLeft > midPoint) {
+                if (currentLang !== 'id') switchLanguage('id');
+                thumb.style.left = '';
+            } else {
+                if (currentLang !== 'en') switchLanguage('en');
+                thumb.style.left = '';
+            }
+        }
+        
+        thumb.addEventListener('mousedown', handleDragStart);
+        thumb.addEventListener('touchstart', handleDragStart, { passive: false });
+        document.addEventListener('mousemove', handleDragMove);
+        document.addEventListener('touchmove', handleDragMove, { passive: false });
+        document.addEventListener('mouseup', handleDragEnd);
+        document.addEventListener('touchend', handleDragEnd);
+        
+        langToggle.addEventListener('click', function(e) {
+            if (isDragging) return;
+            const currentLang = this.getAttribute('data-current');
+            const newLang = currentLang === 'en' ? 'id' : 'en';
+            switchLanguage(newLang);
         });
     }
     const dropdownBtn = document.getElementById('profileDropdownBtn');
