@@ -223,8 +223,23 @@
             inset 1px 1px 2px rgba(255, 255, 255, 0.8),
             inset -1px -1px 2px rgba(0, 0, 0, 0.05);
     }
+    .lang-toggle-3d:hover .lang-toggle-thumb {
+        box-shadow: 
+            3px 3px 6px rgba(0, 0, 0, 0.18),
+            -2px -2px 4px rgba(255, 255, 255, 0.9),
+            inset 0 1px 2px rgba(255, 255, 255, 0.9),
+            0 0 0 3px rgba(12, 42, 54, 0.08);
+    }
     .lang-toggle-3d:active .lang-toggle-thumb {
         transform: scale(0.95);
+        box-shadow: 
+            2px 2px 4px rgba(0, 0, 0, 0.15),
+            -1px -1px 3px rgba(255, 255, 255, 0.8),
+            inset 0 1px 2px rgba(255, 255, 255, 0.9),
+            0 0 0 4px rgba(12, 42, 54, 0.12);
+    }
+    [data-theme="dark"] .lang-toggle-3d {
+        -webkit-tap-highlight-color: rgba(212, 175, 55, 0.3);
     }
     [data-theme="dark"] .lang-toggle-track {
         background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
@@ -240,6 +255,28 @@
             2px 2px 4px rgba(0, 0, 0, 0.4),
             -1px -1px 3px rgba(60, 60, 60, 0.2),
             inset 0 1px 2px rgba(80, 80, 80, 0.3);
+    }
+    [data-theme="dark"] .lang-toggle-3d:hover .lang-toggle-track {
+        box-shadow: 
+            5px 5px 12px rgba(0, 0, 0, 0.5),
+            -4px -4px 8px rgba(60, 60, 60, 0.25),
+            inset 1px 1px 2px rgba(60, 60, 60, 0.3),
+            inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="dark"] .lang-toggle-3d:hover .lang-toggle-thumb {
+        box-shadow: 
+            3px 3px 6px rgba(0, 0, 0, 0.5),
+            -2px -2px 4px rgba(70, 70, 70, 0.2),
+            inset 0 1px 2px rgba(80, 80, 80, 0.3),
+            0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+    [data-theme="dark"] .lang-toggle-3d:active .lang-toggle-thumb {
+        transform: scale(0.95);
+        box-shadow: 
+            2px 2px 4px rgba(0, 0, 0, 0.4),
+            -1px -1px 3px rgba(60, 60, 60, 0.2),
+            inset 0 1px 2px rgba(80, 80, 80, 0.3),
+            0 0 0 4px rgba(212, 175, 55, 0.35);
     }
     [data-theme="dark"] .lang-label {
         color: rgba(255, 255, 255, 0.4);
