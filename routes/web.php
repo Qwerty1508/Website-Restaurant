@@ -61,6 +61,7 @@ Route::prefix('customer')->middleware('auth')->group(function () {
         }
         $totalOrders = \DB::table('orders')->where('user_id', $userId)->count();
         $totalReservations = \App\Models\Reservation::where('user_id', $userId)->count();
+        $totalFavorites = \App\Models\Favorite::where('user_id', $userId)->count();
         
         $upcomingReservation = \App\Models\Reservation::where('user_id', $userId)
             ->where('date', '>=', now()->toDateString())
@@ -69,7 +70,7 @@ Route::prefix('customer')->middleware('auth')->group(function () {
             ->orderBy('time', 'asc')
             ->first();
             
-        return view('customer.dashboard', compact('orders', 'totalOrders', 'totalReservations', 'upcomingReservation'));
+        return view('customer.dashboard', compact('orders', 'totalOrders', 'totalReservations', 'totalFavorites', 'upcomingReservation'));
     });
     Route::get('/orders', function () {
         $userId = auth()->id();
@@ -126,6 +127,35 @@ Route::prefix('customer')->middleware('auth')->group(function () {
             });
 
         return view('customer.points', compact('points', 'history'));
+    });
+    
+    Route::get('/favorite', function () {
+        $favorites = \App\Models\Favorite::where('user_id', auth()->id())
+            ->with('menu') // Eager load menu
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('customer.favorites', compact('favorites'));
+    });
+
+    Route::post('/favorite/{menuId}', function ($menuId) {
+        $user = auth()->user();
+        $favorite = \App\Models\Favorite::where('user_id', $user->id)
+            ->where('menu_id', $menuId)
+            ->first();
+
+        if ($favorite) {
+            $favorite->delete();
+            $status = 'removed';
+        } else {
+            \App\Models\Favorite::create([
+                'user_id' => $user->id,
+                'menu_id' => $menuId
+            ]);
+            $status = 'added';
+        }
+
+        return redirect()->back()->with('success', 'Favorites updated');
     });
 });
 Route::get('/dashboard', function () {

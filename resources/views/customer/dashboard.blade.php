@@ -69,11 +69,13 @@
                 </a>
             </div>
             <div class="col-md-3">
-                <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center">
-                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509327/IMG_8024_tcrsza.png" class="mb-3" alt="Favorites" style="width: 80px; height: 80px; object-fit: contain;">
-                    <h4 class="mb-1">0</h4>
-                    <small class="text-muted" data-i18n="favorite_menu">{{ __('messages.favorite_menu') }}</small>
-                </div>
+                <a href="{{ url('/customer/favorite') }}" class="text-decoration-none text-reset">
+                    <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center shadow-sm-hover transition-all">
+                        <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509327/IMG_8024_tcrsza.png" class="mb-3" alt="Favorites" style="width: 80px; height: 80px; object-fit: contain;">
+                        <h4 class="mb-1">{{ $totalFavorites ?? 0 }}</h4>
+                        <small class="text-muted" data-i18n="favorite_menu">{{ __('messages.favorite_menu') }}</small>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="row g-4">
