@@ -178,7 +178,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    transform 0.2s ease,
+                    box-shadow 0.3s ease;
         z-index: 2;
     }
     .lang-toggle-3d[data-current="id"] .lang-toggle-thumb {
@@ -196,6 +198,7 @@
         height: 14px;
         object-fit: cover;
         border-radius: 2px;
+        transition: opacity 0.2s ease, transform 0.3s ease;
     }
     .lang-label {
         font-size: 11px;
@@ -555,8 +558,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (flagIcon) {
                 const flagImg = flagIcon.querySelector('.flag-img');
                 if (flagImg) {
-                    flagImg.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
-                    flagImg.alt = newLang === 'en' ? 'EN' : 'ID';
+                    flagImg.style.opacity = '0';
+                    flagImg.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        flagImg.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
+                        flagImg.alt = newLang === 'en' ? 'EN' : 'ID';
+                        setTimeout(() => {
+                            flagImg.style.opacity = '1';
+                            flagImg.style.transform = 'scale(1)';
+                        }, 50);
+                    }, 150);
                 }
             }
             const enLabel = this.querySelector('.lang-en');
