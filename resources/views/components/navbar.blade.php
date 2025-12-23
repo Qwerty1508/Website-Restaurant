@@ -43,9 +43,9 @@
                             <div class="lang-toggle-thumb">
                                 <span class="flag-icon" id="currentFlag">
                                     @if(app()->getLocale() == 'en')
-                                        🇬🇧
+                                        <img src="https://flagcdn.com/w40/gb.png" alt="EN" class="flag-img">
                                     @else
-                                        🇮🇩
+                                        <img src="https://flagcdn.com/w40/id.png" alt="ID" class="flag-img">
                                     @endif
                                 </span>
                             </div>
@@ -187,6 +187,15 @@
     .flag-icon {
         font-size: 14px;
         line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .flag-img {
+        width: 18px;
+        height: 14px;
+        object-fit: cover;
+        border-radius: 2px;
     }
     .lang-label {
         font-size: 11px;
@@ -544,7 +553,11 @@ document.addEventListener('DOMContentLoaded', function() {
             this.setAttribute('data-current', newLang);
             const flagIcon = document.getElementById('currentFlag');
             if (flagIcon) {
-                flagIcon.textContent = newLang === 'en' ? '🇬🇧' : '🇮🇩';
+                const flagImg = flagIcon.querySelector('.flag-img');
+                if (flagImg) {
+                    flagImg.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
+                    flagImg.alt = newLang === 'en' ? 'EN' : 'ID';
+                }
             }
             const enLabel = this.querySelector('.lang-en');
             const idLabel = this.querySelector('.lang-id');
