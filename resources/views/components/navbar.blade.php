@@ -239,26 +239,22 @@
         -webkit-tap-highlight-color: rgba(212, 175, 55, 0.3);
     }
     [data-theme="dark"] .lang-toggle-track {
-        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        background: rgba(255, 255, 255, 0.08);
         box-shadow: 
-            4px 4px 8px rgba(0, 0, 0, 0.4),
-            -4px -4px 8px rgba(50, 50, 50, 0.3),
-            inset 1px 1px 2px rgba(60, 60, 60, 0.3),
-            inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+            inset 1px 1px 3px rgba(0, 0, 0, 0.3),
+            inset -1px -1px 2px rgba(255, 255, 255, 0.05);
     }
     [data-theme="dark"] .lang-toggle-thumb {
-        background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+        background: rgba(255, 255, 255, 0.15);
         box-shadow: 
-            2px 2px 4px rgba(0, 0, 0, 0.4),
-            -1px -1px 3px rgba(60, 60, 60, 0.2),
-            inset 0 1px 2px rgba(80, 80, 80, 0.3);
+            1px 1px 3px rgba(0, 0, 0, 0.3),
+            inset 0 1px 2px rgba(255, 255, 255, 0.1);
     }
     [data-theme="dark"] .lang-toggle-3d:hover .lang-toggle-track {
+        background: rgba(255, 255, 255, 0.12);
         box-shadow: 
-            5px 5px 12px rgba(0, 0, 0, 0.5),
-            -4px -4px 8px rgba(60, 60, 60, 0.25),
-            inset 1px 1px 2px rgba(60, 60, 60, 0.3),
-            inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+            inset 1px 1px 3px rgba(0, 0, 0, 0.35),
+            inset -1px -1px 2px rgba(255, 255, 255, 0.08);
     }
     [data-theme="dark"] .lang-toggle-3d:hover .lang-toggle-thumb {
         box-shadow: 
