@@ -175,28 +175,6 @@
                         </a>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0">
-                            <i class="bi bi-lightning text-warning me-2"></i><span data-i18n="quick_actions">{{ __('messages.quick_actions') }}</span>
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <a href="{{ url('/menu') }}" class="btn btn-outline-primary text-start">
-                                <i class="bi bi-book me-2"></i><span data-i18n="view_menu">{{ __('messages.view_menu') }}</span>
-                            </a>
-                            <a href="{{ url('/customer/orders/create') }}" class="btn btn-outline-success text-start">
-                                <i class="bi bi-bag-plus me-2"></i><span data-i18n="create_new_order">{{ __('messages.create_new_order') }}</span>
-                            </a>
-                            <a href="{{ url('/reservation') }}" class="btn btn-outline-warning text-start">
-                                <i class="bi bi-calendar-plus me-2"></i><span data-i18n="reserve_table_action">{{ __('messages.reserve_table_action') }}</span>
-                            </a>
-                            <a href="{{ url('/customer/profile') }}" class="btn btn-outline-secondary text-start">
-                                <i class="bi bi-person me-2"></i><span data-i18n="edit_profile">{{ __('messages.edit_profile') }}</span>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
