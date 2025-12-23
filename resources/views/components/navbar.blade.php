@@ -45,9 +45,8 @@
                                      alt="{{ app()->getLocale() == 'en' ? 'EN' : 'ID' }}" 
                                      class="flag-img" 
                                      id="currentFlag">
+                                <span class="lang-text" id="currentLangText">{{ app()->getLocale() == 'en' ? 'EN' : 'ID' }}</span>
                             </div>
-                            <span class="lang-label lang-en {{ app()->getLocale() == 'en' ? 'active' : '' }}">EN</span>
-                            <span class="lang-label lang-id {{ app()->getLocale() == 'id' ? 'active' : '' }}">ID</span>
                         </div>
                         <a href="{{ route('lang.switch', 'en') }}" class="lang-link-hidden" id="langLinkEn"></a>
                         <a href="{{ route('lang.switch', 'id') }}" class="lang-link-hidden" id="langLinkId"></a>
@@ -147,10 +146,10 @@
         position: relative;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        width: 80px;
-        height: 32px;
-        padding: 0 8px;
+        justify-content: center;
+        width: 75px;
+        height: 36px;
+        padding: 0;
         border-radius: 50px;
         background: linear-gradient(145deg, #e6e6e6, #ffffff);
         box-shadow: 
@@ -161,54 +160,44 @@
         transition: all 0.3s ease;
     }
     .lang-toggle-thumb {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 50px;
+        background: linear-gradient(145deg, #ffffff, #f5f5f5);
         box-shadow: 
-            2px 2px 4px rgba(0, 0, 0, 0.15),
+            2px 2px 4px rgba(0, 0, 0, 0.1),
             -1px -1px 3px rgba(255, 255, 255, 0.8),
             inset 0 1px 2px rgba(255, 255, 255, 0.9);
-        transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                    transform 0.2s ease,
-                    box-shadow 0.3s ease;
-        z-index: 2;
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 6px;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        z-index: 2;
     }
-    .lang-toggle-3d[data-current="id"] .lang-toggle-thumb {
-        left: calc(100% - 30px);
+    .lang-toggle-thumb:hover {
+        box-shadow: 
+            3px 3px 6px rgba(0, 0, 0, 0.12),
+            -2px -2px 4px rgba(255, 255, 255, 0.9),
+            inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    }
+    .lang-toggle-thumb:active {
+        transform: scale(0.96);
     }
     .flag-img {
-        width: 18px;
-        height: 14px;
+        width: 20px;
+        height: 15px;
         object-fit: cover;
         border-radius: 2px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.15);
     }
-    .lang-label {
-        font-size: 10px;
+    .lang-text {
+        font-size: 12px;
         font-weight: 700;
-        color: rgba(12, 42, 54, 0.6);
+        color: rgba(12, 42, 54, 0.8);
         text-transform: uppercase;
-        letter-spacing: 0.3px;
-        transition: all 0.3s ease;
-        z-index: 3;
-        display: flex;
-        align-items: center;
-        gap: 2px;
-    }
-    .lang-label.active {
-        color: rgba(12, 42, 54, 0.3);
-    }
-    .lang-label.lang-en {
-        margin-left: 4px;
-    }
-    .lang-label.lang-id {
-        margin-right: 4px;
+        letter-spacing: 0.5px;
     }
     .lang-link-hidden {
         display: none;
@@ -541,29 +530,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     const langToggle = document.getElementById('langToggle3D');
     if (langToggle) {
-        const thumb = langToggle.querySelector('.lang-toggle-thumb');
-        const track = langToggle.querySelector('.lang-toggle-track');
-        let isDragging = false;
-        let startX = 0;
-        let currentX = 0;
-        let thumbStartLeft = 0;
-        const trackWidth = 80;
-        const thumbWidth = 28;
-        const maxLeft = trackWidth - thumbWidth - 2;
-        const minLeft = 2;
-        
         function switchLanguage(newLang) {
             langToggle.setAttribute('data-current', newLang);
-            const enLabel = langToggle.querySelector('.lang-en');
-            const idLabel = langToggle.querySelector('.lang-id');
-            if (enLabel && idLabel) {
-                enLabel.classList.toggle('active', newLang === 'en');
-                idLabel.classList.toggle('active', newLang === 'id');
-            }
             const flagImg = document.getElementById('currentFlag');
+            const langText = document.getElementById('currentLangText');
             if (flagImg) {
                 flagImg.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
                 flagImg.alt = newLang === 'en' ? 'EN' : 'ID';
+            }
+            if (langText) {
+                langText.textContent = newLang === 'en' ? 'EN' : 'ID';
             }
             if (window.translations && window.translations[newLang]) {
                 const terms = window.translations[newLang];
@@ -589,50 +565,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        function handleDragStart(e) {
-            isDragging = true;
-            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-            const currentLang = langToggle.getAttribute('data-current');
-            thumbStartLeft = currentLang === 'en' ? minLeft : maxLeft;
-            thumb.style.transition = 'none';
-            e.preventDefault();
-        }
-        
-        function handleDragMove(e) {
-            if (!isDragging) return;
-            currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-            const deltaX = currentX - startX;
-            let newLeft = thumbStartLeft + deltaX;
-            newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
-            thumb.style.left = newLeft + 'px';
-        }
-        
-        function handleDragEnd(e) {
-            if (!isDragging) return;
-            isDragging = false;
-            thumb.style.transition = 'left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            const currentLeft = parseFloat(thumb.style.left) || minLeft;
-            const midPoint = (maxLeft + minLeft) / 2;
-            const currentLang = langToggle.getAttribute('data-current');
-            
-            if (currentLeft > midPoint) {
-                if (currentLang !== 'id') switchLanguage('id');
-                thumb.style.left = '';
-            } else {
-                if (currentLang !== 'en') switchLanguage('en');
-                thumb.style.left = '';
-            }
-        }
-        
-        thumb.addEventListener('mousedown', handleDragStart);
-        thumb.addEventListener('touchstart', handleDragStart, { passive: false });
-        document.addEventListener('mousemove', handleDragMove);
-        document.addEventListener('touchmove', handleDragMove, { passive: false });
-        document.addEventListener('mouseup', handleDragEnd);
-        document.addEventListener('touchend', handleDragEnd);
-        
         langToggle.addEventListener('click', function(e) {
-            if (isDragging) return;
+            e.preventDefault();
             const currentLang = this.getAttribute('data-current');
             const newLang = currentLang === 'en' ? 'id' : 'en';
             switchLanguage(newLang);
