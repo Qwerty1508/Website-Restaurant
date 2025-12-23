@@ -38,10 +38,22 @@
                     </a>
                 </li>
                 <li class="nav-item d-flex align-items-center gap-3 ms-lg-2">
-                    <div class="lang-switch d-flex align-items-center">
-                        <a href="{{ route('lang.switch', 'en') }}" class="lang-link {{ app()->getLocale() == 'en' ? 'active-lang' : '' }}">EN</a>
-                        <span class="mx-1 text-muted">|</span>
-                        <a href="{{ route('lang.switch', 'id') }}" class="lang-link {{ app()->getLocale() == 'id' ? 'active-lang' : '' }}">ID</a>
+                    <div class="lang-toggle-3d" id="langToggle3D" data-current="{{ app()->getLocale() }}">
+                        <div class="lang-toggle-track">
+                            <div class="lang-toggle-thumb">
+                                <span class="flag-icon" id="currentFlag">
+                                    @if(app()->getLocale() == 'en')
+                                        🇬🇧
+                                    @else
+                                        🇮🇩
+                                    @endif
+                                </span>
+                            </div>
+                            <span class="lang-label lang-en {{ app()->getLocale() == 'en' ? 'active' : '' }}">EN</span>
+                            <span class="lang-label lang-id {{ app()->getLocale() == 'id' ? 'active' : '' }}">ID</span>
+                        </div>
+                        <a href="{{ route('lang.switch', 'en') }}" class="lang-link-hidden" id="langLinkEn"></a>
+                        <a href="{{ route('lang.switch', 'id') }}" class="lang-link-hidden" id="langLinkId"></a>
                     </div>
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                         <i class="bi bi-moon-fill icon-moon"></i>
@@ -129,16 +141,117 @@
     .navbar-nav .nav-link.active {
         color: #C89B3A !important;
     }
-    .lang-link {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: rgba(12, 42, 54, 0.5);
-        text-decoration: none;
-        transition: color 0.12s ease;
+    .lang-toggle-3d {
+        position: relative;
+        cursor: pointer;
+        user-select: none;
     }
-    .lang-link:hover,
-    .lang-link.active-lang {
+    .lang-toggle-track {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 72px;
+        height: 32px;
+        padding: 0 8px;
+        border-radius: 50px;
+        background: linear-gradient(145deg, #e6e6e6, #ffffff);
+        box-shadow: 
+            4px 4px 8px rgba(0, 0, 0, 0.1),
+            -4px -4px 8px rgba(255, 255, 255, 0.9),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+            inset -1px -1px 2px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    .lang-toggle-thumb {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        box-shadow: 
+            2px 2px 4px rgba(0, 0, 0, 0.15),
+            -1px -1px 3px rgba(255, 255, 255, 0.8),
+            inset 0 1px 2px rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 2;
+    }
+    .lang-toggle-3d[data-current="id"] .lang-toggle-thumb {
+        left: calc(100% - 30px);
+    }
+    .flag-icon {
+        font-size: 14px;
+        line-height: 1;
+    }
+    .lang-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(12, 42, 54, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        z-index: 1;
+    }
+    .lang-label.active {
         color: #C89B3A;
+    }
+    .lang-label.lang-en {
+        margin-left: 2px;
+    }
+    .lang-label.lang-id {
+        margin-right: 2px;
+    }
+    .lang-link-hidden {
+        display: none;
+    }
+    .lang-toggle-3d:hover .lang-toggle-track {
+        box-shadow: 
+            5px 5px 10px rgba(0, 0, 0, 0.12),
+            -5px -5px 10px rgba(255, 255, 255, 0.95),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+            inset -1px -1px 2px rgba(0, 0, 0, 0.05);
+    }
+    .lang-toggle-3d:active .lang-toggle-thumb {
+        transform: scale(0.95);
+    }
+    [data-theme="dark"] .lang-toggle-track {
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        box-shadow: 
+            4px 4px 8px rgba(0, 0, 0, 0.4),
+            -4px -4px 8px rgba(50, 50, 50, 0.3),
+            inset 1px 1px 2px rgba(60, 60, 60, 0.3),
+            inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="dark"] .lang-toggle-thumb {
+        background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+        box-shadow: 
+            2px 2px 4px rgba(0, 0, 0, 0.4),
+            -1px -1px 3px rgba(60, 60, 60, 0.2),
+            inset 0 1px 2px rgba(80, 80, 80, 0.3);
+    }
+    [data-theme="dark"] .lang-label {
+        color: rgba(255, 255, 255, 0.4);
+    }
+    [data-theme="dark"] .lang-label.active {
+        color: #D4AF37;
+    }
+    @media (max-width: 991.98px) {
+        .lang-toggle-track {
+            width: 68px;
+            height: 30px;
+        }
+        .lang-toggle-thumb {
+            width: 26px;
+            height: 26px;
+        }
+        .lang-toggle-3d[data-current="id"] .lang-toggle-thumb {
+            left: calc(100% - 28px);
+        }
     }
     .navbar-toggler i {
         color: #0C2A36;
@@ -422,34 +535,47 @@
 <div style="height: 80px;"></div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const langLinks = document.querySelectorAll('.lang-link');
-    langLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+    const langToggle = document.getElementById('langToggle3D');
+    if (langToggle) {
+        langToggle.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetLang = this.textContent.trim().toLowerCase();
-            if (window.translations && window.translations[targetLang]) {
-                const terms = window.translations[targetLang];
+            const currentLang = this.getAttribute('data-current');
+            const newLang = currentLang === 'en' ? 'id' : 'en';
+            this.setAttribute('data-current', newLang);
+            const flagIcon = document.getElementById('currentFlag');
+            if (flagIcon) {
+                flagIcon.textContent = newLang === 'en' ? '🇬🇧' : '🇮🇩';
+            }
+            const enLabel = this.querySelector('.lang-en');
+            const idLabel = this.querySelector('.lang-id');
+            if (enLabel && idLabel) {
+                enLabel.classList.toggle('active', newLang === 'en');
+                idLabel.classList.toggle('active', newLang === 'id');
+            }
+            if (window.translations && window.translations[newLang]) {
+                const terms = window.translations[newLang];
                 document.querySelectorAll('[data-i18n]').forEach(el => {
                     const key = el.getAttribute('data-i18n');
                     if (terms[key]) {
                         el.style.opacity = '0.5';
                         setTimeout(() => {
-                            if((el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') && el.getAttribute('placeholder')) {
+                            if ((el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') && el.getAttribute('placeholder')) {
                                 el.placeholder = terms[key];
                             } else {
-                                el.innerHTML = terms[key]; 
+                                el.innerHTML = terms[key];
                             }
                             el.style.opacity = '1';
                         }, 50);
                     }
                 });
-                document.querySelectorAll('.lang-link').forEach(l => l.classList.remove('active-lang'));
-                this.classList.add('active-lang');
-                document.documentElement.lang = targetLang === 'id' ? 'id-ID' : 'en-US';
+                document.documentElement.lang = newLang === 'id' ? 'id-ID' : 'en-US';
             }
-            fetch(this.href).catch(err => console.error('Background session sync failed', err));
+            const langLink = newLang === 'en' ? document.getElementById('langLinkEn') : document.getElementById('langLinkId');
+            if (langLink && langLink.href) {
+                fetch(langLink.href).catch(err => console.error('Language sync failed', err));
+            }
         });
-    });
+    }
     const dropdownBtn = document.getElementById('profileDropdownBtn');
     const dropdownMenu = document.getElementById('profileDropdownMenu');
     if (dropdownBtn && dropdownMenu) {
