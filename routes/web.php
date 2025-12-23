@@ -60,8 +60,16 @@ Route::prefix('customer')->middleware('auth')->group(function () {
                 ->get();
         }
         $totalOrders = \DB::table('orders')->where('user_id', $userId)->count();
-        $totalReservations = \DB::table('reservations')->where('user_id', $userId)->count();
-        return view('customer.dashboard', compact('orders', 'totalOrders', 'totalReservations'));
+        $totalReservations = \App\Models\Reservation::where('user_id', $userId)->count();
+        
+        $upcomingReservation = \App\Models\Reservation::where('user_id', $userId)
+            ->where('date', '>=', now()->toDateString())
+            ->whereIn('status', ['accepted', 'pending'])
+            ->orderBy('date', 'asc')
+            ->orderBy('time', 'asc')
+            ->first();
+            
+        return view('customer.dashboard', compact('orders', 'totalOrders', 'totalReservations', 'upcomingReservation'));
     });
     Route::get('/orders', function () {
         $userId = auth()->id();

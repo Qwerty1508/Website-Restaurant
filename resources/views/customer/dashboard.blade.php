@@ -140,21 +140,36 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <div class="border rounded-3 p-3 bg-light">
-                            <div class="d-flex justify-content-between mb-2">
-                                <strong>{{ date('d M Y', strtotime('+3 days')) }}</strong>
-                                <span class="badge bg-success" data-i18n="confirmed">{{ __('messages.confirmed') }}</span>
+                        @if(isset($upcomingReservation) && $upcomingReservation)
+                            <div class="border rounded-3 p-3 bg-light">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <strong>{{ \Carbon\Carbon::parse($upcomingReservation->date)->format('d M Y') }}</strong>
+                                    @if($upcomingReservation->status == 'accepted')
+                                        <span class="badge bg-success" data-i18n="confirmed">{{ __('messages.confirmed') }}</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark" data-i18n="status_pending">{{ __('messages.status_pending') }}</span>
+                                    @endif
+                                </div>
+                                <p class="mb-2">
+                                    <i class="bi bi-clock me-1"></i>{{ $upcomingReservation->time }}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="bi bi-people me-1"></i>{{ $upcomingReservation->guests }} <span data-i18n="people">{{ __('messages.people') }}</span>
+                                </p>
+                                <p class="mb-0 text-muted small">
+                                    <i class="bi bi-geo-alt me-1"></i>
+                                    @if($upcomingReservation->table_id)
+                                        <span data-i18n="table">{{ __('messages.table') }}</span> {{ $upcomingReservation->table_id }}
+                                    @else
+                                        {{ $upcomingReservation->notes ?: 'No specific notes' }}
+                                    @endif
+                                </p>
                             </div>
-                            <p class="mb-2">
-                                <i class="bi bi-clock me-1"></i>19:00 - 21:00
-                            </p>
-                            <p class="mb-2">
-                                <i class="bi bi-people me-1"></i>4 <span data-i18n="x_people">{{ __('messages.x_people') }}</span>
-                            </p>
-                            <p class="mb-0 text-muted small">
-                                <i class="bi bi-geo-alt me-1"></i>Meja 3 - Garden View
-                            </p>
-                        </div>
+                        @else
+                            <div class="border rounded-3 p-3 bg-light text-center">
+                                <p class="text-muted mb-0" data-i18n="no_upcoming_reservations">No upcoming reservations</p>
+                            </div>
+                        @endif
                         <a href="{{ url('/customer/reservations') }}" class="btn btn-outline-primary btn-sm w-100 mt-3">
                             <span data-i18n="view_all_reservations">{{ __('messages.view_all_reservations') }}</span>
                         </a>
