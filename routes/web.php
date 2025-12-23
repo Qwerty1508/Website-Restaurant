@@ -104,6 +104,29 @@ Route::prefix('customer')->middleware('auth')->group(function () {
         $points = floor($totalSpend / 10000);
         return view('customer.profile', compact('totalOrders', 'totalReservations', 'points'));
     });
+    Route::get('/point', function () {
+        $userId = auth()->id();
+        $totalSpend = \DB::table('orders')
+            ->where('user_id', $userId)
+            ->sum('total');
+        $points = floor($totalSpend / 10000);
+        
+        $history = \DB::table('orders')
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($order) {
+                return [
+                    'id' => $order->id,
+                    'date' => $order->created_at,
+                    'amount' => $order->total,
+                    'points_earned' => floor($order->total / 10000),
+                    'type' => 'Earned'
+                ];
+            });
+
+        return view('customer.points', compact('points', 'history'));
+    });
 });
 Route::get('/dashboard', function () {
     if (auth()->check()) {

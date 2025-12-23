@@ -51,11 +51,13 @@
                 </a>
             </div>
             <div class="col-md-3">
-                <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center">
-                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509120/IMG_8021_l1abhj.png" class="mb-3" alt="Points" style="width: 80px; height: 80px; object-fit: contain;">
-                    <h4 class="mb-1">{{ ($totalOrders ?? 0) * 50 }}</h4>
-                    <small class="text-muted" data-i18n="reward_points">{{ __('messages.reward_points') }}</small>
-                </div>
+                <a href="{{ url('/customer/point') }}" class="text-decoration-none text-reset">
+                    <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center shadow-sm-hover transition-all">
+                        <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766509120/IMG_8021_l1abhj.png" class="mb-3" alt="Points" style="width: 80px; height: 80px; object-fit: contain;">
+                        <h4 class="mb-1">{{ number_format(floor(\DB::table('orders')->where('user_id', auth()->id())->sum('total') / 10000)) }}</h4>
+                        <small class="text-muted" data-i18n="reward_points">{{ __('messages.reward_points') }}</small>
+                    </div>
+                </a>
             </div>
             <div class="col-md-3">
                 <div class="card h-100 p-4 d-flex flex-column align-items-center justify-content-center text-center">
