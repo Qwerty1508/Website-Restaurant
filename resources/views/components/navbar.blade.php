@@ -40,14 +40,14 @@
                 <li class="nav-item d-flex align-items-center gap-3 ms-lg-2">
                     <div class="lang-toggle-3d" id="langToggle3D" data-current="{{ app()->getLocale() }}">
                         <div class="lang-toggle-track">
-                            <span class="lang-label lang-en">EN</span>
+                            <span class="lang-label lang-en">ID</span>
                             <div class="lang-toggle-thumb">
                                 <img src="{{ app()->getLocale() == 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png' }}" 
                                      alt="{{ app()->getLocale() == 'en' ? 'EN' : 'ID' }}" 
                                      class="flag-img" 
                                      id="currentFlag">
                             </div>
-                            <span class="lang-label lang-id">ID</span>
+                            <span class="lang-label lang-id">EN</span>
                         </div>
                         <a href="{{ route('lang.switch', 'en') }}" class="lang-link-hidden" id="langLinkEn"></a>
                         <a href="{{ route('lang.switch', 'id') }}" class="lang-link-hidden" id="langLinkId"></a>
