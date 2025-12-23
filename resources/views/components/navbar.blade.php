@@ -40,13 +40,14 @@
                 <li class="nav-item d-flex align-items-center gap-3 ms-lg-2">
                     <div class="lang-toggle-3d" id="langToggle3D" data-current="{{ app()->getLocale() }}">
                         <div class="lang-toggle-track">
-                            <div class="lang-toggle-thumb"></div>
-                            <span class="lang-label lang-en {{ app()->getLocale() == 'en' ? 'active' : '' }}">
-                                EN <img src="https://flagcdn.com/w40/gb.png" alt="EN" class="flag-img">
-                            </span>
-                            <span class="lang-label lang-id {{ app()->getLocale() == 'id' ? 'active' : '' }}">
-                                <img src="https://flagcdn.com/w40/id.png" alt="ID" class="flag-img"> ID
-                            </span>
+                            <div class="lang-toggle-thumb">
+                                <img src="{{ app()->getLocale() == 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png' }}" 
+                                     alt="{{ app()->getLocale() == 'en' ? 'EN' : 'ID' }}" 
+                                     class="flag-img" 
+                                     id="currentFlag">
+                            </div>
+                            <span class="lang-label lang-en {{ app()->getLocale() == 'en' ? 'active' : '' }}">EN</span>
+                            <span class="lang-label lang-id {{ app()->getLocale() == 'id' ? 'active' : '' }}">ID</span>
                         </div>
                         <a href="{{ route('lang.switch', 'en') }}" class="lang-link-hidden" id="langLinkEn"></a>
                         <a href="{{ route('lang.switch', 'id') }}" class="lang-link-hidden" id="langLinkId"></a>
@@ -147,9 +148,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 120px;
-        height: 34px;
-        padding: 0 6px;
+        width: 80px;
+        height: 32px;
+        padding: 0 8px;
         border-radius: 50px;
         background: linear-gradient(145deg, #e6e6e6, #ffffff);
         box-shadow: 
@@ -161,11 +162,11 @@
     }
     .lang-toggle-thumb {
         position: absolute;
-        top: 3px;
-        left: 3px;
-        width: 54px;
+        top: 2px;
+        left: 2px;
+        width: 28px;
         height: 28px;
-        border-radius: 50px;
+        border-radius: 50%;
         background: linear-gradient(145deg, #ffffff, #f0f0f0);
         box-shadow: 
             2px 2px 4px rgba(0, 0, 0, 0.15),
@@ -175,17 +176,18 @@
                     transform 0.2s ease,
                     box-shadow 0.3s ease;
         z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .lang-toggle-3d[data-current="id"] .lang-toggle-thumb {
-        left: calc(100% - 57px);
+        left: calc(100% - 30px);
     }
     .flag-img {
-        width: 16px;
-        height: 12px;
+        width: 18px;
+        height: 14px;
         object-fit: cover;
         border-radius: 2px;
-        vertical-align: middle;
-        margin: 0 2px;
     }
     .lang-label {
         font-size: 10px;
@@ -545,10 +547,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let startX = 0;
         let currentX = 0;
         let thumbStartLeft = 0;
-        const trackWidth = 120;
-        const thumbWidth = 54;
-        const maxLeft = trackWidth - thumbWidth - 6;
-        const minLeft = 3;
+        const trackWidth = 80;
+        const thumbWidth = 28;
+        const maxLeft = trackWidth - thumbWidth - 2;
+        const minLeft = 2;
         
         function switchLanguage(newLang) {
             langToggle.setAttribute('data-current', newLang);
@@ -557,6 +559,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (enLabel && idLabel) {
                 enLabel.classList.toggle('active', newLang === 'en');
                 idLabel.classList.toggle('active', newLang === 'id');
+            }
+            const flagImg = document.getElementById('currentFlag');
+            if (flagImg) {
+                flagImg.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
+                flagImg.alt = newLang === 'en' ? 'EN' : 'ID';
             }
             if (window.translations && window.translations[newLang]) {
                 const terms = window.translations[newLang];
