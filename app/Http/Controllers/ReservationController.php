@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Reservation;
 class ReservationController extends Controller
 {
     public function create()
@@ -25,8 +26,8 @@ class ReservationController extends Controller
             'payment_proof.required' => 'Bukti transfer wajib diupload.',
             'payment_proof.url' => 'URL bukti transfer tidak valid.',
         ]);
-        $paymentProofPath = $request->payment_proof;
-        DB::table('reservations')->insert([
+        
+        Reservation::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
             'email' => $request->email,
@@ -36,11 +37,10 @@ class ReservationController extends Controller
             'guests' => $request->guests,
             'table_id' => $request->table_id,
             'notes' => $request->notes,
-            'payment_proof' => $paymentProofPath,
+            'payment_proof' => $request->payment_proof,
             'status' => 'pending',
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
+        
         DB::table('activity_logs')->insert([
             'user_id' => Auth::id(),
             'action' => 'reservation_created',
@@ -53,21 +53,17 @@ class ReservationController extends Controller
     }
     public function index()
     {
-        $reservations = DB::table('reservations')
-            ->where('user_id', Auth::id())
+        $reservations = Reservation::where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
         return view('customer.reservations.index', compact('reservations'));
     }
     public function show($id)
     {
-        $reservation = DB::table('reservations')
-            ->where('id', $id)
+        $reservation = Reservation::where('id', $id)
             ->where('user_id', Auth::id())
-            ->first();
-        if (!$reservation) {
-            abort(404);
-        }
+            ->firstOrFail();
+            
         return view('customer.reservations.show', compact('reservation'));
     }
 }
