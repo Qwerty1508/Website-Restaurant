@@ -40,17 +40,13 @@
                 <li class="nav-item d-flex align-items-center gap-3 ms-lg-2">
                     <div class="lang-toggle-3d" id="langToggle3D" data-current="{{ app()->getLocale() }}">
                         <div class="lang-toggle-track">
-                            <div class="lang-toggle-thumb">
-                                <span class="flag-icon" id="currentFlag">
-                                    @if(app()->getLocale() == 'en')
-                                        <img src="https://flagcdn.com/w40/gb.png" alt="EN" class="flag-img">
-                                    @else
-                                        <img src="https://flagcdn.com/w40/id.png" alt="ID" class="flag-img">
-                                    @endif
-                                </span>
-                            </div>
-                            <span class="lang-label lang-en {{ app()->getLocale() == 'en' ? 'active' : '' }}">EN</span>
-                            <span class="lang-label lang-id {{ app()->getLocale() == 'id' ? 'active' : '' }}">ID</span>
+                            <div class="lang-toggle-thumb"></div>
+                            <span class="lang-label lang-en {{ app()->getLocale() == 'en' ? 'active' : '' }}">
+                                EN <img src="https://flagcdn.com/w40/gb.png" alt="EN" class="flag-img">
+                            </span>
+                            <span class="lang-label lang-id {{ app()->getLocale() == 'id' ? 'active' : '' }}">
+                                <img src="https://flagcdn.com/w40/id.png" alt="ID" class="flag-img"> ID
+                            </span>
                         </div>
                         <a href="{{ route('lang.switch', 'en') }}" class="lang-link-hidden" id="langLinkEn"></a>
                         <a href="{{ route('lang.switch', 'id') }}" class="lang-link-hidden" id="langLinkId"></a>
@@ -151,9 +147,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 72px;
-        height: 32px;
-        padding: 0 8px;
+        width: 120px;
+        height: 34px;
+        padding: 0 6px;
         border-radius: 50px;
         background: linear-gradient(145deg, #e6e6e6, #ffffff);
         box-shadow: 
@@ -165,58 +161,52 @@
     }
     .lang-toggle-thumb {
         position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 28px;
+        top: 3px;
+        left: 3px;
+        width: 54px;
         height: 28px;
-        border-radius: 50%;
+        border-radius: 50px;
         background: linear-gradient(145deg, #ffffff, #f0f0f0);
         box-shadow: 
             2px 2px 4px rgba(0, 0, 0, 0.15),
             -1px -1px 3px rgba(255, 255, 255, 0.8),
             inset 0 1px 2px rgba(255, 255, 255, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
         transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
                     transform 0.2s ease,
                     box-shadow 0.3s ease;
         z-index: 2;
     }
     .lang-toggle-3d[data-current="id"] .lang-toggle-thumb {
-        left: calc(100% - 30px);
-    }
-    .flag-icon {
-        font-size: 14px;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        left: calc(100% - 57px);
     }
     .flag-img {
-        width: 18px;
-        height: 14px;
+        width: 16px;
+        height: 12px;
         object-fit: cover;
         border-radius: 2px;
-        transition: opacity 0.2s ease, transform 0.3s ease;
+        vertical-align: middle;
+        margin: 0 2px;
     }
     .lang-label {
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 700;
-        color: rgba(12, 42, 54, 0.4);
+        color: rgba(12, 42, 54, 0.6);
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.3px;
         transition: all 0.3s ease;
-        z-index: 1;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 2px;
     }
     .lang-label.active {
-        color: #C89B3A;
+        color: rgba(12, 42, 54, 0.3);
     }
     .lang-label.lang-en {
-        margin-left: 2px;
+        margin-left: 4px;
     }
     .lang-label.lang-id {
-        margin-right: 2px;
+        margin-right: 4px;
     }
     .lang-link-hidden {
         display: none;
@@ -554,22 +544,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentLang = this.getAttribute('data-current');
             const newLang = currentLang === 'en' ? 'id' : 'en';
             this.setAttribute('data-current', newLang);
-            const flagIcon = document.getElementById('currentFlag');
-            if (flagIcon) {
-                const flagImg = flagIcon.querySelector('.flag-img');
-                if (flagImg) {
-                    flagImg.style.opacity = '0';
-                    flagImg.style.transform = 'scale(0.8)';
-                    setTimeout(() => {
-                        flagImg.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
-                        flagImg.alt = newLang === 'en' ? 'EN' : 'ID';
-                        setTimeout(() => {
-                            flagImg.style.opacity = '1';
-                            flagImg.style.transform = 'scale(1)';
-                        }, 50);
-                    }, 150);
-                }
-            }
             const enLabel = this.querySelector('.lang-en');
             const idLabel = this.querySelector('.lang-id');
             if (enLabel && idLabel) {
