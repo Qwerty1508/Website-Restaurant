@@ -31,6 +31,14 @@ Route::get('/maintenance', function () {
 Route::post('/maintenance/toggle', [StatusController::class, 'toggle'])
     ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
 
+// Maintenance Preview Route (for live preview iframe - super admin only)
+Route::get('/maintenance/preview', function () {
+    if (!auth()->check() || auth()->user()->email !== 'pedoprimasaragi@gmail.com') {
+        abort(403);
+    }
+    return view('maintenance');
+});
+
 // Redirect old /status to /maintenance
 Route::get('/status', function () {
     return redirect('/maintenance');

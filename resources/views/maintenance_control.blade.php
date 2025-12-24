@@ -135,39 +135,24 @@
                                         </div>
                                         <div class="flex-grow-1">
                                             <div class="px-3 py-1 rounded" style="background: rgba(255,255,255,0.1); font-size: 0.7rem; color: rgba(255,255,255,0.5);">
-                                                <i class="bi bi-lock-fill me-1"></i> {{ url('/') }}
+                                                <i class="bi bi-lock-fill me-1"></i> {{ $isMaintenanceMode ? url('/') . ' (maintenance view)' : url('/') }}
                                             </div>
                                         </div>
                                     </div>
                                     
-                                    <!-- Iframe Preview -->
+                                    <!-- Iframe Preview - Shows actual page -->
                                     <iframe 
-                                        src="{{ $isMaintenanceMode ? url('/project?preview_maintenance=1') : url('/') }}" 
-                                        style="width: 100%; height: calc(100% - 35px); border: none; transform: scale(0.6); transform-origin: top left; width: 166.67%; height: 166.67%;"
-                                        sandbox="allow-same-origin"
+                                        src="{{ $isMaintenanceMode ? url('/maintenance/preview') : url('/') }}" 
+                                        style="width: 166.67%; height: 166.67%; border: none; transform: scale(0.6); transform-origin: top left;"
                                         loading="lazy"
                                     ></iframe>
-                                    
-                                    @if($isMaintenanceMode)
-                                    <!-- Maintenance Overlay -->
-                                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center" style="background: rgba(11,14,16,0.95); margin-top: 35px;">
-                                        <div class="mb-3" style="width: 60px; height: 60px; background: rgba(200,155,58,0.15); border: 2px solid rgba(200,155,58,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                            <i class="bi bi-wrench-adjustable" style="font-size: 1.5rem; color: #D4AF37;"></i>
-                                        </div>
-                                        <h4 style="font-family: 'Playfair Display', serif; color: #D4AF37; font-size: 1.2rem;">Under Maintenance</h4>
-                                        <p class="text-white-50 small px-4" style="font-size: 0.75rem;">Visitors will see this page when maintenance mode is ON</p>
-                                        <a href="{{ url('/') }}" target="_blank" class="btn btn-sm mt-2" style="background: rgba(200,155,58,0.2); color: #D4AF37; border: 1px solid rgba(200,155,58,0.3); font-size: 0.7rem;">
-                                            <i class="bi bi-box-arrow-up-right me-1"></i> View Full Maintenance Page
-                                        </a>
-                                    </div>
-                                    @endif
                                 </div>
 
                                 <div class="mt-3 d-flex justify-content-between align-items-center">
                                     <small class="text-white-50">
                                         <i class="bi bi-arrow-repeat me-1"></i> Preview updates after toggle
                                     </small>
-                                    <a href="{{ url('/') }}" target="_blank" class="btn btn-sm" style="background: rgba(200,155,58,0.15); color: #D4AF37; border: 1px solid rgba(200,155,58,0.2);">
+                                    <a href="{{ $isMaintenanceMode ? url('/maintenance/preview') : url('/') }}" target="_blank" class="btn btn-sm" style="background: rgba(200,155,58,0.15); color: #D4AF37; border: 1px solid rgba(200,155,58,0.2);">
                                         <i class="bi bi-box-arrow-up-right me-1"></i> Open in New Tab
                                     </a>
                                 </div>
