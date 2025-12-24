@@ -10,10 +10,19 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminActivityController;
 use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminOrderController;
-Route::get('/', function () {
-    $featuredMenus = \DB::table('menus')->where('is_available', true)->limit(3)->get();
-    return view('welcome', compact('featuredMenus'));
-});
+use App\Http\Controllers\StatusController;
+
+// Secret Status Route (Super Admin Only)
+Route::get('/status', [StatusController::class, 'index'])
+    ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
+Route::post('/status/toggle', [StatusController::class, 'toggle'])
+    ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
+// Main Routes with Maintenance Check
+Route::middleware([\App\Http\Middleware\MaintenanceMiddleware::class])->group(function () {
+    Route::get('/', function () {
+        $featuredMenus = \DB::table('menus')->where('is_available', true)->limit(3)->get();
+        return view('welcome', compact('featuredMenus'));
+    });
 Route::get('/menu', function () {
     $menus = \DB::table('menus')->where('is_available', true)->orderBy('category')->get();
     $favorites = [];
@@ -273,3 +282,4 @@ Route::get('lang/{locale}', function ($locale) {
     } 
     return redirect()->back(); 
 })->name('lang.switch');
+}); // End of MaintenanceMiddleware group
