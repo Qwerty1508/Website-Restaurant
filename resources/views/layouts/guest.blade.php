@@ -267,14 +267,14 @@
     @endif
     
     <!-- Real-time Maintenance Mode Detection -->
-    @if(!request()->is('maintenance*') && !request()->is('project*'))
+    @if(!request()->is('maintenance*') && !request()->is('project*') && !request()->is('login') && !request()->is('register') && !request()->is('auth/*'))
     <script>
         (function() {
             let maintenanceCheckInterval;
             const currentPath = window.location.pathname;
             
-            // Don't run on root (maintenance page will be shown there)
-            if (currentPath === '/') return;
+            // Don't run on root or auth pages
+            if (currentPath === '/' || currentPath.startsWith('/login') || currentPath.startsWith('/register') || currentPath.startsWith('/auth')) return;
             
             // Check maintenance status
             async function checkMaintenanceStatus() {
