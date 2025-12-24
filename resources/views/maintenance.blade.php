@@ -236,7 +236,7 @@
                 <div class="social-icons">
                     <a href="https://instagram.com/allfridhosaragi" class="social-link" target="_blank">
                         <i class="fab fa-instagram"></i>
-                        <span>@allfridhosaragi</span>
+                        <span>@culinaire.id</span>
                     </a>
                     <a href="https://wa.me/6282359586295" class="social-link" target="_blank">
                         <i class="fab fa-whatsapp"></i>
@@ -244,7 +244,7 @@
                     </a>
                     <a href="mailto:pedoprimasaragi@gmail.com" class="social-link">
                         <i class="fas fa-envelope"></i>
-                        <span>pedoprimasaragi@gmail.com</span>
+                        <span>info@culinaire.id</span>
                     </a>
                 </div>
             </div>
