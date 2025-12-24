@@ -172,4 +172,92 @@
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action*="/maintenance/toggle"]');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const statusBadge = document.querySelector('.badge.bg-danger, .badge.bg-success');
+    const previewBadge = document.querySelector('.col-md-7 .badge');
+    const iframe = document.querySelector('iframe');
+    const durationSection = document.getElementById('durationCounter')?.closest('.p-3.rounded-3.mb-4');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        toggleBtn.disabled = true;
+        toggleBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Processing...';
+        
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({})
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update status badge
+                if (statusBadge) {
+                    statusBadge.className = `badge ${data.isMaintenanceMode ? 'bg-danger' : 'bg-success'} px-3 py-2`;
+                    statusBadge.textContent = data.isMaintenanceMode ? 'ACTIVE' : 'INACTIVE';
+                }
+                
+                // Update toggle button
+                toggleBtn.className = `btn btn-lg w-100 ${data.isMaintenanceMode ? 'btn-danger' : 'btn-success'}`;
+                toggleBtn.innerHTML = data.isMaintenanceMode 
+                    ? '<i class="bi bi-toggle-on me-2"></i> Turn OFF Maintenance'
+                    : '<i class="bi bi-toggle-off me-2"></i> Turn ON Maintenance';
+                
+                // Update preview badge
+                if (previewBadge) {
+                    previewBadge.className = `badge ${data.isMaintenanceMode ? 'bg-danger' : 'bg-success'} ms-2`;
+                    previewBadge.textContent = data.isMaintenanceMode ? 'Maintenance' : 'Normal';
+                }
+                
+                // Update iframe
+                if (iframe) {
+                    iframe.src = data.isMaintenanceMode 
+                        ? '{{ url("/maintenance/preview") }}'
+                        : '{{ url("/") }}';
+                }
+                
+                // Show success toast
+                showToast(data.message, 'success');
+                
+                // Handle duration counter - reload page to show/hide it properly
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('Error toggling maintenance mode', 'danger');
+            toggleBtn.disabled = false;
+            toggleBtn.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i> Error - Try Again';
+        }
+    });
+    
+    function showToast(message, type) {
+        const toast = document.createElement('div');
+        toast.className = `alert alert-${type} position-fixed`;
+        toast.style.cssText = 'top: 100px; right: 20px; z-index: 9999; animation: fadeIn 0.3s;';
+        toast.innerHTML = `<i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${message}`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+});
+</script>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+</style>
 @endsection

@@ -32,15 +32,28 @@ class StatusController extends Controller
         $setting->value = $newValue;
         $setting->save();
 
+        $startTime = null;
+        
         // Track start time when turning ON
         if ($newValue === 'true') {
+            $startTime = now()->toISOString();
             CmsSetting::updateOrCreate(
                 ['key' => 'maintenance_start_time'],
-                ['value' => now()->toISOString(), 'type' => 'string']
+                ['value' => $startTime, 'type' => 'string']
             );
         } else {
             // Clear start time when turning OFF
             CmsSetting::where('key', 'maintenance_start_time')->delete();
+        }
+
+        // Return JSON for AJAX requests
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'isMaintenanceMode' => $newValue === 'true',
+                'startTime' => $startTime,
+                'message' => 'Maintenance mode ' . ($newValue === 'true' ? 'activated' : 'deactivated')
+            ]);
         }
 
         return redirect('/maintenance')->with('success', 'Maintenance mode ' . ($newValue === 'true' ? 'activated' : 'deactivated'));
