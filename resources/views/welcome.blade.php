@@ -640,9 +640,10 @@
         // Clear content for animation start
         titleContainer.innerHTML = '';
         subtitleContainer.innerHTML = '';
-        // Ensure cursor state
-        if(titleCursor) titleCursor.style.display = 'inline-block';
+        // Ensure cursor state - HIDDEN INITIALLY (User Request)
+        if(titleCursor) titleCursor.style.display = 'none'; 
         if(subtitleCursor) subtitleCursor.style.display = 'none';
+
         // 3. Animation Configuration
         const config = {
             baseSpeed: 50,      // Base speed in ms (lower is faster)
@@ -652,26 +653,27 @@
             punctuationPause: 400, // Pause at comma/period
             spacePause: 30     // Pause at space
         };
+
         // 4. Start Animation Sequence
         setTimeout(() => {
+            // Show cursor just before typing starts
+            if(titleCursor) titleCursor.style.display = 'inline-block';
+            
             typeText(titleContainer, titleText, () => {
-                // Title Finished
+                // Title Finished - HIDE IMMEDIATELY (User Request)
                 if(titleCursor) {
-                    titleCursor.style.animation = 'none';
-                    titleCursor.style.opacity = 0;
-                    setTimeout(() => titleCursor.style.display = 'none', 500);
+                    titleCursor.style.display = 'none';
                 }
+
                 // Start Subtitle
                 setTimeout(() => {
                     if(subtitleCursor) {
                         subtitleCursor.style.display = 'inline-block';
                         typeText(subtitleContainer, subtitleText, () => {
-                            // Subtitle Finished
-                            // Keep subtitle cursor blinking or fade out? User usually prefers blinking termination or fade.
-                            // Let's fade it out after a while.
-                            setTimeout(() => {
-                                if(subtitleCursor) subtitleCursor.style.opacity = 0;
-                            }, 2000);
+                            // Subtitle Finished - HIDE IMMEDIATELY (User Request)
+                            if(subtitleCursor) {
+                                subtitleCursor.style.display = 'none';
+                            }
                         });
                     }
                 }, config.subtitleDelay);
