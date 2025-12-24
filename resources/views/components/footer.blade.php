@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
-                <div class="footer-brand">
-                    Culinaire<span>.</span>
+                <div class="footer-brand mb-3">
+                    <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766594949/IMG_8083_szjpgb.png" alt="Culinaire" style="height: 50px; width: auto; object-fit: contain;">
                 </div>
                 <p class="text-light opacity-75 mb-4">
                     Nikmati pengalaman kuliner premium dengan cita rasa autentik Indonesia. 

@@ -1,7 +1,7 @@
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-        <a href="{{ url('/admin') }}" class="text-decoration-none">
-            Culinaire<span>.</span>
+        <a href="{{ url('/admin') }}" class="text-decoration-none text-center d-block">
+            <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766594949/IMG_8083_szjpgb.png" alt="Admin Logo" style="height: 50px; width: auto; object-fit: contain; margin-bottom: 5px;">
             <small class="d-block text-light opacity-50 fw-normal" style="font-size: 0.75rem;">Admin Panel</small>
         </a>
     </div>

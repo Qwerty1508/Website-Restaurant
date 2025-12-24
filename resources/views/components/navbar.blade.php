@@ -1,8 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-culinaire fixed-top" id="mainNavbar">
     <div class="container-fluid px-4 px-lg-5">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            Culinaire<span>.</span>
+        <a class="navbar-brand py-0" href="{{ url('/') }}">
+            <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766594949/IMG_8083_szjpgb.png" 
+                 alt="Culinaire Logo" 
+                 style="height: 45px; width: auto; object-fit: contain;">
         </a>
+
         
         <!-- Mobile Controls: Lang Toggle, Theme Toggle, Hamburger -->
         <div class="navbar-mobile-controls d-lg-none">
