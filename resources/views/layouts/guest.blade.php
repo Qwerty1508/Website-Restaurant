@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="{{ __('messages.meta_desc') }}">
     <meta name="keywords" content="restaurant, culinary, Indonesian food, fine dining, reservasi, kuliner">
-    <title>@yield('title', 'Culinaire') - {{ config('app.name', __('messages.premium_restaurant')) }}</title>
+    <title>@hasSection('title') @yield('title') - @endif{{ config('app.name', __('messages.premium_restaurant')) }}</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

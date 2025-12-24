@@ -1,5 +1,5 @@
 @extends('layouts.guest')
-@section('title', 'Beranda')
+
 @section('content')
 <section class="hero-section" id="home">
     <div class="container-fluid px-4 px-lg-5">
