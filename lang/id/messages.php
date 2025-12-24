@@ -12,10 +12,11 @@ return [
     'dashboard' => 'Dasbor',
     'logout' => 'Keluar',
 
-    'hero_subtitle' => 'EST. 2023 • INDONESIA',
+    'hero_subtitle' => 'EST. 2009 • INDONESIA',
     'hero_title_1' => 'Cita Rasa',
     'hero_title_2' => 'yang',
     'hero_title_3' => 'Mewah',
+    'hero_title_full' => 'Cita Rasa yang Mewah',
     'hero_desc' => 'Rasakan perpaduan terbaik warisan budaya Indonesia dan gastronomi modern.',
     'book_now' => 'Pesan Meja',
     'explore_menu' => 'Lihat Menu',

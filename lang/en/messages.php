@@ -12,10 +12,11 @@ return [
     'dashboard' => 'Dashboard',
     'logout' => 'Log Out',
 
-    'hero_subtitle' => 'EST. 2023 • INDONESIA',
+    'hero_subtitle' => 'EST. 2009 • INDONESIA',
     'hero_title_1' => 'Taste',
     'hero_title_2' => 'the',
     'hero_title_3' => 'Luxury',
+    'hero_title_full' => 'Taste the Luxury',
     'hero_desc' => 'Experience the finest fusion of Indonesian heritage and modern gastronomy.',
     'book_now' => 'Book a Table',
     'explore_menu' => 'Explore Menu',

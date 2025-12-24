@@ -6,16 +6,16 @@
         <div class="row align-items-center min-vh-100 py-5">
             <div class="col-lg-8 hero-content">
                 <span class="badge bg-gradient-secondary text-dark mb-3 px-3 py-2 rounded-pill animate-fadeInUp">
-                    <i class="bi bi-star-fill me-1"></i> {!! cms('homepage.hero.subtitle', __('messages.hero_subtitle')) !!}
+                    <i class="bi bi-star-fill me-1"></i> <span data-i18n="hero_subtitle">{!! cms('homepage.hero.subtitle', __('messages.hero_subtitle')) !!}</span>
                 </span>
                 <h1 class="hero-title animate-fadeInUp delay-1 text-white min-h-title">
-                    <span id="typing-title-content">
+                    <span id="typing-title-content" data-i18n="hero_title_full">
                         {!! cms('homepage.hero.title', __('messages.hero_title_1') . ' ' . __('messages.hero_title_2') . ' ' . __('messages.hero_title_3'), 'richtext') !!}
                     </span>
                     <span class="typing-cursor" id="title-cursor">|</span>
                 </h1>
                 <p class="hero-subtitle animate-fadeInUp delay-2 text-light opacity-75 min-h-subtitle">
-                    <span id="typing-subtitle-content">
+                    <span id="typing-subtitle-content" data-i18n="hero_desc">
                         {!! cms('homepage.hero.description', __('messages.hero_desc'), 'richtext') !!}
                     </span>
                     <span class="typing-cursor" id="subtitle-cursor" style="display:none">|</span>
