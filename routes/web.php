@@ -13,15 +13,28 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\StatusController;
 
 // Secret Maintenance Control Page (Super Admin Only)
-Route::get('/maintenance', [StatusController::class, 'index'])
-    ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
+Route::get('/maintenance', function () {
+    // If not logged in, redirect to login
+    if (!auth()->check()) {
+        return redirect('/login');
+    }
+    
+    // If logged in but not super admin, redirect to landing page
+    if (auth()->user()->email !== 'pedoprimasaragi@gmail.com') {
+        return redirect('/');
+    }
+    
+    // Super admin can access
+    return app(StatusController::class)->index();
+});
+
 Route::post('/maintenance/toggle', [StatusController::class, 'toggle'])
     ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
 
 // Redirect old /status to /maintenance
 Route::get('/status', function () {
     return redirect('/maintenance');
-})->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
+});
 
 // Main Routes with Maintenance Check
 Route::middleware([\App\Http\Middleware\MaintenanceMiddleware::class])->group(function () {
