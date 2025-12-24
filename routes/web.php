@@ -17,6 +17,12 @@ Route::get('/status', [StatusController::class, 'index'])
     ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
 Route::post('/status/toggle', [StatusController::class, 'toggle'])
     ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
+
+// Maintenance Page Route (Direct Access)
+Route::get('/maintenance', function () {
+    return view('maintenance');
+});
+
 // Main Routes with Maintenance Check
 Route::middleware([\App\Http\Middleware\MaintenanceMiddleware::class])->group(function () {
     Route::get('/', function () {
