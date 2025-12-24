@@ -28,7 +28,7 @@
                         <div class="card h-100 border-0 shadow-sm-hover transition-all overflow-hidden" style="border-radius: 15px;">
                             <div class="position-relative">
                                 <img src="{{ $fav->menu->image_url ?? 'https://via.placeholder.com/300' }}" class="card-img-top" alt="{{ $fav->menu->name }}" style="height: 200px; object-fit: cover;">
-                                <div class="position-absolute top-0 end-0 p-2">
+                                <div class="position-absolute bottom-0 end-0 p-2">
                                     <form action="{{ url('/customer/favorite/' . $fav->menu->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-light rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" title="Remove from favorites">

@@ -56,7 +56,7 @@
                         </span>
                         @endif
                         <span class="price-tag">Rp {{ number_format($menu->price, 0, ',', '.') }}</span>
-                        <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 shadow-sm btn-favorite" 
+                        <button class="btn btn-light rounded-circle position-absolute bottom-0 end-0 m-2 shadow-sm btn-favorite" 
                                 style="width: 35px; height: 35px; padding: 0; display: flex; align-items: center; justify-content: center;"
                                 onclick="toggleFavorite(this, {{ $menu->id }})">
                             <i class="bi {{ in_array($menu->id, $favorites ?? []) ? 'bi-heart-fill text-danger' : 'bi-heart' }}" style="font-size: 1.1rem; color: #dc3545;"></i>
