@@ -709,31 +709,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupLangToggle(langToggleDesktop);
     setupLangToggle(langToggleMobile);
     
-    // Theme Toggle - Handle both desktop and mobile
-    const themeToggleDesktop = document.getElementById('themeToggle');
-    const themeToggleMobile = document.getElementById('themeToggleMobile');
-    
-    function setupThemeToggle(toggleEl) {
-        if (!toggleEl) return;
-        toggleEl.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            // Trigger the main theme toggle if it exists
-            if (window.toggleTheme) {
-                window.toggleTheme();
-            } else {
-                // Fallback: toggle theme directly
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-            }
-        });
-    }
-    
-    setupThemeToggle(themeToggleDesktop);
-    setupThemeToggle(themeToggleMobile);
-    
     // Profile Dropdown
     const dropdownBtn = document.getElementById('profileDropdownBtn');
     const dropdownMenu = document.getElementById('profileDropdownMenu');
