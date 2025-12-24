@@ -15,6 +15,10 @@ class MaintenanceMiddleware
         'maintenance',
         'maintenance/*',
         'api/maintenance-status',
+        'login',
+        'logout',
+        'register',
+        'auth/*',
     ];
 
     public function handle(Request $request, Closure $next): Response
