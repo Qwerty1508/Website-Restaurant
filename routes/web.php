@@ -16,7 +16,7 @@ use App\Http\Controllers\StatusController;
 Route::get('/maintenance', function () {
     // If not logged in, redirect to login
     if (!auth()->check()) {
-        return redirect('/login');
+        return redirect('/login')->with('warning', 'Silakan login untuk mengakses halaman ini.');
     }
     
     // If logged in but not super admin, redirect to landing page
@@ -25,11 +25,12 @@ Route::get('/maintenance', function () {
     }
     
     // Super admin can access
-    return app(StatusController::class)->index();
-});
+    return app(\App\Http\Controllers\StatusController::class)->index();
+})->withoutMiddleware([\App\Http\Middleware\MaintenanceMiddleware::class]);
 
-Route::post('/maintenance/toggle', [StatusController::class, 'toggle'])
-    ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
+Route::post('/maintenance/toggle', [\App\Http\Controllers\StatusController::class, 'toggle'])
+    ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class])
+    ->withoutMiddleware([\App\Http\Middleware\MaintenanceMiddleware::class]);
 
 // Maintenance Preview Route (for live preview iframe - super admin only)
 Route::get('/maintenance/preview', function () {
@@ -37,7 +38,7 @@ Route::get('/maintenance/preview', function () {
         abort(403);
     }
     return view('maintenance');
-});
+})->withoutMiddleware([\App\Http\Middleware\MaintenanceMiddleware::class]);
 
 // API endpoint for real-time maintenance status check (polling)
 Route::get('/api/maintenance-status', function () {

@@ -14,6 +14,7 @@ class MaintenanceMiddleware
         'project/*',
         'maintenance',
         'maintenance/*',
+        'api/maintenance-status',
         'login',
         'register',
         'logout',
