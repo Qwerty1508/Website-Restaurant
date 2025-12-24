@@ -31,8 +31,14 @@ class MaintenanceMiddleware
 
         // Check if maintenance mode is ON
         if ($this->isMaintenanceMode()) {
-            // Show maintenance page directly for all paths
-            return response()->view('maintenance', [], 503);
+            // Check if on root path (empty string or /)
+            $path = $request->path();
+            if ($path === '/' || $path === '') {
+                return response()->view('maintenance', [], 503);
+            }
+            
+            // All other paths: redirect to root
+            return redirect('/');
         }
 
         return $next($request);
