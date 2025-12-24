@@ -73,47 +73,52 @@
                                     <span class="badge {{ $isMaintenanceMode ? 'bg-danger' : 'bg-success' }} ms-2">{{ $isMaintenanceMode ? 'Maintenance' : 'Normal' }}</span>
                                 </h5>
                                 
-                                <!-- Preview Container -->
-                                <div class="preview-container rounded-3 overflow-hidden" style="border: 2px solid rgba(200,155,58,0.2); height: 400px;">
-                                    @if($isMaintenanceMode)
-                                    <!-- Maintenance Preview -->
-                                    <div class="h-100 d-flex flex-column align-items-center justify-content-center text-center p-4" style="background: linear-gradient(135deg, #0B0E10 0%, #1a1f25 100%);">
-                                        <div class="mb-3" style="width: 80px; height: 80px; background: rgba(200,155,58,0.1); border: 2px solid rgba(200,155,58,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                            <i class="bi bi-wrench-adjustable" style="font-size: 2rem; color: #D4AF37;"></i>
+                                <!-- Real Live Preview with Iframe -->
+                                <div class="preview-container rounded-3 overflow-hidden position-relative" style="border: 2px solid rgba(200,155,58,0.2); height: 400px; background: #0B0E10;">
+                                    <!-- Browser Chrome Bar -->
+                                    <div class="d-flex align-items-center px-3 py-2" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(200,155,58,0.2);">
+                                        <div class="d-flex gap-1 me-3">
+                                            <span style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f57;"></span>
+                                            <span style="width: 10px; height: 10px; border-radius: 50%; background: #febc2e;"></span>
+                                            <span style="width: 10px; height: 10px; border-radius: 50%; background: #28c840;"></span>
                                         </div>
-                                        <h3 style="font-family: 'Playfair Display', serif; color: #D4AF37;">Under Maintenance</h3>
-                                        <p class="text-white-50 small mb-3">Kami sedang melakukan peningkatan sistem untuk memberikan pengalaman yang lebih baik.</p>
-                                        <div style="width: 100px; height: 3px; background: linear-gradient(90deg, transparent, #D4AF37, transparent);"></div>
-                                        <div class="mt-3 px-3 py-2 rounded" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(200,155,58,0.2);">
-                                            <small class="text-white-50"><i class="bi bi-envelope me-1"></i> info@culinaire.id</small>
-                                        </div>
-                                    </div>
-                                    @else
-                                    <!-- Normal Preview -->
-                                    <div class="h-100 position-relative" style="background: linear-gradient(to right, rgba(12, 42, 54, 0.92) 0%, rgba(12, 42, 54, 0.7) 50%, rgba(12, 42, 54, 0.22) 100%), url('https://res.cloudinary.com/dh9ysyfit/image/upload/v1766046687/IMG_7856_esb0xz.jpg'); background-size: cover; background-position: center;">
-                                        <div class="p-4 h-100 d-flex flex-column justify-content-center">
-                                            <span class="badge mb-2 px-2 py-1" style="background: rgba(200,155,58,0.3); color: #D4AF37; width: fit-content; font-size: 0.65rem;">
-                                                <i class="bi bi-star-fill me-1"></i> EST. 2009 • INDONESIA
-                                            </span>
-                                            <h3 class="text-white fw-bold mb-2" style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Taste the Luxury</h3>
-                                            <p class="text-white-50 small mb-3" style="font-size: 0.75rem;">Experience the finest fusion of Indonesian heritage and modern gastronomy.</p>
-                                            <div class="d-flex gap-2">
-                                                <span class="btn btn-sm px-3" style="background: rgba(200,155,58,0.3); color: #D4AF37; font-size: 0.7rem; border: 1px solid rgba(200,155,58,0.4);">
-                                                    Explore Menu
-                                                </span>
-                                                <span class="btn btn-sm px-3" style="background: rgba(255,255,255,0.1); color: white; font-size: 0.7rem; border: 1px solid rgba(255,255,255,0.2);">
-                                                    Reservation
-                                                </span>
+                                        <div class="flex-grow-1">
+                                            <div class="px-3 py-1 rounded" style="background: rgba(255,255,255,0.1); font-size: 0.7rem; color: rgba(255,255,255,0.5);">
+                                                <i class="bi bi-lock-fill me-1"></i> {{ url('/') }}
                                             </div>
                                         </div>
+                                    </div>
+                                    
+                                    <!-- Iframe Preview -->
+                                    <iframe 
+                                        src="{{ $isMaintenanceMode ? url('/project?preview_maintenance=1') : url('/') }}" 
+                                        style="width: 100%; height: calc(100% - 35px); border: none; transform: scale(0.6); transform-origin: top left; width: 166.67%; height: 166.67%;"
+                                        sandbox="allow-same-origin"
+                                        loading="lazy"
+                                    ></iframe>
+                                    
+                                    @if($isMaintenanceMode)
+                                    <!-- Maintenance Overlay -->
+                                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center" style="background: rgba(11,14,16,0.95); margin-top: 35px;">
+                                        <div class="mb-3" style="width: 60px; height: 60px; background: rgba(200,155,58,0.15); border: 2px solid rgba(200,155,58,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-wrench-adjustable" style="font-size: 1.5rem; color: #D4AF37;"></i>
+                                        </div>
+                                        <h4 style="font-family: 'Playfair Display', serif; color: #D4AF37; font-size: 1.2rem;">Under Maintenance</h4>
+                                        <p class="text-white-50 small px-4" style="font-size: 0.75rem;">Visitors will see this page when maintenance mode is ON</p>
+                                        <a href="{{ url('/') }}" target="_blank" class="btn btn-sm mt-2" style="background: rgba(200,155,58,0.2); color: #D4AF37; border: 1px solid rgba(200,155,58,0.3); font-size: 0.7rem;">
+                                            <i class="bi bi-box-arrow-up-right me-1"></i> View Full Maintenance Page
+                                        </a>
                                     </div>
                                     @endif
                                 </div>
 
-                                <div class="mt-3 text-center">
+                                <div class="mt-3 d-flex justify-content-between align-items-center">
                                     <small class="text-white-50">
                                         <i class="bi bi-arrow-repeat me-1"></i> Preview updates after toggle
                                     </small>
+                                    <a href="{{ url('/') }}" target="_blank" class="btn btn-sm" style="background: rgba(200,155,58,0.15); color: #D4AF37; border: 1px solid rgba(200,155,58,0.2);">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i> Open in New Tab
+                                    </a>
                                 </div>
                             </div>
                         </div>
