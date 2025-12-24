@@ -487,29 +487,7 @@
         .mobile-nav-close:hover i {
             transform: scale(1.1);
         }
-        .navbar-collapse::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at 30% 20%, rgba(200, 155, 58, 0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 80%, rgba(200, 155, 58, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .navbar-collapse::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            border: 1px solid rgba(200, 155, 58, 0.08);
-            border-radius: 50%;
-            pointer-events: none;
-        }
+
         .navbar-nav {
             position: absolute;
             top: 50%;
