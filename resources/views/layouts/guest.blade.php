@@ -7,7 +7,7 @@
     <meta name="description" content="{{ __('messages.meta_desc') }}">
     <meta name="keywords" content="restaurant, culinary, Indonesian food, fine dining, reservasi, kuliner">
     <title>@yield('title', 'Culinaire') - {{ config('app.name', __('messages.premium_restaurant')) }}</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
