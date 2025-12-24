@@ -202,7 +202,7 @@
                         <source src="https://res.cloudinary.com/dh9ysyfit/video/upload/v1766171775/gemini_generated_video_1C6E4459_ge0iic.mov" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    <div class="position-absolute glass-badge text-white rounded-4 p-4 shadow-lg" 
+                    <div class="position-absolute glass-badge experience-badge text-white rounded-4 p-4 shadow-lg" 
                          style="bottom: 20px; right: 20px;">
                         <h2 class="mb-0">15+</h2>
                         <small data-i18n="years_experience">{{ __('messages.years_experience') }}</small>
@@ -596,6 +596,22 @@
     }
     .min-h-title { min-height: 1.2em; }
     .min-h-subtitle { min-height: 3em; }
+    
+    /* Experience Badge - Mobile Responsive */
+    @media (max-width: 768px) {
+        .experience-badge {
+            padding: 0.75rem 1rem !important;
+            bottom: 10px !important;
+            right: 10px !important;
+        }
+        .experience-badge h2 {
+            font-size: 1.5rem !important;
+            margin-bottom: 0 !important;
+        }
+        .experience-badge small {
+            font-size: 0.65rem !important;
+        }
+    }
 </style>
 @endpush
 @push('scripts')
