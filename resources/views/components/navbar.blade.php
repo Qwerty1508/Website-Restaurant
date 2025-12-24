@@ -3,7 +3,7 @@
         <a class="navbar-brand py-0" href="{{ url('/') }}">
             <img src="https://res.cloudinary.com/dh9ysyfit/image/upload/v1766594949/IMG_8083_szjpgb.png" 
                  alt="Culinaire Logo" 
-                 style="height: 45px; width: auto; object-fit: contain;">
+                 style="height: 120px; width: auto; object-fit: contain;">
         </a>
 
         
