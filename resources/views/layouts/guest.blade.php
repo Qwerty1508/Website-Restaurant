@@ -81,18 +81,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
         const savedTheme = localStorage.getItem('theme') || 'light';
         htmlElement.setAttribute('data-theme', savedTheme);
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = htmlElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                htmlElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
+        
+        // Global toggle function for sync
+        window.toggleTheme = function() {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        };
+        
+        // Setup all theme toggles after DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggles = document.querySelectorAll('.theme-toggle');
+            themeToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.toggleTheme();
+                });
             });
-        }
+        });
+        
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar-culinaire');
             if (navbar) {
