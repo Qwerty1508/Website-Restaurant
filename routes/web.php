@@ -104,20 +104,35 @@ Route::prefix('customer')->middleware('auth')->group(function () {
         $userId = auth()->id();
         $totalOrders = \DB::table('orders')->where('user_id', $userId)->count();
         $totalReservations = \DB::table('reservations')->where('user_id', $userId)->count();
-        $totalSpend = \DB::table('orders')
+        
+        // New points system: 1.000 per order + 10.000 per accepted reservation
+        $orderPoints = $totalOrders * 1000;
+        $acceptedReservations = \DB::table('reservations')
             ->where('user_id', $userId)
-            ->sum('total');
-        $points = floor($totalSpend / 10000);
+            ->whereIn('status', ['accepted', 'completed'])
+            ->count();
+        $reservationPoints = $acceptedReservations * 10000;
+        $points = $orderPoints + $reservationPoints;
+        
         return view('customer.profile', compact('totalOrders', 'totalReservations', 'points'));
     });
     Route::get('/point', function () {
         $userId = auth()->id();
-        $totalSpend = \DB::table('orders')
-            ->where('user_id', $userId)
-            ->sum('total');
-        $points = floor($totalSpend / 10000);
         
-        $history = \DB::table('orders')
+        // New points system: 1.000 per order + 10.000 per accepted reservation
+        $totalOrders = \DB::table('orders')->where('user_id', $userId)->count();
+        $orderPoints = $totalOrders * 1000;
+        
+        $acceptedReservations = \DB::table('reservations')
+            ->where('user_id', $userId)
+            ->whereIn('status', ['accepted', 'completed'])
+            ->count();
+        $reservationPoints = $acceptedReservations * 10000;
+        
+        $points = $orderPoints + $reservationPoints;
+        
+        // Get order history
+        $orderHistory = \DB::table('orders')
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->get()
@@ -125,13 +140,36 @@ Route::prefix('customer')->middleware('auth')->group(function () {
                 return [
                     'id' => $order->id,
                     'date' => $order->created_at,
+                    'description' => 'Order #' . substr($order->id, 0, 8),
                     'amount' => $order->total,
-                    'points_earned' => floor($order->total / 10000),
-                    'type' => 'Earned'
+                    'points_earned' => 1000,
+                    'type' => 'order'
                 ];
             });
+        
+        // Get reservation history (only accepted/completed)
+        $reservationHistory = \DB::table('reservations')
+            ->where('user_id', $userId)
+            ->whereIn('status', ['accepted', 'completed'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($reservation) {
+                return [
+                    'id' => $reservation->id,
+                    'date' => $reservation->created_at,
+                    'description' => 'Reservasi ' . \Carbon\Carbon::parse($reservation->date)->format('d M Y'),
+                    'amount' => null,
+                    'points_earned' => 10000,
+                    'type' => 'reservation'
+                ];
+            });
+        
+        // Combine and sort by date
+        $history = $orderHistory->concat($reservationHistory)
+            ->sortByDesc('date')
+            ->values();
 
-        return view('customer.points', compact('points', 'history'));
+        return view('customer.points', compact('points', 'history', 'orderPoints', 'reservationPoints', 'totalOrders', 'acceptedReservations'));
     });
     
     Route::get('/favorite', function () {
