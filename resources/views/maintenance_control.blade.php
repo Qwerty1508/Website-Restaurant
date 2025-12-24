@@ -54,6 +54,57 @@
                                     </form>
                                 </div>
 
+                                @if($isMaintenanceMode && $maintenanceStartTime)
+                                <!-- Duration Counter -->
+                                <div class="p-3 rounded-3 mb-4" style="background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3);">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-clock-history text-danger me-2"></i>
+                                        <small class="text-white-50">Maintenance Duration</small>
+                                    </div>
+                                    <div id="durationCounter" class="d-flex gap-2 justify-content-center">
+                                        <div class="text-center px-2">
+                                            <div class="fs-4 fw-bold text-danger" id="days">00</div>
+                                            <small class="text-white-50">Days</small>
+                                        </div>
+                                        <div class="text-danger fs-4">:</div>
+                                        <div class="text-center px-2">
+                                            <div class="fs-4 fw-bold text-danger" id="hours">00</div>
+                                            <small class="text-white-50">Hours</small>
+                                        </div>
+                                        <div class="text-danger fs-4">:</div>
+                                        <div class="text-center px-2">
+                                            <div class="fs-4 fw-bold text-danger" id="minutes">00</div>
+                                            <small class="text-white-50">Mins</small>
+                                        </div>
+                                        <div class="text-danger fs-4">:</div>
+                                        <div class="text-center px-2">
+                                            <div class="fs-4 fw-bold text-danger" id="seconds">00</div>
+                                            <small class="text-white-50">Secs</small>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <small class="text-white-50">Started: {{ \Carbon\Carbon::parse($maintenanceStartTime)->timezone('Asia/Jakarta')->format('d M Y, H:i:s') }} WIB</small>
+                                    </div>
+                                </div>
+                                <script>
+                                    const startTime = new Date('{{ $maintenanceStartTime }}');
+                                    function updateDuration() {
+                                        const now = new Date();
+                                        const diff = Math.floor((now - startTime) / 1000);
+                                        const days = Math.floor(diff / 86400);
+                                        const hours = Math.floor((diff % 86400) / 3600);
+                                        const minutes = Math.floor((diff % 3600) / 60);
+                                        const seconds = diff % 60;
+                                        document.getElementById('days').textContent = String(days).padStart(2, '0');
+                                        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                                        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                                        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+                                    }
+                                    updateDuration();
+                                    setInterval(updateDuration, 1000);
+                                </script>
+                                @endif
+
                                 <div class="p-3 rounded-3" style="background: rgba(200,155,58,0.1); border: 1px solid rgba(200,155,58,0.3);">
                                     <small class="text-white-50">
                                         <i class="bi bi-info-circle text-warning me-2"></i>
