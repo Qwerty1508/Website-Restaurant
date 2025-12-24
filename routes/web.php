@@ -12,23 +12,16 @@ use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\StatusController;
 
-// Secret Status Route (Super Admin Only)
-Route::get('/status', [StatusController::class, 'index'])
+// Secret Maintenance Control Page (Super Admin Only)
+Route::get('/maintenance', [StatusController::class, 'index'])
     ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
-Route::post('/status/toggle', [StatusController::class, 'toggle'])
+Route::post('/maintenance/toggle', [StatusController::class, 'toggle'])
     ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
 
-// Maintenance Page Route (Only shows if maintenance mode is ON)
-Route::get('/maintenance', function () {
-    $setting = \App\Models\CmsSetting::where('key', 'maintenance_mode')->first();
-    $isMaintenanceMode = $setting && $setting->value === 'true';
-    
-    if (!$isMaintenanceMode) {
-        return redirect('/');
-    }
-    
-    return view('maintenance');
-});
+// Redirect old /status to /maintenance
+Route::get('/status', function () {
+    return redirect('/maintenance');
+})->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
 
 // Main Routes with Maintenance Check
 Route::middleware([\App\Http\Middleware\MaintenanceMiddleware::class])->group(function () {

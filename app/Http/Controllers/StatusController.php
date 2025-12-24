@@ -12,7 +12,7 @@ class StatusController extends Controller
         $maintenanceMode = CmsSetting::where('key', 'maintenance_mode')->first();
         $isMaintenanceMode = $maintenanceMode && $maintenanceMode->value === 'true';
         
-        return view('status', compact('isMaintenanceMode'));
+        return view('maintenance_control', compact('isMaintenanceMode'));
     }
 
     public function toggle(Request $request)
@@ -25,6 +25,6 @@ class StatusController extends Controller
         $setting->value = $setting->value === 'true' ? 'false' : 'true';
         $setting->save();
 
-        return redirect()->back()->with('success', 'Maintenance mode ' . ($setting->value === 'true' ? 'activated' : 'deactivated'));
+        return redirect('/maintenance')->with('success', 'Maintenance mode ' . ($setting->value === 'true' ? 'activated' : 'deactivated'));
     }
 }
