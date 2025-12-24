@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Website Maintenance - CULINAIRE</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -13,6 +13,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         body, html {
@@ -21,6 +25,19 @@
             font-family: 'Poppins', sans-serif;
             background-color: #0B0E10;
             overflow: hidden;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Hide scrollbars */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         .maintenance-container {
