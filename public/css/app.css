@@ -3818,19 +3818,18 @@ html {
     }
 
     .hero-content {
-        text-align: center;
+        text-align: left; /* Explicitly set left or just let it inherit */
         padding-top: 60px;
     }
 
     .hero-actions {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        display: block; /* Restore block or default behavior */
     }
 
     .hero-actions .btn {
-        width: 100%;
-        margin-right: 0 !important;
+        width: auto; /* Restore auto width */
+        margin-right: 1rem !important; /* Adding margin right for spacing between buttons if they wrap */
+        margin-bottom: 1rem; /* Add margin bottom for wrapping */
     }
 
     .card-glass {
