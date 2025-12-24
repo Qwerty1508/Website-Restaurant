@@ -234,17 +234,17 @@
             <div class="contact-section">
                 <h3>Sementara itu, hubungi kami di:</h3>
                 <div class="social-icons">
-                    <a href="https://instagram.com/culinaire.id" class="social-link" target="_blank">
+                    <a href="https://instagram.com/allfridhosaragi" class="social-link" target="_blank">
                         <i class="fab fa-instagram"></i>
-                        <span>@culinaire.id</span>
+                        <span>@allfridhosaragi</span>
                     </a>
-                    <a href="https://wa.me/6281234567890" class="social-link" target="_blank">
+                    <a href="https://wa.me/6282359586295" class="social-link" target="_blank">
                         <i class="fab fa-whatsapp"></i>
                         <span>Reservasi WA</span>
                     </a>
-                    <a href="mailto:info@culinaire.id" class="social-link">
+                    <a href="mailto:pedoprimasaragi@gmail.com" class="social-link">
                         <i class="fas fa-envelope"></i>
-                        <span>info@culinaire.id</span>
+                        <span>pedoprimasaragi@gmail.com</span>
                     </a>
                 </div>
             </div>
