@@ -1,146 +1,238 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Under Maintenance - Culinaire</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Maintenance - CULINAIRE</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0B0E10 0%, #1a1f25 50%, #0B0E10 100%);
+
+        body, html {
+            height: 100%;
+            width: 100%;
             font-family: 'Poppins', sans-serif;
-            color: #fff;
+            background-color: #0B0E10;
             overflow: hidden;
         }
+
         .maintenance-container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 600px;
+            display: flex;
+            height: 100vh;
+            width: 100vw;
         }
-        .icon-wrapper {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 2rem;
-            background: rgba(200, 155, 58, 0.1);
-            border: 2px solid rgba(200, 155, 58, 0.3);
-            border-radius: 50%;
+
+        .left-panel {
+            flex: 1;
+            background-image: url('https://res.cloudinary.com/dh9ysyfit/image/upload/v1766046687/IMG_7856_esb0xz.jpg'); 
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(11, 14, 16, 0) 0%, rgba(11, 14, 16, 1) 100%);
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            text-align: center;
+            color: #f5f5f5;
+            background: #0B0E10;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 3rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
-            justify-content: center;
-            animation: pulse 2s ease-in-out infinite;
+            gap: 10px;
         }
-        .icon-wrapper i {
-            font-size: 4rem;
-            color: #D4AF37;
+        
+        .logo i {
+            font-size: 1.5rem;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-        }
+
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .highlight-text {
             color: #D4AF37;
         }
-        p {
+
+        p.description {
             font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
-            margin-bottom: 2rem;
+            max-width: 550px;
+            margin-bottom: 3rem;
+            color: rgba(255,255,255,0.7);
         }
-        .progress-bar-wrapper {
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto 2rem;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            width: 30%;
-            background: linear-gradient(90deg, #D4AF37, #F5D77F, #D4AF37);
-            background-size: 200% 100%;
-            animation: shimmer 2s linear infinite;
-            border-radius: 2px;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .contact-info {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(200, 155, 58, 0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-        .contact-info p {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        .contact-info a {
+
+        .status-box {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(212, 175, 55, 0.15);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            margin-bottom: 3rem;
+            font-weight: 600;
             color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .status-box i {
+            margin-right: 12px;
+            animation: pulse 2s infinite;
+        }
+
+        .contact-section h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-decoration: none;
+            color: rgba(255,255,255,0.7);
+            transition: all 0.3s ease;
         }
-        .contact-info a:hover {
-            text-decoration: underline;
+
+        .social-link i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #D4AF37;
+            transition: transform 0.3s ease;
         }
-        .decoration {
-            position: fixed;
-            opacity: 0.03;
-            pointer-events: none;
+
+        .social-link span {
+            font-size: 0.85rem;
+            font-weight: 500;
         }
-        .decoration.top-left {
-            top: -100px;
-            left: -100px;
-            font-size: 300px;
+
+        .social-link:hover {
+            color: #D4AF37;
         }
-        .decoration.bottom-right {
-            bottom: -100px;
-            right: -100px;
-            font-size: 300px;
+
+        .social-link:hover i {
+            transform: translateY(-5px);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+            100% { opacity: 0.6; transform: scale(1); }
+        }
+
+        @media (max-width: 1024px) {
+            .maintenance-container {
+                flex-direction: column;
+                height: auto;
+                overflow: auto;
+            }
+            .left-panel {
+                height: 35vh;
+                flex: none;
+            }
+            .left-panel::after {
+                background: linear-gradient(to bottom, rgba(11, 14, 16, 0) 0%, rgba(11, 14, 16, 1) 100%);
+            }
+            .right-panel {
+                flex: none;
+                padding: 2.5rem 1.5rem;
+            }
+            h1 { 
+                font-size: 2rem; 
+            }
+            p.description {
+                font-size: 1rem;
+            }
+            .social-icons {
+                gap: 1.5rem;
+            }
+            body, html { 
+                overflow: auto; 
+            }
         }
     </style>
 </head>
 <body>
-    <i class="bi bi-gear decoration top-left"></i>
-    <i class="bi bi-tools decoration bottom-right"></i>
-    
+
     <div class="maintenance-container">
-        <div class="icon-wrapper">
-            <i class="bi bi-wrench-adjustable"></i>
-        </div>
-        
-        <h1>Under Maintenance</h1>
-        
-        <p>
-            Kami sedang melakukan peningkatan sistem untuk memberikan pengalaman yang lebih baik. 
-            Website akan segera kembali online.
-        </p>
-        
-        <div class="progress-bar-wrapper">
-            <div class="progress-bar"></div>
-        </div>
-        
-        <div class="contact-info">
-            <p><i class="bi bi-envelope me-2"></i> Hubungi kami di</p>
-            <p><a href="mailto:info@culinaire.id">info@culinaire.id</a></p>
+        <div class="left-panel"></div>
+
+        <div class="right-panel">
+            <div class="logo">
+                <i class="fas fa-utensils"></i> CULINAIRE
+            </div>
+            
+            <h1>Kami Sedang Meracik <br><span class="highlight-text">Cita Rasa Baru</span></h1>
+            
+            <p class="description">
+                Mohon maaf atas ketidaknyamanan ini. Website kami sedang menjalani renovasi untuk menyajikan pengalaman menjelajah kekayaan kuliner Indonesia yang lebih nikmat. Kami akan segera kembali dengan tampilan segar dan menu yang lebih lengkap.
+            </p>
+
+            <div class="status-box">
+                <i class="fas fa-fire-burner"></i> Status: Dapur Sedang Panas (Segera Kembali)
+            </div>
+
+            <div class="contact-section">
+                <h3>Sementara itu, hubungi kami di:</h3>
+                <div class="social-icons">
+                    <a href="https://instagram.com/culinaire.id" class="social-link" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        <span>@culinaire.id</span>
+                    </a>
+                    <a href="https://wa.me/6281234567890" class="social-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Reservasi WA</span>
+                    </a>
+                    <a href="mailto:info@culinaire.id" class="social-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@culinaire.id</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
+
 </body>
 </html>
