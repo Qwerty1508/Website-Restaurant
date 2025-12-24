@@ -77,7 +77,7 @@ class AdminOrderController extends Controller
         DB::table('activity_logs')->insert([
             'user_id' => auth()->id(),
             'action' => 'update_order_status',
-            'description' => "Mengubah status pesanan 
+            'description' => "Mengubah status pesanan #{$order->order_number} menjadi {$request->status}",
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'created_at' => now(),
