@@ -23,7 +23,23 @@ class MaintenanceMiddleware
 
     public function handle(Request $request, Closure $next): Response
     {
-        // Always allow excluded paths
+        $path = $request->path();
+        
+        // Handle /maintenance path specially - redirect to login if not super admin
+        if ($path === 'maintenance' || str_starts_with($path, 'maintenance/')) {
+            // If not logged in, redirect to login
+            if (!auth()->check()) {
+                return redirect('/login')->with('warning', 'Silakan login untuk mengakses halaman ini.');
+            }
+            // If logged in but not super admin, redirect to landing page
+            if (auth()->user()->email !== 'pedoprimasaragi@gmail.com') {
+                return redirect('/');
+            }
+            // Super admin can proceed
+            return $next($request);
+        }
+        
+        // Always allow other excluded paths
         if ($this->isExcludedPath($request)) {
             return $next($request);
         }
@@ -36,7 +52,6 @@ class MaintenanceMiddleware
         // Check if maintenance mode is ON
         if ($this->isMaintenanceMode()) {
             // Check if on root path (empty string or /)
-            $path = $request->path();
             if ($path === '/' || $path === '') {
                 return response()->view('maintenance', [], 503);
             }
