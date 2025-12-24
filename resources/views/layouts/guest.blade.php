@@ -179,5 +179,88 @@
     @if(request()->has('cms_mode') || session('cms_mode'))
         <script src="{{ asset('js/cms-iframe.js') }}"></script>
     @endif
+    
+    <!-- Real-time Maintenance Mode Detection -->
+    @if(!request()->is('maintenance*') && !request()->is('project*') && !request()->is('login') && !request()->is('register'))
+    <script>
+        (function() {
+            let maintenanceCheckInterval;
+            const excludedPaths = ['/maintenance', '/project', '/login', '/register'];
+            const currentPath = window.location.pathname;
+            
+            // Don't run on excluded paths
+            if (excludedPaths.some(path => currentPath.startsWith(path))) return;
+            
+            // Check maintenance status
+            async function checkMaintenanceStatus() {
+                try {
+                    const response = await fetch('/api/maintenance-status', {
+                        headers: { 'Accept': 'application/json' },
+                        cache: 'no-store'
+                    });
+                    const data = await response.json();
+                    
+                    if (data.maintenance) {
+                        // Stop polling
+                        clearInterval(maintenanceCheckInterval);
+                        
+                        // Show maintenance overlay immediately
+                        showMaintenanceOverlay();
+                    }
+                } catch (error) {
+                    console.log('Maintenance check failed:', error);
+                }
+            }
+            
+            function showMaintenanceOverlay() {
+                // Create full-screen overlay
+                const overlay = document.createElement('div');
+                overlay.id = 'maintenance-overlay';
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    background: linear-gradient(135deg, #0B0E10 0%, #1a1f25 100%);
+                    z-index: 999999;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    animation: fadeIn 0.5s ease;
+                `;
+                overlay.innerHTML = `
+                    <style>
+                        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+                    </style>
+                    <div style="width: 100px; height: 100px; background: rgba(212,175,55,0.15); border: 2px solid rgba(212,175,55,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; animation: pulse 2s infinite;">
+                        <i class="bi bi-wrench-adjustable" style="font-size: 3rem; color: #D4AF37;"></i>
+                    </div>
+                    <h1 style="font-family: 'Playfair Display', serif; color: #D4AF37; font-size: 2.5rem; margin-bottom: 1rem;">Under Maintenance</h1>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; max-width: 500px; margin-bottom: 2rem;">Kami sedang melakukan peningkatan sistem. Halaman akan otomatis refresh dalam beberapa detik...</p>
+                    <div style="width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #D4AF37, #F5D77F, #D4AF37); animation: shimmer 1.5s linear infinite; background-size: 200% 100%;"></div>
+                    </div>
+                    <style>@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }</style>
+                `;
+                document.body.appendChild(overlay);
+                
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            }
+            
+            // Start polling every 5 seconds
+            maintenanceCheckInterval = setInterval(checkMaintenanceStatus, 5000);
+            
+            // Also check immediately on page load
+            checkMaintenanceStatus();
+        })();
+    </script>
+    @endif
 </body>
 </html>

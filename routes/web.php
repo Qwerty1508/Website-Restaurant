@@ -39,6 +39,16 @@ Route::get('/maintenance/preview', function () {
     return view('maintenance');
 });
 
+// API endpoint for real-time maintenance status check (polling)
+Route::get('/api/maintenance-status', function () {
+    $setting = \App\Models\CmsSetting::where('key', 'maintenance_mode')->first();
+    $isMaintenanceMode = $setting && $setting->value === 'true';
+    
+    return response()->json([
+        'maintenance' => $isMaintenanceMode
+    ]);
+});
+
 // Redirect old /status to /maintenance
 Route::get('/status', function () {
     return redirect('/maintenance');
