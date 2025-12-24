@@ -18,8 +18,15 @@ Route::get('/status', [StatusController::class, 'index'])
 Route::post('/status/toggle', [StatusController::class, 'toggle'])
     ->middleware(['auth', \App\Http\Middleware\SuperAdminMiddleware::class]);
 
-// Maintenance Page Route (Direct Access)
+// Maintenance Page Route (Only shows if maintenance mode is ON)
 Route::get('/maintenance', function () {
+    $setting = \App\Models\CmsSetting::where('key', 'maintenance_mode')->first();
+    $isMaintenanceMode = $setting && $setting->value === 'true';
+    
+    if (!$isMaintenanceMode) {
+        return redirect('/');
+    }
+    
     return view('maintenance');
 });
 
