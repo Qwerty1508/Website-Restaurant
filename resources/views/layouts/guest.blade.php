@@ -115,7 +115,7 @@
     
     @include('components.navbar')
     <main>
-        @if(session('warning'))
+        @if(session('warning') && auth()->check())
             <div class="modal fade" id="warningModal" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" style="max-width: 650px;">
                     <div class="modal-content border-0 bg-transparent" style="overflow: visible !important; box-shadow: none !important;">
