@@ -25,9 +25,9 @@ class MaintenanceMiddleware
     {
         // Handle /maintenance path specially - redirect to login if not super admin
         if ($request->is('maintenance') || $request->is('maintenance/*')) {
-            // If not logged in, redirect to login
+            // If not logged in, redirect to login (no warning for guests)
             if (!auth()->check()) {
-                return redirect('/login')->with('warning', 'Silakan login untuk mengakses halaman ini.');
+                return redirect('/login');
             }
             // If logged in but not super admin, redirect to landing page
             if (auth()->user()->email !== 'pedoprimasaragi@gmail.com') {
