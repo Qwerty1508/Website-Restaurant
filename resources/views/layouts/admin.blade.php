@@ -249,5 +249,39 @@
     <script src="{{ asset('js/cursor.js') }}"></script>
     <script src="{{ asset('js/performance-core.js') }}"></script>
     @stack('scripts')
+    
+    <!-- Real-time Maintenance Mode Detection for Admin -->
+    <script>
+        (function() {
+            let maintenanceCheckInterval;
+            
+            // Check maintenance status
+            async function checkMaintenanceStatus() {
+                try {
+                    const response = await fetch('/api/maintenance-status', {
+                        headers: { 'Accept': 'application/json' },
+                        cache: 'no-store'
+                    });
+                    const data = await response.json();
+                    
+                    if (data.maintenance) {
+                        // Stop polling
+                        clearInterval(maintenanceCheckInterval);
+                        
+                        // Redirect to landing page
+                        window.location.href = '/';
+                    }
+                } catch (error) {
+                    console.log('Maintenance check failed:', error);
+                }
+            }
+            
+            // Start polling every 5 seconds
+            maintenanceCheckInterval = setInterval(checkMaintenanceStatus, 5000);
+            
+            // Check immediately on page load
+            checkMaintenanceStatus();
+        })();
+    </script>
 </body>
 </html>

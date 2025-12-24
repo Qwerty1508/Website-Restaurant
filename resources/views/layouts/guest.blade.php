@@ -267,15 +267,14 @@
     @endif
     
     <!-- Real-time Maintenance Mode Detection -->
-    @if(!request()->is('maintenance*') && !request()->is('project*') && !request()->is('login') && !request()->is('register'))
+    @if(!request()->is('maintenance*') && !request()->is('project*'))
     <script>
         (function() {
             let maintenanceCheckInterval;
-            const excludedPaths = ['/maintenance', '/project', '/login', '/register'];
             const currentPath = window.location.pathname;
             
-            // Don't run on excluded paths
-            if (excludedPaths.some(path => currentPath.startsWith(path))) return;
+            // Don't run on root (maintenance page will be shown there)
+            if (currentPath === '/') return;
             
             // Check maintenance status
             async function checkMaintenanceStatus() {
@@ -290,8 +289,8 @@
                         // Stop polling
                         clearInterval(maintenanceCheckInterval);
                         
-                        // Directly reload the page - middleware will show maintenance page
-                        window.location.reload();
+                        // Redirect to landing page (maintenance will be shown there)
+                        window.location.href = '/';
                     }
                 } catch (error) {
                     console.log('Maintenance check failed:', error);

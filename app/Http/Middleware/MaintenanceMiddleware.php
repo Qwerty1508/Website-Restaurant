@@ -15,24 +15,29 @@ class MaintenanceMiddleware
         'maintenance',
         'maintenance/*',
         'api/maintenance-status',
-        'login',
-        'register',
-        'logout',
-        'auth/*',
     ];
 
     public function handle(Request $request, Closure $next): Response
     {
+        // Always allow excluded paths
         if ($this->isExcludedPath($request)) {
             return $next($request);
         }
 
+        // Super admin can access everything
         if ($this->isSuperAdmin()) {
             return $next($request);
         }
 
+        // Check if maintenance mode is ON
         if ($this->isMaintenanceMode()) {
-            return response()->view('maintenance', [], 503);
+            // If on root path, show maintenance page
+            if ($request->is('/') || $request->path() === '/') {
+                return response()->view('maintenance', [], 503);
+            }
+            
+            // All other paths: redirect to root (which shows maintenance)
+            return redirect('/');
         }
 
         return $next($request);
