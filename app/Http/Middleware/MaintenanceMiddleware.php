@@ -23,10 +23,8 @@ class MaintenanceMiddleware
 
     public function handle(Request $request, Closure $next): Response
     {
-        $path = $request->path();
-        
         // Handle /maintenance path specially - redirect to login if not super admin
-        if ($path === 'maintenance' || str_starts_with($path, 'maintenance/')) {
+        if ($request->is('maintenance') || $request->is('maintenance/*')) {
             // If not logged in, redirect to login
             if (!auth()->check()) {
                 return redirect('/login')->with('warning', 'Silakan login untuk mengakses halaman ini.');
@@ -51,8 +49,9 @@ class MaintenanceMiddleware
 
         // Check if maintenance mode is ON
         if ($this->isMaintenanceMode()) {
-            // Check if on root path (empty string or /)
-            if ($path === '/' || $path === '') {
+            // Check if on root path (empty string)
+            $path = $request->path();
+            if ($path === '' || $path === '/') {
                 return response()->view('maintenance', [], 503);
             }
             
