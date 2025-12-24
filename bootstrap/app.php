@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\SecurityHeaders::class,
             \App\Http\Middleware\ViewerMiddleware::class,
+            \App\Http\Middleware\MaintenanceMiddleware::class, // Global maintenance check
         ]);
         
         $middleware->trustProxies(at: '*');

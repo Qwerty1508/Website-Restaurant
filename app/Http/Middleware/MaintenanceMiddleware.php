@@ -12,8 +12,8 @@ class MaintenanceMiddleware
     protected $excludedPaths = [
         'project',
         'project/*',
-        'status',
-        'status/*',
+        'maintenance',
+        'maintenance/*',
         'login',
         'register',
         'logout',
