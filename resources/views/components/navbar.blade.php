@@ -3,10 +3,31 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             Culinaire<span>.</span>
         </a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="bi bi-list fs-4"></i>
-        </button>
+        
+        <!-- Mobile Controls: Lang Toggle, Theme Toggle, Hamburger -->
+        <div class="navbar-mobile-controls d-lg-none">
+            <div class="lang-toggle-3d" id="langToggle3DMobile" data-current="{{ app()->getLocale() }}">
+                <div class="lang-toggle-track">
+                    <span class="lang-label lang-en">ID</span>
+                    <div class="lang-toggle-thumb">
+                        <img src="{{ app()->getLocale() == 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png' }}" 
+                             alt="{{ app()->getLocale() == 'en' ? 'EN' : 'ID' }}" 
+                             class="flag-img" 
+                             id="currentFlagMobile">
+                    </div>
+                    <span class="lang-label lang-id">EN</span>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
+                <i class="bi bi-moon-fill icon-moon"></i>
+                <i class="bi bi-sun-fill icon-sun"></i>
+            </button>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+        </div>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <button class="mobile-nav-close d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Close menu">
                 <i class="bi bi-x-lg"></i>
@@ -38,7 +59,8 @@
                     </a>
                 </li>
                 <li class="nav-item d-flex align-items-center gap-3 ms-lg-2">
-                    <div class="lang-toggle-3d" id="langToggle3D" data-current="{{ app()->getLocale() }}">
+                    <!-- Desktop Only: Lang Toggle & Theme Toggle -->
+                    <div class="lang-toggle-3d d-none d-lg-block" id="langToggle3D" data-current="{{ app()->getLocale() }}">
                         <div class="lang-toggle-track">
                             <span class="lang-label lang-en">ID</span>
                             <div class="lang-toggle-thumb">
@@ -52,7 +74,7 @@
                         <a href="{{ route('lang.switch', 'en') }}" class="lang-link-hidden" id="langLinkEn"></a>
                         <a href="{{ route('lang.switch', 'id') }}" class="lang-link-hidden" id="langLinkId"></a>
                     </div>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <button class="theme-toggle d-none d-lg-flex" id="themeToggle" aria-label="Toggle dark mode">
                         <i class="bi bi-moon-fill icon-moon"></i>
                         <i class="bi bi-sun-fill icon-sun"></i>
                     </button>
@@ -130,6 +152,55 @@
     }
     .navbar-brand span {
         color: #C89B3A !important;
+    }
+    /* Mobile Controls Container */
+    .navbar-mobile-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-left: auto;
+    }
+    .navbar-mobile-controls .lang-toggle-3d {
+        transform: scale(0.85);
+        transform-origin: center;
+    }
+    .navbar-mobile-controls .theme-toggle {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(12, 42, 54, 0.08);
+        border: 1px solid rgba(12, 42, 54, 0.12);
+        border-radius: 50%;
+        color: #0C2A36;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .navbar-mobile-controls .theme-toggle:hover {
+        background: rgba(200, 155, 58, 0.15);
+        border-color: rgba(200, 155, 58, 0.3);
+    }
+    .navbar-mobile-controls .navbar-toggler {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    [data-theme="dark"] .navbar-mobile-controls .theme-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.15);
+        color: #E6EFEF;
+    }
+    [data-theme="dark"] .navbar-mobile-controls .theme-toggle:hover {
+        background: rgba(212, 175, 55, 0.2);
+        border-color: rgba(212, 175, 55, 0.4);
+    }
+    [data-theme="dark"] .navbar-mobile-controls .navbar-toggler i {
+        color: #E6EFEF;
     }
     .navbar-nav .nav-link {
         color: #0C2A36 !important;
@@ -568,53 +639,102 @@
 <div style="height: 80px;"></div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const langToggle = document.getElementById('langToggle3D');
-    if (langToggle) {
-        function switchLanguage(newLang) {
-            langToggle.setAttribute('data-current', newLang);
+    // Language Toggle - Handle both desktop and mobile
+    const langToggleDesktop = document.getElementById('langToggle3D');
+    const langToggleMobile = document.getElementById('langToggle3DMobile');
+    
+    function switchLanguage(newLang, source) {
+        // Update desktop toggle
+        if (langToggleDesktop) {
+            langToggleDesktop.setAttribute('data-current', newLang);
             const flagImg = document.getElementById('currentFlag');
             if (flagImg) {
                 flagImg.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
                 flagImg.alt = newLang === 'en' ? 'EN' : 'ID';
             }
-            if (window.translations && window.translations[newLang]) {
-                const terms = window.translations[newLang];
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if (terms[key]) {
-                        if ((el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') && el.getAttribute('placeholder')) {
-                            el.placeholder = terms[key];
-                        } else {
-                            el.innerHTML = terms[key];
-                        }
-                    }
-                });
-                document.documentElement.lang = newLang === 'id' ? 'id-ID' : 'en-US';
-            }
-            const langLink = newLang === 'en' ? document.getElementById('langLinkEn') : document.getElementById('langLinkId');
-            if (langLink && langLink.href) {
-                fetch(langLink.href).catch(err => console.error('Language sync failed', err));
+        }
+        // Update mobile toggle
+        if (langToggleMobile) {
+            langToggleMobile.setAttribute('data-current', newLang);
+            const flagImgMobile = document.getElementById('currentFlagMobile');
+            if (flagImgMobile) {
+                flagImgMobile.src = newLang === 'en' ? 'https://flagcdn.com/w40/gb.png' : 'https://flagcdn.com/w40/id.png';
+                flagImgMobile.alt = newLang === 'en' ? 'EN' : 'ID';
             }
         }
+        // Update translations
+        if (window.translations && window.translations[newLang]) {
+            const terms = window.translations[newLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (terms[key]) {
+                    if ((el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') && el.getAttribute('placeholder')) {
+                        el.placeholder = terms[key];
+                    } else {
+                        el.innerHTML = terms[key];
+                    }
+                }
+            });
+            document.documentElement.lang = newLang === 'id' ? 'id-ID' : 'en-US';
+        }
+        // Sync with server
+        const langLink = newLang === 'en' ? document.getElementById('langLinkEn') : document.getElementById('langLinkId');
+        if (langLink && langLink.href) {
+            fetch(langLink.href).catch(err => console.error('Language sync failed', err));
+        }
+    }
+    
+    function setupLangToggle(toggleEl) {
+        if (!toggleEl) return;
         
         function toggle() {
-            const currentLang = langToggle.getAttribute('data-current');
+            const currentLang = toggleEl.getAttribute('data-current');
             const newLang = currentLang === 'en' ? 'id' : 'en';
-            switchLanguage(newLang);
+            switchLanguage(newLang, toggleEl.id);
         }
         
-        langToggle.addEventListener('click', function(e) {
+        toggleEl.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             toggle();
         });
         
-        langToggle.addEventListener('touchend', function(e) {
+        toggleEl.addEventListener('touchend', function(e) {
             e.preventDefault();
             e.stopPropagation();
             toggle();
         }, { passive: false });
     }
+    
+    setupLangToggle(langToggleDesktop);
+    setupLangToggle(langToggleMobile);
+    
+    // Theme Toggle - Handle both desktop and mobile
+    const themeToggleDesktop = document.getElementById('themeToggle');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
+    
+    function setupThemeToggle(toggleEl) {
+        if (!toggleEl) return;
+        toggleEl.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // Trigger the main theme toggle if it exists
+            if (window.toggleTheme) {
+                window.toggleTheme();
+            } else {
+                // Fallback: toggle theme directly
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            }
+        });
+    }
+    
+    setupThemeToggle(themeToggleDesktop);
+    setupThemeToggle(themeToggleMobile);
+    
+    // Profile Dropdown
     const dropdownBtn = document.getElementById('profileDropdownBtn');
     const dropdownMenu = document.getElementById('profileDropdownMenu');
     if (dropdownBtn && dropdownMenu) {
