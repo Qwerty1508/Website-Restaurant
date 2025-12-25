@@ -251,5 +251,103 @@
         </div>
     </div>
 
+    <script>
+        // Visitor Tracking Script
+        (function() {
+            // Generate unique session ID
+            let sessionId = sessionStorage.getItem('maintenance_session_id');
+            if (!sessionId) {
+                sessionId = 'mv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                sessionStorage.setItem('maintenance_session_id', sessionId);
+            }
+
+            // Detect browser info
+            const ua = navigator.userAgent;
+            let browser = 'Unknown';
+            let browserVersion = '';
+            
+            if (ua.includes('Firefox/')) {
+                browser = 'Firefox';
+                browserVersion = ua.match(/Firefox\/(\d+)/)?.[1] || '';
+            } else if (ua.includes('Chrome/') && !ua.includes('Edg/')) {
+                browser = 'Chrome';
+                browserVersion = ua.match(/Chrome\/(\d+)/)?.[1] || '';
+            } else if (ua.includes('Edg/')) {
+                browser = 'Edge';
+                browserVersion = ua.match(/Edg\/(\d+)/)?.[1] || '';
+            } else if (ua.includes('Safari/') && !ua.includes('Chrome')) {
+                browser = 'Safari';
+                browserVersion = ua.match(/Version\/(\d+)/)?.[1] || '';
+            } else if (ua.includes('Opera') || ua.includes('OPR/')) {
+                browser = 'Opera';
+                browserVersion = ua.match(/(?:Opera|OPR)\/(\d+)/)?.[1] || '';
+            }
+
+            // Detect device type
+            let deviceType = 'Desktop';
+            if (/Mobi|Android/i.test(ua)) {
+                deviceType = 'Mobile';
+            } else if (/Tablet|iPad/i.test(ua)) {
+                deviceType = 'Tablet';
+            }
+
+            // Detect OS
+            let os = 'Unknown';
+            if (ua.includes('Windows')) os = 'Windows';
+            else if (ua.includes('Mac')) os = 'macOS';
+            else if (ua.includes('Linux')) os = 'Linux';
+            else if (ua.includes('Android')) os = 'Android';
+            else if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
+
+            // Screen resolution
+            const resolution = window.screen.width + 'x' + window.screen.height;
+
+            // Send entry data
+            fetch('/api/maintenance-visitor/enter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    session_id: sessionId,
+                    browser: browser,
+                    browser_version: browserVersion,
+                    device_type: deviceType,
+                    operating_system: os,
+                    screen_resolution: resolution
+                })
+            });
+
+            // Heartbeat every 30 seconds
+            setInterval(() => {
+                fetch('/api/maintenance-visitor/heartbeat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+            }, 30000);
+
+            // Send exit on page unload
+            window.addEventListener('beforeunload', () => {
+                navigator.sendBeacon('/api/maintenance-visitor/exit', JSON.stringify({
+                    session_id: sessionId
+                }));
+            });
+
+            // Also send exit on visibility change (for mobile)
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    navigator.sendBeacon('/api/maintenance-visitor/exit', JSON.stringify({
+                        session_id: sessionId
+                    }));
+                }
+            });
+        })();
+    </script>
+
 </body>
 </html>

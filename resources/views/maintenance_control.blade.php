@@ -168,6 +168,62 @@
                         This page is only accessible by the super admin account
                     </small>
                 </div>
+
+                <!-- Real-Time Visitor Tracking Section -->
+                @if($isMaintenanceMode)
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card border-0" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(200,155,58,0.2) !important;">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="text-white mb-0">
+                                        <i class="bi bi-people-fill me-2 text-warning"></i>Real-Time Visitors
+                                    </h5>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="badge bg-success" id="active-count">0 Active</span>
+                                        <span class="badge bg-secondary" id="total-today">0 Today</span>
+                                        <small class="text-white-50">
+                                            <i class="bi bi-arrow-repeat me-1 spinning" id="refresh-indicator" style="display: none;"></i>
+                                            Auto-refresh: 10s
+                                        </small>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-dark table-hover mb-0" style="background: transparent;">
+                                        <thead>
+                                            <tr class="text-warning" style="border-bottom: 1px solid rgba(200,155,58,0.3);">
+                                                <th><i class="bi bi-hash"></i></th>
+                                                <th><i class="bi bi-geo-alt me-1"></i>IP</th>
+                                                <th><i class="bi bi-browser-chrome me-1"></i>Browser</th>
+                                                <th><i class="bi bi-phone me-1"></i>Device</th>
+                                                <th><i class="bi bi-windows me-1"></i>OS</th>
+                                                <th><i class="bi bi-aspect-ratio me-1"></i>Resolution</th>
+                                                <th><i class="bi bi-clock me-1"></i>Entry Time</th>
+                                                <th><i class="bi bi-stopwatch me-1"></i>Duration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="visitors-table-body">
+                                            <tr>
+                                                <td colspan="8" class="text-center text-white-50 py-4">
+                                                    <i class="bi bi-hourglass-split me-2"></i>Loading visitors...
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="mt-3 text-center">
+                                    <small class="text-white-50">
+                                        <i class="bi bi-info-circle me-1"></i>
+                                        Visitors are marked inactive after 60 seconds without heartbeat
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -259,5 +315,72 @@ document.addEventListener('DOMContentLoaded', function() {
     from { opacity: 0; transform: translateX(20px); }
     to { opacity: 1; transform: translateX(0); }
 }
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.spinning {
+    animation: spin 1s linear infinite;
+}
 </style>
+
+@if($isMaintenanceMode)
+<script>
+// Real-Time Visitor Tracking Refresh
+(function() {
+    async function fetchVisitors() {
+        const indicator = document.getElementById('refresh-indicator');
+        if (indicator) indicator.style.display = 'inline-block';
+        
+        try {
+            const response = await fetch('/api/maintenance-visitors');
+            const data = await response.json();
+            
+            // Update counts
+            document.getElementById('active-count').textContent = data.active_count + ' Active';
+            document.getElementById('total-today').textContent = data.total_today + ' Today';
+            
+            // Update table
+            const tbody = document.getElementById('visitors-table-body');
+            if (data.active.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center text-white-50 py-4">
+                            <i class="bi bi-emoji-smile me-2"></i>No active visitors at the moment
+                        </td>
+                    </tr>
+                `;
+            } else {
+                tbody.innerHTML = data.active.map((v, i) => `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td class="text-white-50">${i + 1}</td>
+                        <td><code class="text-warning">${v.ip || '-'}</code></td>
+                        <td class="text-white">${v.browser || '-'}</td>
+                        <td>
+                            <span class="badge ${v.device === 'Mobile' ? 'bg-info' : v.device === 'Tablet' ? 'bg-primary' : 'bg-secondary'}">
+                                <i class="bi bi-${v.device === 'Mobile' ? 'phone' : v.device === 'Tablet' ? 'tablet' : 'laptop'} me-1"></i>${v.device || '-'}
+                            </span>
+                        </td>
+                        <td class="text-white-50">${v.os || '-'}</td>
+                        <td class="text-white-50">${v.resolution || '-'}</td>
+                        <td class="text-success">${v.entry_time || '-'}</td>
+                        <td class="text-warning fw-bold">${v.duration || '-'}</td>
+                    </tr>
+                `).join('');
+            }
+        } catch (error) {
+            console.log('Error fetching visitors:', error);
+        } finally {
+            if (indicator) indicator.style.display = 'none';
+        }
+    }
+    
+    // Initial fetch
+    fetchVisitors();
+    
+    // Refresh every 10 seconds
+    setInterval(fetchVisitors, 10000);
+})();
+</script>
+@endif
 @endsection
