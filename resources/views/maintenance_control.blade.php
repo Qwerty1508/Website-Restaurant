@@ -328,6 +328,29 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 // Real-Time Visitor Tracking Refresh
 (function() {
+    let visitorData = [];
+    let lastFetchTime = Date.now();
+    
+    function formatDuration(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        
+        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+    
+    function updateDurations() {
+        const elapsed = Math.floor((Date.now() - lastFetchTime) / 1000);
+        const durationCells = document.querySelectorAll('.duration-cell');
+        
+        durationCells.forEach((cell, index) => {
+            if (visitorData[index]) {
+                const newDuration = visitorData[index].duration_seconds + elapsed;
+                cell.textContent = formatDuration(newDuration);
+            }
+        });
+    }
+    
     async function fetchVisitors() {
         const indicator = document.getElementById('refresh-indicator');
         if (indicator) indicator.style.display = 'inline-block';
@@ -335,6 +358,9 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch('/api/maintenance-visitors');
             const data = await response.json();
+            
+            visitorData = data.active;
+            lastFetchTime = Date.now();
             
             // Update counts
             document.getElementById('active-count').textContent = data.active_count + ' Active';
@@ -364,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <td class="text-white-50">${v.os || '-'}</td>
                         <td class="text-white-50">${v.resolution || '-'}</td>
                         <td class="text-success">${v.entry_time || '-'}</td>
-                        <td class="text-warning fw-bold">${v.duration || '-'}</td>
+                        <td class="text-warning fw-bold duration-cell">${v.duration || '-'}</td>
                     </tr>
                 `).join('');
             }
@@ -378,8 +404,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial fetch
     fetchVisitors();
     
-    // Refresh every 2 seconds
-    setInterval(fetchVisitors, 2000);
+    // Refresh data every 5 seconds
+    setInterval(fetchVisitors, 5000);
+    
+    // Update duration display every 1 second
+    setInterval(updateDurations, 1000);
 })();
 </script>
 @endif

@@ -113,6 +113,7 @@ Route::get('/api/maintenance-visitors', function () {
             'resolution' => $v->screen_resolution,
             'entry_time' => $v->entry_time->format('H:i:s'),
             'duration' => $v->formatted_duration,
+            'duration_seconds' => $v->duration_seconds,
         ]),
         'total_today' => $todayVisitors->count(),
         'active_count' => $activeVisitors->count(),
