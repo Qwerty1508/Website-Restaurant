@@ -191,12 +191,12 @@
                                         <thead>
                                             <tr class="text-warning" style="border-bottom: 1px solid rgba(200,155,58,0.3);">
                                                 <th><i class="bi bi-hash"></i></th>
+                                                <th><i class="bi bi-link-45deg me-1"></i>Page</th>
                                                 <th><i class="bi bi-geo-alt me-1"></i>IP</th>
                                                 <th><i class="bi bi-browser-chrome me-1"></i>Browser</th>
                                                 <th><i class="bi bi-phone me-1"></i>Device</th>
                                                 <th><i class="bi bi-windows me-1"></i>OS</th>
-                                                <th><i class="bi bi-aspect-ratio me-1"></i>Resolution</th>
-                                                <th><i class="bi bi-clock me-1"></i>Entry Time</th>
+                                                <th><i class="bi bi-clock me-1"></i>Entry</th>
                                                 <th><i class="bi bi-stopwatch me-1"></i>Duration</th>
                                             </tr>
                                         </thead>
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (indicator) indicator.style.display = 'inline-block';
         
         try {
-            const response = await fetch('/api/maintenance-visitors');
+            const response = await fetch('/api/site-visitors');
             const data = await response.json();
             
             visitorData = data.active;
@@ -377,6 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 tbody.innerHTML = data.active.map((v, i) => `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                         <td class="text-white-50">${i + 1}</td>
+                        <td><code class="text-info">${v.page_url || '-'}</code></td>
                         <td><code class="text-warning">${v.ip || '-'}</code></td>
                         <td class="text-white">${v.browser || '-'}</td>
                         <td>
@@ -385,9 +386,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             </span>
                         </td>
                         <td class="text-white-50">${v.os || '-'}</td>
-                        <td class="text-white-50">${v.resolution || '-'}</td>
                         <td class="text-success">${v.entry_time || '-'}</td>
-                        <td class="text-warning fw-bold duration-cell">${v.duration || '-'}</td>
+                        <td class="text-warning fw-bold duration-cell">${formatDuration(v.duration_seconds || 0)}</td>
                     </tr>
                 `).join('');
             }

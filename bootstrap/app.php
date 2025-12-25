@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Exclude visitor tracking API routes from CSRF verification
         $middleware->validateCsrfTokens(except: [
             'api/maintenance-visitor/*',
+            'api/site-visitor/*',
         ]);
         
         $middleware->trustProxies(at: '*');

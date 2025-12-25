@@ -120,6 +120,86 @@ Route::get('/api/maintenance-visitors', function () {
     ]);
 })->withoutMiddleware([\App\Http\Middleware\MaintenanceMiddleware::class]);
 
+// Site-Wide Visitor Tracking API Routes
+Route::post('/api/site-visitor/enter', function (\Illuminate\Http\Request $request) {
+    $visitor = \App\Models\SiteVisitor::create([
+        'session_id' => $request->session_id,
+        'page_url' => $request->page_url,
+        'page_title' => $request->page_title,
+        'ip_address' => $request->ip(),
+        'browser' => $request->browser,
+        'browser_version' => $request->browser_version,
+        'device_type' => $request->device_type,
+        'operating_system' => $request->operating_system,
+        'screen_resolution' => $request->screen_resolution,
+        'user_id' => auth()->id(),
+        'user_email' => auth()->user()?->email,
+        'entry_time' => now(),
+        'last_heartbeat' => now(),
+        'is_active' => true,
+    ]);
+    return response()->json(['success' => true, 'id' => $visitor->id]);
+});
+
+Route::post('/api/site-visitor/heartbeat', function (\Illuminate\Http\Request $request) {
+    $visitor = \App\Models\SiteVisitor::where('session_id', $request->session_id)
+        ->where('page_url', $request->page_url)
+        ->where('is_active', true)
+        ->first();
+    if ($visitor) {
+        $visitor->last_heartbeat = now();
+        $visitor->duration_seconds = $visitor->entry_time->diffInSeconds(now());
+        $visitor->save();
+    }
+    return response()->json(['success' => true]);
+});
+
+Route::post('/api/site-visitor/exit', function (\Illuminate\Http\Request $request) {
+    $visitor = \App\Models\SiteVisitor::where('session_id', $request->session_id)
+        ->where('page_url', $request->page_url)
+        ->where('is_active', true)
+        ->first();
+    if ($visitor) {
+        $visitor->exit_time = now();
+        $visitor->is_active = false;
+        $visitor->duration_seconds = $visitor->entry_time->diffInSeconds(now());
+        $visitor->save();
+    }
+    return response()->json(['success' => true]);
+});
+
+Route::get('/api/site-visitors', function () {
+    if (!auth()->check() || auth()->user()->email !== 'pedoprimasaragi@gmail.com') {
+        abort(403);
+    }
+    
+    // Mark inactive visitors (no heartbeat for 60s)
+    \App\Models\SiteVisitor::where('is_active', true)
+        ->where('last_heartbeat', '<', now()->subSeconds(60))
+        ->update(['is_active' => false, 'exit_time' => \DB::raw('last_heartbeat')]);
+    
+    $activeVisitors = \App\Models\SiteVisitor::getActiveVisitors();
+    $todayVisitors = \App\Models\SiteVisitor::getTodayVisitors();
+    
+    return response()->json([
+        'active' => $activeVisitors->map(fn($v) => [
+            'id' => $v->id,
+            'page_url' => $v->page_url,
+            'page_title' => $v->page_title,
+            'ip' => $v->ip_address,
+            'browser' => $v->browser . ' ' . $v->browser_version,
+            'device' => $v->device_type,
+            'os' => $v->operating_system,
+            'resolution' => $v->screen_resolution,
+            'user_email' => $v->user_email,
+            'entry_time' => $v->entry_time->format('H:i:s'),
+            'duration_seconds' => $v->duration_seconds,
+        ]),
+        'total_today' => $todayVisitors->count(),
+        'active_count' => $activeVisitors->count(),
+    ]);
+})->withoutMiddleware([\App\Http\Middleware\MaintenanceMiddleware::class]);
+
 // Redirect old /status to /maintenance
 Route::get('/status', function () {
     return redirect('/maintenance');

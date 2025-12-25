@@ -44,6 +44,10 @@ class StatusController extends Controller
         } else {
             // Clear start time when turning OFF
             CmsSetting::where('key', 'maintenance_start_time')->delete();
+            
+            // Clear all visitor tracking data when maintenance is turned OFF
+            \App\Models\SiteVisitor::truncate();
+            \App\Models\MaintenanceVisitor::truncate();
         }
 
         // Return JSON for AJAX requests
