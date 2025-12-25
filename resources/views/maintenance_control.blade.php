@@ -182,10 +182,7 @@
                                     <div class="d-flex align-items-center gap-3">
                                         <span class="badge bg-success" id="active-count">0 Active</span>
                                         <span class="badge bg-secondary" id="total-today">0 Today</span>
-                                        <small class="text-white-50">
-                                            <i class="bi bi-arrow-repeat me-1 spinning" id="refresh-indicator" style="display: none;"></i>
-                                            Auto-refresh: 10s
-                                        </small>
+                                        <i class="bi bi-arrow-repeat text-white-50 spinning" id="refresh-indicator" style="display: none;"></i>
                                     </div>
                                 </div>
                                 
