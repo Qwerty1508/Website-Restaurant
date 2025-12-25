@@ -18,6 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\MaintenanceMiddleware::class, // Global maintenance check
         ]);
         
+        // Exclude visitor tracking API routes from CSRF verification
+        $middleware->validateCsrfTokens(except: [
+            'api/maintenance-visitor/*',
+        ]);
+        
         $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
