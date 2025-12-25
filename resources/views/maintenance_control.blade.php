@@ -378,8 +378,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial fetch
     fetchVisitors();
     
-    // Refresh every 10 seconds
-    setInterval(fetchVisitors, 10000);
+    // Refresh every 2 seconds
+    setInterval(fetchVisitors, 2000);
 })();
 </script>
 @endif
