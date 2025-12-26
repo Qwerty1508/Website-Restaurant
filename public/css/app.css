@@ -2281,17 +2281,30 @@ body {
 }
 
 [data-theme="dark"] .table>tbody>tr>td {
-    color: #E6EFEF;
+    color: #FFFFFF !important;
     border-color: rgba(255, 255, 255, 0.08);
 }
 
+[data-theme="dark"] .table>tbody>tr>td a {
+    color: #5dade2 !important;
+}
+
+[data-theme="dark"] .table>tbody>tr>td a:hover {
+    color: #85c1e9 !important;
+}
+
 [data-theme="dark"] .table>tbody>tr>td strong {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .table>tbody>tr>td div,
+[data-theme="dark"] .table>tbody>tr>td span {
+    color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .table>tbody>tr>td small,
 [data-theme="dark"] .table>tbody>tr>td .text-muted {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
 [data-theme="dark"] .main-content-admin .table>tbody>tr:hover {
