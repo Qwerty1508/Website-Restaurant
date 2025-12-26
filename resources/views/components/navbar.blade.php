@@ -101,11 +101,7 @@
                                     </a>
                                 </li>
                                 @endif
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('/customer/orders') }}">
-                                        <i class="bi bi-bag me-2"></i><span data-i18n="my_orders">{{ __('messages.my_orders') }}</span>
-                                    </a>
-                                </li>
+
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/customer/profile') }}">
