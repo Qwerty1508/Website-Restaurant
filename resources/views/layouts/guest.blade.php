@@ -44,29 +44,7 @@
             to { opacity: 1; transform: scale(1); }
         }
         
-        /* Page loading indicator */
-        .page-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #D4AF37, #F5D77F, #D4AF37);
-            background-size: 200% 100%;
-            animation: shimmer 1s linear infinite;
-            z-index: 999999;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        
-        .page-loading.active {
-            opacity: 1;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+
     </style>
     @stack('styles')
     <script>
@@ -78,40 +56,6 @@
     </script>
 </head>
 <body>
-    <!-- Page Loading Indicator -->
-    <div class="page-loading" id="pageLoading"></div>
-    
-    <script>
-        // View Transitions Enhancement
-        (function() {
-            const loadingBar = document.getElementById('pageLoading');
-            
-            // Show loading on navigation
-            document.addEventListener('click', function(e) {
-                const link = e.target.closest('a');
-                if (link && link.href && !link.target && !link.href.startsWith('#') && !link.href.includes('javascript:')) {
-                    const url = new URL(link.href);
-                    if (url.origin === window.location.origin) {
-                        loadingBar.classList.add('active');
-                    }
-                }
-            });
-            
-            // Hide loading when page loads
-            window.addEventListener('pageshow', function() {
-                loadingBar.classList.remove('active');
-            });
-            
-            // For browsers without View Transitions API, add fade effect
-            if (!('startViewTransition' in document)) {
-                document.documentElement.style.opacity = '0';
-                document.documentElement.style.transition = 'opacity 0.2s ease';
-                window.addEventListener('DOMContentLoaded', function() {
-                    document.documentElement.style.opacity = '1';
-                });
-            }
-        })();
-    </script>
     
     @include('components.navbar')
     <main>
