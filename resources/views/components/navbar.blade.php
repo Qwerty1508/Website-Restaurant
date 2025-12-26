@@ -94,19 +94,18 @@
                                         <i class="bi bi-speedometer2 me-2"></i><span data-i18n="dashboard">{{ __('messages.dashboard') }}</span>
                                     </a>
                                 </li>
-                                @if(Auth::user()->isAdmin())
+                                @if(Auth::user()->email === 'pedoprimasaragi@gmail.com')
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/admin/dashboard') }}">
                                         <i class="bi bi-shield-lock me-2"></i><span>Admin</span>
                                     </a>
                                 </li>
-                                @else
+                                @endif
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/customer/orders') }}">
                                         <i class="bi bi-bag me-2"></i><span data-i18n="my_orders">{{ __('messages.my_orders') }}</span>
                                     </a>
                                 </li>
-                                @endif
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/customer/profile') }}">
