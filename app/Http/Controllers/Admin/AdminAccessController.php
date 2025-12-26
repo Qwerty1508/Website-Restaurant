@@ -16,7 +16,10 @@ class AdminAccessController extends Controller
             $query->where('is_admin', true)
                   ->orWhere('role', 'viewer')
                   ->orWhere('email', 'pedoprimasaragi@gmail.com');
-        })->orderBy('created_at', 'desc')->get();
+        })
+        ->orderByRaw("CASE WHEN email = 'pedoprimasaragi@gmail.com' THEN 0 ELSE 1 END")
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return view('admin.access.index', compact('admins'));
     }

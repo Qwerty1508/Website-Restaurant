@@ -88,17 +88,19 @@
                                 @endif
                             </td>
                             <td>
+                                @if($admin->isSuperAdmin())
+                                <span class="badge bg-secondary">Super Admin</span>
+                                @else
                                 <div class="dropdown">
-                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Aksi
                                     </button>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
                                             <a class="dropdown-item" href="{{ route('admin.access.edit', $admin->id) }}">
                                                 <i class="bi bi-pencil me-2"></i>Edit & Permissions
                                             </a>
                                         </li>
-                                        @if(!$admin->isSuperAdmin())
                                         <li>
                                             <form action="{{ route('admin.access.toggle-super', $admin->id) }}" method="POST">
                                                 @csrf
@@ -118,9 +120,9 @@
                                                 </button>
                                             </form>
                                         </li>
-                                        @endif
                                     </ul>
                                 </div>
+                                @endif
                             </td>
                         </tr>
                         @empty
