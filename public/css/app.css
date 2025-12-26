@@ -2264,6 +2264,30 @@ body {
     background-color: var(--surface);
 }
 
+/* Fix table-light in dark mode for admin */
+[data-theme="dark"] .table-light,
+[data-theme="dark"] .table-light>tr,
+[data-theme="dark"] .table-light>tr>th,
+[data-theme="dark"] thead.table-light,
+[data-theme="dark"] thead.table-light th {
+    background-color: var(--surface-light) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-medium) !important;
+}
+
+[data-theme="dark"] .table>tbody>tr>td {
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+[data-theme="dark"] .table>tbody>tr>td strong {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .table>tbody>tr>td small {
+    color: var(--text-secondary);
+}
+
 [data-theme="dark"] .dropdown-menu {
     background-color: var(--surface);
     border-color: var(--border-medium);
@@ -3818,18 +3842,23 @@ html {
     }
 
     .hero-content {
-        text-align: left; /* Explicitly set left or just let it inherit */
+        text-align: left;
+        /* Explicitly set left or just let it inherit */
         padding-top: 60px;
     }
 
     .hero-actions {
-        display: block; /* Restore block or default behavior */
+        display: block;
+        /* Restore block or default behavior */
     }
 
     .hero-actions .btn {
-        width: auto; /* Restore auto width */
-        margin-right: 1rem !important; /* Adding margin right for spacing between buttons if they wrap */
-        margin-bottom: 1rem; /* Add margin bottom for wrapping */
+        width: auto;
+        /* Restore auto width */
+        margin-right: 1rem !important;
+        /* Adding margin right for spacing between buttons if they wrap */
+        margin-bottom: 1rem;
+        /* Add margin bottom for wrapping */
     }
 
     .card-glass {
