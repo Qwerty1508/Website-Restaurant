@@ -2269,23 +2269,33 @@ body {
 [data-theme="dark"] .table-light>tr,
 [data-theme="dark"] .table-light>tr>th,
 [data-theme="dark"] thead.table-light,
-[data-theme="dark"] thead.table-light th {
-    background-color: var(--surface-light) !important;
-    color: var(--text-primary) !important;
-    border-color: var(--border-medium) !important;
+[data-theme="dark"] thead.table-light th,
+[data-theme="dark"] .main-content-admin .table-light,
+[data-theme="dark"] .main-content-admin thead.table-light,
+[data-theme="dark"] .main-content-admin thead.table-light th,
+[data-theme="dark"] .main-content-admin .table thead th {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    font-weight: 600 !important;
 }
 
 [data-theme="dark"] .table>tbody>tr>td {
-    color: var(--text-primary);
-    border-color: var(--border-light);
+    color: #E6EFEF;
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="dark"] .table>tbody>tr>td strong {
-    color: var(--text-primary);
+    color: #FFFFFF;
 }
 
-[data-theme="dark"] .table>tbody>tr>td small {
-    color: var(--text-secondary);
+[data-theme="dark"] .table>tbody>tr>td small,
+[data-theme="dark"] .table>tbody>tr>td .text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+[data-theme="dark"] .main-content-admin .table>tbody>tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 [data-theme="dark"] .dropdown-menu {
