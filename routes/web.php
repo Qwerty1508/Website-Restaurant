@@ -463,6 +463,17 @@ Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\AdminMiddleware
     Route::post('/developer/api/content', [\App\Http\Controllers\Admin\AdminCmsController::class, 'apiUpdateContent']);
     Route::post('/developer/api/image', [\App\Http\Controllers\Admin\AdminCmsController::class, 'apiUploadImage']);
     Route::post('/developer/settings', [\App\Http\Controllers\Admin\AdminCmsController::class, 'updateSettings']);
+
+    // Admin Access Management (Super Admin Only)
+    Route::middleware([\App\Http\Middleware\SuperAdminMiddleware::class])->group(function () {
+        Route::get('/access', [\App\Http\Controllers\Admin\AdminAccessController::class, 'index'])->name('admin.access.index');
+        Route::get('/access/create', [\App\Http\Controllers\Admin\AdminAccessController::class, 'create'])->name('admin.access.create');
+        Route::post('/access', [\App\Http\Controllers\Admin\AdminAccessController::class, 'store'])->name('admin.access.store');
+        Route::get('/access/{id}/edit', [\App\Http\Controllers\Admin\AdminAccessController::class, 'edit'])->name('admin.access.edit');
+        Route::put('/access/{id}', [\App\Http\Controllers\Admin\AdminAccessController::class, 'update'])->name('admin.access.update');
+        Route::delete('/access/{id}', [\App\Http\Controllers\Admin\AdminAccessController::class, 'destroy'])->name('admin.access.destroy');
+        Route::post('/access/{id}/toggle-super', [\App\Http\Controllers\Admin\AdminAccessController::class, 'toggleSuperAdmin'])->name('admin.access.toggle-super');
+    });
 });
 Route::get('lang/{locale}', function ($locale) { 
     if (in_array($locale, ['en', 'id'])) { 

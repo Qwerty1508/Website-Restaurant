@@ -3,6 +3,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -28,6 +30,30 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
         ];
     }
+
+    public function adminPermissions(): HasMany
+    {
+        return $this->hasMany(AdminPermission::class);
+    }
+
+    public function hasAdminPermission(string $key): bool
+    {
+        // Super admin has all permissions
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        // Check if user has specific permission
+        $permission = $this->adminPermissions()->where('permission_key', $key)->first();
+        
+        // If no permission record exists, default to true (backward compatibility)
+        if (!$permission) {
+            return true;
+        }
+
+        return $permission->is_enabled;
+    }
+
     public function isAdmin(): bool
     {
         // Super admin always has admin access
