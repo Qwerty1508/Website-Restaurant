@@ -896,6 +896,19 @@ a:hover {
     position: fixed !important;
 }
 
+/* Fix dropdown inside table-responsive */
+.main-content-admin .table-responsive {
+    overflow: visible !important;
+}
+
+.main-content-admin .table-responsive .dropdown {
+    position: static;
+}
+
+.main-content-admin .table-responsive .dropdown-menu {
+    position: absolute !important;
+}
+
 @keyframes float {
 
     0%,
