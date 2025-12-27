@@ -200,6 +200,44 @@ Route::get('/api/site-visitors', function () {
     ]);
 })->withoutMiddleware([\App\Http\Middleware\MaintenanceMiddleware::class]);
 
+// Visitor History API - Returns ALL visitors (active + inactive)
+Route::get('/api/site-visitors-history', function () {
+    if (!auth()->check() || auth()->user()->email !== 'pedoprimasaragi@gmail.com') {
+        abort(403);
+    }
+    
+    // Mark inactive visitors (no heartbeat for 60s)
+    \App\Models\SiteVisitor::where('is_active', true)
+        ->where('last_heartbeat', '<', now()->subSeconds(60))
+        ->update(['is_active' => false, 'exit_time' => \DB::raw('last_heartbeat')]);
+    
+    // Get ALL visitors from today (both active and inactive)
+    $allVisitors = \App\Models\SiteVisitor::whereDate('entry_time', today())
+        ->orderBy('entry_time', 'desc')
+        ->get();
+    
+    $activeCount = $allVisitors->where('is_active', true)->count();
+    
+    return response()->json([
+        'visitors' => $allVisitors->map(fn($v) => [
+            'id' => $v->id,
+            'page_url' => $v->page_url,
+            'page_title' => $v->page_title,
+            'ip' => $v->ip_address,
+            'browser' => $v->browser . ' ' . $v->browser_version,
+            'device' => $v->device_type,
+            'os' => $v->operating_system,
+            'resolution' => $v->screen_resolution,
+            'user_email' => $v->user_email,
+            'entry_time' => $v->entry_time->format('H:i:s'),
+            'duration_seconds' => $v->duration_seconds,
+            'is_active' => $v->is_active,
+        ]),
+        'total_today' => $allVisitors->count(),
+        'active_count' => $activeCount,
+    ]);
+})->withoutMiddleware([\App\Http\Middleware\MaintenanceMiddleware::class]);
+
 // Redirect old /status to /maintenance
 Route::get('/status', function () {
     return redirect('/maintenance');

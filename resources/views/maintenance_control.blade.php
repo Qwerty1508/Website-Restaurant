@@ -169,15 +169,14 @@
                     </small>
                 </div>
 
-                <!-- Real-Time Visitor Tracking Section -->
-                @if($isMaintenanceMode)
+                <!-- Real-Time Visitor Tracking Section - Always Visible -->
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card border-0" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(200,155,58,0.2) !important;">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <h5 class="text-white mb-0">
-                                        <i class="bi bi-people-fill me-2 text-warning"></i>Real-Time Visitors
+                                        <i class="bi bi-people-fill me-2 text-warning"></i>Visitor History
                                     </h5>
                                     <div class="d-flex align-items-center gap-3">
                                         <span class="badge bg-success" id="active-count">0 Active</span>
@@ -186,9 +185,9 @@
                                     </div>
                                 </div>
                                 
-                                <div class="table-responsive">
+                                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                                     <table class="table table-dark table-hover mb-0" style="background: transparent;">
-                                        <thead>
+                                        <thead style="position: sticky; top: 0; background: #1a1f25; z-index: 10;">
                                             <tr class="text-warning" style="border-bottom: 1px solid rgba(200,155,58,0.3);">
                                                 <th><i class="bi bi-hash"></i></th>
                                                 <th><i class="bi bi-link-45deg me-1"></i>Page</th>
@@ -198,11 +197,12 @@
                                                 <th><i class="bi bi-windows me-1"></i>OS</th>
                                                 <th><i class="bi bi-clock me-1"></i>Entry</th>
                                                 <th><i class="bi bi-stopwatch me-1"></i>Duration</th>
+                                                <th><i class="bi bi-circle-fill me-1"></i>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody id="visitors-table-body">
                                             <tr>
-                                                <td colspan="8" class="text-center text-white-50 py-4">
+                                                <td colspan="9" class="text-center text-white-50 py-4">
                                                     <i class="bi bi-hourglass-split me-2"></i>Loading visitors...
                                                 </td>
                                             </tr>
@@ -213,14 +213,13 @@
                                 <div class="mt-3 text-center">
                                     <small class="text-white-50">
                                         <i class="bi bi-info-circle me-1"></i>
-                                        Visitors are marked inactive after 60 seconds without heartbeat
+                                        Shows all visitor history. Data resets when maintenance mode is turned OFF.
                                     </small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                @endif
             </div>
         </div>
     </div>
@@ -321,9 +320,8 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
 
-@if($isMaintenanceMode)
 <script>
-// Real-Time Visitor Tracking Refresh
+// Visitor Tracking - Always runs
 (function() {
     let visitorData = [];
     let lastFetchTime = Date.now();
@@ -338,13 +336,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function updateDurations() {
         const elapsed = Math.floor((Date.now() - lastFetchTime) / 1000);
-        const durationCells = document.querySelectorAll('.duration-cell');
+        const durationCells = document.querySelectorAll('.duration-cell[data-active="true"]');
         
         durationCells.forEach((cell, index) => {
-            if (visitorData[index]) {
-                const newDuration = visitorData[index].duration_seconds + elapsed;
-                cell.textContent = formatDuration(newDuration);
-            }
+            const baseDuration = parseInt(cell.dataset.baseDuration) || 0;
+            cell.textContent = formatDuration(baseDuration + elapsed);
         });
     }
     
@@ -353,10 +349,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (indicator) indicator.style.display = 'inline-block';
         
         try {
-            const response = await fetch('/api/site-visitors');
+            const response = await fetch('/api/site-visitors-history');
             const data = await response.json();
             
-            visitorData = data.active;
+            visitorData = data.visitors || [];
             lastFetchTime = Date.now();
             
             // Update counts
@@ -365,17 +361,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Update table
             const tbody = document.getElementById('visitors-table-body');
-            if (data.active.length === 0) {
+            if (visitorData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8" class="text-center text-white-50 py-4">
-                            <i class="bi bi-emoji-smile me-2"></i>No active visitors at the moment
+                        <td colspan="9" class="text-center text-white-50 py-4">
+                            <i class="bi bi-emoji-smile me-2"></i>No visitors recorded yet
                         </td>
                     </tr>
                 `;
             } else {
-                tbody.innerHTML = data.active.map((v, i) => `
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                tbody.innerHTML = visitorData.map((v, i) => `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); ${v.is_active ? '' : 'opacity: 0.6;'}">
                         <td class="text-white-50">${i + 1}</td>
                         <td><code class="text-info">${v.page_url || '-'}</code></td>
                         <td><code class="text-warning">${v.ip || '-'}</code></td>
@@ -387,7 +383,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         </td>
                         <td class="text-white-50">${v.os || '-'}</td>
                         <td class="text-success">${v.entry_time || '-'}</td>
-                        <td class="text-warning fw-bold duration-cell">${formatDuration(v.duration_seconds || 0)}</td>
+                        <td class="text-warning fw-bold duration-cell" data-active="${v.is_active}" data-base-duration="${v.duration_seconds || 0}">${formatDuration(v.duration_seconds || 0)}</td>
+                        <td>
+                            ${v.is_active 
+                                ? '<span class="badge bg-success"><i class="bi bi-circle-fill me-1"></i>Online</span>' 
+                                : '<span class="badge bg-secondary"><i class="bi bi-circle me-1"></i>Left</span>'}
+                        </td>
                     </tr>
                 `).join('');
             }
@@ -404,9 +405,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Refresh data every 5 seconds
     setInterval(fetchVisitors, 5000);
     
-    // Update duration display every 1 second
+    // Update duration display every 1 second (only for active visitors)
     setInterval(updateDurations, 1000);
 })();
 </script>
-@endif
 @endsection
